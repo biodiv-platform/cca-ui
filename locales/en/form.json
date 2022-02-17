@@ -1,0 +1,61 @@
+{
+  "attribution": "Attribution",
+  "choose_language": "Choose Language",
+  "comments": {
+    "add_comment": "Add a new comment",
+    "post": "Post Comment",
+    "title": "Comment(s)"
+  },
+  "continue": "Continue",
+  "created_on": "Created On",
+  "description": "Description",
+  "edit": "Edit",
+  "edit_fields": "Edit Fields",
+  "edit_meta": "Edit MetaData",
+  "field_id": "Field Id",
+  "find_gmaps": "Search from Google Maps",
+  "geometry": "Geometry",
+  "geometry_hint": "Enter Latitude,Longitude in decimal degrees",
+  "help_text": "Help Text",
+  "is_filterable": "Filterable",
+  "is_required": "Required",
+  "is_summary": "Summary Column",
+  "license": "License",
+  "map": {
+    "hide": "Simplified Edit",
+    "show": "Advanced Edit"
+  },
+  "max": "Maximum",
+  "min": "Minimum",
+  "name": "Name",
+  "options": {
+    "label": "Display Label",
+    "title": "Options",
+    "value": "Value"
+  },
+  "permission": {
+    "title": "Permission"
+  },
+  "parent_name": "Parent Template",
+  "platform": {
+    "desktop": "Desktop",
+    "mobile": "Mobile",
+    "title": "Platform"
+  },
+  "question": "Question",
+  "range": "Range",
+  "resource_info": "Resource Information",
+  "responses": "Responses",
+  "saved": {
+    "error": "Unable to Save",
+    "success": "Saved Successfully"
+  },
+  "short_name": "Short Name",
+  "submit": "Submit",
+  "terms": "By submitting this form, you agree that the photos or videos you are submitting are taken by you, or you have permission of the copyright holder to upload them on creative commons licenses.",
+  "type": "Type",
+  "updated_on": "Updated On",
+  "validations": {
+    "short_name": "Only lowercase alphabets and hyphens are allowed"
+  }
+}

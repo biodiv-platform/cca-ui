@@ -1,0 +1,34 @@
+{
+  "activity": "Activity",
+  "add": "Add",
+  "cancel": "Cancel",
+  "clear": "Clear",
+  "close": "Close",
+  "confirm_delete": "Are you sure want to delete?",
+  "delete": "Delete",
+  "download": "Download",
+  "edit": "Edit",
+  "home": "Home",
+  "learn_more": "Learn More",
+  "license": "All content on this portal is under CC-BY License unless otherwise specified.",
+  "list": "List",
+  "load_more": "load more",
+  "navigation": "Navigation",
+  "next": "Next",
+  "no_data": "No Data",
+  "no_results": "No Results",
+  "notifications": {
+    "invalid_credentials": "The username or password you entered is incorrect.",
+    "token_error": "Error fetching token",
+    "token_not_saved": "Could not save token",
+    "token_saved": "Token saved"
+  },
+  "or": "or",
+  "prev": "Previous",
+  "save": "Save",
+  "search": "Search",
+  "site": {
+    "title": "Community Conserved Areas"
+  },
+  "view": "View"
+}

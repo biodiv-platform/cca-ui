@@ -1,0 +1,23 @@
+{
+  "cta": {
+    "donate": {
+      "action": "Donate",
+      "description": "This portal is managed by a group of not for profit organisations. Support us in this endeavour."
+    },
+    "participate": {
+      "action": "Participate",
+      "description": "This is a participatory platform. Create an account and start contributing information on community conserved areas."
+    }
+  },
+  "featured": {
+    "title": "Community Conserved Areas"
+  },
+  "mission": {
+    "description": "Our mission is to enhance the understanding of and strengthen the narrative about the role played by Community Conserved Areas in conservation of biological diversity in larger landscapes in South Asia.",
+    "title": "Our Mission"
+  },
+  "why_portal": {
+    "description": "A need to create an open source platform which would serve as a repository of knowledge/data covering the multidimensional nature of Community Conserved Areas to enhance the understanding of the role they play in conservation. This knowledge/data is created by, for and with the people from communities across South Asia who are conserving their territories.",
+    "title": "Why This Portal"
+  }
+}

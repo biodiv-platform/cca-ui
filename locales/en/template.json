@@ -1,0 +1,35 @@
+{
+  "add_field": "Add Field",
+  "create": {
+    "title": "Create New Template"
+  },
+  "delete": {
+    "confirm": "Are you sure?\nThis will delete template.",
+    "error": "There was an error while deleting template",
+    "success": "Template Deleted Successfully"
+  },
+  "delete_confirm": "Are you sure?\nThis will delete children fields (if any)",
+  "edit_fields": "Edit Fields",
+  "filters": "Filters",
+  "manage_field": "Manage Field",
+  "participate": "Participate",
+  "pull": {
+    "error": "Unable to pull translations",
+    "success": "Translations pulled successfully",
+    "title": "Pull Translations"
+  },
+  "response": {
+    "delete": {
+      "error": "There was an error while deleting response",
+      "success": "Response Deleted Successfully"
+    }
+  },
+  "responses": "Responses",
+  "results": "Results",
+  "templates": "Templates",
+  "update": {
+    "error": "There was an error while saving template",
+    "success": "Template Saved Successfully",
+    "title": "Edit MetaData"
+  }
+}

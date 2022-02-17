@@ -1,0 +1,143 @@
+@import "./nprogress.scss";
+@import "./transitions.scss";
+
+:root {
+  --header-height: 64px;
+  --content-top: calc(var(--header-height) + var(--chakra-space-10));
+}
+
+html,
+body {
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell,
+    Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  background: var(--chakra-colors-gray-50) !important;
+  scroll-behavior: smooth;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.places-search > div:first-child {
+  width: 100%;
+}
+
+.chakra-input,
+.chakra-select {
+  background: white !important;
+}
+
+.show-table a {
+  color: var(--chakra-colors-blue-500);
+}
+
+@media only screen and (min-width: 600px) {
+  /* total width */
+  .cscr::-webkit-scrollbar {
+    background-color: #fff;
+    width: 14px;
+  }
+
+  /* background of the scrollbar except button or resizer */
+  .cscr::-webkit-scrollbar-track {
+    background-color: #fff;
+  }
+
+  /* scrollbar itself */
+  .cscr::-webkit-scrollbar-thumb {
+    background-color: #babac0;
+    border-radius: 14px;
+    border: 4px solid #fff;
+  }
+
+  /* set button(top and bottom of the scrollbar) */
+  .cscr::-webkit-scrollbar-button {
+    display: none;
+  }
+}
+
+.infoBox {
+  border: 0 !important;
+  overflow: unset !important;
+}
+
+.infoBox > img {
+  display: none;
+}
+
+.textarea {
+  min-height: 6rem;
+  border-radius: 0.25rem;
+  border: 1px solid var(--chakra-colors-gray-300);
+  .textarea__highlighter,
+  .textarea__input {
+    padding: 8px 1rem;
+  }
+  .textarea__suggestions {
+    position: absolute;
+    padding: 0.25rem;
+    border-radius: 0.25rem;
+    border: 1px solid var(--chakra-colors-gray-300);
+  }
+}
+
+textarea,
+input {
+  border-color: var(--chakra-colors-gray-300) !important;
+  &:focus,
+  &:active {
+    border-color: var(--chakra-colors-blue-500) !important;
+  }
+  &[aria-invalid="true"] {
+    border-color: var(--chakra-colors-red-500) !important;
+  }
+  &:disabled {
+    background: var(--chakra-colors-gray-200) !important;
+  }
+}
+
+[aria-invalid="true"] > div > div {
+  border-color: var(--chakra-colors-red-500) !important;
+  box-shadow: 0 0 0 1px var(--chakra-colors-red-500) !important;
+}
+
+@media print {
+  .no-print,
+  .no-print * {
+    display: none !important;
+  }
+
+  .chakra-collapse,
+  .show-print {
+    overflow: unset !important;
+    display: unset !important;
+    opacity: unset !important;
+    height: unset !important;
+  }
+
+  html,
+  body {
+    background: none !important;
+  }
+
+  #menu {
+    position: absolute !important;
+  }
+
+  .pagebreak {
+    page-break-before: always;
+  }
+
+  .avoid-break {
+    page-break-inside: avoid;
+  }
+}
+
+/* React Datepicker */
+.react-datepicker__navigation-icon {
+  margin-top: 12px !important;
+}
+
+.react-datepicker__triangle {
+  margin-left: -50% !important;
+}

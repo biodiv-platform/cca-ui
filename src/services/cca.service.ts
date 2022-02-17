@@ -1,0 +1,211 @@
+import { ENDPOINT } from "@static/constants";
+import { cleanAggregationData } from "@utils/field";
+import { http, plainHttp } from "@utils/http";
+import { cleanTemplate } from "@utils/json";
+import { stringify } from "@utils/query-string";
+
+export const axGetTemplateByShortName = async (shortName, language?) => {
+  try {
+    const { data } = await plainHttp.get(`${ENDPOINT.CCA}/v1/template/${shortName}`, {
+      params: { language }
+    });
+
+    return { success: true, data };
+  } catch (e) {
+    console.error(e);
+
+    return { success: false, data: {} };
+  }
+};
+
+export const getTemplateByShortOrParentName = async (shortName, ctx?) => {
+  const { data: _tMain } = await axGetTemplateByShortName(shortName, ctx?.locale);
+
+  // if template contains parent then re-fetch that template
+  if (_tMain.parentName) {
+    const { data: _tParent } = await axGetTemplateByShortName(_tMain.parentName, ctx?.locale);
+    return _tParent;
+  }
+
+  return _tMain;
+};
+
+export const axGetTemplateResponseById = async (responseId, params = {}) => {
+  try {
+    const { data } = await plainHttp.get(`${ENDPOINT.CCA}/v1/data/${responseId}`, { params });
+
+    return { success: true, data };
+  } catch (e) {
+    console.error(e);
+
+    return { success: false, data: null };
+  }
+};
+
+export const axDeleteTemplateResponseById = async (responseId) => {
+  try {
+    const { data } = await http.delete(`${ENDPOINT.CCA}/v1/data/delete/${responseId}`);
+
+    return { success: true, data };
+  } catch (e) {
+    console.error(e);
+
+    return { success: false, data: {} };
+  }
+};
+
+export const axGetAllTemplates = async (ctx, params = {}) => {
+  try {
+    const { data } = await http.get(`${ENDPOINT.CCA}/v1/template/all`, {
+      params: { ctx, ...params }
+    });
+
+    return { success: true, data };
+  } catch (e) {
+    console.error(e);
+
+    return { success: false, data: [] };
+  }
+};
+
+export const axCreateTemplate = async (payload) => {
+  try {
+    const { data } = await http.post(`${ENDPOINT.CCA}/v1/template/save`, payload);
+
+    return { success: true, data };
+  } catch (e) {
+    console.error(e);
+
+    return { success: false, data: {} };
+  }
+};
+
+export const axUpdateTemplate = async (payload, language?) => {
+  try {
+    const { data } = await http.put(`${ENDPOINT.CCA}/v1/template/update`, cleanTemplate(payload), {
+      params: { language }
+    });
+
+    return { success: true, data };
+  } catch (e) {
+    console.error(e);
+
+    return { success: false, data: {} };
+  }
+};
+
+export const axDeleteTemplate = async (templateId) => {
+  try {
+    const { data } = await http.delete(`${ENDPOINT.CCA}/v1/template/delete/${templateId}`);
+
+    return { success: true, data };
+  } catch (e) {
+    console.error(e);
+
+    return { success: false, data: {} };
+  }
+};
+
+export const axSaveParticipation = async (payload) => {
+  try {
+    const { data } = await http.post(`${ENDPOINT.CCA}/v1/data/save`, payload);
+
+    return { success: true, data };
+  } catch (e) {
+    console.error(e);
+
+    return { success: false, data: {} };
+  }
+};
+
+export const axUpdateParticipation = async (payload) => {
+  try {
+    const { data } = await http.put(`${ENDPOINT.CCA}/v1/data/update`, payload);
+
+    return { success: true, data };
+  } catch (e) {
+    console.error(e);
+
+    return { success: false, data: {} };
+  }
+};
+
+export const axGetTemplateResponseTableByShortName = async (shortName) => {
+  try {
+    const { data } = await http.get(`${ENDPOINT.CCA}/v1/data/all`, {
+      params: { shortName }
+    });
+
+    return { success: true, data };
+  } catch (e) {
+    console.error(e);
+
+    return { success: false, data: [] as any };
+  }
+};
+
+export const getLoactionInfo = async ([lon, lat]) => {
+  try {
+    const { data } = await plainHttp.get(`${ENDPOINT.NAKSHA}/layer/locationInfo`, {
+      params: { lat, lon }
+    });
+
+    return { success: true, data };
+  } catch (e) {
+    console.error(e);
+
+    return { success: false, data: {} };
+  }
+};
+
+export const axGetTemplateResponseList = async (params) => {
+  try {
+    const {
+      data: { aggregation, ccaDataList }
+    } = await plainHttp.get(`${ENDPOINT.CCA}/v1/data/list?${stringify(params)}`);
+
+    return { success: true, data: ccaDataList, aggregation: cleanAggregationData(aggregation) };
+  } catch (e) {
+    console.error(e);
+
+    return { success: false, data: [], aggregation: {} };
+  }
+};
+
+export const axGetFiltersListByShortName = async (params) => {
+  try {
+    const { data } = await plainHttp.get(`${ENDPOINT.CCA}/v1/template/filter/fields`, { params });
+
+    return { success: true, data };
+  } catch (e) {
+    console.error(e);
+
+    return { success: false, data: {} };
+  }
+};
+
+export const axGetUserParticipations = async () => {
+  try {
+    const { data } = await http.get(`${ENDPOINT.CCA}/v1/data/myList`);
+
+    return { success: true, data: data.ccaDataList };
+  } catch (e) {
+    console.error(e);
+
+    return { success: false, data: [] };
+  }
+};
+
+export const axPullTemplateTranslations = async (params) => {
+  try {
+    const { data } = await http.get(`${ENDPOINT.CCA}/v1/template/pullMasterTranslation`, {
+      params
+    });
+
+    return { success: true, data };
+  } catch (e) {
+    console.error(e);
+
+    return { success: false, data: {} };
+  }
+};
