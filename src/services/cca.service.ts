@@ -18,12 +18,12 @@ export const axGetTemplateByShortName = async (shortName, language?) => {
   }
 };
 
-export const getTemplateByShortOrParentName = async (shortName, ctx?) => {
-  const { data: _tMain } = await axGetTemplateByShortName(shortName, ctx?.locale);
+export const getTemplateByShortOrParentName = async (shortName, locale?) => {
+  const { data: _tMain } = await axGetTemplateByShortName(shortName, locale);
 
   // if template contains parent then re-fetch that template
   if (_tMain.parentName) {
-    const { data: _tParent } = await axGetTemplateByShortName(_tMain.parentName, ctx?.locale);
+    const { data: _tParent } = await axGetTemplateByShortName(_tMain.parentName, locale);
     return _tParent;
   }
 
