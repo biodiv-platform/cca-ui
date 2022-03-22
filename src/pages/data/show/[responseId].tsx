@@ -7,6 +7,7 @@ import {
   getLoactionInfo,
   getTemplateByShortOrParentName
 } from "@services/cca.service";
+import { getUserIBPsByIds } from "@services/user.service";
 import { FORM_TYPE } from "@static/constants";
 import { canEditData } from "@utils/auth";
 import { capitalize } from "@utils/basic";
@@ -53,11 +54,14 @@ export const getServerSideProps = async (ctx) => {
     }
   }
 
-  const canEdit = canEditData(response.userId, ctx);
+  const canEdit = canEditData([response.userId, ...response.allowedUsers], ctx);
+
+  const [owner, ...editors] = await getUserIBPsByIds([response.userId, ...response.allowedUsers]);
 
   return {
     props: {
       success: true,
+      permissions: { owner, editors },
       template,
       response,
       canEdit,

@@ -209,3 +209,15 @@ export const axPullTemplateTranslations = async (params) => {
     return { success: false, data: {} };
   }
 };
+
+export const axUpdateParticipationUsers = async (payload) => {
+  try {
+    const { data } = await http.put(`${ENDPOINT.CCA}/v1/data/update/permission`, payload);
+
+    return { success: true, data };
+  } catch (e) {
+    console.error(e);
+
+    return { success: false, data: {} };
+  }
+};

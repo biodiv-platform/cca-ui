@@ -7,11 +7,13 @@
     "title": "टिप्पणियाँ)"
   },
   "continue": "जारी रखें",
+  "contributors_for_document": "इस दस्तावेज़ के लिए योगदानकर्ता",
   "created_on": "को निर्मित",
   "description": "विवरण",
   "edit": "संपादित करें",
   "edit_fields": "फ़ील्ड संपादित करें",
   "edit_meta": "मेटाडेटा संपादित करें",
+  "editors": "इस दस्तावेज़ के संपादक",
   "field_id": "फील्ड आईडी",
   "find_gmaps": "Google मानचित्र से खोजें",
   "geometry": "ज्यामिति",

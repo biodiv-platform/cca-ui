@@ -3,6 +3,7 @@ import { flattenFields, splitIntoGroups } from "@utils/field";
 import React, { createContext, useContext, useMemo } from "react";
 
 interface TemplateResponseShowContextProps {
+  permissions;
   template;
   response;
   header;
@@ -11,6 +12,7 @@ interface TemplateResponseShowContextProps {
 }
 
 interface TemplateResponseShowProviderProps {
+  permissions;
   template;
   response;
   header;
@@ -23,6 +25,7 @@ const TemplateResponseShowContext = createContext<TemplateResponseShowContextPro
 );
 
 export const TemplateResponseShowProvider = ({
+  permissions,
   template,
   response,
   header,
@@ -56,6 +59,7 @@ export const TemplateResponseShowProvider = ({
   return (
     <TemplateResponseShowContext.Provider
       value={{
+        permissions,
         template,
         header,
         templateGroups,

@@ -7,6 +7,7 @@
     "title": "Comment(s)"
   },
   "continue": "Continue",
+  "contributors_for_document": "Contributors for this Document",
   "created_on": "Created On",
   "description": "Description",
   "edit": "Edit",
@@ -33,10 +34,10 @@
     "title": "Options",
     "value": "Value"
   },
+  "parent_name": "Parent Template",
   "permission": {
     "title": "Permission"
   },
-  "parent_name": "Parent Template",
   "platform": {
     "desktop": "Desktop",
     "mobile": "Mobile",

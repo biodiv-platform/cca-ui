@@ -87,3 +87,5 @@ export const RESOURCE_TYPE = {
 };
 
 export const OPTION_SEPRATOR = "|";
+
+export const MENU_PORTAL_TARGET = isBrowser ? document.body : undefined;

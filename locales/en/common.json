@@ -5,6 +5,7 @@
   "clear": "Clear",
   "close": "Close",
   "confirm_delete": "Are you sure want to delete?",
+  "contributors": "Contributors",
   "delete": "Delete",
   "download": "Download",
   "edit": "Edit",
@@ -24,6 +25,7 @@
     "token_saved": "Token saved"
   },
   "or": "or",
+  "owner": "Owner",
   "prev": "Previous",
   "save": "Save",
   "search": "Search",

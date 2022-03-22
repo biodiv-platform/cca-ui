@@ -30,9 +30,8 @@ const RenderOption = ({ value }) => <div>{optionLabelShow(value?.label)}</div>;
 
 const RenderOptionMulti = ({ value }) => (
   <UnorderedList pl={1}>
-    {value?.map((o, index) => (
-      <ListItem key={index}>{optionLabelShow(o?.label)}</ListItem>
-    ))}
+    {Array.isArray(value) &&
+      value?.map((o, index) => <ListItem key={index}>{optionLabelShow(o?.label)}</ListItem>)}
   </UnorderedList>
 );
 
