@@ -1,4 +1,5 @@
 import {
+  Button,
   FormControl,
   FormErrorMessage,
   FormHelperText,
@@ -7,6 +8,7 @@ import {
   Stack
 } from "@chakra-ui/react";
 import { namedFormErrorMessage, optionLabelShow } from "@utils/field";
+import useTranslation from "next-translate/useTranslation";
 import React from "react";
 import { useController } from "react-hook-form";
 
@@ -41,6 +43,9 @@ export const RadioInputField = ({
   ...props
 }: IRadioProps) => {
   const { field, fieldState } = useController({ name });
+  const { t } = useTranslation();
+
+  const handleOnReset = () => field.onChange("");
 
   return (
     <FormControl isInvalid={fieldState.invalid} mb={mb} {...props}>
@@ -51,7 +56,7 @@ export const RadioInputField = ({
         name={name}
         helpText={helpText}
       />
-      <RadioGroup id={name} key={name} {...field}>
+      <RadioGroup id={name} {...field}>
         <Stack direction={isInline ? "row" : "column"} py={2}>
           {options.map((o) => (
             <Radio key={o.value} value={o.value}>
@@ -62,6 +67,10 @@ export const RadioInputField = ({
       </RadioGroup>
 
       {isOthers && <OthersInput name={name} value={field.value} />}
+
+      <Button onClick={handleOnReset} size="xs">
+        {t("common:clear")}
+      </Button>
 
       <FormErrorMessage children={namedFormErrorMessage(fieldState?.error?.message, name, title)} />
       {hint && <FormHelperText color="gray.600">{hint}</FormHelperText>}
