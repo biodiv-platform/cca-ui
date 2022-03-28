@@ -10,6 +10,22 @@ export interface Newsletter {
   showInFooter?: boolean;
   sticky?: boolean;
 }
+export interface Page {
+  id?: number; // int64
+  title?: string;
+  description?: string;
+  userGroupId?: number; // int64
+  languageId?: number; // int64
+  parentId?: number; // int64
+  pageIndex?: number; // int32
+  pageType?: "CONTENT" | "REDIRECT";
+  url?: string;
+  autherId?: number; // int64
+  autherName?: string;
+  date?: string; // date-time
+  sticky?: boolean;
+  showInFooter?: boolean;
+}
 export interface PageCreate {
   title?: string;
   content?: string;
