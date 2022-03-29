@@ -68,6 +68,7 @@ export default function ParticipateTemplateFieldRenderer({ field }) {
         <RadioInputField
           {...defaultProps}
           options={field.valueOptions}
+          isClearable={true}
           isInline={false}
           isOthers={true}
         />

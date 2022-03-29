@@ -26,6 +26,7 @@ interface IRadioProps {
   isInline?: boolean;
   isLargeVariant?;
   isOthers?;
+  isClearable?;
 }
 
 export const RadioInputField = ({
@@ -40,6 +41,7 @@ export const RadioInputField = ({
   options = [],
   isLargeVariant,
   isOthers,
+  isClearable,
   ...props
 }: IRadioProps) => {
   const { field, fieldState } = useController({ name });
@@ -68,9 +70,11 @@ export const RadioInputField = ({
 
       {isOthers && <OthersInput name={name} value={field.value} />}
 
-      <Button onClick={handleOnReset} size="xs">
-        {t("common:clear")}
-      </Button>
+      {isClearable && (
+        <Button onClick={handleOnReset} size="xs">
+          {t("common:clear")}
+        </Button>
+      )}
 
       <FormErrorMessage children={namedFormErrorMessage(fieldState?.error?.message, name, title)} />
       {hint && <FormHelperText color="gray.600">{hint}</FormHelperText>}
