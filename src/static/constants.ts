@@ -32,10 +32,10 @@ export const FORM_TYPE_OPTIONS = [
   { value: "TEXT_AREA", label: "Text Area" },
   { value: "RICHTEXT", label: "Rich Text" },
   { value: "HEADING", label: "Heading" },
-  { value: "SINGLE_SELECT", label: "Single Select (Dropdown)" },
-  { value: "RADIO", label: "Single Select (Radio)" },
-  { value: "MULTI_SELECT", label: "Multiple Select (Dropdown)" },
-  { value: "CHECKBOX", label: "Multiple Select (Panel)" },
+  { value: "SINGLE_SELECT_DROPDOWN", label: "Single Select (Dropdown)" },
+  { value: "SINGLE_SELECT_RADIO", label: "Single Select (Radio)" },
+  { value: "MULTI_SELECT_DROPDOWN", label: "Multiple Select (Dropdown)" },
+  { value: "MULTI_SELECT_CHECKBOX", label: "Multiple Select (Checkbox)" },
   { value: "NUMBER", label: "Number" },
   { value: "NUMBER_RANGE", label: "Number Range" },
   { value: "DATE", label: "Date" },
@@ -54,10 +54,10 @@ export const MINMAX_DATE_FORM_TYPES = [FORM_TYPE.DATE, FORM_TYPE.YEAR, FORM_TYPE
 export const NON_FILTERABLE_FORM_TYPES = [FORM_TYPE.GEOMETRY, FORM_TYPE.FILE];
 
 export const OPTION_FORM_TYPES = [
-  FORM_TYPE.SINGLE_SELECT,
-  FORM_TYPE.RADIO,
-  FORM_TYPE.MULTI_SELECT,
-  FORM_TYPE.CHECKBOX
+  FORM_TYPE.SINGLE_SELECT_DROPDOWN,
+  FORM_TYPE.SINGLE_SELECT_RADIO,
+  FORM_TYPE.MULTI_SELECT_DROPDOWN,
+  FORM_TYPE.MULTI_SELECT_CHECKBOX
 ];
 
 export const ACCORDIAN_TYPES = [

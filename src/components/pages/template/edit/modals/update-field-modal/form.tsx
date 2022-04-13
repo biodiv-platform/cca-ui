@@ -47,6 +47,7 @@ export default function UpdateFieldForm({ defaultValues, onClose }) {
         type: Yup.string().required(),
         isRequired: Yup.boolean().nullable(),
         isSummaryField: Yup.boolean().nullable(),
+        isTitleColumn: Yup.boolean().nullable(),
         isFilterable: Yup.boolean().nullable(),
         minMax: Yup.mixed().nullable(),
         valueOptions: Yup.array().when("type", {
@@ -104,6 +105,11 @@ export default function UpdateFieldForm({ defaultValues, onClose }) {
               disabled={areFieldsReadOnly}
               name="isSummaryField"
               label={t("form:is_summary")}
+            />
+            <CheckboxField
+              disabled={areFieldsReadOnly}
+              name="isTitleColumn"
+              label={t("form:is_title")}
             />
             {!NON_FILTERABLE_FORM_TYPES.includes(formType) && (
               <CheckboxField

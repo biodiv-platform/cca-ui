@@ -60,10 +60,10 @@ export default function ParticipateTemplateFieldRenderer({ field }) {
         </Heading>
       );
 
-    case FORM_TYPE.SINGLE_SELECT:
+    case FORM_TYPE.SINGLE_SELECT_DROPDOWN:
       return <SelectInputField {...defaultProps} options={field.valueOptions} isClearable={true} />;
 
-    case FORM_TYPE.RADIO:
+    case FORM_TYPE.SINGLE_SELECT_RADIO:
       return (
         <RadioInputField
           {...defaultProps}
@@ -74,7 +74,7 @@ export default function ParticipateTemplateFieldRenderer({ field }) {
         />
       );
 
-    case FORM_TYPE.MULTI_SELECT:
+    case FORM_TYPE.MULTI_SELECT_DROPDOWN:
       return (
         <SelectMultipleInputField
           {...defaultProps}
@@ -83,7 +83,7 @@ export default function ParticipateTemplateFieldRenderer({ field }) {
         />
       );
 
-    case FORM_TYPE.CHECKBOX:
+    case FORM_TYPE.MULTI_SELECT_CHECKBOX:
       return <CheckboxListField {...defaultProps} options={field.valueOptions} isOthers={true} />;
 
     case FORM_TYPE.NUMBER:

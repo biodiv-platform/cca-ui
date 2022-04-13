@@ -21,6 +21,7 @@
   "is_filterable": "Filterable",
   "is_required": "Required",
   "is_summary": "Summary Column",
+  "is_title": "Title Column",
   "license": "License",
   "map": {
     "hide": "Simplified Edit",
