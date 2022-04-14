@@ -25,6 +25,9 @@ export const Card = ({ response, onHover, isTruncated }) => {
       >
         <Flex>
           <Box flexGrow={1} minWidth={0}>
+            <Box fontSize="lg" fontWeight="bold" mb={2}>
+              {response.titlesValues.map((field) => field.value).toString()}
+            </Box>
             <List spacing={1}>
               {response.values.map((field, index) => (
                 <ListItem key={index} lineHeight={1.2}>
