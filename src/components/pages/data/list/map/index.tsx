@@ -50,7 +50,7 @@ export default function Map() {
           )}
           <MarkerClusterer gridSize={30}>
             {(clusterer) =>
-              filteredResponses.map((r) => (
+              filteredResponses.map((r, index) => (
                 <Marker
                   key={r.id}
                   icon={
@@ -63,6 +63,7 @@ export default function Map() {
                   onMouseOut={() => setICard(null)}
                   clusterer={clusterer}
                   onClick={() => onMarkerClick(r.id)}
+                  noClustererRedraw={index !== filteredResponses.length - 1} // for marker rendering performance https://github.com/tomchentw/react-google-maps/issues/836#issuecomment-894381349
                 />
               ))
             }

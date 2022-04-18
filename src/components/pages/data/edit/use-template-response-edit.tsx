@@ -5,12 +5,17 @@ interface TemplateResponseEditContextProps {
   response;
   setResponse;
   canEdit;
+  canEditEditors;
+
+  isEdit;
+  setIsEdit;
 }
 
 interface TemplateResponseEditProviderProps {
   template;
   initialResponse;
   canEdit;
+  canEditEditors;
   children;
 }
 
@@ -22,18 +27,25 @@ export const TemplateResponseEditProvider = ({
   template,
   initialResponse,
   canEdit,
+  canEditEditors,
   children
 }: TemplateResponseEditProviderProps) => {
   const [response, setResponse] = useState(initialResponse);
+
+  const [isEdit, setIsEdit] = useState<boolean>();
 
   return (
     <TemplateResponseEditContext.Provider
       value={{
         template,
         canEdit,
+        canEditEditors,
 
         response,
-        setResponse
+        setResponse,
+
+        isEdit,
+        setIsEdit
       }}
     >
       {children}

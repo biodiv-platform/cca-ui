@@ -3,15 +3,19 @@ import React from "react";
 
 import useResponseList from "../use-response-list";
 import FilterContainer from "./container";
+import FieldCount from "./inputs/field-count";
 
 export default function FilterList() {
   const { filtersList } = useResponseList();
 
   return (
-    <Accordion allowMultiple={true}>
-      {filtersList.map((field: any) => (
-        <FilterContainer key={field.fieldId} field={field} />
-      ))}
-    </Accordion>
+    <>
+      <FieldCount />
+      <Accordion allowMultiple={true}>
+        {filtersList.map((field: any) => (
+          <FilterContainer key={field.fieldId} field={field} />
+        ))}
+      </Accordion>
+    </>
   );
 }

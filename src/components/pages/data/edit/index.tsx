@@ -13,11 +13,12 @@ import { flattenFields, splitIntoGroups } from "@utils/field";
 import React, { useMemo } from "react";
 
 import { FieldEditContainer } from "./field-edit-container";
+import PermissionEdit from "./permission-edit";
 import { ShowHeader } from "./show-header";
 import useTemplateResponseEdit from "./use-template-response-edit";
 
 export default function ResponseEditPageComponent() {
-  const { template } = useTemplateResponseEdit();
+  const { template, canEditEditors, isEdit } = useTemplateResponseEdit();
 
   const [templateFields, templateGroups, selectedAccordians] = useMemo(() => {
     const _flattenFields = flattenFields(template.fields);
@@ -34,6 +35,7 @@ export default function ResponseEditPageComponent() {
   return (
     <Container>
       <ShowHeader />
+      {canEditEditors && isEdit && <PermissionEdit />}
       <Sidebar fields={templateFields}>
         <Accordion defaultIndex={selectedAccordians} allowMultiple>
           {templateGroups.map(({ heading, fields }) => (
