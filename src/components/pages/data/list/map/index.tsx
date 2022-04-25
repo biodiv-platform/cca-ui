@@ -48,7 +48,7 @@ export default function Map() {
               position={{ lng: currentCard.centroid[0], lat: currentCard.centroid[1] }}
             />
           )}
-          <MarkerClusterer gridSize={30}>
+          <MarkerClusterer key={filteredResponses.length} gridSize={30}>
             {(clusterer) =>
               filteredResponses.map((r) => (
                 <Marker
