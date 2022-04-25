@@ -95,5 +95,7 @@ export const adminOrAuthor = (authorId, ctx?) => {
  */
 export const canEditData = (authorId, ctx?) => {
   const u = getParsedUser(ctx);
-  return u?.id === Number(authorId) || hasAccess([Role.Admin, Role.DataCurator], ctx);
+  const userIds = authorId.filter((o) => o).map((o) => Number(o));
+
+  return userIds.includes(u?.id) || hasAccess([Role.Admin, Role.DataCurator], ctx);
 };

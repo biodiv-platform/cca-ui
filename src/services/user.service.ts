@@ -109,3 +109,27 @@ export const axGetUserList = async (
     return { success: false, data: {} };
   }
 };
+
+export const getUserIBPsByIds = async (userIds) => {
+  try {
+    const responses = await Promise.all(
+      userIds.map((userId) => plainHttp.get(`${ENDPOINT.USER}/v1/user/ibp/${userId}`))
+    );
+    return responses.map((r) => r.data);
+  } catch (e) {
+    console.error(e);
+    return [];
+  }
+};
+
+export const axUserSearch = async (name) => {
+  try {
+    const { data } = await plainHttp.get(`${ENDPOINT.USER}/v1/user/autocomplete`, {
+      params: { name }
+    });
+    return { success: true, data: data.map((o) => ({ ...o, display: o.name })) };
+  } catch (e) {
+    console.error(e);
+    return { success: false, data: [] };
+  }
+};

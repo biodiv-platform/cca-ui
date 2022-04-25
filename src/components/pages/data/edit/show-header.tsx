@@ -1,6 +1,7 @@
 import { IconButton } from "@chakra-ui/button";
 import PageHeading from "@components/@core/page-heading";
 import DeleteIcon from "@icons/delete";
+import UsersIcon from "@icons/users";
 import { axDeleteTemplateResponseById } from "@services/cca.service";
 import notification, { NotificationType } from "@utils/notification";
 import useTranslation from "next-translate/useTranslation";
@@ -10,7 +11,7 @@ import useTemplateResponseEdit from "./use-template-response-edit";
 
 export function ShowHeader() {
   const { t } = useTranslation();
-  const { template, response, canEdit } = useTemplateResponseEdit();
+  const { template, response, canEditEditors, setIsEdit } = useTemplateResponseEdit();
 
   const handleOnDelete = async () => {
     if (confirm(t("common:confirm_delete"))) {
@@ -25,7 +26,7 @@ export function ShowHeader() {
 
   return (
     <PageHeading title={`${template.name} (${template.shortName})`} icon="📄">
-      {canEdit && (
+      {canEditEditors && (
         <IconButton
           isRound={true}
           variant="ghost"
@@ -34,6 +35,17 @@ export function ShowHeader() {
           aria-label={t("common:delete")}
           title={t("common:delete")}
           onClick={handleOnDelete}
+        />
+      )}
+      {canEditEditors && (
+        <IconButton
+          isRound={true}
+          variant="ghost"
+          colorScheme="blue"
+          icon={<UsersIcon />}
+          aria-label={t("user:permissions")}
+          title={t("user:permissions")}
+          onClick={() => setIsEdit(true)}
         />
       )}
     </PageHeading>

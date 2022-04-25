@@ -9,6 +9,7 @@ import {
 } from "@chakra-ui/react";
 import AddIcon from "@icons/add";
 import DeleteIcon from "@icons/delete";
+import { nanoid } from "nanoid";
 import useTranslation from "next-translate/useTranslation";
 import React from "react";
 import { useFieldArray, useFormContext } from "react-hook-form";
@@ -49,7 +50,7 @@ export const OptionsField = ({
   const { fields, append, remove: _r } = useFieldArray({ name });
   const { t } = useTranslation();
 
-  const add = () => append({ label: "", value: "" });
+  const add = () => append({ label: "", value: "", valueId: nanoid() });
 
   const remove = (index) => {
     if (confirm(t("common:confirm_delete"))) _r(index);

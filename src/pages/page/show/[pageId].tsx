@@ -9,6 +9,6 @@ export default function PageShowPage({ success, data }) {
 }
 
 export const getServerSideProps = async (ctx) => {
-  const props = await axGetPageByID(ctx.query.pageId);
+  const props = await axGetPageByID(ctx.query.pageId, "full");
   return { props };
 };

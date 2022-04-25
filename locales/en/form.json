@@ -7,6 +7,7 @@
     "title": "Comment(s)"
   },
   "continue": "Continue",
+  "contributors_for_document": "Contributors for this Document",
   "created_on": "Created On",
   "description": "Description",
   "edit": "Edit",
@@ -20,6 +21,7 @@
   "is_filterable": "Filterable",
   "is_required": "Required",
   "is_summary": "Summary Column",
+  "is_title": "Title Column",
   "license": "License",
   "map": {
     "hide": "Simplified Edit",
@@ -33,10 +35,10 @@
     "title": "Options",
     "value": "Value"
   },
+  "parent_name": "Parent Template",
   "permission": {
     "title": "Permission"
   },
-  "parent_name": "Parent Template",
   "platform": {
     "desktop": "Desktop",
     "mobile": "Mobile",
