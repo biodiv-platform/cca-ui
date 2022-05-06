@@ -17,15 +17,18 @@ import useResponseList from "../use-response-list";
 export default function Map() {
   const mapRef = useRef<any>(null);
   const [iCard, setICard] = useState<any>();
-  const { responses, currentCard } = useResponseList();
+  const { currentCard, map } = useResponseList();
   const viewPort = useMemo(
     () => mapboxToGmapsViewPort(getMapCenter(3.8, { maxZoom: 8 }) as any),
     []
   );
 
-  const filteredResponses = useMemo(() => responses.l.filter((m) => m), [responses]);
-
   const onMarkerClick = (responseId) => window.open(`/data/show/${responseId}`, "_blank");
+
+  const hoveredCard = useMemo(
+    () => (currentCard?.id ? map.find((m) => m.id === currentCard.id) : null),
+    [currentCard]
+  );
 
   return (
     <Box boxSize="full">
@@ -42,15 +45,10 @@ export default function Map() {
           ref={mapRef}
           options={{ gestureHandling: "greedy" }}
         >
-          {currentCard && (
-            <Marker
-              animation={"1" as any}
-              position={{ lng: currentCard.centroid[0], lat: currentCard.centroid[1] }}
-            />
-          )}
-          <MarkerClusterer key={filteredResponses.length} gridSize={30}>
+          {hoveredCard && <Marker animation={"1" as any} position={hoveredCard} />}
+          <MarkerClusterer key={map.length} gridSize={30}>
             {(clusterer) =>
-              filteredResponses.map((r, index) => (
+              map.map((r, index) => (
                 <Marker
                   key={r.id}
                   icon={
@@ -58,12 +56,12 @@ export default function Map() {
                       ? "data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEAAAAALAAAAAABAAEAAAIA"
                       : undefined
                   }
-                  position={{ lng: r.centroid[0], lat: r.centroid[1] }}
+                  position={r}
                   onMouseOver={() => setICard(r)}
                   onMouseOut={() => setICard(null)}
                   clusterer={clusterer}
                   onClick={() => onMarkerClick(r.id)}
-                  noClustererRedraw={index !== filteredResponses.length - 1} // for marker rendering performance https://github.com/tomchentw/react-google-maps/issues/836#issuecomment-894381349
+                  noClustererRedraw={index !== map.length - 1} // for marker rendering performance https://github.com/tomchentw/react-google-maps/issues/836#issuecomment-894381349
                 />
               ))
             }

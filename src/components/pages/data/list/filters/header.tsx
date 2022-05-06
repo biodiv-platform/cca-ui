@@ -1,6 +1,6 @@
 import { Button, Flex, Heading } from "@chakra-ui/react";
 import useTranslation from "next-translate/useTranslation";
-import React from "react";
+import React, { useMemo } from "react";
 
 import useResponseList from "../use-response-list";
 
@@ -12,6 +12,11 @@ export function FiltersHeader() {
     window.location.assign(window.location.origin + window.location.pathname);
   };
 
+  const filtersCount = useMemo(
+    () => Object.keys(filter.f).filter((k) => !["offset", "limit"].includes(k)).length,
+    [filter.f]
+  );
+
   return (
     <Flex
       alignItems="center"
@@ -21,7 +26,7 @@ export function FiltersHeader() {
       borderBottom="1px solid var(--chakra-colors-gray-300)"
     >
       <Heading as="h2" fontSize="xl" fontWeight="semibold">
-        {t("template:filters")} ({Object.keys(filter.f).length})
+        {t("template:filters")} ({filtersCount})
       </Heading>
       <Button size="xs" onClick={handleOnClearFilter}>
         {t("common:clear")}

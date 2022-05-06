@@ -1,11 +1,17 @@
 import TemplateResponseListComponent from "@components/pages/data/list";
-import { axGetFiltersListByShortName, axGetTemplateResponseList } from "@services/cca.service";
+import { axGetFiltersListByShortName } from "@services/cca.service";
+import { LIST_PAGINATION_LIMIT } from "@static/constants";
 import React from "react";
 
 const TemplateResponseListPage = (props) => <TemplateResponseListComponent {...props} />;
 
 export const getServerSideProps = async (ctx) => {
-  const initialResponses = await axGetTemplateResponseList({ ...ctx.query, language: ctx.locale });
+  const payload = {
+    language: ctx.locale,
+    ...ctx.query,
+    offset: ctx.query.offset || 0,
+    limit: LIST_PAGINATION_LIMIT
+  };
 
   const filtersList = await axGetFiltersListByShortName({
     shortName: ctx.query?.shortName,
@@ -14,10 +20,8 @@ export const getServerSideProps = async (ctx) => {
 
   return {
     props: {
-      initialFilters: ctx.query,
-      filtersList: filtersList.data,
-      initialResponses: initialResponses.data,
-      initialAggregation: initialResponses.aggregation
+      initialFilters: payload,
+      filtersList: filtersList.data
     }
   };
 };

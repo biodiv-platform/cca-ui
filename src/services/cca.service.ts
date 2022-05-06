@@ -158,6 +158,57 @@ export const getLoactionInfo = async ([lon, lat]) => {
   }
 };
 
+export const axGetDataListAggregation = async (params) => {
+  try {
+    const { data } = await plainHttp.get(
+      `${ENDPOINT.CCA}/v1/data/aggregation?${stringify(params)}`
+    );
+
+    return { success: true, data: cleanAggregationData(data) };
+  } catch (e) {
+    console.error(e);
+
+    return { success: false, data: [], aggregation: {} };
+  }
+};
+
+export const axGetDataListMap = async (params) => {
+  try {
+    const { data } = await plainHttp.get(`${ENDPOINT.CCA}/v1/data/map/info?${stringify(params)}`);
+
+    return { success: true, data };
+  } catch (e) {
+    console.error(e);
+
+    return { success: false, data: [], aggregation: {} };
+  }
+};
+
+export const axGetMapAndAggregation = async (params) => {
+  const [_aggregation, _map] = await Promise.all([
+    axGetDataListAggregation(params),
+    axGetDataListMap(params)
+  ]);
+
+  return {
+    success: _aggregation.success && _map.success,
+    aggregation: _aggregation.data,
+    map: _map.data
+  };
+};
+
+export const axGetDataListPage = async (params) => {
+  try {
+    const { data } = await plainHttp.get(`${ENDPOINT.CCA}/v1/data/page?${stringify(params)}`);
+
+    return { success: true, data };
+  } catch (e) {
+    console.error(e);
+
+    return { success: false, data: [] };
+  }
+};
+
 export const axGetTemplateResponseList = async (params) => {
   try {
     const {
