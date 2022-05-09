@@ -1,18 +1,12 @@
 import { Box } from "@chakra-ui/layout";
 import SITE_CONFIG from "@configs/site-config";
 import { GMAPS_LIBRARIES, mapboxToGmapsViewPort } from "@ibp/naksha-commons";
-import {
-  GoogleMap,
-  InfoBox,
-  LoadScriptNext,
-  Marker,
-  MarkerClusterer
-} from "@react-google-maps/api";
+import { GoogleMap, LoadScriptNext, Marker, MarkerClusterer } from "@react-google-maps/api";
 import { getMapCenter } from "@utils/location";
 import React, { useMemo, useRef, useState } from "react";
 
-import { Card } from "../cards";
 import useResponseList from "../use-response-list";
+import InfoCard from "./info-card";
 
 export default function Map() {
   const mapRef = useRef<any>(null);
@@ -66,16 +60,7 @@ export default function Map() {
               ))
             }
           </MarkerClusterer>
-          {iCard && (
-            <InfoBox
-              position={{ lng: iCard.centroid[0], lat: iCard.centroid[1] }}
-              options={{ maxWidth: 340 }}
-            >
-              <Box bg="white" borderRadius="xl" boxShadow="lg">
-                <Card response={iCard} onHover={() => null} isTruncated={true} />
-              </Box>
-            </InfoBox>
-          )}
+          {iCard && <InfoCard data={iCard} />}
         </GoogleMap>
       </LoadScriptNext>
     </Box>

@@ -184,6 +184,18 @@ export const axGetDataListMap = async (params) => {
   }
 };
 
+export const axGetDataSummaryById = async (id) => {
+  try {
+    const { data } = await plainHttp.get(`${ENDPOINT.CCA}/v1/data/summary/${id}`);
+
+    return { success: true, data };
+  } catch (e) {
+    console.error(e);
+
+    return { success: false, data: {} };
+  }
+};
+
 export const axGetMapAndAggregation = async (params) => {
   const [_aggregation, _map] = await Promise.all([
     axGetDataListAggregation(params),
