@@ -17,7 +17,7 @@ export default function CardHeader() {
       borderBottom="2px solid var(--chakra-colors-gray-300)"
     >
       <Heading as="h2" fontSize="xl" fontWeight="semibold">
-        {t("template:results")} ({responses?.l?.length})
+        {t("template:results")} ({responses?.totalCount})
       </Heading>
     </Flex>
   );

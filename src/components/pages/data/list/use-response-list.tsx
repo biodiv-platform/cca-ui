@@ -38,7 +38,7 @@ export const ResponseListProvider = ({
   initialFilters,
   children
 }: ResponseListProviderProps) => {
-  const [responsesI, setResponsesI] = useImmer({ l: [] as any, hasMore: true });
+  const [responsesI, setResponsesI] = useImmer({ l: [] as any, hasMore: true, totalCount: 0 });
   const [filter, setFilter] = useImmer<{ f: any }>({ f: initialFilters as any });
   const [currentCard, setCurrentCard] = useState();
   const [aggregation, setAggregation] = useState({});
@@ -63,6 +63,7 @@ export const ResponseListProvider = ({
       setResponsesI((_draft) => {
         _draft.l = filter.f.offset === 0 ? response.data : [..._draft.l, ...response.data];
         _draft.hasMore = response.data.length === LIST_PAGINATION_LIMIT;
+        _draft.totalCount = response.totalCount;
       });
     }
 

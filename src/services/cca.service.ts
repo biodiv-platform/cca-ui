@@ -213,7 +213,7 @@ export const axGetDataListPage = async (params) => {
   try {
     const { data } = await plainHttp.get(`${ENDPOINT.CCA}/v1/data/page?${stringify(params)}`);
 
-    return { success: true, data };
+    return { success: true, ...data };
   } catch (e) {
     console.error(e);
 
