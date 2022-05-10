@@ -73,7 +73,7 @@ export function CollapsablePane({ children, header, top }) {
         {isOpen && (
           <>
             <Box flexShrink={0}>{header}</Box>
-            <Box flexGrow={1} overflowY="auto" className="cscr">
+            <Box flexGrow={1} overflowY="auto" overscrollBehavior="contain" className="cscr">
               {children}
             </Box>
           </>

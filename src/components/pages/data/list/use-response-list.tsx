@@ -1,6 +1,5 @@
-import useDidUpdateEffect from "@hooks/use-did-update-effect";
-import { axGetTemplateResponseList } from "@services/cca.service";
-import { isBrowser } from "@static/constants";
+import { axGetDataListPage, axGetMapAndAggregation } from "@services/cca.service";
+import { isBrowser, LIST_PAGINATION_LIMIT } from "@static/constants";
 import { stringify } from "@utils/query-string";
 import useTranslation from "next-translate/useTranslation";
 import NProgress from "nprogress";
@@ -9,9 +8,12 @@ import { useImmer } from "use-immer";
 
 interface ResponseListContextProps {
   filtersList;
+  nextPage;
+  isLoading;
   responses;
   setResponses;
   aggregation;
+  map;
 
   filter;
   addFilter;
@@ -26,7 +28,6 @@ interface ResponseListProviderProps {
   filtersList;
   initialFilters;
   initialResponses;
-  initialAggregation;
   children;
 }
 
@@ -35,28 +36,39 @@ const ResponseListContext = createContext<ResponseListContextProps>({} as Respon
 export const ResponseListProvider = ({
   filtersList,
   initialFilters,
-  initialResponses,
-  initialAggregation,
   children
 }: ResponseListProviderProps) => {
-  const [responsesI, setResponsesI] = useImmer({ l: initialResponses as any });
+  const [responsesI, setResponsesI] = useImmer({ l: [] as any, hasMore: true, totalCount: 0 });
   const [filter, setFilter] = useImmer<{ f: any }>({ f: initialFilters as any });
   const [currentCard, setCurrentCard] = useState();
-  const [aggregation, setAggregation] = useState(initialAggregation);
+  const [aggregation, setAggregation] = useState({});
+  const [map, setMap] = useState([]);
   const { lang } = useTranslation();
+  const [isLoading, setIsLoading] = useState(false);
 
   const fetchListData = async () => {
     NProgress.start();
+    setIsLoading(true);
 
-    const response = await axGetTemplateResponseList({ ...filter.f, language: lang });
+    const payload = { ...filter.f, language: lang, limit: LIST_PAGINATION_LIMIT };
+
+    if (filter.f.offset === 0) {
+      const dataMapAggregation = await axGetMapAndAggregation(payload);
+      setAggregation(dataMapAggregation.aggregation);
+      setMap(dataMapAggregation.map);
+    }
+
+    const response = await axGetDataListPage(payload);
     if (response.success) {
       setResponsesI((_draft) => {
-        _draft.l = response.data;
+        _draft.l = filter.f.offset === 0 ? response.data : [..._draft.l, ...response.data];
+        _draft.hasMore = response.data.length === LIST_PAGINATION_LIMIT;
+        _draft.totalCount = response.totalCount;
       });
-      setAggregation(response.aggregation);
     }
 
     NProgress.done();
+    setIsLoading(false);
   };
 
   useEffect(() => {
@@ -65,7 +77,7 @@ export const ResponseListProvider = ({
     }
   }, [filter]);
 
-  useDidUpdateEffect(() => {
+  useEffect(() => {
     fetchListData();
   }, [filter]);
 
@@ -76,19 +88,27 @@ export const ResponseListProvider = ({
     }
 
     setFilter((_draft) => {
+      _draft.f.offset = 0;
       _draft.f[key] = value;
     });
   };
 
   const removeFilter = (key) => {
     setFilter((_draft) => {
+      _draft.f.offset = 0;
       delete _draft.f[key];
     });
   };
 
   const resetFilter = () => {
     setFilter((_draft) => {
-      _draft.f = {};
+      _draft.f = { offset: 0 };
+    });
+  };
+
+  const nextPage = () => {
+    setFilter((_draft) => {
+      _draft.f.offset = Number(_draft.f.offset) + LIST_PAGINATION_LIMIT;
     });
   };
 
@@ -96,10 +116,13 @@ export const ResponseListProvider = ({
     <ResponseListContext.Provider
       value={{
         filtersList,
+        nextPage,
+        isLoading,
 
         responses: responsesI,
         setResponses: setResponsesI,
         aggregation,
+        map,
 
         filter,
         addFilter,
