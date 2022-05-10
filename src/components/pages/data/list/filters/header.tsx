@@ -13,7 +13,7 @@ export function FiltersHeader() {
   };
 
   const filtersCount = useMemo(
-    () => Object.keys(filter.f).filter((k) => !["offset", "limit"].includes(k)).length,
+    () => Object.keys(filter.f).filter((k) => !["offset", "limit", "language"].includes(k)).length,
     [filter.f]
   );
 
