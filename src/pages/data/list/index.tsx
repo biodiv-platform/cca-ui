@@ -1,5 +1,5 @@
 import TemplateResponseListComponent from "@components/pages/data/list";
-import { axGetFiltersListByShortName } from "@services/cca.service";
+import { axGetDataListAggregation, axGetFiltersListByShortName } from "@services/cca.service";
 import { LIST_PAGINATION_LIMIT } from "@static/constants";
 import React from "react";
 
@@ -13,6 +13,8 @@ export const getServerSideProps = async (ctx) => {
     limit: LIST_PAGINATION_LIMIT
   };
 
+  const aggregationData = await axGetDataListAggregation(payload);
+
   const filtersList = await axGetFiltersListByShortName({
     shortName: ctx.query?.shortName,
     language: ctx.locale
@@ -21,6 +23,7 @@ export const getServerSideProps = async (ctx) => {
   return {
     props: {
       initialFilters: payload,
+      initialAggregation: aggregationData.data,
       filtersList: filtersList.data
     }
   };

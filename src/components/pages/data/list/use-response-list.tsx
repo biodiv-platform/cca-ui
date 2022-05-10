@@ -27,6 +27,7 @@ interface ResponseListContextProps {
 interface ResponseListProviderProps {
   filtersList;
   initialFilters;
+  initialAggregation;
   initialResponses;
   children;
 }
@@ -36,12 +37,13 @@ const ResponseListContext = createContext<ResponseListContextProps>({} as Respon
 export const ResponseListProvider = ({
   filtersList,
   initialFilters,
+  initialAggregation,
   children
 }: ResponseListProviderProps) => {
   const [responsesI, setResponsesI] = useImmer({ l: [] as any, hasMore: true, totalCount: 0 });
   const [filter, setFilter] = useImmer<{ f: any }>({ f: initialFilters as any });
   const [currentCard, setCurrentCard] = useState();
-  const [aggregation, setAggregation] = useState({});
+  const [aggregation, setAggregation] = useState(initialAggregation || {});
   const [map, setMap] = useState([]);
   const { lang } = useTranslation();
   const [isLoading, setIsLoading] = useState(false);
