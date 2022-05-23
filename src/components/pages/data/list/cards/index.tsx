@@ -1,6 +1,7 @@
 import { Box, Button, Flex, Image, List, ListItem } from "@chakra-ui/react";
 import Loading from "@components/@core/loading";
 import NextLink from "@components/@core/next-link";
+import { FORM_TYPE } from "@static/constants";
 import { renderSimpleValue } from "@utils/field";
 import { getResourceThumbnail } from "@utils/image";
 import useTranslation from "next-translate/useTranslation";
@@ -31,20 +32,22 @@ export const Card = ({ response, onHover, isTruncated }) => {
               {response.titlesValues.map((field) => field.value).toString()}
             </Box>
             <List spacing={1}>
-              {response.values.map((field, index) => (
-                <ListItem key={index} lineHeight={1.2}>
-                  <Box isTruncated={isTruncated}>
-                    <Box as="span" fontWeight="semibold" mr={1}>
-                      {field.name}:
+              {response.values
+                .filter((field) => field.type !== FORM_TYPE.FILE)
+                .map((field, index) => (
+                  <ListItem key={index} lineHeight={1.2}>
+                    <Box isTruncated={isTruncated}>
+                      <Box as="span" fontWeight="semibold" mr={1}>
+                        {field.name}:
+                      </Box>
+                      <span
+                        dangerouslySetInnerHTML={{
+                          __html: renderSimpleValue(field.value, field.type)
+                        }}
+                      />
                     </Box>
-                    <span
-                      dangerouslySetInnerHTML={{
-                        __html: renderSimpleValue(field.value, field.type)
-                      }}
-                    />
-                  </Box>
-                </ListItem>
-              ))}
+                  </ListItem>
+                ))}
             </List>
           </Box>
           {thumb && <Image boxSize="64px" src={thumb} borderRadius="md" ml={4} flexShrink={0} />}

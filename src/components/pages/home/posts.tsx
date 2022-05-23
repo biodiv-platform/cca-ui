@@ -1,7 +1,7 @@
 import { Box, chakra, Heading, Image, Link, List, ListItem, SimpleGrid } from "@chakra-ui/react";
 import { Container } from "@components/@core/container";
 import NextLink from "@components/@core/next-link";
-import SITE_CONFIG from "@configs/site-config";
+import { FORM_TYPE } from "@static/constants";
 import { findTitleFromHeader, renderSimpleValue } from "@utils/field";
 import { getResourceThumbnail } from "@utils/image";
 import useTranslation from "next-translate/useTranslation";
@@ -56,7 +56,7 @@ export default function Posts({ featured }) {
                 <Box p={4} h="154px">
                   <List spacing={1}>
                     {f.values
-                      .filter((f) => !SITE_CONFIG.CCA.TITLE_FIELD_IDS.includes(f.fieldId))
+                      .filter((field) => field.type !== FORM_TYPE.FILE)
                       .map((field, index) => (
                         <ListItem key={index} lineHeight={1.2}>
                           <Box as="span" fontWeight="semibold" mr={1}>
