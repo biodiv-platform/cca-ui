@@ -53,7 +53,7 @@ export default function Posts({ featured }) {
                     </Link>
                   </NextLink>
                 </Box>
-                <Box p={4} h="120px">
+                <Box p={4} h="154px">
                   <List spacing={1}>
                     {f.values
                       .filter((f) => !SITE_CONFIG.CCA.TITLE_FIELD_IDS.includes(f.fieldId))
