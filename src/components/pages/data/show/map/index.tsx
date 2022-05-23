@@ -11,7 +11,20 @@ export default function ShowMap() {
   return (
     <NakshaGmapsView
       defaultViewPort={defaultViewPort}
-      features={header?.geometry?.value}
+      features={
+        header.centroid
+          ? [
+              {
+                type: "Feature",
+                properties: {},
+                geometry: {
+                  type: "Point",
+                  coordinates: header.centroid
+                }
+              }
+            ]
+          : []
+      }
       gmapRegion={SITE_CONFIG.MAP.COUNTRY}
       gmapApiAccessToken={SITE_CONFIG.TOKENS.GMAP}
       maxZoom={14}

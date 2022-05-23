@@ -20,7 +20,9 @@ const settings = {
 const carouselHeight = { base: "200px", md: "380px" };
 
 const slides = [
+  "/next-assets/carousel/5.jpg",
   "/next-assets/carousel/1.jpg",
+  "/next-assets/carousel/6.jpg",
   "/next-assets/carousel/2.jpg",
   "/next-assets/carousel/3.jpg",
   "/next-assets/carousel/4.jpg"
