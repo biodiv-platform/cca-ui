@@ -1,10 +1,10 @@
-import { Box, Button, Flex, Image, List, ListItem } from "@chakra-ui/react";
+import { Box, Flex, Image, List, ListItem } from "@chakra-ui/react";
 import Loading from "@components/@core/loading";
 import NextLink from "@components/@core/next-link";
 import { renderSimpleValue } from "@utils/field";
 import { getResourceThumbnail } from "@utils/image";
-import useTranslation from "next-translate/useTranslation";
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
+import InfiniteScroll from "react-infinite-scroll-component";
 
 import useResponseList from "../use-response-list";
 
@@ -56,20 +56,42 @@ export const Card = ({ response, onHover, isTruncated }) => {
 
 export default function Cards() {
   const { responses, setCurrentCard, nextPage, isLoading } = useResponseList();
-  const { t } = useTranslation();
+  const [h, setH] = useState<any>();
+
+  const ref = useRef<any>(null);
+
+  useEffect(() => {
+    setH(ref?.current?.offsetHeight);
+  }, [ref]);
 
   return (
-    <Box onMouseLeave={() => setCurrentCard(null)} w="full">
-      {responses?.l.map((response) => (
-        <Card key={response.id} onHover={setCurrentCard} response={response} isTruncated={false} />
-      ))}
-
-      {isLoading ? (
-        <Loading />
-      ) : (
-        <Button w="full" onClick={nextPage} borderRadius={0}>
-          {t("common:load_more")}
-        </Button>
+    <Box h="full" ref={ref}>
+      {h && (
+        <Box
+          onMouseLeave={() => setCurrentCard(null)}
+          w="full"
+          h={h}
+          overflow="auto"
+          position="relative"
+          id="ccaList"
+        >
+          <InfiniteScroll
+            dataLength={responses.l.length}
+            next={nextPage}
+            hasMore={responses.hasMore && !isLoading}
+            loader={<Loading />}
+            scrollableTarget="ccaList"
+          >
+            {responses?.l.map((response) => (
+              <Card
+                key={response.id}
+                onHover={setCurrentCard}
+                response={response}
+                isTruncated={false}
+              />
+            ))}
+          </InfiniteScroll>
+        </Box>
       )}
     </Box>
   );
