@@ -1,7 +1,7 @@
 import { Center, Divider } from "@chakra-ui/react";
 import Activity from "@components/@core/activity";
 import { Container } from "@components/@core/container";
-import { axAddAcitivityComment } from "@services/activity.service";
+import { axAddAcitivityComment } from "@services/cca.service";
 import { RESOURCE_TYPE } from "@static/constants";
 import React from "react";
 

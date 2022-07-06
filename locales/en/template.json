@@ -11,6 +11,11 @@
   "delete_confirm": "Are you sure?\nThis will delete children fields (if any)",
   "edit_fields": "Edit Fields",
   "filters": "Filters",
+  "follow": {
+    "error": "Unable to Follow",
+    "success": "Successfully Followed",
+    "title": "Follow"
+  },
   "manage_field": "Manage Field",
   "participate": "Participate",
   "pull": {
@@ -27,6 +32,11 @@
   "responses": "Responses",
   "results": "Results",
   "templates": "Templates",
+  "unfollow": {
+    "error": "Unable to Unfollow",
+    "success": "Successfully Unfollowed",
+    "title": "Unfollow"
+  },
   "update": {
     "error": "There was an error while saving template",
     "success": "Template Saved Successfully",

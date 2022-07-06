@@ -1,4 +1,5 @@
 import { ENDPOINT } from "@static/constants";
+import { waitForAuth } from "@utils/auth";
 import { cleanAggregationData } from "@utils/field";
 import { http, plainHttp } from "@utils/http";
 import { cleanTemplate } from "@utils/json";
@@ -121,6 +122,21 @@ export const axSaveParticipation = async (payload) => {
 export const axUpdateParticipation = async (payload) => {
   try {
     const { data } = await http.put(`${ENDPOINT.CCA}/v1/data/update`, payload);
+
+    return { success: true, data };
+  } catch (e) {
+    console.error(e);
+
+    return { success: false, data: {} };
+  }
+};
+
+export const axToggleDocumentFollow = async (isFollow, id) => {
+  try {
+    const { data } = await http.put(`${ENDPOINT.CCA}/v1/data/update/followers`, {
+      id,
+      type: isFollow ? "follow" : "unfollow"
+    });
 
     return { success: true, data };
   } catch (e) {
@@ -282,5 +298,19 @@ export const axUpdateParticipationUsers = async (payload) => {
     console.error(e);
 
     return { success: false, data: {} };
+  }
+};
+
+export const axAddAcitivityComment = async (payload) => {
+  try {
+    await waitForAuth();
+    const { data } = await http.post(
+      `${ENDPOINT.CCA}/v1/data/comment/${payload.rootHolderId}`,
+      payload
+    );
+    return { success: true, data };
+  } catch (e) {
+    console.error(e);
+    return { success: false, data: [] };
   }
 };

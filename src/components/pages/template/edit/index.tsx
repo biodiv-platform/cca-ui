@@ -2,7 +2,7 @@ import { Box } from "@chakra-ui/react";
 import Activity from "@components/@core/activity";
 import { Container } from "@components/@core/container";
 import PageHeading from "@components/@core/page-heading";
-import { axAddAcitivityComment } from "@services/activity.service";
+import { axAddAcitivityComment } from "@services/cca.service";
 import { RESOURCE_TYPE } from "@static/constants";
 import { NextSeo } from "next-seo";
 import useTranslation from "next-translate/useTranslation";
