@@ -314,3 +314,17 @@ export const axAddAcitivityComment = async (payload) => {
     return { success: false, data: [] };
   }
 };
+
+export const axAddTemplateAcitivityComment = async (payload) => {
+  try {
+    await waitForAuth();
+    const { data } = await http.post(
+      `${ENDPOINT.CCA}/v1/template/comment/${payload.rootHolderId}`,
+      payload
+    );
+    return { success: true, data };
+  } catch (e) {
+    console.error(e);
+    return { success: false, data: [] };
+  }
+};

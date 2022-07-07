@@ -2,7 +2,7 @@ import { Box } from "@chakra-ui/react";
 import Activity from "@components/@core/activity";
 import { Container } from "@components/@core/container";
 import PageHeading from "@components/@core/page-heading";
-import { axAddAcitivityComment } from "@services/cca.service";
+import { axAddTemplateAcitivityComment } from "@services/cca.service";
 import { RESOURCE_TYPE } from "@static/constants";
 import { NextSeo } from "next-seo";
 import useTranslation from "next-translate/useTranslation";
@@ -42,7 +42,7 @@ export default function TemplateEditFieldsComponent() {
         <Activity
           resourceId={template.id}
           resourceType={RESOURCE_TYPE.CCA_TEMPLATE}
-          commentFunc={axAddAcitivityComment}
+          commentFunc={axAddTemplateAcitivityComment}
         />
       </Box>
 
