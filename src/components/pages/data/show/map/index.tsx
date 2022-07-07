@@ -12,7 +12,7 @@ export default function ShowMap() {
     <NakshaGmapsView
       defaultViewPort={defaultViewPort}
       features={
-        header.centroid
+        header.centroid.length
           ? [
               {
                 type: "Feature",
