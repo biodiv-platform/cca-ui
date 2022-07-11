@@ -306,10 +306,7 @@ export const axUpdateParticipationUsers = async (payload) => {
 export const axAddAcitivityComment = async (payload) => {
   try {
     await waitForAuth();
-    const { data } = await http.post(
-      `${ENDPOINT.CCA}/v1/data/comment/${payload.rootHolderId}`,
-      payload
-    );
+    const { data } = await http.post(`${ENDPOINT.CCA}/v1/data/comment`, payload);
     return { success: true, data };
   } catch (e) {
     console.error(e);
@@ -320,10 +317,7 @@ export const axAddAcitivityComment = async (payload) => {
 export const axAddTemplateAcitivityComment = async (payload) => {
   try {
     await waitForAuth();
-    const { data } = await http.post(
-      `${ENDPOINT.CCA}/v1/template/comment/${payload.rootHolderId}`,
-      payload
-    );
+    const { data } = await http.post(`${ENDPOINT.CCA}/v1/template/comment`, payload);
     return { success: true, data };
   } catch (e) {
     console.error(e);

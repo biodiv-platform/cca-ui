@@ -42,15 +42,19 @@ export const getServerSideProps = async (ctx) => {
     data: [header]
   } = await axGetTemplateResponseList({ id: ctx.query.responseId, language: ctx.locale });
 
-  if (header?.centroid) {
-    const { data: li, success } = await getLoactionInfo(header.centroid);
-    if (success) {
-      header.values.push({
-        type: FORM_TYPE.TEXT,
-        fieldId: "loc",
-        name: "Location",
-        value: capitalize(`${li.district}, ${li.state}`)
-      });
+  if (header?.centroid?.length) {
+    try {
+      const { data: li, success } = await getLoactionInfo(header.centroid);
+      if (success) {
+        header.values.push({
+          type: FORM_TYPE.TEXT,
+          fieldId: "loc",
+          name: "Location",
+          value: capitalize(`${li.district}, ${li.state}`)
+        });
+      }
+    } catch (e) {
+      console.error(e);
     }
   }
 
