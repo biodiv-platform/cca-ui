@@ -61,7 +61,7 @@ export default function Cards() {
   const ref = useRef<any>(null);
 
   useEffect(() => {
-    setH(ref?.current?.offsetHeight);
+    setH(ref?.current?.offsetHeight || window.screen.availHeight / 2);
   }, [ref]);
 
   return (

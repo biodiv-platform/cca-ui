@@ -1,14 +1,12 @@
 import { Flex } from "@chakra-ui/react";
-import dynamic from "next/dynamic";
 import React from "react";
 
 import Cards from "../cards";
 import CardHeader from "../cards/header";
 import Filters from "../filters";
 import { FiltersHeader } from "../filters/header";
+import Map from "../map";
 import { CollapsablePane, NonCollapsablePane } from "./panes";
-
-const Map = dynamic(() => import("../map"), { ssr: false });
 
 export default function ResponseListContainer() {
   return (

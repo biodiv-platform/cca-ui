@@ -188,9 +188,11 @@ export const axGetDataListAggregation = async (params) => {
   }
 };
 
-export const axGetDataListMap = async (params) => {
+export const axGetDataListMap = async (params?) => {
   try {
-    const { data } = await plainHttp.get(`${ENDPOINT.CCA}/v1/data/map/info?${stringify(params)}`);
+    const { data } = await plainHttp.get(
+      `${ENDPOINT.CCA}/v1/data/map/info?${stringify(params || {})}`
+    );
 
     return { success: true, data };
   } catch (e) {

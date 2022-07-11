@@ -1,7 +1,11 @@
-import TemplateResponseListComponent from "@components/pages/data/list";
 import { axGetDataListAggregation, axGetFiltersListByShortName } from "@services/cca.service";
 import { LIST_PAGINATION_LIMIT } from "@static/constants";
+import dynamic from "next/dynamic";
 import React from "react";
+
+const TemplateResponseListComponent = dynamic(() => import("@components/pages/data/list"), {
+  ssr: false
+});
 
 const TemplateResponseListPage = (props) => <TemplateResponseListComponent {...props} />;
 

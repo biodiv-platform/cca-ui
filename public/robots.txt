@@ -1,0 +1,10 @@
+# *
+User-agent: *
+Allow: /
+Disallow: /cdn-cgi
+
+# Host
+Host: https://communityconservedareas.org
+
+# Sitemaps
+Sitemap: https://communityconservedareas.org/api/sitemap.xml

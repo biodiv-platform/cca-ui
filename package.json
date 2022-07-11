@@ -64,6 +64,7 @@
     "react-sortable-tree": "^2.8.0",
     "react-table": "^7.7.0",
     "react-web-share": "^1.1.1",
+    "sitemap": "^7.1.1",
     "styled-components": "^5.3.3",
     "timeago.js": "^4.0.2",
     "tinymce": "^5.10.3",
