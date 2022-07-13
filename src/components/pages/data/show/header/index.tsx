@@ -28,7 +28,7 @@ export default function ShowHeader() {
   const title = findTitleFromHeader(header);
   const { t } = useTranslation();
   const { user, isLoggedIn } = useGlobalState();
-  const [isFollowing, setIsFollowing] = useState(response.followers.includes(user?.id?.toString()));
+  const [isFollowing, setIsFollowing] = useState(response.followers?.includes(user?.id?.toString()));
 
   const toggleFollow = async () => {
     const { success } = await axToggleDocumentFollow(!isFollowing, response.id);
