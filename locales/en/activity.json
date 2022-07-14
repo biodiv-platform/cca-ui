@@ -1,9 +1,12 @@
 {
   "added_a_comment": "commented",
+  "data_comment": "commented",
   "data_created": "data created",
   "data_updated": "data updated",
   "field_created": "field created",
   "field_deleted": "field deleted",
   "field_updated": "field updated",
+  "follower_added": "added follower",
+  "follower_removed": "removed follower",
   "load_more_activity": "load more activity"
 }

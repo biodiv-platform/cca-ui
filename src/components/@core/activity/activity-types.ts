@@ -4,5 +4,6 @@ export default {
   FIELD_CREATED: "Field Created",
   FIELD_DELETED: "Field Deleted",
   DATA_UPDATED: "Data Updated",
-  DATA_CREATED: "Data Created"
+  DATA_CREATED: "Data Created",
+  DATA_COMMENTED: "Added a comment"
 };

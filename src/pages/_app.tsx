@@ -3,6 +3,7 @@ import "keen-slider/keen-slider.min.css";
 import "react-datepicker/dist/react-datepicker.css";
 
 import { Box, ChakraProvider } from "@chakra-ui/react";
+import AuthWall from "@components/@core/container/authwall";
 import Footer from "@components/@core/footer";
 import NavBar from "@components/@core/navbar";
 import { customTheme } from "@configs/theme";
@@ -26,6 +27,7 @@ function MainApp({ Component, pageProps, user }) {
           <Component {...pageProps} />
         </Box>
         <Footer />
+        <AuthWall />
       </ChakraProvider>
     </GlobalStateProvider>
   );
