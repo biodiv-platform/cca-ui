@@ -4,7 +4,7 @@ import {
   ChevronRightIcon,
   ChevronUpIcon
 } from "@chakra-ui/icons";
-import { Box, Flex, IconButton, useBreakpointValue, useDisclosure } from "@chakra-ui/react";
+import { Box, Flex, IconButton, useBreakpointValue, useDisclosure, useMediaQuery } from "@chakra-ui/react";
 import React, { useEffect } from "react";
 
 const ToggleButton = ({ isOpen, onToggle, top }) => {
@@ -49,7 +49,7 @@ const ToggleButton = ({ isOpen, onToggle, top }) => {
 
 export function CollapsablePane({ children, header, top }) {
   const { isOpen, onToggle, onClose } = useDisclosure({ defaultIsOpen: true });
-  const isMobile = useBreakpointValue({ base: 1, md: 0 });
+  const [isMobile] = useMediaQuery('(max-width: 480px)')
 
   useEffect(() => {
     if (isMobile) {

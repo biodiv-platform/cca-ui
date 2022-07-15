@@ -10,7 +10,7 @@ import React, { useMemo } from "react";
 
 import Tooltip from "../tooltip";
 
-export function NavbarAuthOption() {
+export default function NavbarAuthOption() {
   const { user, isLoggedIn, isPreviewMode } = useGlobalState();
   const { t } = useTranslation();
   const router = useRouter();

@@ -62,7 +62,7 @@ export const GeometryField = ({
   const { field, fieldState } = useController({ name, defaultValue: [] });
 
   return (
-    <FormControl isInvalid={fieldState.invalid} mb={mb} isRequired={isRequired} {...props}>
+    <FormControl isInvalid={!!fieldState.error} mb={mb} isRequired={isRequired} {...props}>
       <FormLabel
         isLargeVariant={isLargeVariant}
         title={title}

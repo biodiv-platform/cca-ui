@@ -94,7 +94,7 @@ export const SelectAsyncInputField = ({
 
   return (
     <FormControl
-      isInvalid={fieldState.invalid}
+      isInvalid={!!fieldState.error}
       aria-invalid={fieldState.invalid}
       isRequired={isRequired}
       mb={mb}

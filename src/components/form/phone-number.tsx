@@ -61,7 +61,7 @@ export const PhoneNumberInputField = ({
   const { field, fieldState } = useController({ name });
 
   return (
-    <FormControl as={PhoneFormControl} isInvalid={fieldState.invalid} mb={mb} id={name} {...props}>
+    <FormControl as={PhoneFormControl} isInvalid={!!fieldState.error} mb={mb} id={name} {...props}>
       <FormLabel
         isLargeVariant={isLargeVariant}
         title={title}

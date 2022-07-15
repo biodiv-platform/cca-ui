@@ -9,7 +9,7 @@ import React, { useEffect } from "react";
 
 const LOCALE_COOKIE = "NEXT_LOCALE";
 
-export function LanguageSwitcher() {
+export default function LanguageSwitcher() {
   const { lang } = useTranslation();
   const { isPreviewMode } = useGlobalState();
 
