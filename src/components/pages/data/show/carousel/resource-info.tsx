@@ -46,7 +46,7 @@ function CarouselResourceInfo({ currentResource }: CarouselResourceInfoProps) {
           <PopoverBody>
             <Grid templateColumns="1fr 2fr" gap={3}>
               <Box>{t("form:attribution")}:</Box>
-              <Box title={currentResource?.attribution} isTruncated>
+              <Box title={currentResource?.attribution} noOfLines={1}>
                 {currentResource?.attribution || "NA"}
               </Box>
 

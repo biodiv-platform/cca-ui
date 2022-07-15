@@ -33,7 +33,7 @@ export const Card = ({ response, onHover, isTruncated }) => {
             <List spacing={1}>
               {response.values.map((field, index) => (
                 <ListItem key={index} lineHeight={1.2}>
-                  <Box isTruncated={isTruncated}>
+                  <Box noOfLines={isTruncated ? 1 : undefined}>
                     <Box as="span" fontWeight="semibold" mr={1}>
                       {field.name}:
                     </Box>

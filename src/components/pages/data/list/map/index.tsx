@@ -1,6 +1,6 @@
 import { Box } from "@chakra-ui/layout";
 import SITE_CONFIG from "@configs/site-config";
-import { GMAPS_LIBRARIES, mapboxToGmapsViewPort } from "@ibp/naksha-commons";
+import { GMAPS_LIBRARIES, mapboxToGmapsViewState } from "@ibp/naksha-commons";
 import { GoogleMap, LoadScriptNext, Marker, MarkerClusterer } from "@react-google-maps/api";
 import { getMapCenter } from "@utils/location";
 import React, { useMemo, useRef, useState } from "react";
@@ -13,7 +13,7 @@ export default function Map() {
   const [iCard, setICard] = useState<any>();
   const { currentCard, map } = useResponseList();
   const viewPort = useMemo(
-    () => mapboxToGmapsViewPort(getMapCenter(3.8, { maxZoom: 8 }) as any),
+    () => mapboxToGmapsViewState(getMapCenter(3.8, { maxZoom: 8 }) as any),
     []
   );
 

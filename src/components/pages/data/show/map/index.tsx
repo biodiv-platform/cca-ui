@@ -1,5 +1,5 @@
 import SITE_CONFIG from "@configs/site-config";
-import { defaultViewPort } from "@ibp/naksha-commons";
+import { defaultViewState } from "@ibp/naksha-commons";
 import { NakshaGmapsView } from "@ibp/naksha-gmaps-view";
 import React from "react";
 
@@ -10,7 +10,7 @@ export default function ShowMap() {
 
   return (
     <NakshaGmapsView
-      defaultViewPort={defaultViewPort}
+      defaultViewState={defaultViewState}
       features={
         header.centroid.length
           ? [
@@ -26,7 +26,7 @@ export default function ShowMap() {
           : []
       }
       gmapRegion={SITE_CONFIG.MAP.COUNTRY}
-      gmapApiAccessToken={SITE_CONFIG.TOKENS.GMAP}
+      gmapAccessToken={SITE_CONFIG.TOKENS.GMAP}
       maxZoom={14}
       mapStyle={{
         height: "100%",

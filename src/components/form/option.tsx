@@ -58,7 +58,7 @@ export const OptionsField = ({
 
   return (
     <FormControl
-      isInvalid={formState?.errors?.[name]?.message}
+      isInvalid={!!formState?.errors?.[name]?.message}
       mb={mb}
       hidden={hidden}
       isRequired={isRequired}
@@ -81,7 +81,7 @@ export const OptionsField = ({
                 placeholder={t("form:options.label")}
                 bg="white"
               />
-              <FormErrorMessage children={formState.errors[`${name}.${index}.label`]} />
+              <FormErrorMessage children={!!formState.errors[`${name}.${index}.label`]} />
             </GridItem>
             <GridItem colSpan={3}>
               <Input
@@ -90,7 +90,7 @@ export const OptionsField = ({
                 disabled={disableValues}
                 bg="white"
               />
-              <FormErrorMessage children={formState.errors[`${name}.${index}.value`]} />
+              <FormErrorMessage children={!!formState.errors[`${name}.${index}.value`]} />
             </GridItem>
             <Button
               colorScheme="red"
@@ -113,7 +113,7 @@ export const OptionsField = ({
           {t("common:add")}
         </Button>
       </div>
-      <FormErrorMessage children={formState?.errors?.[name]?.message} />
+      <FormErrorMessage children={formState?.errors?.[name]?.message?.toString()} />
       {hint && <FormHelperText color="gray.600">{hint}</FormHelperText>}
     </FormControl>
   );

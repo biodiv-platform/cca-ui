@@ -6,10 +6,9 @@ import NextLink from "next/link";
 import useTranslation from "next-translate/useTranslation";
 import React from "react";
 
-import { NavbarAuthOption } from "./auth-option";
-import { LanguageSwitcher } from "./language-switcher";
-
+const LanguageSwitcher = dynamic(() => import("./language-switcher"), { ssr: false });
 const MenuItems = dynamic(() => import("./menu-items"), { ssr: false });
+const NavbarAuthOption = dynamic(() => import("./auth-option"), { ssr: false });
 
 export default function NavBar() {
   const { isOpen, onOpen, onClose } = useDisclosure();

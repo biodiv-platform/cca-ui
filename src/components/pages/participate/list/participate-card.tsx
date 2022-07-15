@@ -24,10 +24,10 @@ export default function ParticipateCard({ template }) {
           {template.platform.join("/")}
         </Badge>
       </Flex>
-      <Box fontWeight="bold" as="h4" lineHeight="tight" isTruncated>
+      <Box fontWeight="bold" as="h4" lineHeight="tight" noOfLines={1}>
         {template.name}
       </Box>
-      <Box mb={4} title={template.description} isTruncated>
+      <Box mb={4} title={template.description} noOfLines={1}>
         {template.description}
       </Box>
       <NextLink href={`/participate/${template.templateId}`}>
