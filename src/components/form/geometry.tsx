@@ -10,7 +10,7 @@ import {
 } from "@chakra-ui/react";
 import SITE_CONFIG from "@configs/site-config";
 import styled from "@emotion/styled";
-import { NakshaGmapsDraw } from "@ibp/naksha-gmaps-draw";
+import { GMAP_FEATURE_TYPES,NakshaGmapsDraw } from "@ibp/naksha-gmaps-draw";
 import { namedFormErrorMessage } from "@utils/field";
 import { getMapCenter } from "@utils/location";
 import useTranslation from "next-translate/useTranslation";
@@ -72,15 +72,16 @@ export const GeometryField = ({
       />
       <MapContainerBox id={name}>
         <NakshaGmapsDraw
-          defaultViewPort={defaultViewPort}
-          defaultFeatures={field.value}
+          defaultViewState={defaultViewPort}
+          defaultDrawingMode={GMAP_FEATURE_TYPES.POINT}
+          data={field.value}
           isAutocomplete={true}
           isMultiple={true}
           isImport={true}
-          onFeaturesChange={field.onChange}
+          onDataChange={field.onChange}
           gmapRegion={SITE_CONFIG.MAP.COUNTRY}
           autoCompleteRegion=""
-          gmapApiAccessToken={SITE_CONFIG.TOKENS.GMAP}
+          gmapAccessToken={SITE_CONFIG.TOKENS.GMAP}
           mapStyle={{ height: "22rem", width: "100%", borderRadius: ".25rem" }}
           maxZoom={14}
           autocompleteComponent={
@@ -99,11 +100,7 @@ export const GeometryField = ({
             <Input name="raw-input" placeholder={t("form:geometry_hint")} required={false} mx={4} />
           }
           importButtonComponent={
-            <Button
-              type="button"
-              placeholder={t("common:add")}
-              children="Import"
-            />
+            <Button type="button" placeholder={t("common:add")} children="Import" />
           }
         />
       </MapContainerBox>
