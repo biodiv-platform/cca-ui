@@ -4,6 +4,7 @@ import DeleteIcon from "@icons/delete";
 import UsersIcon from "@icons/users";
 import { axDeleteTemplateResponseById } from "@services/cca.service";
 import notification, { NotificationType } from "@utils/notification";
+import { useRouter } from "next/router";
 import useTranslation from "next-translate/useTranslation";
 import React from "react";
 
@@ -12,12 +13,14 @@ import useTemplateResponseEdit from "./use-template-response-edit";
 export function ShowHeader() {
   const { t } = useTranslation();
   const { template, response, canEditEditors, setIsEdit } = useTemplateResponseEdit();
+  const router = useRouter();
 
   const handleOnDelete = async () => {
     if (confirm(t("common:confirm_delete"))) {
       const { success } = await axDeleteTemplateResponseById(response.id);
       if (success) {
         notification(t("template:response.delete.success"), NotificationType.Success);
+        router.push("/data/list");
       } else {
         notification(t("template:response.delete.error"));
       }
