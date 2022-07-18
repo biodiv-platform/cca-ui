@@ -1,4 +1,5 @@
 import {
+  Box,
   Checkbox,
   CheckboxGroup,
   FormControl,
@@ -47,14 +48,16 @@ export const CheckboxListField = ({
   } = useController({ name });
 
   return (
-    <FormControl isInvalid={!!fieldState.error} mb={mb} {...props}>
-      <FormLabel
-        isLargeVariant={isLargeVariant}
-        title={title}
-        label={label}
-        name={name}
-        helpText={helpText}
-      />
+    <Box mb={mb}>
+      <FormControl isInvalid={!!fieldState.error} {...props}>
+        <FormLabel
+          isLargeVariant={isLargeVariant}
+          title={title}
+          label={label}
+          name={name}
+          helpText={helpText}
+        />
+      </FormControl>
       <CheckboxGroup defaultValue={value} onChange={onChange} isDisabled={disabled}>
         <Stack id={name}>
           {options.map((option) => (
@@ -69,6 +72,6 @@ export const CheckboxListField = ({
 
       <FormErrorMessage children={namedFormErrorMessage(fieldState?.error?.message, name, title)} />
       {hint && <FormHelperText color="gray.600">{hint}</FormHelperText>}
-    </FormControl>
+    </Box>
   );
 };
