@@ -1,3 +1,5 @@
+import "react-sortable-tree/style.css";
+
 import { IconButton } from "@chakra-ui/react";
 import styled from "@emotion/styled";
 import DeleteIcon from "@icons/delete";
@@ -57,13 +59,6 @@ export default function FieldTree() {
 
   return (
     <PageListContainer>
-      <Head>
-        <link
-          rel="stylesheet"
-          type="text/css"
-          href="https://unpkg.com/react-sortable-tree@2.7.1/style.css"
-        />
-      </Head>
       <SortableTree
         treeData={template.fields}
         onChange={setFields}

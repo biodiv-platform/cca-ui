@@ -1,3 +1,5 @@
+import "react-sortable-tree/style.css";
+
 import { IconButton } from "@chakra-ui/react";
 import CopyIcon from "@icons/copy";
 import Head from "next/head";
@@ -30,13 +32,6 @@ export default function MasterFieldTree() {
 
   return (
     <PageListContainer>
-      <Head>
-        <link
-          rel="stylesheet"
-          type="text/css"
-          href="https://unpkg.com/react-sortable-tree@2.7.1/style.css"
-        />
-      </Head>
       <SortableTree
         treeData={treeState}
         canDrag={() => false}
