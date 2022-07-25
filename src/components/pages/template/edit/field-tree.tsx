@@ -4,7 +4,6 @@ import { IconButton } from "@chakra-ui/react";
 import styled from "@emotion/styled";
 import DeleteIcon from "@icons/delete";
 import EditIcon from "@icons/edit";
-import Head from "next/head";
 import React from "react";
 import SortableTree from "react-sortable-tree";
 

@@ -2,7 +2,6 @@ import "react-sortable-tree/style.css";
 
 import { IconButton } from "@chakra-ui/react";
 import CopyIcon from "@icons/copy";
-import Head from "next/head";
 import React, { useState } from "react";
 import SortableTree, { toggleExpandedForAll } from "react-sortable-tree";
 
