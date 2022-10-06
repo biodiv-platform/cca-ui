@@ -1,0 +1,57 @@
+{
+  "clear": "{{filterCount}} फ़िल्टर साफ़ करें",
+  "location": {
+    "district": "ज़िला",
+    "map": {
+      "title": "नक्शा"
+    },
+    "protected_area": {
+      "title": "संरक्षित क्षेत्र"
+    },
+    "state": {
+      "title": "राज्य"
+    },
+    "tehsil": "तहसील",
+    "title": "स्थान"
+  },
+  "time": {
+    "created_on": "निर्माण की तिथि",
+    "last_logged": "पिछला लॉग इन",
+    "last_updated": "आखरी अपडेट",
+    "max_date": "अधिकतम तिथि",
+    "min_date": "न्यूनतम तिथि",
+    "month": {
+      "apr": "अप्रैल",
+      "aug": "अगस्त",
+      "dec": "दिसंबर",
+      "feb": "फ़रवरी",
+      "jan": "जनवरी",
+      "jul": "जुलाई",
+      "jun": "जून",
+      "mar": "मार्च",
+      "may": "मई",
+      "nov": "नवंबर",
+      "oct": "अक्टूबर",
+      "sep": "सितंबर",
+      "title": "माह मनाया गया"
+    },
+    "title": "समय"
+  },
+  "title": "फिल्टर",
+  "toggle": "फ़िल्टर टॉगल करें",
+  "user": {
+    "contributor": "योगदान देने वाला",
+    "email": "ईमेल",
+    "group_role_title": "उपयोगकर्ता समूह भूमिकाएँ",
+    "institution_title": "संस्थान",
+    "phone": "फ़ोन नंबर",
+    "profession_title": "पेशा",
+    "role_title": "भूमिकाएँ",
+    "search": "उपयोगकर्ता खोजें",
+    "sex_title": "लिंग",
+    "taxon_browser": "टैक्सोन सीच",
+    "taxon_role_title": "वर्गीकरण भूमिकाएँ",
+    "title": "उपयोगकर्ता",
+    "username": "उपयोगकर्ता नाम"
+  }
+}

@@ -18,7 +18,7 @@ import { axUploadResource } from "@services/files.service";
 import { ENDPOINT, LICENSES } from "@static/constants";
 import { timeOut } from "@utils/basic";
 import { namedFormErrorMessage } from "@utils/field";
-import { resizeImage } from "@utils/image";
+import { resizeImage } from "@utils/media";
 import useTranslation from "next-translate/useTranslation";
 import React, { useState } from "react";
 import { useDropzone } from "react-dropzone";

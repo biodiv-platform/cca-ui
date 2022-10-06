@@ -19,14 +19,16 @@ Router.events.on("routeChangeComplete", () => NProgress.done());
 Router.events.on("routeChangeError", () => NProgress.done());
 
 function MainApp({ Component, pageProps, user }) {
+  const config = { footer: true, ...Component?.config };
+
   return (
     <GlobalStateProvider initialState={{ user }}>
       <ChakraProvider theme={customTheme}>
         <NavBar />
-        <Box minH="calc(100vh - var(--header-height))">
+        <Box minH="calc(100vh - var(--heading-height))">
           <Component {...pageProps} />
         </Box>
-        <Footer />
+        {config?.footer && <Footer />}
         <AuthWall />
       </ChakraProvider>
     </GlobalStateProvider>

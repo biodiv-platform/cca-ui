@@ -12,6 +12,6 @@ module.exports = {
     "rgx:/participate/": ["template"],
     "rgx:/register": ["user"],
     "rgx:/template/": ["template", "activity"],
-    "rgx:/user/": ["user"]
+    "rgx:/user/": ["user", "filters"]
   }
 };

@@ -9,7 +9,7 @@ import NotificationsActiveIcon from "@icons/notifications-active";
 import NotificationsNoneIcon from "@icons/notifications-none";
 import { axToggleDocumentFollow } from "@services/cca.service";
 import { findTitleFromHeader, renderSimpleValue } from "@utils/field";
-import { getUserImage } from "@utils/image";
+import { getUserImage } from "@utils/media";
 import notification, { NotificationType } from "@utils/notification";
 import { NextSeo } from "next-seo";
 import useTranslation from "next-translate/useTranslation";

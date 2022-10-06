@@ -5,7 +5,7 @@ import useActivity from "@hooks/use-activity";
 import { ACTIVITY_UPDATED } from "@static/events";
 import { toKey } from "@utils/basic";
 import { formatTimeStampFromUTC, timeAgoUTC } from "@utils/date";
-import { getUserImage } from "@utils/image";
+import { getUserImage } from "@utils/media";
 import useTranslation from "next-translate/useTranslation";
 import React, { useEffect } from "react";
 import { useListener } from "react-gbus";

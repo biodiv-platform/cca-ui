@@ -133,3 +133,27 @@ export const axUserSearch = async (name) => {
     return { success: false, data: [] };
   }
 };
+
+export const axGetUsersByID = async (userIds) => {
+  try {
+    const { data } = await plainHttp.get(`${ENDPOINT.USER}/v1/user/bulk/ibp`, {
+      params: { userIds }
+    });
+    return data.map(({ name, id, profilePic }) => ({ label: name, value: id, pic: profilePic }));
+  } catch (e) {
+    console.error(e.response.data.message);
+    return [];
+  }
+};
+
+export const axUserFilterSearch = async (name) => {
+  try {
+    const { data } = await plainHttp.get(`${ENDPOINT.USER}/v1/user/autocomplete`, {
+      params: { name }
+    });
+    return data.map((u) => ({ label: u.name, value: u.id }));
+  } catch (e) {
+    console.error(e.response.data.message);
+    return { success: false, data: [] };
+  }
+};

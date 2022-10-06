@@ -1,0 +1,57 @@
+{
+  "clear": "Clear {{filterCount}} Filter(s)",
+  "location": {
+    "district": "District",
+    "map": {
+      "title": "Map"
+    },
+    "protected_area": {
+      "title": "Protected Areas"
+    },
+    "state": {
+      "title": "State"
+    },
+    "tehsil": "Tehsil",
+    "title": "Location"
+  },
+  "time": {
+    "created_on": "Date Created",
+    "last_logged": "Last Logged In",
+    "last_updated": "Last Updated",
+    "max_date": "Maximum Date",
+    "min_date": "Minimum Date",
+    "month": {
+      "apr": "April",
+      "aug": "August",
+      "dec": "December",
+      "feb": "February",
+      "jan": "January",
+      "jul": "July",
+      "jun": "June",
+      "mar": "March",
+      "may": "May",
+      "nov": "November",
+      "oct": "October",
+      "sep": "September",
+      "title": "Month Observed"
+    },
+    "title": "Time"
+  },
+  "title": "Filters",
+  "toggle": "Toggle Filters",
+  "user": {
+    "contributor": "Contributor",
+    "email": "email",
+    "group_role_title": "Usergroup Roles",
+    "institution_title": "Institution",
+    "phone": "Phone Number",
+    "profession_title": "Profession",
+    "role_title": "Roles",
+    "search": "Search User",
+    "sex_title": "Gender",
+    "taxon_browser": "Taxon Seach",
+    "taxon_role_title": "Taxonomy Roles",
+    "title": "User",
+    "username": "User Name"
+  }
+}

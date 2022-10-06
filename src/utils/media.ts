@@ -52,3 +52,9 @@ export const getUserImage = (resourceUrl, name, w = 50) => {
       : `${ENDPOINT.FILES}/get/crop/users${resourceUrl}?w=${w}`
     : `/api/avatar?t=${name}&s=${w}`;
 };
+
+export const getTraitIcon = (resourceUrl, w = 40) => {
+  return resourceUrl.startsWith("/next-assets/")
+    ? resourceUrl
+    : `${ENDPOINT.FILES}/get/crop/traits${resourceUrl}?w=${w}`;
+};
