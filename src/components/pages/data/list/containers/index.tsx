@@ -12,7 +12,7 @@ export default function ResponseListContainer() {
   return (
     <Flex
       width="full"
-      height="calc(100vh - var(--header-height))"
+      height="calc(100vh - var(--heading-height))"
       direction={{ base: "column", md: "row" }}
     >
       <CollapsablePane top="2.4rem" header={<FiltersHeader />}>

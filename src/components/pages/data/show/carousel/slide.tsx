@@ -1,5 +1,5 @@
 import { Flex, Image, Link } from "@chakra-ui/react";
-import { getResourceThumbnail } from "@utils/image";
+import { getResourceThumbnail } from "@utils/media";
 import React from "react";
 
 export const NoSlide = () => (

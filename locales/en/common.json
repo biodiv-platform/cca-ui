@@ -12,7 +12,16 @@
   "home": "Home",
   "learn_more": "Learn More",
   "license": "All content on this portal is under CC-BY License unless otherwise specified.",
-  "list": "List",
+  "list": {
+    "sort_by": "Sort By",
+    "sort_options": {
+      "last_logged_in": "Last Logged In",
+      "last_updated": "Last Updated",
+      "latest": "Last Created",
+      "most_viewed": "Most Viewed"
+    },
+    "title": "List"
+  },
   "load_more": "load more",
   "loading": "Loading...",
   "navigation": "Navigation",

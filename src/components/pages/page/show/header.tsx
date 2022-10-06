@@ -8,7 +8,7 @@ import useGlobalState from "@hooks/use-global-state";
 import EditIcon from "@icons/edit";
 import { axDeletePageByID } from "@services/pages.service";
 import { formatTimeStampFromUTC } from "@utils/date";
-import { getUserImage } from "@utils/image";
+import { getUserImage } from "@utils/media";
 import { useRouter } from "next/router";
 import { NextSeo } from "next-seo";
 import useTranslation from "next-translate/useTranslation";

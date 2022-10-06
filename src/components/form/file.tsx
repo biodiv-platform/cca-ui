@@ -18,7 +18,7 @@ import { axUploadResource } from "@services/files.service";
 import { ENDPOINT, LICENSES } from "@static/constants";
 import { timeOut } from "@utils/basic";
 import { namedFormErrorMessage } from "@utils/field";
-import { resizeImage } from "@utils/image";
+import { resizeImage } from "@utils/media";
 import useTranslation from "next-translate/useTranslation";
 import React, { useState } from "react";
 import { useDropzone } from "react-dropzone";
@@ -201,7 +201,7 @@ export const FileField = ({
         </SimpleGrid>
       )}
       <FormErrorMessage
-        children={namedFormErrorMessage(formState?.errors?.[name]?.error?.message, name, title)}
+        children={namedFormErrorMessage(formState?.errors?.[name]?.["error"]?.message, name, title)}
       />
       {hint && <FormHelperText color="gray.600">{hint}</FormHelperText>}
     </FormControl>

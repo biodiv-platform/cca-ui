@@ -10,7 +10,7 @@ export default function TemplateResponseListComponent(props) {
 
   return (
     <ResponseListProvider {...props}>
-      <NextSeo title={t("common:list")} />
+      <NextSeo title={t("common:list.title")} />
       <ResponseListContainer />
     </ResponseListProvider>
   );

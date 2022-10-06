@@ -12,6 +12,7 @@ import {
 import SITE_CONFIG from "@configs/site-config";
 import useGlobalState from "@hooks/use-global-state";
 import FacebookIcon from "@icons/facebook";
+import InstagramIcon from "@icons/instagram";
 import MailIcon from "@icons/mail";
 import YouTubeIcon from "@icons/youtube";
 import { containerMaxW } from "@static/navmenu";
@@ -72,15 +73,15 @@ export default function Footer() {
                 children={<YouTubeIcon />}
               />
               <SocialButton
+                label="Instagram"
+                href={SITE_CONFIG.FOOTER.INSTAGRAM}
+                children={<InstagramIcon />}
+              />
+              <SocialButton
                 label="Facebook"
                 href={SITE_CONFIG.FOOTER.FACEBOOK}
                 children={<FacebookIcon />}
               />
-              {/* <SocialButton
-                label="GitHub"
-                href={SITE_CONFIG.FOOTER.GITHUB}
-                children={<GithubIcon />}
-              /> */}
             </Stack>
           </Stack>
           <div>

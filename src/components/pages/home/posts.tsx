@@ -3,7 +3,7 @@ import { Container } from "@components/@core/container";
 import NextLink from "@components/@core/next-link";
 import SITE_CONFIG from "@configs/site-config";
 import { findTitleFromHeader, renderSimpleValue } from "@utils/field";
-import { getResourceThumbnail } from "@utils/image";
+import { getResourceThumbnail } from "@utils/media";
 import useTranslation from "next-translate/useTranslation";
 import React from "react";
 

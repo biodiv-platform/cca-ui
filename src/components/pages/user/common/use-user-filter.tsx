@@ -1,11 +1,11 @@
+import useDidUpdateEffect from "@hooks/use-did-update-effect";
 import { axGetUserList } from "@services/user.service";
 import { isBrowser } from "@static/constants";
+import { LIST_PAGINATION_LIMIT } from "@static/user";
 import NProgress from "nprogress";
 import { stringify } from "querystring";
 import React, { createContext, useContext, useEffect } from "react";
 import { useImmer } from "use-immer";
-
-const LIST_PAGINATION_LIMIT = 10;
 
 export interface UserListData {
   l: any[];
@@ -15,7 +15,9 @@ export interface UserListData {
 }
 
 interface UserListContextProps {
-  userList?: UserListData;
+  filter?;
+  userListData: UserListData;
+  isAdmin: boolean;
   addFilter?;
   removeFilter?;
   children?;
@@ -27,14 +29,18 @@ interface UserListContextProps {
 const UserListContext = createContext<UserListContextProps>({} as UserListContextProps);
 
 export function UserListContextProvider(props: UserListContextProps) {
-  const [filter, setFilter] = useImmer<any>({ f: { offset: 0 } });
-  const [userList, setuserList] = useImmer<any>({ l: [], ag: {}, n: 0, hasMore: false });
+  const [filter, setFilter] = useImmer<{ f: any }>({ f: props.filter });
+  const [isAdmin] = useImmer<boolean>(props.isAdmin);
+
+  const [userListData, setuserListData] = useImmer<any>(props.userListData);
+
+  useDidUpdateEffect(() => {
+    fetchListData();
+  }, [filter]);
 
   useEffect(() => {
     if (isBrowser) {
       window.history.pushState("", "", `?${stringify({ ...filter.f })}`);
-
-      fetchListData();
     }
   }, [filter]);
 
@@ -42,16 +48,24 @@ export function UserListContextProvider(props: UserListContextProps) {
     try {
       NProgress.start();
 
-      const { data } = await axGetUserList(filter.f);
-      setuserList((_draft) => {
+      // Reset list data if params are changed
+      if (filter.f?.offset === 0) {
+        setuserListData((_draft) => {
+          _draft.l = [];
+        });
+      }
+
+      const { location, ...otherValues } = filter.f;
+      const { data } = await axGetUserList(
+        { ...otherValues },
+        location ? { location } : {},
+        isAdmin
+      );
+      setuserListData((_draft) => {
         if (data?.userList?.length) {
-          const l = data.userList.map((o) => o.user);
-          if (filter.f?.offset === 0) {
-            _draft.l = l;
-          } else {
-            _draft.l.push(...l);
-          }
-          _draft.hasMore = data.userList.length === LIST_PAGINATION_LIMIT;
+          _draft.l.push(...data.userList);
+          _draft.hasMore =
+            data.totalCount > filter?.f?.offset && data?.totalCount !== _draft.l.length;
           _draft.ag = data.aggregationData;
         } else {
           _draft.hasMore = false;
@@ -65,9 +79,9 @@ export function UserListContextProvider(props: UserListContextProps) {
     }
   };
 
-  const nextPage = () => {
+  const nextPage = (max = LIST_PAGINATION_LIMIT) => {
     setFilter((_draft) => {
-      _draft.f.offset = Number(_draft.f.offset) + LIST_PAGINATION_LIMIT;
+      _draft.f.offset = Number(_draft.f.offset) + max;
     });
   };
 
@@ -93,7 +107,9 @@ export function UserListContextProvider(props: UserListContextProps) {
   return (
     <UserListContext.Provider
       value={{
-        userList,
+        filter: filter.f,
+        isAdmin,
+        userListData,
         addFilter,
         setFilter,
         removeFilter,

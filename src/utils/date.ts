@@ -32,3 +32,5 @@ export const timeAgoUTC = (ts) => dayjs(ts).utc().fromNow();
  * @param {*} dateValue
  */
 export const parseToDateObject = (dateValue?) => (dateValue ? new Date(dateValue) : dateValue);
+
+export default dayjs;

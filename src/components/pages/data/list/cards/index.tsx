@@ -2,7 +2,7 @@ import { Box, Flex, Image, List, ListItem } from "@chakra-ui/react";
 import Loading from "@components/@core/loading";
 import NextLink from "@components/@core/next-link";
 import { renderSimpleValue } from "@utils/field";
-import { getResourceThumbnail } from "@utils/image";
+import { getResourceThumbnail } from "@utils/media";
 import React, { useEffect, useRef, useState } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 

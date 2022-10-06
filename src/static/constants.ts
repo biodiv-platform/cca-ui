@@ -9,6 +9,7 @@ const API_ENDPOINT = process.browser
 export const ENDPOINT = {
   ACTIVITY: `${API_ENDPOINT}activity-api/api`,
   CCA: `${API_ENDPOINT}cca-api/api`,
+  ESMODULE: `${API_ENDPOINT}esmodule-api/api`,
   FILES: `${API_ENDPOINT}files-api/api`,
   INTEGRATOR: `${API_ENDPOINT}integrator-api/api`,
   NAKSHA: `https://indiabiodiversity.org/naksha-api/api`,

@@ -3,7 +3,7 @@ import NextLink from "@components/@core/next-link";
 import Badge from "@components/@core/user/badge";
 import { Role } from "@interfaces/custom";
 import { adminOrAuthor, hasAccess } from "@utils/auth";
-import { getUserImage } from "@utils/image";
+import { getUserImage } from "@utils/media";
 import useTranslation from "next-translate/useTranslation";
 import React, { useEffect, useState } from "react";
 
