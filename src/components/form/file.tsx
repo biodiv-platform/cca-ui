@@ -201,7 +201,7 @@ export const FileField = ({
         </SimpleGrid>
       )}
       <FormErrorMessage
-        children={namedFormErrorMessage(formState?.errors?.[name]?.error?.message, name, title)}
+        children={namedFormErrorMessage(formState?.errors?.[name]?.["error"]?.message, name, title)}
       />
       {hint && <FormHelperText color="gray.600">{hint}</FormHelperText>}
     </FormControl>
