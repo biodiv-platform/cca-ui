@@ -11,7 +11,6 @@ import {
 } from "@chakra-ui/react";
 import SITE_CONFIG from "@configs/site-config";
 import useGlobalState from "@hooks/use-global-state";
-import FacebookIcon from "@icons/facebook";
 import InstagramIcon from "@icons/instagram";
 import MailIcon from "@icons/mail";
 import YouTubeIcon from "@icons/youtube";
