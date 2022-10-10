@@ -24,7 +24,7 @@ export default function ShowAccordian({ data }) {
 
   return (
     <Box>
-      <Accordion allowMultiple={true} defaultIndex={defaultIndex} allowToggle={true} mt={"-1px"}>
+      <Accordion allowMultiple={true} defaultIndex={defaultIndex} mt={"-1px"}>
         {data.map((field) => {
           const isEmpty = !response?.ccaFieldValues?.[field.fieldId]?.value;
 
