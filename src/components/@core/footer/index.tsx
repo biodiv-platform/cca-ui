@@ -37,6 +37,8 @@ const SocialButton = ({ children, label, href }) => (
     justifyContent="center"
     transition="background 0.3s ease"
     _hover={{ bg: "blackAlpha.200" }}
+    target="_blank"
+    rel="noreferrer noopener"
   >
     <VisuallyHidden>{label}</VisuallyHidden>
     {children}
@@ -76,11 +78,6 @@ export default function Footer() {
                 label="Instagram"
                 href={SITE_CONFIG.FOOTER.INSTAGRAM}
                 children={<InstagramIcon />}
-              />
-              <SocialButton
-                label="Facebook"
-                href={SITE_CONFIG.FOOTER.FACEBOOK}
-                children={<FacebookIcon />}
               />
             </Stack>
           </Stack>
