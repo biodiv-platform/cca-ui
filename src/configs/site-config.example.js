@@ -49,7 +49,7 @@ const SITE_CONFIG_EXAMPLE = {
   },
   FOOTER: {
     FACEBOOK: "https://www.facebook.com/x",
-    GITHUB: "https://github.com/strandls/cca-ui",
+    GITHUB: "https://github.com/biodiv-platform?q=cca",
     INSTAGRAM: "https://www.instagram.com/x",
     MAIL: "mailto:user@example.com",
     YOUTUBE: "https://youtube.com/x",

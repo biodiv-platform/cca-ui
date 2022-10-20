@@ -11,6 +11,7 @@ import {
 } from "@chakra-ui/react";
 import SITE_CONFIG from "@configs/site-config";
 import useGlobalState from "@hooks/use-global-state";
+import GithubIcon from "@icons/github";
 import InstagramIcon from "@icons/instagram";
 import MailIcon from "@icons/mail";
 import YouTubeIcon from "@icons/youtube";
@@ -77,6 +78,11 @@ export default function Footer() {
                 label="Instagram"
                 href={SITE_CONFIG.FOOTER.INSTAGRAM}
                 children={<InstagramIcon />}
+              />
+              <SocialButton
+                label="GitHub"
+                href={SITE_CONFIG.FOOTER.GITHUB}
+                children={<GithubIcon />}
               />
             </Stack>
           </Stack>
