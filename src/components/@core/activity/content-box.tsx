@@ -1,4 +1,3 @@
-import { Box } from "@chakra-ui/react";
 import { ShowActivityIbp } from "@interfaces/activity";
 import React from "react";
 
@@ -13,11 +12,7 @@ const ContentBox = ({ activity }: { activity: ShowActivityIbp }) => {
       return <CommentRender html={activity?.commentsIbp?.body} />;
 
     default:
-      return (
-        <Box>
-          <Box whiteSpace="pre-line">{activity?.activityIbp?.activityDescription}</Box>
-        </Box>
-      );
+      return <CommentRender html={activity?.activityIbp?.activityDescription} />;
   }
 };
 
