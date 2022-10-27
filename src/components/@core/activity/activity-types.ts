@@ -6,8 +6,8 @@ export default {
   DATA_UPDATED: "Data Updated",
   DATA_CREATED: "Data Created",
   DATA_COMMENTED: "Data comment",
-  PERMISSION_REMOVED:"Permission removed",
-  PERMISSION_ADDED:"Permission added",
-  FOLLOWER_ADDED:"Follower added",
-  FOLLOWER_REMOVED:"Follower removed"
+  PERMISSION_REMOVED: "Permission removed",
+  PERMISSION_ADDED: "Permission added",
+  FOLLOWER_ADDED: "Follower added",
+  FOLLOWER_REMOVED: "Follower removed"
 };
