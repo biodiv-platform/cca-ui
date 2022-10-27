@@ -8,5 +8,7 @@
   "field_updated": "फ़ील्ड अपडेट किया गया",
   "follower_added": "जोड़ा अनुयायी",
   "follower_removed": "हटाए गए अनुयायी",
-  "load_more_activity": "अधिक गतिविधि लोड करें"
+  "load_more_activity": "अधिक गतिविधि लोड करें",
+  "permission_added": "अनुमति जोड़ी गई",
+  "permission_removed": "अनुमति हटा दी गई"
 }

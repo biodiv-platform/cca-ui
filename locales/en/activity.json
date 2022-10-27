@@ -8,5 +8,7 @@
   "field_updated": "field updated",
   "follower_added": "added follower",
   "follower_removed": "removed follower",
-  "load_more_activity": "load more activity"
+  "load_more_activity": "load more activity",
+  "permission_added": "permission added",
+  "permission_removed": "permission removed"
 }
