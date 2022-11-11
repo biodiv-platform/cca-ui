@@ -9,7 +9,7 @@ const ContentBox = ({ activity }: { activity: ShowActivityIbp }) => {
   const at = activity.activityIbp?.activityType;
 
   switch (at) {
-    case ACTIVITY_TYPE.DATA_COMMENTED:
+    case ACTIVITY_TYPE.ADDED_A_COMMENT:
     case ACTIVITY_TYPE.PERMISSION_ADDED:
     case ACTIVITY_TYPE.PERMISSION_REMOVED:
     case ACTIVITY_TYPE.FOLLOWER_ADDED:
