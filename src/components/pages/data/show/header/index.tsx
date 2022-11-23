@@ -96,7 +96,7 @@ export default function ShowHeader() {
               onClick={toggleFollow}
             />
           )}
-          {!canEdit && (
+          {isLoggedIn &&!canEdit && (
             <IconButton
               className="no-print"
               icon={<MailIcon />}
