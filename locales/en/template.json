@@ -41,5 +41,10 @@
     "error": "There was an error while saving template",
     "success": "Template Saved Successfully",
     "title": "Edit MetaData"
+  },
+  "request_cca_contibutor": {
+    "error": "Unable to send request. Request email wont works if already sent within 3 days!",
+    "success": "Request Email Sent",
+    "title": "Request CCA Permission"
   }
 }

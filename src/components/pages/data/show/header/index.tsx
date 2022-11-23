@@ -5,9 +5,10 @@ import Tooltip from "@components/@core/tooltip";
 import SITE_CONFIG from "@configs/site-config";
 import useGlobalState from "@hooks/use-global-state";
 import EditIcon from "@icons/edit";
+import MailIcon from "@icons/mail";
 import NotificationsActiveIcon from "@icons/notifications-active";
 import NotificationsNoneIcon from "@icons/notifications-none";
-import { axToggleDocumentFollow } from "@services/cca.service";
+import { axsendContributorRequest, axToggleDocumentFollow } from "@services/cca.service";
 import { findTitleFromHeader, renderSimpleValue } from "@utils/field";
 import { getUserImage } from "@utils/media";
 import notification, { NotificationType } from "@utils/notification";
@@ -44,6 +45,24 @@ export default function ShowHeader() {
     }
   };
 
+  const sendContributorRequest = async () => {
+    const payload = {
+      ccaid: response.id,
+      requestorId: user.id,
+      role: "ROLE_EXTDATACONTRIBUTOR"
+    };
+    const { success } = await axsendContributorRequest(payload);
+
+    if (success) {
+      notification(
+        t("success"),
+        NotificationType.Success
+      );
+    } else {
+      notification(t("error"));
+    }
+  };
+
   return (
     <Box mx="auto" bg="gray.100" py={10}>
       <Container textAlign="center">
@@ -75,6 +94,18 @@ export default function ShowHeader() {
               colorScheme="purple"
               aria-label={isFollowing ? t("template:unfollow.title") : t("template:follow.title")}
               onClick={toggleFollow}
+            />
+          )}
+          {!canEdit && (
+            <IconButton
+              className="no-print"
+              icon={<MailIcon />}
+              size="lg"
+              isRound={true}
+              variant="ghost"
+              colorScheme="purple"
+              aria-label={t("template:unfollow.title")}
+              onClick={sendContributorRequest}
             />
           )}
         </Heading>

@@ -324,3 +324,25 @@ export const axAddTemplateAcitivityComment = async (payload) => {
     return { success: false, data: [] };
   }
 };
+
+export const axsendContributorRequest = async (payload) => {
+  try {
+    const { data } = await http.post(`${ENDPOINT.CCA}/v1/data/request`, payload);
+
+    return { success: true, data };
+  } catch (e) {
+    console.error(e);
+
+    return { success: false, data: {} };
+  }
+};
+
+export const axVerifyContributorPermission = async (token) => {
+  try {
+    await http.post(`${ENDPOINT.CCA}/v1/data/grant`, { token });
+    return { success: true };
+  } catch (e) {
+    console.error(e);
+    return { success: false };
+  }
+};
