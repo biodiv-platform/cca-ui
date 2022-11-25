@@ -1,13 +1,14 @@
-import { Avatar, Box, Flex, Heading, IconButton, LinkOverlay } from "@chakra-ui/react";
+import { EmailIcon } from "@chakra-ui/icons";
+import { Avatar, Box, Button, Flex, Heading, IconButton, LinkOverlay } from "@chakra-ui/react";
 import { Container } from "@components/@core/container";
 import NextLink from "@components/@core/next-link";
 import Tooltip from "@components/@core/tooltip";
 import SITE_CONFIG from "@configs/site-config";
 import useGlobalState from "@hooks/use-global-state";
 import EditIcon from "@icons/edit";
-import MailIcon from "@icons/mail";
 import NotificationsActiveIcon from "@icons/notifications-active";
 import NotificationsNoneIcon from "@icons/notifications-none";
+import { Role } from "@interfaces/custom";
 import { axsendContributorRequest, axToggleDocumentFollow } from "@services/cca.service";
 import { findTitleFromHeader, renderSimpleValue } from "@utils/field";
 import { getUserImage } from "@utils/media";
@@ -49,17 +50,17 @@ export default function ShowHeader() {
     const payload = {
       ccaid: response.id,
       requestorId: user.id,
-      role: "ROLE_EXTDATACONTRIBUTOR"
+      role: Role.ExtDataContributor
     };
     const { success } = await axsendContributorRequest(payload);
 
     if (success) {
       notification(
-        t("success"),
+        t("template:request_cca_contibutor.success"),
         NotificationType.Success
       );
     } else {
-      notification(t("error"));
+      notification(t("template:request_cca_contibutor.error"));
     }
   };
 
@@ -96,17 +97,11 @@ export default function ShowHeader() {
               onClick={toggleFollow}
             />
           )}
-          {isLoggedIn &&!canEdit && (
-            <IconButton
-              className="no-print"
-              icon={<MailIcon />}
-              size="lg"
-              isRound={true}
-              variant="ghost"
-              colorScheme="purple"
-              aria-label={t("template:unfollow.title")}
-              onClick={sendContributorRequest}
-            />
+          {isLoggedIn && !canEdit && (
+            <Button leftIcon={<EmailIcon />} colorScheme='purple' variant='solid'
+              onClick={sendContributorRequest}>
+              {t("template:request_cca_contibutor.title")}
+            </Button>
           )}
         </Heading>
         <Flex

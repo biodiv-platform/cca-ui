@@ -6,7 +6,7 @@ import React from "react";
 const VerifyRequestPage = ({ token, type }) => <VerifyRequestComponent token={token} type={type} />;
 
 VerifyRequestPage.getInitialProps = async (ctx) => {
-  authorizedPageSSR([Role.Any], ctx, true);
+  authorizedPageSSR([Role.DataCurator, Role.Admin], ctx);
   return { token: ctx.query.token, type: ctx.query.type ?? null };
 };
 

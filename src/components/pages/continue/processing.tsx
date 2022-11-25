@@ -1,5 +1,5 @@
 import { Alert, AlertIcon } from "@chakra-ui/react";
-import { useLocalRouter } from "@components/@core/local-link";
+import { useRouter } from "next/router";
 import useTranslation from "next-translate/useTranslation";
 import React, { useEffect } from "react";
 
@@ -9,13 +9,13 @@ interface ProcessingProps {
   redirect?: boolean;
 }
 
-export default function Processing({ success, loading, redirect = true }: ProcessingProps) {
+export default function Processing({ success, loading }: ProcessingProps) {
   const { t } = useTranslation();
-  const router = useLocalRouter();
+  const router = useRouter();
 
   useEffect(() => {
-    if (success && redirect) {
-      router.push("/show", true);
+    if (success) {
+      router.push("/data/list");
     }
   }, [success]);
 
@@ -26,8 +26,9 @@ export default function Processing({ success, loading, redirect = true }: Proces
     </Alert>
   ) : (
     <Alert m={6} borderRadius="md" status={success ? "success" : "error"}>
+
       <AlertIcon />
-      {t(success ? "SUCCESS" : "INVALID_REQUEST")}
+      {success ? "Added Contributor Successfully" : "Failed to add Contributor"}
     </Alert>
   );
 }
