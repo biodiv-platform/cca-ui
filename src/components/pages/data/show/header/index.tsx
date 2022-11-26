@@ -1,4 +1,3 @@
-import { EmailIcon } from "@chakra-ui/icons";
 import { Avatar, Box, Button, Flex, Heading, IconButton, LinkOverlay } from "@chakra-ui/react";
 import { Container } from "@components/@core/container";
 import NextLink from "@components/@core/next-link";
@@ -6,6 +5,7 @@ import Tooltip from "@components/@core/tooltip";
 import SITE_CONFIG from "@configs/site-config";
 import useGlobalState from "@hooks/use-global-state";
 import EditIcon from "@icons/edit";
+import MailIcon from "@icons/mail";
 import NotificationsActiveIcon from "@icons/notifications-active";
 import NotificationsNoneIcon from "@icons/notifications-none";
 import { Role } from "@interfaces/custom";
@@ -97,12 +97,6 @@ export default function ShowHeader() {
               onClick={toggleFollow}
             />
           )}
-          {isLoggedIn && !canEdit && (
-            <Button leftIcon={<EmailIcon />} colorScheme='purple' variant='solid'
-              onClick={sendContributorRequest}>
-              {t("template:request_cca_contibutor.title")}
-            </Button>
-          )}
         </Heading>
         <Flex
           direction={{ base: "column", md: "row" }}
@@ -133,6 +127,13 @@ export default function ShowHeader() {
                 <UserAvatar key={u.id} u={u} />
               ))}
             </Flex>
+          )}
+          {isLoggedIn && !canEdit && (
+            <Tooltip hasArrow label='Request Permission to Contibute'>
+              <Button leftIcon={<MailIcon boxSize={"7"} />} colorScheme='blue' variant='ghost'
+                onClick={sendContributorRequest}>
+              </Button>
+            </Tooltip>
           )}
         </Flex>
       </Container>

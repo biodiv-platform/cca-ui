@@ -45,6 +45,6 @@
   "request_cca_contibutor": {
     "error": "Permission request pending",
     "success": "Permission request has been sent",
-    "title": "Request Permission to Contribute"
+    "title": "Request Permission"
   }
 }
