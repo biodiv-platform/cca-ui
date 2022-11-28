@@ -26,7 +26,6 @@ export default function Processing({ success, loading }: ProcessingProps) {
     </Alert>
   ) : (
     <Alert m={6} borderRadius="md" status={success ? "success" : "error"}>
-
       <AlertIcon />
       {success ? "Added Contributor Successfully" : "Failed to add Contributor"}
     </Alert>

@@ -1,4 +1,19 @@
-import { Avatar, Box, Button, Flex, Heading, IconButton, LinkOverlay } from "@chakra-ui/react";
+import {
+  Avatar,
+  Box,
+  Button,
+  Flex,
+  Heading,
+  IconButton,
+  LinkOverlay,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalHeader,
+  ModalOverlay,
+  useDisclosure
+} from "@chakra-ui/react";
 import { Container } from "@components/@core/container";
 import NextLink from "@components/@core/next-link";
 import Tooltip from "@components/@core/tooltip";
@@ -9,7 +24,7 @@ import MailIcon from "@icons/mail";
 import NotificationsActiveIcon from "@icons/notifications-active";
 import NotificationsNoneIcon from "@icons/notifications-none";
 import { Role } from "@interfaces/custom";
-import { axsendContributorRequest, axToggleDocumentFollow } from "@services/cca.service";
+import { axToggleDocumentFollow } from "@services/cca.service";
 import { findTitleFromHeader, renderSimpleValue } from "@utils/field";
 import { getUserImage } from "@utils/media";
 import notification, { NotificationType } from "@utils/notification";
@@ -18,6 +33,7 @@ import useTranslation from "next-translate/useTranslation";
 import React, { useState } from "react";
 
 import useTemplateResponseShow from "../use-template-response-show";
+import NewRequestForm from "./requestorForm";
 
 const UserAvatar = ({ u, ...rest }) => (
   <Tooltip hasArrow={true} title={u.name}>
@@ -30,7 +46,10 @@ export default function ShowHeader() {
   const title = findTitleFromHeader(header);
   const { t } = useTranslation();
   const { user, isLoggedIn } = useGlobalState();
-  const [isFollowing, setIsFollowing] = useState(response.followers?.includes(user?.id?.toString()));
+  const [isFollowing, setIsFollowing] = useState(
+    response.followers?.includes(user?.id?.toString())
+  );
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   const toggleFollow = async () => {
     const { success } = await axToggleDocumentFollow(!isFollowing, response.id);
@@ -46,22 +65,10 @@ export default function ShowHeader() {
     }
   };
 
-  const sendContributorRequest = async () => {
-    const payload = {
-      ccaid: response.id,
-      requestorId: user.id,
-      role: Role.ExtDataContributor
-    };
-    const { success } = await axsendContributorRequest(payload);
-
-    if (success) {
-      notification(
-        t("template:request_cca_contibutor.success"),
-        NotificationType.Success
-      );
-    } else {
-      notification(t("template:request_cca_contibutor.error"));
-    }
+  const defaultValues = {
+    ccaid: response.id,
+    requestorId: user.id,
+    role: Role.ExtDataContributor
   };
 
   return (
@@ -129,11 +136,26 @@ export default function ShowHeader() {
             </Flex>
           )}
           {isLoggedIn && !canEdit && (
-            <Tooltip hasArrow label='Request Permission to Contibute'>
-              <Button leftIcon={<MailIcon boxSize={"7"} />} colorScheme='blue' variant='ghost'
-                onClick={sendContributorRequest}>
-              </Button>
-            </Tooltip>
+            <>
+              <Tooltip hasArrow label="Request Permission to Contibute">
+                <Button
+                  leftIcon={<MailIcon boxSize={"7"} />}
+                  colorScheme="blue"
+                  variant="ghost"
+                  onClick={onOpen}
+                ></Button>
+              </Tooltip>
+              <Modal isOpen={isOpen} onClose={onClose}>
+                <ModalOverlay />
+                <ModalContent>
+                  <ModalHeader>{t("template:request_cca_contibutor.add_request")}</ModalHeader>
+                  <ModalCloseButton />
+                  <ModalBody>
+                    <NewRequestForm onClose={onClose} defaultValues={defaultValues} />
+                  </ModalBody>
+                </ModalContent>
+              </Modal>
+            </>
           )}
         </Flex>
       </Container>

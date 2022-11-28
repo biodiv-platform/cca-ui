@@ -45,6 +45,9 @@
   "request_cca_contibutor": {
     "error": "Permission request pending",
     "success": "Permission request has been sent",
-    "title": "Request Permission"
+    "title": "Request Permission",
+    "label": "Specify your reason to contribute to this CCA",
+    "placeholder": "Please specify your reason to contribute (Max 200 characters)",
+    "add_request": "Add a request message"
   }
 }
