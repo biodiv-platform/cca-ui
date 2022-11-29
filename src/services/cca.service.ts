@@ -328,11 +328,9 @@ export const axAddTemplateAcitivityComment = async (payload) => {
 export const axsendContributorRequest = async (payload) => {
   try {
     const { data } = await http.post(`${ENDPOINT.CCA}/v1/data/request`, payload);
-
     return { success: true, data };
   } catch (e) {
     console.error(e);
-
     return { success: false, data: {} };
   }
 };
