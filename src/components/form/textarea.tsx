@@ -46,7 +46,7 @@ export const TextAreaField = ({
       />
       <Textarea
         id={name}
-        placeholder={label}
+        placeholder={placeholder}
         minH="124px"
         isDisabled={disabled}
         bg="white"
