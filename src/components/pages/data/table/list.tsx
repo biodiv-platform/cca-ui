@@ -45,6 +45,7 @@ export default function ResponseList() {
           data={data}
           onRowClicked={handleOnRowClicked}
           pagination={true}
+          highlightOnHover
         />
       </ResponsiveContainer>
     </>

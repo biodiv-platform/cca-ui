@@ -148,8 +148,7 @@ export const axToggleDocumentFollow = async (isFollow, id) => {
 
 export const axGetTemplateResponseTableByShortName = async (shortName) => {
   try {
-    const { data } = await http.get(`${ENDPOINT.CCA}/v1/data/all`, {
-      params: { shortName }
+    const { data } = await http.get(`${ENDPOINT.CCA}/v1/data/all?${stringify(shortName)}`, {
     });
 
     return { success: true, data };
@@ -227,8 +226,11 @@ export const axGetMapAndAggregation = async (params) => {
   };
 };
 
+
 export const axGetDataListPage = async (params) => {
   try {
+console.warn("params = ",params)
+    ///
     const { data } = await plainHttp.get(`${ENDPOINT.CCA}/v1/data/page?${stringify(params)}`);
 
     return { success: true, ...data };
