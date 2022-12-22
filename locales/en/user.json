@@ -43,5 +43,7 @@
   "user_found": "User Found",
   "username": "Username",
   "verify_through": "Since you have provided email and mobile number both how would you like to verify your account?",
-  "website": "Website"
+  "website": "Website",
+  "download": "Download",
+  "file_not_found": "File Not Found"
 }

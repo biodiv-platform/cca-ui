@@ -157,3 +157,12 @@ export const axUserFilterSearch = async (name) => {
     return { success: false, data: [] };
   }
 };
+
+export const axGetDownloadLogsList = async (params) => {
+  try {
+    const { data } = await plainHttp.get(`${ENDPOINT.USER}/v1/downloadLog/list`, { params });
+    return { success: true, data };
+  } catch (e) {
+    return { success: false, data: {} };
+  }
+};
