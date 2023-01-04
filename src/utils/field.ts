@@ -100,9 +100,6 @@ export const reverseFlatSaveData = (field, value: any) => {
 
 export const simplifyDTPayload = (fields, data) => {
   const newFields = flattenFields(fields);
-  console.warn("newFields ",newFields[1].fieldId);
-  console.warn("Fields name",newFields[1].name);
-
 
   return {
     columns: newFields.map((field) => ({
@@ -122,9 +119,8 @@ export const simplifyDTPayload = (fields, data) => {
           raw: row?.ccaFieldValues?.[field.fieldId]
         }
       ]);
-      newFieldsData.push(["id", row.value]);
-      console.warn("newFieldsData ",newFieldsData)
-      console.warn("Object.fromEntries(newFieldsData) ",Object.fromEntries(newFieldsData))
+      newFieldsData.push(["id", row.id]);
+
       return Object.fromEntries(newFieldsData);
     })
   };
@@ -195,7 +191,6 @@ export const flattenFields = (fields) => {
       flatFields.push(...flattenFields(field.children));
     }
   });
-  console.warn("flatFields ", flatFields);
   return flatFields;
 };
 

@@ -148,8 +148,7 @@ export const axToggleDocumentFollow = async (isFollow, id) => {
 
 export const axGetTemplateResponseTableByShortName = async (shortName) => {
   try {
-    const { data } = await http.get(`${ENDPOINT.CCA}/v1/data/all?${stringify(shortName)}`, {
-    });
+    const { data } = await http.get(`${ENDPOINT.CCA}/v1/data/all?${stringify(shortName)}`, {});
 
     return { success: true, data };
   } catch (e) {
@@ -226,11 +225,8 @@ export const axGetMapAndAggregation = async (params) => {
   };
 };
 
-
 export const axGetDataListPage = async (params) => {
   try {
-console.warn("params = ",params)
-    ///
     const { data } = await plainHttp.get(`${ENDPOINT.CCA}/v1/data/page?${stringify(params)}`);
 
     return { success: true, ...data };
@@ -344,5 +340,23 @@ export const axVerifyContributorPermission = async (token) => {
   } catch (e) {
     console.error(e);
     return { success: false };
+  }
+};
+
+export const axDownloadRequest = async (params) => {
+  try {
+    const { data } = await plainHttp.get(`${ENDPOINT.CCA}/v1/data/all/download`, { params });
+    return { success: true, data };
+  } catch (e) {
+    return { success: false, data: {} };
+  }
+};
+
+export const axGetCCAData = async (params) => {
+  try {
+    const { data } = await plainHttp.get(`${ENDPOINT.CCA}/v1/data/${params}`);
+    return { data };
+  } catch (e) {
+    return { data: {} };
   }
 };

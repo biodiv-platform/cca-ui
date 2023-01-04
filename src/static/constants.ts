@@ -15,7 +15,7 @@ export const ENDPOINT = {
   NAKSHA: `https://indiabiodiversity.org/naksha-api/api`,
   PAGES: `${API_ENDPOINT}pages-api/api`,
   USER: `${API_ENDPOINT}user-api/api`,
-  RAW: `${API_ENDPOINT}cca`,
+  RAW: `${API_ENDPOINT}biodiv`,
 };
 
 export const TOKEN = {

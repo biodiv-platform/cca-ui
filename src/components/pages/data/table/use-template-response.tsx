@@ -26,7 +26,7 @@ export const TemplateResponseProvider = ({
   children
 }: TemplateResponseProviderProps) => {
   const [responsesI, setResponsesI] = useImmer({ l: [] as any });
-  const payload = { shortName, list: false };
+  const payload = { shortName, projectAll: false };
 
   const loadMore = async () => {
     const { data } = await axGetTemplateResponseTableByShortName(payload);
