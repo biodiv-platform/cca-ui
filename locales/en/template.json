@@ -49,5 +49,11 @@
     "label": "Specify your reason to contribute to this CCA",
     "placeholder": "Please specify your reason to contribute (Max 200 characters)",
     "add_request": "Add a request message"
+  },
+  "download_cca_template": {
+    "error": "Error sending download request",
+    "label": "Specify your reason to download this CCA",
+    "placeholder": "Please specify your reason to download this CCA (Max 200 characters)",
+    "success": "Download request has been sent"
   }
 }

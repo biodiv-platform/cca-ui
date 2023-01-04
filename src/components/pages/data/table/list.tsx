@@ -19,18 +19,13 @@ export default function ResponseList() {
   const { columns, data } = useMemo(() => simplifyDTPayload(fields, responses.l), [responses]);
   const { isOpen, onOpen, onClose } = useDisclosure();
 
-
-
-
   const handleOnRowClicked = ({ id }) => router.push(`/data/show/${id}`);
-
-
 
   return (
     <>
       <PageHeading title={`${t("template:responses")} ${shortName}`} icon="🗃">
         <>
-          <Tooltip hasArrow label="Request Permission to Contibute">
+          <Tooltip hasArrow label="Downlaod CCA Data">
             <Button
               leftIcon={<DownloadIcon />}
               colorScheme="blue"
@@ -58,7 +53,6 @@ export default function ResponseList() {
           pagination={true}
           highlightOnHover
           expandableRows={true}
-          expandOnRowClicked={true}
           expandableRowsComponent={ExpandedComponent}
         />
       </ResponsiveContainer>

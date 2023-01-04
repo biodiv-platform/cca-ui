@@ -345,7 +345,7 @@ export const axVerifyContributorPermission = async (token) => {
 
 export const axDownloadRequest = async (params) => {
   try {
-    const { data } = await plainHttp.get(`${ENDPOINT.CCA}/v1/data/all/download`, { params });
+    const { data } = await http.post(`${ENDPOINT.CCA}/v1/data/all/download`, { params });
     return { success: true, data };
   } catch (e) {
     return { success: false, data: {} };
@@ -355,8 +355,8 @@ export const axDownloadRequest = async (params) => {
 export const axGetCCAData = async (params) => {
   try {
     const { data } = await plainHttp.get(`${ENDPOINT.CCA}/v1/data/${params}`);
-    return { data };
+    return { success: true, data };
   } catch (e) {
-    return { data: {} };
+    return { success: false, data: {} };
   }
 };

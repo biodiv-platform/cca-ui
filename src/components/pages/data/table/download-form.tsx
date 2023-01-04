@@ -14,7 +14,7 @@ export default function DownloadForm({ onClose, shortName }) {
     mode: "onChange"
   });
 
-  const sendContributorRequest = async (value) => {
+  const sendDownloadRequest = async (value) => {
     const payload = {
       shortName: shortName,
       projectAll: true,
@@ -34,7 +34,7 @@ export default function DownloadForm({ onClose, shortName }) {
         NotificationType.Success
       );
     } else {
-      notification(t("template:request_cca_contibutor.error"));
+      notification(t("template:download_cca_template.error"));
     }
     onClose(false);
   };
@@ -44,12 +44,12 @@ export default function DownloadForm({ onClose, shortName }) {
       <Container textAlign="center">
         <Box display="flex" alignItems="center">
           <FormProvider {...hForm}>
-            <form onSubmit={hForm.handleSubmit(sendContributorRequest)}>
+            <form onSubmit={hForm.handleSubmit(sendDownloadRequest)}>
               <TextAreaField
                 name="notes"
                 isRequired={true}
-                label={t("template:request_cca_contibutor.label")}
-                placeholder={t("template:request_cca_contibutor.placeholder")}
+                label={t("template:download_cca_template.label")}
+                placeholder={t("template:download_cca_template.placeholder")}
                 maxLength="200"
               />
               <SubmitButton>{t("form:submit")}</SubmitButton>
