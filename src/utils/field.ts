@@ -98,11 +98,24 @@ export const reverseFlatSaveData = (field, value: any) => {
   return defaultValues;
 };
 
+export const filteredSummaryFields = (fields) => {
+  const flatFields: any = [];
+
+  fields.map((field) => {
+    if (field.isSummaryField == true) {
+      flatFields.push(field);
+    }
+  });
+  return flatFields;
+};
+
 export const simplifyDTPayload = (fields, data) => {
   const newFields = flattenFields(fields);
 
+  const filteredField = filteredSummaryFields(newFields);
+
   return {
-    columns: newFields.map((field) => ({
+    columns: filteredField.map((field) => ({
       name: field.name,
       selector: (row) => row[field.fieldId].value,
       maxWidth: "250px",
@@ -112,7 +125,7 @@ export const simplifyDTPayload = (fields, data) => {
       value: field.fieldId
     })),
     data: data?.map((row) => {
-      const newFieldsData = newFields.map((field) => [
+      const newFieldsData = filteredField.map((field) => [
         field.fieldId,
         {
           value: formatDTValue(row, field),

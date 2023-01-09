@@ -23,7 +23,7 @@ export const axUploadResource = async (file: File, dir = "pages") => {
  * @param {IDBObservationAsset} resource
  * @returns
  */
- export const axUploadUserResource = async (resource: File, directory, nestedPath?: string) => {
+export const axUploadUserResource = async (resource: File, directory, nestedPath?: string) => {
   try {
     const formData = new FormData();
     formData.append("hash", nanoid());

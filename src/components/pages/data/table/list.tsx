@@ -1,5 +1,15 @@
 import { DownloadIcon } from "@chakra-ui/icons";
-import { Button, Modal, ModalBody, ModalCloseButton, ModalContent, ModalHeader, ModalOverlay, Tooltip, useDisclosure } from "@chakra-ui/react";
+import {
+  Button,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalHeader,
+  ModalOverlay,
+  Tooltip,
+  useDisclosure
+} from "@chakra-ui/react";
 import { ResponsiveContainer } from "@components/@core/basic-table";
 import PageHeading from "@components/@core/page-heading";
 import { simplifyDTPayload } from "@utils/field";
@@ -26,12 +36,9 @@ export default function ResponseList() {
       <PageHeading title={`${t("template:responses")} ${shortName}`} icon="🗃">
         <>
           <Tooltip hasArrow label="Downlaod CCA Data">
-            <Button
-              leftIcon={<DownloadIcon />}
-              colorScheme="blue"
-              variant="ghost"
-              onClick={onOpen}
-            >{t("common:download")}</Button>
+            <Button leftIcon={<DownloadIcon />} colorScheme="blue" variant="ghost" onClick={onOpen}>
+              {t("common:download")}
+            </Button>
           </Tooltip>
           <Modal isOpen={isOpen} onClose={onClose}>
             <ModalOverlay />

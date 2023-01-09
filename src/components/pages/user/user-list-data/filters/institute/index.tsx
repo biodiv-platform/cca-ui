@@ -7,14 +7,14 @@ import CheckboxFilterPanel from "../shared/checkbox";
 export default function InstituteFilter() {
   const {
     userListData: {
-      ag: { institution },
-    },
+      ag: { institution }
+    }
   } = useUserFilter();
 
   const STATE_OPTIONS = Object.keys(institution)?.map((val) => ({
     label: covertToSentenceCase(val),
     value: val,
-    stat: institution[val],
+    stat: institution[val]
   }));
 
   return (

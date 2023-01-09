@@ -10,7 +10,7 @@ import {
 } from "@chakra-ui/react";
 import SITE_CONFIG from "@configs/site-config";
 import styled from "@emotion/styled";
-import { GMAP_FEATURE_TYPES,NakshaGmapsDraw } from "@ibp/naksha-gmaps-draw";
+import { GMAP_FEATURE_TYPES, NakshaGmapsDraw } from "@ibp/naksha-gmaps-draw";
 import { namedFormErrorMessage } from "@utils/field";
 import { getMapCenter } from "@utils/location";
 import useTranslation from "next-translate/useTranslation";

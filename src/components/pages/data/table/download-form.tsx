@@ -19,7 +19,7 @@ export default function DownloadForm({ onClose, shortName }) {
       shortName: shortName,
       projectAll: true,
 
-      ...value,
+      ...value
     };
 
     const { success } = await axDownloadRequest(payload);
@@ -27,9 +27,7 @@ export default function DownloadForm({ onClose, shortName }) {
       notification(
         <>
           {t("Sucess")}{" "}
-          <ExternalBlueLink href="/user/download-logs">
-            {t("Download logs")}
-          </ExternalBlueLink>
+          <ExternalBlueLink href="/user/download-logs">{t("Download logs")}</ExternalBlueLink>
         </>,
         NotificationType.Success
       );
