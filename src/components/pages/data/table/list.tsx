@@ -43,7 +43,9 @@ export default function ResponseList() {
           <Modal isOpen={isOpen} onClose={onClose}>
             <ModalOverlay />
             <ModalContent>
-              <ModalHeader>{t("template:request_cca_contibutor.add_request")}</ModalHeader>
+              <ModalHeader  pb={"auto"} >
+                {t("template:request_cca_contibutor.add_request")}
+                </ModalHeader>
               <ModalCloseButton />
               <ModalBody>
                 <DownloadForm onClose={onClose} shortName={shortName} />

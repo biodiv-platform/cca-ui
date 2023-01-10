@@ -22,7 +22,7 @@ export default function DownloadForm({ onClose, shortName }) {
       ...value
     };
 
-    await axDownloadRequest(payload);
+    axDownloadRequest(payload);
     notification(
       <>
         {t("template:download_cca_template.success")}{" "}
