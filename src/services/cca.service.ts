@@ -345,7 +345,7 @@ export const axVerifyContributorPermission = async (token) => {
 
 export const axDownloadRequest = async (params) => {
   try {
-    const { data } = await http.post(`${ENDPOINT.CCA}/v1/data/all/download`, { params });
+    const { data } = await http.post(`${ENDPOINT.CCA}/v1/data/all/download?${stringify(params)}`);
     return { success: true, data };
   } catch (e) {
     return { success: false, data: {} };

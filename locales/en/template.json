@@ -54,6 +54,7 @@
     "error": "Error sending download request",
     "label": "Specify your reason to download this CCA",
     "placeholder": "Please specify your reason to download this CCA (Max 200 characters)",
-    "success": "Download request has been sent"
+    "success": "Your file is being generated. When it is ready, you will be notified by email and a download link will appear in",
+    "title": "Download Logs"
   }
 }

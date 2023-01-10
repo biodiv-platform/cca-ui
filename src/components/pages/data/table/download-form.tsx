@@ -22,18 +22,18 @@ export default function DownloadForm({ onClose, shortName }) {
       ...value
     };
 
-    const { success } = await axDownloadRequest(payload);
-    if (success) {
-      notification(
-        <>
-          {t("Sucess")}{" "}
-          <ExternalBlueLink href="/user/download-logs">{t("Download logs")}</ExternalBlueLink>
-        </>,
-        NotificationType.Success
-      );
-    } else {
-      notification(t("template:download_cca_template.error"));
-    }
+    await axDownloadRequest(payload);
+    notification(
+      <>
+        {t("template:download_cca_template.success")}{" "}
+        <ExternalBlueLink href="/user/download-logs">
+          {t("template:download_cca_template.title")}
+        </ExternalBlueLink>
+      </>,
+      NotificationType.Info
+
+    );
+
     onClose(false);
   };
 

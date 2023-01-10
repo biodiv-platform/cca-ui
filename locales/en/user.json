@@ -45,5 +45,6 @@
   "verify_through": "Since you have provided email and mobile number both how would you like to verify your account?",
   "website": "Website",
   "download": "Download",
+  "download_logs": "Download Logs",
   "file_not_found": "File Not Found"
 }
