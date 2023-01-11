@@ -27,45 +27,45 @@ export default function ExpandedComponent(props) {
     [data]
   );
 
-  function findCCAFieldValuesByKey(obj, keyToFind) {
+  const findCCAFieldValuesByKey = (object, keyToFind) => {
     return (
-      Object.entries(obj).reduce(
+      Object.entries(object).reduce(
         (acc, [key, value]) =>
           key === keyToFind
-            ? acc.concat(obj)
+            ? acc.concat(object)
             : typeof value === "object" && value
-              ? acc.concat(findCCAFieldValuesByKey(value, keyToFind))
-              : acc,
+            ? acc.concat(findCCAFieldValuesByKey(value, keyToFind))
+            : acc,
         []
       ) || []
     );
-  }
+  };
 
-  const buildObject = (arr) => {
-    const obj = {};
-    for (let i = 0; i < arr.length; i++) {
+  const buildObject = (ccaFieldValues) => {
+    const ccaFieldValue = {};
+    ccaFieldValues.forEach((element) => {
       if (
-        arr[i].type == "MULTI_SELECT_CHECKBOX" ||
-        arr[i].type == "SINGLE_SELECT_DROPDOWN" ||
-        arr[i].type == "FILE" ||
-        arr[i].type == "SINGLE_SELECT_RADIO" ||
-        arr[i].type == "GEOMETRY"
+        element.type == "MULTI_SELECT_CHECKBOX" ||
+        element.type == "SINGLE_SELECT_DROPDOWN" ||
+        element.type == "FILE" ||
+        element.type == "SINGLE_SELECT_RADIO" ||
+        element.type == "GEOMETRY"
       ) {
-        if (typeof arr[i].value[0] != "undefined") {
-          const { label, value } = arr[i].value[0];
-          obj[label] = value;
+        if (typeof element.value[0] != "undefined") {
+          const { label, value } = element.value[0];
+          ccaFieldValue[label] = value;
         }
-        if (typeof arr[i].value.label != "undefined") {
-          const { name } = arr[i].name;
-          const { label } = arr[i].value.label;
-          obj[name] = label;
+        if (typeof element.value.label != "undefined") {
+          const { name } = element.name;
+          const { label } = element.value.label;
+          ccaFieldValue[name] = label;
         }
       } else {
-        const { name, value } = arr[i];
-        obj[name] = value;
+        const { name, value } = element;
+        ccaFieldValue[name] = value;
       }
-    }
-    return obj;
+    });
+    return ccaFieldValue;
   };
 
   const ccaFieldValues = buildObject(findCCAFieldValuesByKey(data, "value"));

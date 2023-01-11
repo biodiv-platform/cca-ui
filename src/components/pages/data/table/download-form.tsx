@@ -31,7 +31,6 @@ export default function DownloadForm({ onClose, shortName }) {
         </ExternalBlueLink>
       </>,
       NotificationType.Info
-
     );
 
     onClose(false);
