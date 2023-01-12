@@ -7,6 +7,7 @@ import {
 } from "@static/constants";
 
 import { formatDateFromUTC, formatYearFromUTC } from "./date";
+import { stripTags } from "./text";
 
 const postProcessValue = (field, value, othersValue?) => {
   // Does reverse lookup and sends label and value pair for option types
@@ -97,11 +98,24 @@ export const reverseFlatSaveData = (field, value: any) => {
   return defaultValues;
 };
 
+export const filteredSummaryFields = (fields) => {
+  const flatFields: any = [];
+
+  fields.map((field) => {
+    if (field.isSummaryField == true) {
+      flatFields.push(field);
+    }
+  });
+  return flatFields;
+};
+
 export const simplifyDTPayload = (fields, data) => {
   const newFields = flattenFields(fields);
 
+  const filteredField = filteredSummaryFields(newFields);
+
   return {
-    columns: newFields.map((field) => ({
+    columns: filteredField.map((field) => ({
       name: field.name,
       selector: (row) => row[field.fieldId].value,
       maxWidth: "250px",
@@ -111,14 +125,13 @@ export const simplifyDTPayload = (fields, data) => {
       value: field.fieldId
     })),
     data: data?.map((row) => {
-      const newFieldsData = newFields.map((field) => [
+      const newFieldsData = filteredField.map((field) => [
         field.fieldId,
         {
           value: formatDTValue(row, field),
           raw: row?.ccaFieldValues?.[field.fieldId]
         }
       ]);
-
       newFieldsData.push(["id", row.id]);
 
       return Object.fromEntries(newFieldsData);
@@ -129,7 +142,11 @@ export const simplifyDTPayload = (fields, data) => {
 const formatDTValue = (row, field) => {
   const v = row?.ccaFieldValues?.[field.fieldId]?.value;
 
-  if (["string", "number"].includes(typeof v)) {
+  if (["string"].includes(typeof v)) {
+    return stripTags(v);
+  }
+
+  if (["number"].includes(typeof v)) {
     return v;
   }
 
@@ -187,7 +204,6 @@ export const flattenFields = (fields) => {
       flatFields.push(...flattenFields(field.children));
     }
   });
-
   return flatFields;
 };
 

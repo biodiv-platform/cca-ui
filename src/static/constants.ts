@@ -14,7 +14,8 @@ export const ENDPOINT = {
   INTEGRATOR: `${API_ENDPOINT}integrator-api/api`,
   NAKSHA: `https://indiabiodiversity.org/naksha-api/api`,
   PAGES: `${API_ENDPOINT}pages-api/api`,
-  USER: `${API_ENDPOINT}user-api/api`
+  USER: `${API_ENDPOINT}user-api/api`,
+  RAW: `${API_ENDPOINT}biodiv`
 };
 
 export const TOKEN = {
