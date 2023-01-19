@@ -12,9 +12,17 @@ import { stripTags } from "./text";
 const postProcessValue = (field, value, othersValue?) => {
   // Does reverse lookup and sends label and value pair for option types
   // Also takes care of replacing others value with label
+
+  // make clear functionality work by adding only the fieldId
+  const none = {
+    label: "",
+    value: "",
+    valueId: field.valueOptions[0].valueId
+  };
+
   if (OPTION_FORM_TYPES.includes(field.type)) {
     if (!value || value?.length === 0) {
-      return value;
+      return none;
     }
 
     if (Array.isArray(value)) {
