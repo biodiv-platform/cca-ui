@@ -17,7 +17,7 @@ const postProcessValue = (field, value, othersValue?) => {
   const none = {
     label: "",
     value: "",
-    valueId: field.valueOptions[0].valueId
+    valueId: ""
   };
 
   if (OPTION_FORM_TYPES.includes(field.type)) {

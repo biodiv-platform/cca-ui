@@ -51,11 +51,11 @@ export default function ExpandedComponent(props) {
         element.type == "SINGLE_SELECT_RADIO" ||
         element.type == "GEOMETRY"
       ) {
-        if (typeof element.value[0] != "undefined") {
+        if (element.value[0]) {
           const { label, value } = element.value[0];
           ccaFieldValue[label] = value;
         }
-        if (typeof element.value.label != "undefined") {
+        if (element.value.label) {
           const { name } = element.name;
           const { label } = element.value.label;
           ccaFieldValue[name] = label;
