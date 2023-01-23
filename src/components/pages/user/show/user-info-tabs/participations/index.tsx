@@ -8,6 +8,7 @@ import { findTitleFromHeader } from "@utils/field";
 import React, { useEffect, useState } from "react";
 import DataTable from "react-data-table-component";
 
+// import { UserProfileProps } from "../..";
 const userParticipationColumns = [
   {
     name: "Name",
@@ -38,11 +39,11 @@ const userParticipationColumns = [
   }
 ];
 
-export default function UserParticipations() {
+export default function UserParticipations({ user }) {
   const [particiapations, setParticipations] = useState<any>();
 
   useEffect(() => {
-    axGetUserParticipations().then(
+    axGetUserParticipations(user.id).then(
       ({ success, data }) => success && setParticipations(data.reverse())
     );
   }, []);
