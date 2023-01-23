@@ -8,7 +8,6 @@ import { findTitleFromHeader } from "@utils/field";
 import React, { useEffect, useState } from "react";
 import DataTable from "react-data-table-component";
 
-// import { UserProfileProps } from "../..";
 const userParticipationColumns = [
   {
     name: "Name",
