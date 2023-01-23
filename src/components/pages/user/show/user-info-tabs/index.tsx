@@ -22,7 +22,7 @@ export default function UserInfoTabs({ user }) {
             <UserAbout user={user} />
           </TabPanel>
           <TabPanel pb={0}>
-            <UserParticipations />
+            <UserParticipations user={user} />
           </TabPanel>
         </TabPanels>
       </Tabs>

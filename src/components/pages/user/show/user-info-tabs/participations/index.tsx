@@ -38,11 +38,15 @@ const userParticipationColumns = [
   }
 ];
 
-export default function UserParticipations() {
+export default function UserParticipations({ user }) {
   const [particiapations, setParticipations] = useState<any>();
 
+  const payload = {
+    userId: user.id
+  };
+
   useEffect(() => {
-    axGetUserParticipations().then(
+    axGetUserParticipations(payload).then(
       ({ success, data }) => success && setParticipations(data.reverse())
     );
   }, []);
