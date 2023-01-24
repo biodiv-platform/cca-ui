@@ -10,7 +10,7 @@ Community Conserved Areas UI
 
 ```sh
 yarn install
-cp src/configs/site-config.example.json src/configs/site-config.json  # setup with appropriate properties
+cp src/configs/site-config.example.js src/configs/site-config.js  # setup with appropriate properties
 yarn start # will start development server on port 3000
 ```
 
