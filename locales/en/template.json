@@ -1,60 +1,78 @@
 {
+  "action_icons": {
+      "delete": "Delete",
+      "edit": "Edit"
+  },
   "add_field": "Add Field",
   "create": {
-    "title": "Create New Template"
+      "title": "Create New Template"
   },
   "delete": {
-    "confirm": "Are you sure?\nThis will delete template.",
-    "error": "There was an error while deleting template",
-    "success": "Template Deleted Successfully"
+      "confirm": "Are you sure?\nThis will delete template.",
+      "error": "There was an error while deleting template",
+      "success": "Template Deleted Successfully"
   },
   "delete_confirm": "Are you sure?\nThis will delete children fields (if any)",
+  "download_cca_template": {
+      "error": "Error sending download request",
+      "label": "Specify your reason to download this CCA",
+      "placeholder": "Please specify your reason to download this CCA (Max 200 characters)",
+      "success": "Your file is being generated. When it is ready, you will be notified by email and a download link will appear in",
+      "title": "Download Logs"
+  },
   "edit_fields": "Edit Fields",
   "filters": "Filters",
   "follow": {
-    "error": "Unable to Follow",
-    "success": "Successfully Followed",
-    "title": "Follow"
+      "error": "Unable to Follow",
+      "success": "Successfully Followed",
+      "title": "Follow"
+  },
+  "indicator_icons": {
+      "date": "Date field",
+      "file": "File field",
+      "filterable": "Filterable type",
+      "geometry": "Geometry field",
+      "heading": "Heading field",
+      "multi_select": "Multi select field",
+      "number": "Number field",
+      "required": "Required type",
+      "single_select": "Single select field",
+      "summary": "Summary type",
+      "text": "Text field",
+      "title": "Title type"
   },
   "manage_field": "Manage Field",
   "participate": "Participate",
   "pull": {
-    "error": "Unable to pull translations",
-    "success": "Translations pulled successfully",
-    "title": "Pull Translations"
+      "error": "Unable to pull translations",
+      "success": "Translations pulled successfully",
+      "title": "Pull Translations"
+  },
+  "request_cca_contibutor": {
+      "add_request": "Add a request message",
+      "error": "Permission request pending",
+      "label": "Specify your reason to contribute to this CCA",
+      "placeholder": "Please specify your reason to contribute (Max 200 characters)",
+      "success": "Permission request has been sent",
+      "title": "Request Permission"
   },
   "response": {
-    "delete": {
-      "error": "There was an error while deleting response",
-      "success": "Response Deleted Successfully"
-    }
+      "delete": {
+          "error": "There was an error while deleting response",
+          "success": "Response Deleted Successfully"
+      }
   },
   "responses": "Responses",
   "results": "Results",
   "templates": "Templates",
   "unfollow": {
-    "error": "Unable to Unfollow",
-    "success": "Successfully Unfollowed",
-    "title": "Unfollow"
+      "error": "Unable to Unfollow",
+      "success": "Successfully Unfollowed",
+      "title": "Unfollow"
   },
   "update": {
-    "error": "There was an error while saving template",
-    "success": "Template Saved Successfully",
-    "title": "Edit MetaData"
-  },
-  "request_cca_contibutor": {
-    "error": "Permission request pending",
-    "success": "Permission request has been sent",
-    "title": "Request Permission",
-    "label": "Specify your reason to contribute to this CCA",
-    "placeholder": "Please specify your reason to contribute (Max 200 characters)",
-    "add_request": "Add a request message"
-  },
-  "download_cca_template": {
-    "error": "Error sending download request",
-    "label": "Specify your reason to download this CCA",
-    "placeholder": "Please specify your reason to download this CCA (Max 200 characters)",
-    "success": "Your file is being generated. When it is ready, you will be notified by email and a download link will appear in",
-    "title": "Download Logs"
+      "error": "There was an error while saving template",
+      "success": "Template Saved Successfully",
+      "title": "Edit MetaData"
   }
 }

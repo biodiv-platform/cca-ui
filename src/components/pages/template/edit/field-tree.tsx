@@ -16,6 +16,8 @@ import RequiredIcon from "@icons/required";
 import SummaryIcon from "@icons/summary";
 import TextIcon from "@icons/text";
 import TitleIcon from "@icons/title";
+import { FORM_TYPE } from "@static/constants";
+import useTranslation from "next-translate/useTranslation";
 import React from "react";
 import SortableTree from "react-sortable-tree";
 
@@ -47,11 +49,15 @@ export default function FieldTree() {
   const { template, setFields, setCurrentField, removeFieldById, areFieldsReadOnly } =
     useTemplate();
 
+  const { t } = useTranslation();
+
   const generateNodeProps = (row) => ({
     title: row.node.name,
     buttons: [
-      (row.node.type == "TEXT" || row.node.type == "TEXTAREA" || row.node.type == "RICHTEXT") && (
-        <Tooltip label="Text">
+      (row.node.type == FORM_TYPE.TEXT ||
+        row.node.type == FORM_TYPE.TEXT_AREA ||
+        row.node.type == FORM_TYPE.RICHTEXT) && (
+        <Tooltip label={t("template:indicator_icons.text")}>
           <IconButton
             colorScheme="black"
             minW="auto"
@@ -62,8 +68,8 @@ export default function FieldTree() {
         </Tooltip>
       ),
 
-      row.node.type == "HEADING" && (
-        <Tooltip label="Heading">
+      row.node.type == FORM_TYPE.HEADING && (
+        <Tooltip label={t("template:indicator_icons.heading")}>
           <IconButton
             colorScheme="black"
             minW="auto"
@@ -75,8 +81,9 @@ export default function FieldTree() {
         </Tooltip>
       ),
 
-      (row.node.type == "SINGLE_SELECT_RADIO" || row.node.type == "SINGLE_SELECT_DROPDOWN") && (
-        <Tooltip label="Single-select">
+      (row.node.type == FORM_TYPE.SINGLE_SELECT_RADIO ||
+        row.node.type == FORM_TYPE.SINGLE_SELECT_DROPDOWN) && (
+        <Tooltip label={t("template:indicator_icons.single_select")}>
           <IconButton
             minW="auto"
             aria-label="Single Select Field"
@@ -87,8 +94,8 @@ export default function FieldTree() {
         </Tooltip>
       ),
 
-      row.node.type == "MULTI_SELECT_CHECKBOX" && (
-        <Tooltip label="Multi-select">
+      row.node.type == FORM_TYPE.MULTI_SELECT_CHECKBOX && (
+        <Tooltip label={t("template:indicator_icons.multi_select")}>
           <IconButton
             colorScheme="black"
             size="xl"
@@ -100,8 +107,8 @@ export default function FieldTree() {
         </Tooltip>
       ),
 
-      row.node.type == "NUMBER" && (
-        <Tooltip label="Number">
+      row.node.type == FORM_TYPE.NUMBER && (
+        <Tooltip label={t("template:indicator_icons.number")}>
           <IconButton
             colorScheme="black"
             size="xl"
@@ -113,8 +120,8 @@ export default function FieldTree() {
         </Tooltip>
       ),
 
-      (row.node.type == "DATE" || row.node.type == "YEAR") && (
-        <Tooltip label="Date">
+      (row.node.type == FORM_TYPE.DATE || row.node.type == FORM_TYPE.YEAR) && (
+        <Tooltip label={t("template:indicator_icons.date")}>
           <IconButton
             colorScheme="black"
             minW="auto"
@@ -125,8 +132,8 @@ export default function FieldTree() {
         </Tooltip>
       ),
 
-      row.node.type == "FILE" && (
-        <Tooltip label="File">
+      row.node.type == FORM_TYPE.FILE && (
+        <Tooltip label={t("template:indicator_icons.file")}>
           <IconButton
             colorScheme="black"
             minW="auto"
@@ -137,8 +144,8 @@ export default function FieldTree() {
         </Tooltip>
       ),
 
-      row.node.type == "GEOMETRY" && (
-        <Tooltip label="Geometry">
+      row.node.type == FORM_TYPE.GEOMETRY && (
+        <Tooltip label={t("template:indicator_icons.geometry")}>
           <IconButton
             colorScheme="black"
             size="xl"
@@ -151,7 +158,7 @@ export default function FieldTree() {
       ),
 
       row.node.isSummaryField && (
-        <Tooltip label="Summary">
+        <Tooltip label={t("template:indicator_icons.summary")}>
           <IconButton
             colorScheme="black"
             size="xl"
@@ -164,7 +171,7 @@ export default function FieldTree() {
       ),
 
       row.node.isTitleColumn && (
-        <Tooltip label="Title">
+        <Tooltip label={t("template:indicator_icons.title")}>
           <IconButton
             colorScheme="black"
             minW="auto"
@@ -176,7 +183,7 @@ export default function FieldTree() {
       ),
 
       row.node.isFilterable && (
-        <Tooltip label="Filterable">
+        <Tooltip label={t("template:indicator_icons.filterable")}>
           <IconButton
             colorScheme="black"
             size="xl"
@@ -189,7 +196,7 @@ export default function FieldTree() {
       ),
 
       row.node.isRequired && (
-        <Tooltip label="Required">
+        <Tooltip label={t("template:indicator_icons.required")}>
           <IconButton
             colorScheme="black"
             size="lg"
@@ -200,14 +207,10 @@ export default function FieldTree() {
           />
         </Tooltip>
       ),
-      " ",
-      " ",
-      " ",
-      " ",
-      "  ",
-      " ",
-      <Tooltip label="edit">
+
+      <Tooltip label={t("template:action_icons.edit")}>
         <IconButton
+          marginLeft={95}
           colorScheme="green"
           minW="auto"
           aria-label="Edit Field"
@@ -217,7 +220,7 @@ export default function FieldTree() {
         />
       </Tooltip>,
 
-      <Tooltip label="delete">
+      <Tooltip label={t("template:action_icons.delete")}>
         <IconButton
           colorScheme="red"
           minW="auto"
