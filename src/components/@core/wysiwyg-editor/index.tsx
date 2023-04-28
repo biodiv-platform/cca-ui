@@ -30,14 +30,36 @@ export default function WYSIWYGEditor({ uploadHandler, ...props }: WYSIWYGEditor
         height: "300px",
         relative_urls: false,
         convert_urls: false,
-        plugins: ["advlist", "paste", "autolink", "lists", "link", "image", "charmap", "print", "preview", "anchor", "help", "searchreplace", "visualblocks", "code", "insertdatetime", "media", "table", "paste", "wordcount", uploadHandler ? "image" : "na"],        toolbar:
-        "image undo paste-as-text redo  bold italic alignleft aligncenter alignright bullist numlist outdent indent help code",
+        plugins: [
+          "advlist",
+          "paste",
+          "autolink",
+          "lists",
+          "link",
+          "image",
+          "charmap",
+          "print",
+          "preview",
+          "anchor",
+          "help",
+          "searchreplace",
+          "visualblocks",
+          "code",
+          "insertdatetime",
+          "media",
+          "table",
+          "paste",
+          "wordcount",
+          uploadHandler ? "image" : "na"
+        ],
+        toolbar:
+          "image undo paste-as-text redo  bold italic alignleft aligncenter alignright bullist numlist outdent indent help code",
         images_upload_handler: uploadHandler,
         images_upload_base_path: "/",
-          valid_elements: "*[*]",
-          valid_children: "+body[style]",
-          verify_html: false,
-          extended_valid_elements: 'style[type|media],link[rel|type|media|href]',
+        valid_elements: "*[*]",
+        valid_children: "+body[style]",
+        verify_html: false,
+        extended_valid_elements: "style[type|media],link[rel|type|media|href]"
       }}
     />
   );
