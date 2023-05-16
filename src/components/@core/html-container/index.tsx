@@ -115,6 +115,22 @@ const HTMLContainer = styled.div`
     color: #4a5568;
     font-size: small;
   }
+
+
+       
+
+  @media screen and (max-width: 768px) {
+        .container {
+          flex-direction: column;
+        }
+
+        .item {
+          width: 100% !important;
+          // set width to 100% on small screens by over-riding inline css
+        }
+      }
+
+           
 `;
 
 export default HTMLContainer;
