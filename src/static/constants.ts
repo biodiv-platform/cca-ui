@@ -11,7 +11,7 @@ export const ENDPOINT = {
   CCA: `${API_ENDPOINT}cca-api/api`,
   ESMODULE: `${API_ENDPOINT}esmodule-api/api`,
   FILES: `${API_ENDPOINT}files-api/api`,
-  INTEGRATOR: `${API_ENDPOINT}integrator-api/api`,
+  INTEGRATOR: `${API_ENDPOINT}cca-integrator-api/api`,
   NAKSHA: `https://indiabiodiversity.org/naksha-api/api`,
   PAGES: `${API_ENDPOINT}pages-api/api`,
   USER: `${API_ENDPOINT}user-api/api`,
