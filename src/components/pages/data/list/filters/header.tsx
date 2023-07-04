@@ -3,7 +3,7 @@ import useTranslation from "next-translate/useTranslation";
 import React, { useMemo } from "react";
 
 import useResponseList from "../use-response-list";
-
+import Search from "./search";
 export function FiltersHeader() {
   const { filter } = useResponseList();
   const { t } = useTranslation();
@@ -28,6 +28,7 @@ export function FiltersHeader() {
       <Heading as="h2" fontSize="xl" fontWeight="semibold">
         {t("template:filters")} ({filtersCount})
       </Heading>
+      <Search />
       <Button size="xs" onClick={handleOnClearFilter}>
         {t("common:clear")}
       </Button>
