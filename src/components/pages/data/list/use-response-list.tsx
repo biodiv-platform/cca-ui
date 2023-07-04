@@ -1,4 +1,4 @@
-import { axGetDataListPage, axGetMapAndAggregation } from "@services/cca.service";
+import { axGetMapAndAggregation, axSearchCCAData, axSearchMapCCAData } from "@services/cca.service";
 import { isBrowser, LIST_PAGINATION_LIMIT } from "@static/constants";
 import { stringify } from "@utils/query-string";
 import useTranslation from "next-translate/useTranslation";
@@ -22,6 +22,14 @@ interface ResponseListContextProps {
 
   currentCard;
   setCurrentCard;
+  list_results;
+  setListResults;
+  map_results;
+  setMapResults;
+  isSearching;
+  setIsSearching;
+  query;
+  setQuery;
 }
 
 interface ResponseListProviderProps {
@@ -47,25 +55,29 @@ export const ResponseListProvider = ({
   const [map, setMap] = useState([]);
   const { lang } = useTranslation();
   const [isLoading, setIsLoading] = useState(false);
+  const [list_results, setListResults] = useState([]);
+  const [map_results, setMapResults] = useState([]);
+  const [isSearching, setIsSearching] = useState(false);
+  const [query, setQuery] = useState("");
 
   const fetchListData = async () => {
     NProgress.start();
     setIsLoading(true);
-
-    const payload = { ...filter.f, language: lang, limit: LIST_PAGINATION_LIMIT };
-
+    const payload = { ...filter.f, language: lang, limit: LIST_PAGINATION_LIMIT, query };
+    const response = await axSearchCCAData(payload);
+    const map_response = await axSearchMapCCAData(payload);
     if (filter.f.offset === 0) {
       const dataMapAggregation = await axGetMapAndAggregation(payload);
       setAggregation(dataMapAggregation.aggregation);
       setMap(dataMapAggregation.map);
     }
 
-    const response = await axGetDataListPage(payload);
     if (response.success) {
       setResponsesI((_draft) => {
         _draft.l = filter.f.offset === 0 ? response.data : [..._draft.l, ...response.data];
         _draft.hasMore = response.data.length === LIST_PAGINATION_LIMIT;
-        _draft.totalCount = response.totalCount;
+        _draft.totalCount = map_response.data.length;
+        setMap(map_response.data);
       });
     }
 
@@ -80,8 +92,14 @@ export const ResponseListProvider = ({
   }, [filter]);
 
   useEffect(() => {
+    setFilter((_draft) => {
+      _draft.f.offset = 0;
+    });
+  }, [map_results]);
+
+  useEffect(() => {
     fetchListData();
-  }, [filter]);
+  }, [filter, isSearching]);
 
   const addFilter = (key, value) => {
     if (value?.length === 0) {
@@ -132,7 +150,15 @@ export const ResponseListProvider = ({
         resetFilter,
 
         currentCard,
-        setCurrentCard
+        setCurrentCard,
+        list_results,
+        setListResults,
+        map_results,
+        setMapResults,
+        isSearching,
+        setIsSearching,
+        query,
+        setQuery
       }}
     >
       {children}
