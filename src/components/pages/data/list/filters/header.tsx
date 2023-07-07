@@ -17,31 +17,31 @@ export function FiltersHeader() {
     [filter.f]
   );
 
-  return (<>
-     <Flex
-      alignItems="center"
-      justifyContent="space-between"
-      w="full"
-      p={4}
-      borderBottom="1px solid var(--chakra-colors-gray-300)"
-    >
-       <Search/>
-    </Flex>
-    <Flex
-      alignItems="center"
-      justifyContent="space-between"
-      w="full"
-      p={4}
-      borderBottom="1px solid var(--chakra-colors-gray-300)"
-    >
-      <Heading as="h2" fontSize="xl" fontWeight="semibold">
-        {t("template:filters")} ({filtersCount})
-      </Heading>
-      <Button size="xm" onClick={handleOnClearFilter}>
-        {t("common:clear")}
-      </Button>
-    </Flex>
-   
+  return (
+    <>
+      <Flex
+        alignItems="center"
+        justifyContent="space-between"
+        w="full"
+        p={4}
+        borderBottom="1px solid var(--chakra-colors-gray-300)"
+      >
+        <Search />
+      </Flex>
+      <Flex
+        alignItems="center"
+        justifyContent="space-between"
+        w="full"
+        p={4}
+        borderBottom="1px solid var(--chakra-colors-gray-300)"
+      >
+        <Heading as="h2" fontSize="xl" fontWeight="semibold">
+          {t("template:filters")} ({filtersCount})
+        </Heading>
+        <Button size="xm" onClick={handleOnClearFilter}>
+          {t("common:clear")}
+        </Button>
+      </Flex>
     </>
   );
 }
