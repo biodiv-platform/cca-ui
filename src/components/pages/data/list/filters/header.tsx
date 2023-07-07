@@ -17,7 +17,16 @@ export function FiltersHeader() {
     [filter.f]
   );
 
-  return (
+  return (<>
+     <Flex
+      alignItems="center"
+      justifyContent="space-between"
+      w="full"
+      p={4}
+      borderBottom="1px solid var(--chakra-colors-gray-300)"
+    >
+       <Search/>
+    </Flex>
     <Flex
       alignItems="center"
       justifyContent="space-between"
@@ -28,10 +37,11 @@ export function FiltersHeader() {
       <Heading as="h2" fontSize="xl" fontWeight="semibold">
         {t("template:filters")} ({filtersCount})
       </Heading>
-      <Search />
-      <Button size="xs" onClick={handleOnClearFilter}>
+      <Button size="xm" onClick={handleOnClearFilter}>
         {t("common:clear")}
       </Button>
     </Flex>
+   
+    </>
   );
 }
