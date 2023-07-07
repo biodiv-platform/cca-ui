@@ -1,4 +1,4 @@
-import { Box, Input, InputGroup } from "@chakra-ui/react";
+import { Box, Button,Input, InputGroup } from "@chakra-ui/react";
 import { axSearchMapCCAData } from "@services/cca.service";
 import React from "react";
 
@@ -34,8 +34,12 @@ function Search() {
     }
   };
 
+  const handleButtonClick = () => {
+    handleSearch();
+  };
+
   return (
-    <Box position="relative">
+    <Box position="relative" display="flex" alignItems="center">
       <InputGroup>
         <Input
           type="text"
@@ -43,8 +47,11 @@ function Search() {
           onChange={handleInputChange}
           onKeyDown={handleKeyDown}
           placeholder="Search CCA"
-        ></Input>
+        />
       </InputGroup>
+      <Button size="xm" onClick={handleButtonClick} ml={10} height="100%">
+        Search
+      </Button>
     </Box>
   );
 }
