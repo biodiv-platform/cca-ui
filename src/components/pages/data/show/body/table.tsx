@@ -1,20 +1,16 @@
 import { Box, Table, Tbody, Td, Tr } from "@chakra-ui/react";
 import { renderSimpleValue } from "@utils/field";
-import React, { useMemo } from "react";
+import React from "react";
 
 import useTemplateResponseShow from "../use-template-response-show";
 
 export default function ShowTable({ data, title }) {
   const { response } = useTemplateResponseShow();
 
-  const tableData = useMemo(
-    () =>
-      data.map((row) => ({
-        label: row.name,
-        value: renderSimpleValue(response.ccaFieldValues[row.fieldId]?.value, row.type) || "-"
-      })),
-    []
-  );
+  const tableData = data.map((row) => ({
+    label: row.name,
+    value: renderSimpleValue(response.ccaFieldValues[row.fieldId]?.value, row.type) || "-"
+  }));
 
   if (tableData.length === 0) {
     return null;
