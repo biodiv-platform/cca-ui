@@ -64,20 +64,21 @@ export const ResponseListProvider = ({
     NProgress.start();
     setIsLoading(true);
     const payload = { ...filter.f, language: lang, limit: LIST_PAGINATION_LIMIT, query };
-    const response = await axSearchCCAData(payload);
-    const map_response = await axSearchMapCCAData(payload);
+    const ccaDataResponse = await axSearchCCAData(payload);
+    const ccaMapResponse = await axSearchMapCCAData(payload);
     if (filter.f.offset === 0) {
       const dataMapAggregation = await axGetMapAndAggregation(payload);
       setAggregation(dataMapAggregation.aggregation);
       setMap(dataMapAggregation.map);
     }
 
-    if (response.success) {
+    if (ccaDataResponse.success) {
       setResponsesI((_draft) => {
-        _draft.l = filter.f.offset === 0 ? response.data : [..._draft.l, ...response.data];
-        _draft.hasMore = response.data.length === LIST_PAGINATION_LIMIT;
-        _draft.totalCount = map_response.data.length;
-        setMap(map_response.data);
+        _draft.l =
+          filter.f.offset === 0 ? ccaDataResponse.data : [..._draft.l, ...ccaDataResponse.data];
+        _draft.hasMore = ccaDataResponse.data.length === LIST_PAGINATION_LIMIT;
+        _draft.totalCount = ccaMapResponse.data.length;
+        setMap(ccaMapResponse.data);
       });
     }
 
