@@ -3,7 +3,7 @@ import useTranslation from "next-translate/useTranslation";
 import React, { useMemo } from "react";
 
 import useResponseList from "../use-response-list";
-
+import Search from "./search";
 export function FiltersHeader() {
   const { filter } = useResponseList();
   const { t } = useTranslation();
@@ -18,19 +18,30 @@ export function FiltersHeader() {
   );
 
   return (
-    <Flex
-      alignItems="center"
-      justifyContent="space-between"
-      w="full"
-      p={4}
-      borderBottom="1px solid var(--chakra-colors-gray-300)"
-    >
-      <Heading as="h2" fontSize="xl" fontWeight="semibold">
-        {t("template:filters")} ({filtersCount})
-      </Heading>
-      <Button size="xs" onClick={handleOnClearFilter}>
-        {t("common:clear")}
-      </Button>
-    </Flex>
+    <>
+      <Flex
+        alignItems="center"
+        justifyContent="space-between"
+        w="full"
+        p={4}
+        borderBottom="1px solid var(--chakra-colors-gray-300)"
+      >
+        <Search />
+      </Flex>
+      <Flex
+        alignItems="center"
+        justifyContent="space-between"
+        w="full"
+        p={4}
+        borderBottom="1px solid var(--chakra-colors-gray-300)"
+      >
+        <Heading as="h2" fontSize="xl" fontWeight="semibold">
+          {t("template:filters")} ({filtersCount})
+        </Heading>
+        <Button size="xm" onClick={handleOnClearFilter}>
+          {t("common:clear")}
+        </Button>
+      </Flex>
+    </>
   );
 }

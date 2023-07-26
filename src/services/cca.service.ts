@@ -215,9 +215,8 @@ export const axGetDataSummaryById = async (id) => {
 export const axGetMapAndAggregation = async (params) => {
   const [_aggregation, _map] = await Promise.all([
     axGetDataListAggregation(params),
-    axGetDataListMap(params)
+    axSearchMapCCAData(params)
   ]);
-
   return {
     success: _aggregation.success && _map.success,
     aggregation: _aggregation.data,
@@ -355,6 +354,25 @@ export const axDownloadRequest = async (params) => {
 export const axGetCCAData = async (params) => {
   try {
     const { data } = await plainHttp.get(`${ENDPOINT.CCA}/v1/data/${params}`);
+    return { success: true, data };
+  } catch (e) {
+    return { success: false, data: {} };
+  }
+};
+
+export const axSearchCCAData = async (params) => {
+  try {
+    const { data } = await plainHttp.get(`${ENDPOINT.CCA}/v1/data/search?${stringify(params)}`);
+
+    return { success: true, ...data };
+  } catch (e) {
+    return { success: false, data: {} };
+  }
+};
+
+export const axSearchMapCCAData = async (params) => {
+  try {
+    const { data } = await plainHttp.get(`${ENDPOINT.CCA}/v1/data/search/map?${stringify(params)}`);
     return { success: true, data };
   } catch (e) {
     return { success: false, data: {} };
