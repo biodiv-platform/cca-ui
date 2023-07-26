@@ -13,7 +13,7 @@ export default function ShowTable({ data, title }) {
         label: row.name,
         value: renderSimpleValue(response.ccaFieldValues[row.fieldId]?.value, row.type) || "-"
       })),
-    []
+    [title]
   );
 
   if (tableData.length === 0) {
