@@ -264,7 +264,7 @@ export const axGetFiltersListByShortName = async (params) => {
 
 export const axGetUserParticipations = async (params) => {
   try {
-    const { data } = await http.get(`${ENDPOINT.CCA}/v1/data/myList/?${stringify(params)}`);
+    const { data } = await plainHttp.get(`${ENDPOINT.CCA}/v1/data/myList/?${stringify(params)}`);
 
     return { success: true, data: data.ccaDataList };
   } catch (e) {
