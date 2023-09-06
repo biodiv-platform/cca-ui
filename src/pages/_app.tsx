@@ -6,6 +6,7 @@ import { Box, ChakraProvider } from "@chakra-ui/react";
 import AuthWall from "@components/@core/container/authwall";
 import Footer from "@components/@core/footer";
 import NavBar from "@components/@core/navbar";
+import NavbarDark from "@components/@core/navbar-dark";
 import { customTheme } from "@configs/theme";
 import { GlobalStateProvider } from "@hooks/use-global-state";
 import { getParsedUser } from "@utils/auth";
@@ -25,6 +26,7 @@ function MainApp({ Component, pageProps, user }) {
     <GlobalStateProvider initialState={{ user }}>
       <ChakraProvider theme={customTheme}>
         <NavBar />
+        <NavbarDark />
         <Box minH="calc(100vh - var(--heading-height))">
           <Component {...pageProps} />
         </Box>

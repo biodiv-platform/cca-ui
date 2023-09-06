@@ -8,6 +8,7 @@ const API_ENDPOINT = process.browser
 
 export const ENDPOINT = {
   ACTIVITY: `${API_ENDPOINT}activity-api/api`,
+  API: `${SITE_CONFIG.SITE.URL}/api`,
   CCA: `${API_ENDPOINT}cca-api/api`,
   ESMODULE: `${API_ENDPOINT}esmodule-api/api`,
   FILES: `${API_ENDPOINT}files-api/api`,
@@ -15,6 +16,7 @@ export const ENDPOINT = {
   NAKSHA: `https://indiabiodiversity.org/naksha-api/api`,
   PAGES: `${API_ENDPOINT}pages-api/api`,
   USER: `${API_ENDPOINT}user-api/api`,
+  USERGROUP: `${API_ENDPOINT}userGroup-api/api`,
   RAW: `${API_ENDPOINT}biodiv`
 };
 
@@ -93,3 +95,15 @@ export const OPTION_SEPRATOR = "|";
 export const MENU_PORTAL_TARGET = isBrowser ? document.body : undefined;
 
 export const LIST_PAGINATION_LIMIT = 10;
+
+export const RESOURCE_SIZE = {
+  APPLE_TOUCH: "?h=180&w=180&crop=fit&preserve=true",
+  DEFAULT: "?h=200",
+  LIST_THUMBNAIL: "?h=300",
+  MANIFEST: "${icon}?h=${size}&w=${size}&crop=fit&preserve=true",
+  PREVIEW: "?h=500",
+  RECENT_THUMBNAIL: "?h=230",
+  THUMBNAIL: "?h=34",
+  TWITTER: "?w=600&h=330&fit=center&preserve=true",
+  PAGE: "?w=1440&h=300&fit=center"
+};

@@ -20,6 +20,11 @@ interface GlobalStateContextProps {
   isLoggedIn: boolean;
   logOut;
 
+  currentGroup;
+  setCurrentGroup;
+  isCurrentGroupMember?: boolean;
+  setIsCurrentGroupMember;
+
   languageId?;
 }
 
@@ -35,6 +40,8 @@ export const GlobalStateProvider = ({ initialState, children }: GlobalStateProvi
   const [pages, setPages] = useState<any[]>([]);
   const router = useRouter();
   const { lang, t } = useTranslation();
+
+  const [currentGroup, setCurrentGroup] = useState<any>();
 
   const languageId = useMemo(() => getLanguageId(lang)?.ID, [lang]);
   const isLoggedIn = useMemo(() => !!user.id, [user]);
@@ -79,7 +86,10 @@ export const GlobalStateProvider = ({ initialState, children }: GlobalStateProvi
 
         isPreviewMode,
         isLoggedIn,
-        logOut
+        logOut,
+
+        currentGroup,
+        setCurrentGroup
       }}
     >
       <DefaultSeo

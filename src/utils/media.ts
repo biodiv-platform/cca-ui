@@ -58,3 +58,26 @@ export const getTraitIcon = (resourceUrl, w = 40) => {
     ? resourceUrl
     : `${ENDPOINT.FILES}/get/crop/traits${resourceUrl}?w=${w}`;
 };
+
+export const RESOURCE_CTX = {
+  MY_UPLOADS: "MY_UPLOADS",
+  OBSERVATION: "OBSERVATION",
+  PAGES: "PAGES",
+  SPECIES: "SPECIES",
+  USERGROUPS: "USERGROUPS"
+};
+
+export const groupsThumbnail = (resourceType, resourceUrl, size) => {
+  return resourceUrl
+    ? `${ENDPOINT.FILES}/get/crop/${RESOURCE_CTX_MAP[resourceType]}/${resourceUrl}${size}`
+    : undefined;
+};
+
+const RESOURCE_CTX_MAP = {
+  MY_UPLOADS: "myUploads",
+  OBSERVATION: "observations",
+  PAGES: "pages",
+  SPECIES_FIELD: "img",
+  SPECIES: "img",
+  USERGROUPS: "userGroups"
+};

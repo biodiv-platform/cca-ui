@@ -1,18 +1,65 @@
-import { CloseIcon, HamburgerIcon } from "@chakra-ui/icons";
-import { Box, Flex, HStack, IconButton, Image, Link, Stack, useDisclosure } from "@chakra-ui/react";
+import { ChevronDownIcon, CloseIcon, HamburgerIcon } from "@chakra-ui/icons";
+import {
+  Box,
+  Flex,
+  IconButton,
+  Image,
+  Link,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuList,
+  Stack,
+  useDisclosure
+} from "@chakra-ui/react";
+import useGlobalState from "@hooks/use-global-state";
+import { fetchGroups } from "@services/usergroup.service";
 import { containerMaxW } from "@static/navmenu";
 import dynamic from "next/dynamic";
 import NextLink from "next/link";
 import useTranslation from "next-translate/useTranslation";
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 const LanguageSwitcher = dynamic(() => import("./language-switcher"), { ssr: false });
 const MenuItems = dynamic(() => import("./menu-items"), { ssr: false });
 const NavbarAuthOption = dynamic(() => import("./auth-option"), { ssr: false });
 
+type Group = {
+  id: number;
+  name: string;
+  icon: string;
+  webAddress: string;
+  isParticipatory: boolean;
+};
+
 export default function NavBar() {
+  const { setCurrentGroup } = useGlobalState();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { t } = useTranslation();
+
+  const [groups, setGroups] = useState<Group[]>([]);
+
+  const handleGroupClick = (group: Group) => {
+    setCurrentGroup(group); // Set the current group when a group is clicked
+  };
+
+  const handleCommunityConservedAreasClick = () => {
+    setCurrentGroup(null); // Set currentGroup to null when clicking on the icon
+  };
+
+  useEffect(() => {
+    fetchGroups()
+      .then((response) => {
+        if (response.success) {
+          setGroups(response.data);
+        } else {
+          console.error("Error fetching groups");
+        }
+      })
+      .catch((error) => {
+        console.error("Error fetching groups:", error);
+      });
+  }, []);
 
   return (
     <Box h={16}>
@@ -43,16 +90,30 @@ export default function NavBar() {
               onClick={isOpen ? onClose : onOpen}
               className="no-print"
             />
+
             <NextLink href="/" passHref={true}>
-              <Link>
+              <Link onClick={handleCommunityConservedAreasClick}>
+                {" "}
+                {/* Add onClick handler here */}
                 <Image alt={t("common:site.title")} src="/next-assets/logo.png" />
               </Link>
             </NextLink>
           </Flex>
           <Flex alignItems="center" className="no-print">
-            <HStack as="nav" spacing={4} display={{ base: "none", md: "flex" }}>
-              <MenuItems />
-            </HStack>
+            <Menu>
+              <MenuButton as={Link} rightIcon={<ChevronDownIcon />} style={{ color: "black" }}>
+                Groups
+              </MenuButton>
+              <MenuList color="black" bg="white">
+                {groups.map((group) => (
+                  <NextLink href={`/group/${group.id}`} key={group.id} passHref>
+                    <Link onClick={() => handleGroupClick(group)}>
+                      <MenuItem>{group.name}</MenuItem>
+                    </Link>
+                  </NextLink>
+                ))}
+              </MenuList>
+            </Menu>
             <LanguageSwitcher />
             <NavbarAuthOption />
           </Flex>

@@ -5262,6 +5262,11 @@ react-select@^5.4.0:
     prop-types "^15.6.0"
     react-transition-group "^4.3.0"
 
+react-simple-wysiwyg@^2.2.5:
+  version "2.2.5"
+  resolved "https://registry.yarnpkg.com/react-simple-wysiwyg/-/react-simple-wysiwyg-2.2.5.tgz#804881576ef81e9e685a49002ba6f4ba7045e81c"
+  integrity sha512-cNut1O8wAavVJKi3cobLlM3VIjiJG4clBSJDEz4Rgc6V+ww7bmjp8KGTuJJw79ZAsJDYGfN1ic/80u2et8GZZg==
+
 react-slick@^0.29.0:
   version "0.29.0"
   resolved "https://registry.yarnpkg.com/react-slick/-/react-slick-0.29.0.tgz#0bed5ea42bf75a23d40c0259b828ed27627b51bb"
