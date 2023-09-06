@@ -1,5 +1,5 @@
 import { ENDPOINT } from "@static/constants";
-import { formDataHeaders, http,plainHttp } from "@utils/http";
+import { formDataHeaders, http } from "@utils/http";
 import { nanoid } from "nanoid";
 
 import { axClearMemoryCache } from "./api.service";
@@ -37,7 +37,7 @@ export const axUploadResource = async (resource: File, directory, nestedPath?: s
 export const fetchGroups = async () => {
   const GROUPS_API_URL = `${ENDPOINT.USERGROUP}/v1/group/list`;
   try {
-    const response = await plainHttp.get(GROUPS_API_URL);
+    const response = await http.get(GROUPS_API_URL);
     const { data } = response;
     return { success: true, data };
   } catch (error) {
@@ -48,7 +48,7 @@ export const fetchGroups = async () => {
 
 export const fetchGroupDetails = async (groupId) => {
   try {
-    const response = await plainHttp.get(`${ENDPOINT.USERGROUP}/v1/group/${groupId}`);
+    const response = await http.get(`${ENDPOINT.USERGROUP}/v1/group/${groupId}`);
     const { data } = response;
     return { success: true, data };
   } catch (error) {
