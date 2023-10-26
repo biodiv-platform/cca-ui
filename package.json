@@ -66,6 +66,7 @@
     "react-mentions": "^4.4.7",
     "react-phone-number-input": "^3.2.11",
     "react-select": "^5.4.0",
+    "react-simple-wysiwyg": "^2.2.5",
     "react-slick": "^0.29.0",
     "react-sortable-tree": "^2.8.0",
     "react-table": "^7.8.0",

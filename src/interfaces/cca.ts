@@ -14,3 +14,11 @@ export interface CCATemplate {
   shortName?: string;
   fields?: CCAField[];
 }
+
+export interface UserGroupIbp {
+  id?: number; // int64
+  name?: string;
+  icon?: string;
+  webAddress?: string;
+  isParticipatory?: boolean;
+}
