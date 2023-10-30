@@ -1,10 +1,12 @@
 import { UserListContextProvider } from "@components/pages/user/common/use-user-filter";
 import UserListComponent from "@components/pages/user/user-list-data";
 import { Role } from "@interfaces/custom";
+import { axGroupList } from "@services/app.service";
 import { axGetUserList } from "@services/user.service";
 import { LIST_PAGINATION_LIMIT } from "@static/user";
 import { DEFAULT_FILTER } from "@static/user";
 import { hasAccess } from "@utils/auth";
+import { absoluteUrl } from "@utils/basic";
 import React from "react";
 
 function UserListPage({ userListData, initialFilterParams, isAdmin }) {
@@ -25,8 +27,10 @@ UserListPage.config = {
 
 export const getServerSideProps = async (ctx) => {
   const nextOffset = (Number(ctx.query.offset) || LIST_PAGINATION_LIMIT) + LIST_PAGINATION_LIMIT;
+  const aURL = absoluteUrl(ctx).href;
   const isAdmin = hasAccess([Role.Admin], ctx);
-  const initialFilterParams = { ...ctx.query, ...DEFAULT_FILTER };
+  const { currentGroup } = await axGroupList(aURL);
+  const initialFilterParams = { ...ctx.query, ...DEFAULT_FILTER, userGroupList: currentGroup?.id };
   const { data } = await axGetUserList(initialFilterParams);
 
   return {
