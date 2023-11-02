@@ -1,7 +1,7 @@
 import useGlobalState from "@hooks/use-global-state";
 import { axMemberGroupList, axMemberGroupListByUserId } from "@services/usergroup.service";
 import { isBrowser } from "@static/constants";
-import { DEFAULT_FILTER } from "@static/documnet-list";
+import { DEFAULT_FILTER } from "@static/user";
 import { removeEmptyKeys } from "@utils/basic";
 import { stringify } from "@utils/query-string";
 import NProgress from "nprogress";

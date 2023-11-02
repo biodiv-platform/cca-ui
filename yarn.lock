@@ -794,6 +794,11 @@
     "@chakra-ui/media-query" "3.2.7"
     "@chakra-ui/react-use-previous" "2.0.2"
 
+"@chakra-ui/skip-nav@^2.1.0":
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/@chakra-ui/skip-nav/-/skip-nav-2.1.0.tgz#cac27eecc6eded1e83c8f0cf7445d727739cb325"
+  integrity sha512-Hk+FG+vadBSH0/7hwp9LJnLjkO0RPGnx7gBJWI4/SpoJf3e4tZlWYtwGj0toYY4aGKl93jVghuwGbDBEMoHDug==
+
 "@chakra-ui/slider@2.0.12":
   version "2.0.12"
   resolved "https://registry.yarnpkg.com/@chakra-ui/slider/-/slider-2.0.12.tgz#42fc5fe385c507276da29f4aa49a6408ee853978"
@@ -2380,6 +2385,11 @@ array-includes@^3.1.5:
     get-intrinsic "^1.1.1"
     is-string "^1.0.7"
 
+array-move@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/array-move/-/array-move-4.0.0.tgz#2c3730f056cc926f62a59769a5a8cda2fb6d8c55"
+  integrity sha512-+RY54S8OuVvg94THpneQvFRmqWdAHeqtMzgMW6JNurHxe8rsS07cHQdfGkXnTUXiBcyZ0j3SiDIxxj0RPiqCkQ==
+
 array-union@^2.1.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/array-union/-/array-union-2.1.0.tgz#b798420adbeb1de828d84acd8a2e23d3efe85e8d"
@@ -2423,6 +2433,11 @@ attr-accept@^2.2.2:
   version "2.2.2"
   resolved "https://registry.yarnpkg.com/attr-accept/-/attr-accept-2.2.2.tgz#646613809660110749e92f2c10833b70968d929b"
   integrity sha512-7prDjvt9HmqiZ0cl5CRjtS84sEyhsHP2coDkaZKRKVfCDo9s7iw7ChVmar78Gu9pC4SoR/28wFu/G5JJhTnqEg==
+
+auto-toc@^0.0.6:
+  version "0.0.6"
+  resolved "https://registry.yarnpkg.com/auto-toc/-/auto-toc-0.0.6.tgz#db4b765c9507a949b683683aa076ac9a9fa4a576"
+  integrity sha512-XAOJwRGuWIz4+7qKiLKrc0c0Txm/caFlvbfSo9SvgPmq9ezvmSXMEVDXFqON6fjsMwCIfd8xOFjqtDkK7KmIOw==
 
 axe-core@^4.3.5:
   version "4.3.5"

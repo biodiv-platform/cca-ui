@@ -1,5 +1,5 @@
 import { ArrowBackIcon } from "@chakra-ui/icons";
-import { Box, Button, Flex, Switch, Text } from "@chakra-ui/react";
+import { Box, Button } from "@chakra-ui/react";
 import { CheckboxField } from "@components/form/checkbox";
 import { SubmitButton } from "@components/form/submit-button";
 import { TextAreaField } from "@components/form/textarea";
@@ -10,7 +10,6 @@ import React, { useEffect, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 
 import { galleryFieldValidationSchema } from "./common";
-import ExsistingResourceForm from "./exsisting-resource-form";
 import NewResourceForm from "./new-resource-form";
 
 interface IGallerySetupForm {
@@ -28,9 +27,8 @@ interface IGallerySetupForm {
 
 export default function GallerySetupFrom({ setIsCreate, galleryList, setGalleryList }) {
   const { t } = useTranslation();
-  const [imagePicker, setImagePicker] = useState<boolean>(true);
   const { currentGroup } = useGlobalState();
-  const [defaultValues, setDefaultValues] = useState<IGallerySetupForm | any>(
+  const [defaultValues] = useState<IGallerySetupForm | any>(
     currentGroup.id ? undefined : { truncated: true }
   );
   const hForm = useForm<any>({
@@ -50,10 +48,6 @@ export default function GallerySetupFrom({ setIsCreate, galleryList, setGalleryL
     setIsCreate(false);
   };
 
-  const handleChange = () => {
-    setImagePicker(!imagePicker);
-  };
-
   useEffect(() => {
     hForm.reset(defaultValues);
   }, [defaultValues]);
@@ -70,20 +64,9 @@ export default function GallerySetupFrom({ setIsCreate, galleryList, setGalleryL
           >
             {t("group:homepage_customization.back")}
           </Button>
-          <Flex alignItems="center">
-            <Text m={3}>{t("group:homepage_customization.resources.new_image")}</Text>
-            <Switch onChange={handleChange} />
-            <Text m={3}>{t("group:homepage_customization.resources.observation_image")}</Text>
-          </Flex>
         </Box>
-        {imagePicker ? (
-          <NewResourceForm />
-        ) : (
-          <ExsistingResourceForm
-            defaultValues={defaultValues}
-            setDefaultValues={setDefaultValues}
-          />
-        )}
+        <NewResourceForm />
+
         <TextAreaField
           name="customDescripition"
           label={t("group:homepage_customization.table.description")}

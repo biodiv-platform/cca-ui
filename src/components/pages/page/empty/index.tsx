@@ -1,19 +1,21 @@
 import { ArrowForwardIcon } from "@chakra-ui/icons";
 import { Button, Center, Text } from "@chakra-ui/react";
 import { Container } from "@components/@core/container";
-import { Role } from "@interfaces/custom";
-import { hasAccess } from "@utils/auth";
-import NextLink from "next/link";
+import LocalLink from "@components/@core/local-link";
+import useGlobalState from "@hooks/use-global-state";
+import { axCheckUserGroupFounderOrAdmin } from "@services/usergroup.service";
 import useTranslation from "next-translate/useTranslation";
 import React, { useEffect, useState } from "react";
 
 export default function EmptyPageComponent() {
+  const { currentGroup } = useGlobalState();
+
   const { t } = useTranslation();
 
   const [canCreate, setCanCreate] = useState(false);
 
   useEffect(() => {
-    setCanCreate(hasAccess([Role.Admin]));
+    axCheckUserGroupFounderOrAdmin(currentGroup.id, true).then(setCanCreate);
   }, []);
 
   return (
@@ -24,11 +26,11 @@ export default function EmptyPageComponent() {
             {t("page:empty")}
           </Text>
           {canCreate && (
-            <NextLink href="/page/create">
+            <LocalLink prefixGroup={true} href="/page/create">
               <Button as="a" colorScheme="blue" rightIcon={<ArrowForwardIcon />}>
                 {t("page:create.title")}
               </Button>
-            </NextLink>
+            </LocalLink>
           )}
         </div>
       </Center>

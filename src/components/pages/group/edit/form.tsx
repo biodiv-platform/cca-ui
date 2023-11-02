@@ -15,23 +15,15 @@ import { FormProvider, useForm } from "react-hook-form";
 import * as Yup from "yup";
 
 import AreaDrawField from "../common/area-draw-field";
-import IconCheckboxField from "../common/icon-checkbox-field";
 import ImageUploaderField from "../common/image-uploader-field";
 import { STATIC_GROUP_PAYLOAD } from "../common/static";
 
 interface IuserGroupEditProps {
   groupInfo: UserGroupEditData;
   userGroupId;
-  habitats;
-  speciesGroups;
 }
 
-export default function UserGroupEditForm({
-  groupInfo,
-  userGroupId,
-  habitats,
-  speciesGroups
-}: IuserGroupEditProps) {
+export default function UserGroupEditForm({ groupInfo, userGroupId }: IuserGroupEditProps) {
   const { t } = useTranslation();
   const router = useLocalRouter();
   const { languageId } = useGlobalState();
@@ -101,24 +93,10 @@ export default function UserGroupEditForm({
         <SimpleGrid columns={{ base: 1, md: 4 }} spacing={{ md: 4 }}>
           <Box gridColumn="1/4">
             <TextBoxField name="name" isRequired={true} label={t("group:name")} />
-            <RichTextareaField name="description" label={t("form:description.title")} />
+            <RichTextareaField name="description" label={t("form:description")} />
           </Box>
           <ImageUploaderField label="Logo" name="icon" />
         </SimpleGrid>
-        <IconCheckboxField
-          name="speciesGroupId"
-          label={t("common:species_coverage")}
-          options={speciesGroups}
-          type="species"
-          isRequired={true}
-        />
-        <IconCheckboxField
-          name="habitatId"
-          label={t("common:habitats_covered")}
-          options={habitats}
-          type="habitat"
-          isRequired={true}
-        />
         <CheckboxField name="allowUserToJoin" label={t("group:join_without_invitation")} />
         <AreaDrawField
           label={t("group:spatial_coverge")}

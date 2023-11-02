@@ -26,7 +26,6 @@ export default function HomePageCustomizationForm({ userGroupId, homePageDetails
     showGallery,
     showStats,
     showDesc,
-    showRecentObservation,
     showGridMap,
     showPartners,
     gallerySlider,
@@ -40,7 +39,6 @@ export default function HomePageCustomizationForm({ userGroupId, homePageDetails
         showGallery: Yup.boolean(),
         showStats: Yup.boolean(),
         showDesc: Yup.boolean(),
-        showRecentObservation: Yup.boolean(),
         showGridMap: Yup.boolean(),
         showPartners: Yup.boolean(),
         description: Yup.string()
@@ -49,7 +47,6 @@ export default function HomePageCustomizationForm({ userGroupId, homePageDetails
     defaultValues: {
       showGallery,
       showStats,
-      showRecentObservation,
       showGridMap,
       showPartners,
       showDesc,
@@ -85,10 +82,6 @@ export default function HomePageCustomizationForm({ userGroupId, homePageDetails
             <SwitchField name="showGallery" label={t("group:homepage_customization.gallery")} />
             <SwitchField name="showStats" label={t("group:homepage_customization.module_stats")} />
             <SwitchField
-              name="showRecentObservation"
-              label={t("group:homepage_customization.recent_observation")}
-            />
-            <SwitchField
               name="showGridMap"
               label={t("group:homepage_customization.observation_map")}
             />
@@ -97,7 +90,7 @@ export default function HomePageCustomizationForm({ userGroupId, homePageDetails
           </Box>
           <WYSIWYGField
             name="description"
-            label={t("form:description.title")}
+            label={t("form:description")}
             uploadHandler={axUploadEditorPageResource}
           />
         </form>

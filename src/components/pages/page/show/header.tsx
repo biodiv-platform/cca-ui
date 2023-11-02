@@ -3,13 +3,13 @@ import { Avatar, Flex, Heading, Link, SimpleGrid } from "@chakra-ui/react";
 import DeleteActionButton from "@components/@core/action-buttons/delete";
 import ShareActionButton from "@components/@core/action-buttons/share";
 import SimpleActionButton from "@components/@core/action-buttons/simple";
+import { useLocalRouter } from "@components/@core/local-link";
 import NextLink from "@components/@core/next-link";
 import useGlobalState from "@hooks/use-global-state";
 import EditIcon from "@icons/edit";
 import { axDeletePageByID } from "@services/pages.service";
 import { formatTimeStampFromUTC } from "@utils/date";
 import { getUserImage } from "@utils/media";
-import { useRouter } from "next/router";
 import { NextSeo } from "next-seo";
 import useTranslation from "next-translate/useTranslation";
 import React from "react";
@@ -18,13 +18,13 @@ import usePagesSidebar from "../common/sidebar/use-pages-sidebar";
 
 export default function PageHeader({ title, pageId, user, date }) {
   const { t } = useTranslation();
-  const router = useRouter();
+  const router = useLocalRouter();
   const { fetchPages } = useGlobalState();
   const { canEdit } = usePagesSidebar();
 
-  const handleOnEdit = () => router.push(`/page/edit/${pageId}`);
+  const handleOnEdit = () => router.push(`/page/edit/${pageId}`, true);
 
-  const handleOnCreate = () => router.push(`/page/create`);
+  const handleOnCreate = () => router.push(`/page/create`, true);
 
   const handleOnDelete = async (id) => {
     await axDeletePageByID(id);

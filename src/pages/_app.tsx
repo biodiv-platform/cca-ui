@@ -6,6 +6,7 @@ import { Box, ChakraProvider } from "@chakra-ui/react";
 import AuthWall from "@components/@core/container/authwall";
 import Footer from "@components/@core/footer";
 import NavBar from "@components/@core/navbar";
+import NavigationMenuLight from "@components/@core/navigation-menu/light";
 import SITE_CONFIG from "@configs/site-config";
 import { customTheme } from "@configs/theme";
 import { GlobalStateProvider } from "@hooks/use-global-state";
@@ -22,12 +23,20 @@ Router.events.on("routeChangeComplete", () => NProgress.done());
 Router.events.on("routeChangeError", () => NProgress.done());
 
 function MainApp({ Component, pageProps, user, groups, currentGroup, languageId }) {
-  const config = { footer: true, ...Component?.config };
+  const config = { header: true, footer: true, ...Component?.config };
 
   return (
     <GlobalStateProvider initialState={{ user, groups, currentGroup, languageId }}>
       <ChakraProvider theme={customTheme}>
         <NavBar />
+
+        <div className="content">
+          {config.header && (
+            <>
+              <NavigationMenuLight />
+            </>
+          )}
+        </div>
         <Box minH="calc(100vh - var(--heading-height))">
           <Component {...pageProps} />
         </Box>

@@ -69,7 +69,7 @@ const GallerySetupTable = ({
   };
 
   return (
-    <>
+    <div>
       <table style={{ minWidth: "750px" }} className="table table-bordered">
         <thead>
           <tr>
@@ -106,7 +106,7 @@ const GallerySetupTable = ({
           {t("group:homepage_customization.gallery_setup.save_order")}
         </Button>
       </ButtonGroup>
-    </>
+    </div>
   );
 };
 

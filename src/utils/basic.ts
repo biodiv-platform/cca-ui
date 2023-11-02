@@ -45,3 +45,6 @@ export const absoluteUrl = (ctx, asPath?, setLocalhost?) => {
 
   return new URL(`${protocol}//${host}${asPath || ctx?.resolvedUrl || ctx?.req?.url || ""}`);
 };
+
+export const removeEmptyKeys = (obj = {}): any =>
+  Object.fromEntries(Object.entries(obj).filter(([, v]) => (Array.isArray(v) ? v.length : v)));

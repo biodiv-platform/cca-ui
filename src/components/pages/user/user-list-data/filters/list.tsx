@@ -7,6 +7,7 @@ import {
   Box
 } from "@chakra-ui/react";
 import useUserListFilter from "@components/pages/user/common/use-user-filter";
+import SITE_CONFIG from "@configs/site-config";
 import useTranslation from "next-translate/useTranslation";
 import React from "react";
 
@@ -18,6 +19,7 @@ import ProfessionFilter from "./profession";
 import SexTypeFilter from "./sex-type";
 import TimeFilter from "./time";
 import UserFilter from "./user";
+import UserGroupFilter from "./user-group";
 import UserNameFilter from "./username";
 
 export default function FiltersList() {
@@ -75,6 +77,7 @@ export default function FiltersList() {
           </>
         )}
       </AccordionItem>
+      {SITE_CONFIG.USERGROUP.ACTIVE && <UserGroupFilter />}
     </Accordion>
   );
 }

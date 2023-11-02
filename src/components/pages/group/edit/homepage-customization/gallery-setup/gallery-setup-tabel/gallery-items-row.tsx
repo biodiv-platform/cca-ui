@@ -9,7 +9,7 @@ import {
 import { Box, Button, Image, Link } from "@chakra-ui/react";
 import useGlobalState from "@hooks/use-global-state";
 import { RESOURCE_SIZE } from "@static/constants";
-import { getResourceThumbnail, RESOURCE_CTX } from "@utils/media";
+import { getNextResourceThumbnail, RESOURCE_CTX } from "@utils/media";
 import useTranslation from "next-translate/useTranslation";
 import React from "react";
 import { SortableElement } from "react-sortable-hoc";
@@ -19,8 +19,8 @@ const GalleryItemsRow: any = SortableElement(({ itemDetails, onDelete, onEdit })
   const { title, customDescripition, moreLinks, fileName, observationId, truncated } = itemDetails;
   const { currentGroup } = useGlobalState();
   const imgUrl = observationId
-    ? getResourceThumbnail(RESOURCE_CTX.OBSERVATION, fileName, RESOURCE_SIZE.LIST_THUMBNAIL)
-    : getResourceThumbnail(RESOURCE_CTX.USERGROUPS, fileName, RESOURCE_SIZE.LIST_THUMBNAIL);
+    ? getNextResourceThumbnail(RESOURCE_CTX.OBSERVATION, fileName, RESOURCE_SIZE.LIST_THUMBNAIL)
+    : getNextResourceThumbnail(RESOURCE_CTX.USERGROUPS, fileName, RESOURCE_SIZE.LIST_THUMBNAIL);
 
   return (
     <tr>

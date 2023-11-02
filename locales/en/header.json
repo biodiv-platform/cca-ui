@@ -1,10 +1,30 @@
 {
   "about": "About",
   "browse": "Browse CCAs",
+  "group_edit": "Edit Group",
+  "logged_user_only": "Please login to join the group",
+  "member_only": "Please join the group to upload CCAs",
   "login_register": "Log In/Register",
-  "pages": "Pages",
+  "pages": {
+    "empty": "No Pages",
+    "title": "Pages"
+  },
+  "menu_primary": {
+    "groups": {
+      "see_all": "See All",
+      "title": "Groups"
+    }
+  },
+  "menu_secondary": {
+    "pages": {
+      "empty": "No Pages",
+      "title": "Pages"
+    }
+  },
   "participate": "Participate",
   "search": "Search",
+  "sign_in": "Login",
+  "toggle_menu": "toggle menu",
   "templates": "Templates",
   "users": "Users"
 }
