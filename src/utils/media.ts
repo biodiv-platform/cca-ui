@@ -97,3 +97,6 @@ export const getGroupImageThumb = (resourceUrl, height = 32) => {
     ? `${ENDPOINT.FILES}/get/crop/userGroups${resourceUrl}?h=${height}`
     : `/next-assets/species/Unknown.svg`;
 };
+
+export const getLocalIcon = (icon, type = "species") =>
+  `/next-assets/${type}/${icon || "Unknown"}.svg`;
