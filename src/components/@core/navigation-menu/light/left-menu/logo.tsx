@@ -73,14 +73,14 @@ const Logo = styled.div`
 export default function PrimaryLogo({ isOpen, onToggle }) {
   const { currentGroup, isCurrentGroupMember, setIsCurrentGroupMember } = useGlobalState();
   const { t } = useTranslation();
-
-  const { name, nameLocal, icon } = currentGroup;
+  const { name, nameLocal } = currentGroup;
+  const icon = currentGroup.id ? currentGroup.icon : "/next-assets/logo.png";
 
   return (
     <Logo>
       <LocalLink href="/" prefixGroup={true}>
         <Link>
-          <img src={`${icon}?w=128&preserve=true`} width="128px" alt={name} title={name} />
+          <img src={`${icon}?w=128&preserve=true`} alt={name} title={name} />
           <Box ml={2} textAlign="center" maxW={{ base: "8rem", sm: "unset" }}>
             {nameLocal && <Box mb={1}>{nameLocal}</Box>}
             {name}

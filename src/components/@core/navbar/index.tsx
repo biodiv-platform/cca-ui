@@ -1,5 +1,5 @@
 import { CloseIcon, HamburgerIcon } from "@chakra-ui/icons";
-import { Box, Flex, HStack, IconButton, Image, Link, Stack, useDisclosure } from "@chakra-ui/react";
+import { Box, Flex, HStack, IconButton, Link, Stack, useDisclosure } from "@chakra-ui/react";
 import { containerMaxW } from "@static/navmenu";
 import dynamic from "next/dynamic";
 import NextLink from "next/link";
@@ -9,6 +9,7 @@ import React from "react";
 const LanguageSwitcher = dynamic(() => import("./language-switcher"), { ssr: false });
 const MenuItems = dynamic(() => import("./menu-items"), { ssr: false });
 const NavbarAuthOption = dynamic(() => import("./auth-option"), { ssr: false });
+const GroupListItem = dynamic(() => import("./group-list-item"), { ssr: false });
 
 export default function NavBar() {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -44,15 +45,14 @@ export default function NavBar() {
               className="no-print"
             />
             <NextLink href="/" passHref={true}>
-              <Link>
-                <Image alt={t("common:site.title")} src="/next-assets/logo.png" />
-              </Link>
+              <Link>{t("common:site.title")}</Link>
             </NextLink>
           </Flex>
           <Flex alignItems="center" className="no-print">
             <HStack as="nav" spacing={4} display={{ base: "none", md: "flex" }}>
               <MenuItems />
             </HStack>
+            <GroupListItem />
             <LanguageSwitcher />
             <NavbarAuthOption />
           </Flex>

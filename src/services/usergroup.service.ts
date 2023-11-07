@@ -6,6 +6,16 @@ import { reorderRemovedGallerySetup, transformUserGroupList } from "@utils/userG
 
 import { axClearMemoryCache } from "./api.service";
 
+export const axGetUserGroupList = async () => {
+  try {
+    const { data } = await http.get(`${ENDPOINT.USERGROUP}/v1/group/all`);
+    return { success: true, data };
+  } catch (e) {
+    console.error(e);
+    return { success: false, data: [] };
+  }
+};
+
 export const axGetUserGroupById = async (userGroupId) => {
   try {
     const { data } = await plainHttp.get(`${ENDPOINT.USERGROUP}/v1/group/${userGroupId}`);

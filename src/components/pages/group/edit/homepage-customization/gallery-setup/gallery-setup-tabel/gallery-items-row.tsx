@@ -16,11 +16,13 @@ import { SortableElement } from "react-sortable-hoc";
 
 const GalleryItemsRow: any = SortableElement(({ itemDetails, onDelete, onEdit }) => {
   const { t } = useTranslation();
-  const { title, customDescripition, moreLinks, fileName, observationId, truncated } = itemDetails;
+  const { title, customDescripition, moreLinks, fileName, truncated } = itemDetails;
   const { currentGroup } = useGlobalState();
-  const imgUrl = observationId
-    ? getNextResourceThumbnail(RESOURCE_CTX.OBSERVATION, fileName, RESOURCE_SIZE.LIST_THUMBNAIL)
-    : getNextResourceThumbnail(RESOURCE_CTX.USERGROUPS, fileName, RESOURCE_SIZE.LIST_THUMBNAIL);
+  const imgUrl = getNextResourceThumbnail(
+    RESOURCE_CTX.USERGROUPS,
+    fileName,
+    RESOURCE_SIZE.LIST_THUMBNAIL
+  );
 
   return (
     <tr>

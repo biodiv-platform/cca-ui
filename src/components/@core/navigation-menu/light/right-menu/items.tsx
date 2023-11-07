@@ -1,14 +1,18 @@
 import SITE_CONFIG from "@configs/site-config";
 
-import GroupListItem from "../../dark/right-menu/group-list-item";
 import PagesMenuItem from "./pages-menu-item";
 
 export default [
   {
-    active: SITE_CONFIG.USERGROUP.ACTIVE,
-    cell: GroupListItem,
-    isLazy: true,
-    name: "header:menu_primary.groups."
+    active: true,
+    name: "header:browse",
+    to: "/data/list",
+    isDarkButton: true
+  },
+  {
+    active: true,
+    name: "header:users",
+    to: "/user/list"
   },
   {
     active: SITE_CONFIG.PAGES.ACTIVE,

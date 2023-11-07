@@ -347,6 +347,19 @@ export interface UserGroupFilterRuleInputData {
   createdOnDateList?: UserGroupFilterDate[];
   observedOnDateList?: UserGroupFilterDate[];
 }
+
+export interface Featured {
+  id?: number; // int64
+  version?: number; // int64
+  authorId?: number; // int64
+  createdOn?: string; // date-time
+  notes?: string;
+  objectId?: number; // int64
+  objectType?: string;
+  userGroup?: number; // int64
+  languageId?: number; // int64
+  expireTime?: string; // date-time
+}
 export interface UserGroupHomePageEditData {
   showGallery?: boolean;
   showStats?: boolean;

@@ -44,7 +44,7 @@ export default function MenuItems(props) {
   ) : (
     <SimpleLink to={to} params={params}>
       {NameIcon && <NameIcon mr={1} />}
-      {t(`${name}title`)}
+      {t(`${name}`)}
     </SimpleLink>
   );
 }

@@ -10,20 +10,8 @@ export const header = [
     preview: false
   },
   {
-    title: "header:users",
-    url: "/user/list",
-    access: [Role.Any],
-    preview: false
-  },
-  {
     title: "header:templates",
     url: "/template/list",
     access: [Role.Admin, Role.TemplateCurator]
-  },
-  {
-    title: "header:browse",
-    url: "/data/list",
-    access: [Role.Any],
-    isDarkButton: true
   }
 ];

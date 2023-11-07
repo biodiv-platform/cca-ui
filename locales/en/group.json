@@ -71,7 +71,7 @@
       "more_link": "Link",
       "title": "Title"
     },
-    "title": "Homepage Customization (BETA)",
+    "title": "Homepage Customization",
     "update": {
       "failure": "Unable to Update Homepage Details",
       "success": "Homepage Details Updated successfully",

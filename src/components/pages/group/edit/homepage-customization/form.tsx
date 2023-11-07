@@ -80,12 +80,10 @@ export default function HomePageCustomizationForm({ userGroupId, homePageDetails
         <form onSubmit={hForm.handleSubmit(handleFormSubmit)} className="fade">
           <Box width={["100%", 350]} justifyContent="space-between">
             <SwitchField name="showGallery" label={t("group:homepage_customization.gallery")} />
-            <SwitchField name="showStats" label={t("group:homepage_customization.module_stats")} />
             <SwitchField
               name="showGridMap"
               label={t("group:homepage_customization.observation_map")}
             />
-            <SwitchField name="showPartners" label={t("group:homepage_customization.about_us")} />
             <SwitchField name="showDesc" label={t("group:homepage_customization.show_desc")} />
           </Box>
           <WYSIWYGField
