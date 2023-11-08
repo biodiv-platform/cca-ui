@@ -1,6 +1,5 @@
 import { CloseIcon, HamburgerIcon } from "@chakra-ui/icons";
 import { Box, Flex, HStack, IconButton, Link, Stack, useDisclosure } from "@chakra-ui/react";
-import { containerMaxW } from "@static/navmenu";
 import dynamic from "next/dynamic";
 import NextLink from "next/link";
 import useTranslation from "next-translate/useTranslation";
@@ -23,18 +22,10 @@ export default function NavBar() {
         id="menu"
         position="fixed"
         width="100%"
-        zIndex={3}
+        zIndex={4}
         shadow="md"
       >
-        <Flex
-          h={16}
-          alignItems="center"
-          justifyContent="space-between"
-          w="full"
-          px={4}
-          mx="auto"
-          maxW={containerMaxW}
-        >
+        <Flex h={16} alignItems="center" justifyContent="space-between" w="full" px={4}>
           <Flex alignItems="center" justifyContent="center" gap={4}>
             <IconButton
               size="md"

@@ -31,7 +31,7 @@ export default function NavigationMenuLight() {
   }, []);
 
   return (
-    <Box borderBottom="1px solid" bg="whiteAlpha.800" borderColor="white" pr={"5"} pl={"5"}>
+    <Box borderBottom="1px solid" bg="whiteAlpha.800" borderColor="gray.300" pr={"4"} pl={"4"}>
       <LightMenuContainer className="container-fluid">
         <PrimaryLogo isOpen={isOpen} onToggle={onToggle} />
         <RightMenu isOpen={isOpen} />
