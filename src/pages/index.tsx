@@ -14,14 +14,21 @@ export const getServerSideProps = async (ctx) => {
   const aURL = absoluteUrl(ctx).href;
   const { currentGroup } = await axGroupList(aURL);
 
-  const { data } = currentGroup?.id
-    ? await axGetGroupHompageDetails(currentGroup?.id)
-    : await axGetTemplateResponseList({
-        id: SITE_CONFIG.CCA.FEATURED_IDS.toString(),
-        language: ctx.locale
-      });
+  const { data: groupdata } = await axGetGroupHompageDetails(currentGroup?.id);
 
-  return { props: { featured: data } };
+  const { data: featured } = await axGetTemplateResponseList({
+    id: SITE_CONFIG.CCA.FEATURED_IDS.toString(),
+    language: ctx.locale
+  });
+
+  return {
+    props: {
+      featured: {
+        featured: featured,
+        groupdata: groupdata
+      }
+    }
+  };
 };
 
 export default index;

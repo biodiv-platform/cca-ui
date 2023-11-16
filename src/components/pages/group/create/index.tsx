@@ -1,5 +1,6 @@
 import { Box, Center, SimpleGrid } from "@chakra-ui/react";
 import { PageHeading } from "@components/@core/layout";
+import { useLocalRouter } from "@components/@core/local-link";
 import { CheckboxField } from "@components/form/checkbox";
 import { RichTextareaField } from "@components/form/rich-textarea";
 import { SubmitButton } from "@components/form/submit-button";
@@ -8,7 +9,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import useGlobalState from "@hooks/use-global-state";
 import { axUserGroupCreate } from "@services/usergroup.service";
 import notification, { NotificationType } from "@utils/notification";
-import { useRouter } from "next/router";
+import { processUserGroupName } from "@utils/userGroup";
 import useTranslation from "next-translate/useTranslation";
 import React from "react";
 import { FormProvider, useForm } from "react-hook-form";
@@ -32,7 +33,7 @@ export const transformMemberPayload = (membersList) => {
 
 export default function CreateGroupPageComponent() {
   const { t } = useTranslation();
-  const router = useRouter();
+  const router = useLocalRouter();
   const { languageId } = useGlobalState();
 
   const hForm = useForm<any>({
@@ -40,10 +41,6 @@ export default function CreateGroupPageComponent() {
       Yup.object().shape({
         name: Yup.string().required(),
         allowUserToJoin: Yup.boolean().required(),
-        // spacialCoverage: Yup.object().shape({
-        //   ne: Yup.array().required(),
-        //   se: Yup.array().required()
-        // }),
         icon: Yup.string().nullable(),
         founder: Yup.array().nullable(),
         moderator: Yup.array().nullable()
@@ -85,7 +82,7 @@ export default function CreateGroupPageComponent() {
     const { success, data } = await axUserGroupCreate(payload);
     if (success) {
       notification(t("group:create.success"), NotificationType.Success);
-      router.push(`/group/${data.name}/show`);
+      router.push(`/group/${processUserGroupName(data.name)}/show`, false, {}, true);
     } else {
       notification(t("group:create.error"));
     }

@@ -340,7 +340,7 @@ export const axGetGroupHompageDetails = async (userGroupId) => {
     return { success: true, data };
   } catch (e) {
     console.error(e);
-    return { success: false };
+    return { success: false, data: [] };
   }
 };
 

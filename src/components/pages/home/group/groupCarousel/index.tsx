@@ -1,63 +1,80 @@
-import { Box } from "@chakra-ui/react";
-import { getNextResourceThumbnail, RESOURCE_CTX } from "@utils/media";
-import React from "react";
-import Slider from "react-slick";
+import "keen-slider/keen-slider.min.css";
 
-import { NavigationButtons } from "./navigation";
+import { Box, Center, SimpleGrid } from "@chakra-ui/react";
+import { useKeenSlider } from "keen-slider/react";
+import React, { useState } from "react";
 
-// Settings for the slider
-const settings = {
-  dots: false,
-  arrows: false,
-  fade: true,
-  infinite: true,
-  autoplay: true,
-  speed: 500,
-  autoplaySpeed: 5000,
-  slidesToShow: 1,
-  slidesToScroll: 1
-};
+import Sidebar from "./sidebar";
+import Slide from "./slide";
+import SlideInfo from "./slide-info";
 
-const carouselHeight = { base: "200px", md: "380px" };
+export default function GroupCarousel({ featured }) {
+  const [currentSlide, setCurrentSlide] = useState(0);
 
-export default function GroupCarousel({ info }) {
-  const [slider, setSlider] = React.useState<Slider | null>(null);
+  const [sliderRef, iSlider] = useKeenSlider<HTMLDivElement>(
+    {
+      loop: featured.length > 1,
+      slideChanged: (s) => setCurrentSlide(s?.track?.details?.rel)
+    },
+    [
+      (slider) => {
+        let timeout: ReturnType<typeof setTimeout>;
+        let mouseOver = false;
+        function clearNextTimeout() {
+          clearTimeout(timeout);
+        }
+        function nextTimeout() {
+          clearTimeout(timeout);
+          if (mouseOver) return;
+          timeout = setTimeout(() => {
+            slider.next();
+          }, 4000);
+        }
+        slider.on("created", () => {
+          slider.container.addEventListener("mouseover", () => {
+            mouseOver = true;
+            clearNextTimeout();
+          });
+          slider.container.addEventListener("mouseout", () => {
+            mouseOver = false;
+            nextTimeout();
+          });
+          nextTimeout();
+        });
+        slider.on("dragStarted", clearNextTimeout);
+        slider.on("animationEnded", nextTimeout);
+        slider.on("updated", nextTimeout);
+      }
+    ]
+  );
 
   return (
-    <Box position="relative" height={carouselHeight} width="full" overflow="hidden">
-      {/* CSS files for react-slick */}
-      <link
-        rel="stylesheet"
-        type="text/css"
-        charSet="UTF-8"
-        href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.min.css"
-      />
-      <link
-        rel="stylesheet"
-        type="text/css"
-        href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick-theme.min.css"
-      />
-
-      <NavigationButtons slider={slider} />
-
-      {/* Slider */}
-      <Slider {...settings} ref={(slider) => setSlider(slider)}>
-        {info?.gallerySlider?.map((item, index) => (
-          <Box
-            key={index}
-            height={carouselHeight}
-            position="relative"
-            backgroundImage={getNextResourceThumbnail(
-              RESOURCE_CTX.USERGROUPS,
-              item.fileName,
-              "?h=300"
-            )}
-            backgroundPosition="center"
-            backgroundRepeat="no-repeat"
-            backgroundSize="cover"
-          />
-        ))}
-      </Slider>
-    </Box>
+    <Center>
+      <Box pt={10} className="container" width={"50%"}>
+        <SimpleGrid
+          columns={{ base: 1, md: 3 }}
+          borderRadius="md"
+          overflow="hidden"
+          mb={10}
+          bg="gray.300"
+          color="white"
+        >
+          <Box gridColumn={{ md: "1/3" }} position="relative">
+            <Box ref={sliderRef} className="keen-slider fade">
+              {featured.map((o) => (
+                <Slide resource={o} key={o.id} />
+              ))}
+            </Box>
+            <SlideInfo
+              size={featured.length}
+              resource={featured[currentSlide]}
+              currentSlide={currentSlide}
+              scrollTo={iSlider?.current?.moveToIdx}
+            />
+          </Box>
+          <Sidebar resource={featured[currentSlide]} />
+        </SimpleGrid>
+      </Box>
+    </Center>
   );
 }

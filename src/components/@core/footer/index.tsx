@@ -47,9 +47,11 @@ const SocialButton = ({ children, label, href }) => (
 
 export default function Footer() {
   const { t, lang } = useTranslation();
-  const { pages } = useGlobalState();
+  const { pages, currentGroup } = useGlobalState();
 
-  const footerPages = useMemo(() => getFooterLinks(pages, lang), [pages]);
+  const footerPages = useMemo(() => {
+    return currentGroup.id ? pages : getFooterLinks(pages, lang);
+  }, [pages, currentGroup.id, lang]);
 
   return (
     <Box bg="gray.100" color="gray.700" className="no-print">

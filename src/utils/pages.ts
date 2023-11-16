@@ -53,3 +53,40 @@ export const preProcessContent = (content) =>
   content
     .replace(/\<table/g, '<div class="table-responsive"><table')
     .replace(/\<\/table\>/g, "</table></div>");
+
+export const convertToMenuFormat = (
+  data,
+  basePath = "/page/",
+  showInPrimaryHeader = false,
+  showInSecondaryHeader = false
+) => {
+  const convertNode = (node) => {
+    const menuNode = {
+      name: node.title,
+      to: basePath + node.id,
+      rows: []
+    };
+
+    const filteredChildren = (node.children || []).filter((child) => {
+      return (
+        (child.showInPrimaryHeader || !showInPrimaryHeader) &&
+        (child.showInSecondaryHeader || !showInSecondaryHeader)
+      );
+    });
+
+    if (filteredChildren.length > 0) {
+      menuNode.rows = filteredChildren.map((child) => convertNode(child));
+    }
+
+    return menuNode;
+  };
+
+  const filteredData = data.filter((node) => {
+    return (
+      (node.showInPrimaryHeader || !showInPrimaryHeader) &&
+      (node.showInSecondaryHeader || !showInSecondaryHeader)
+    );
+  });
+
+  return filteredData.map((node) => convertNode(node));
+};

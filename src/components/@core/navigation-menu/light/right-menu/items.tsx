@@ -1,10 +1,8 @@
-import SITE_CONFIG from "@configs/site-config";
-
 import PagesMenuItem from "./pages-menu-item";
 
 export default [
   {
-    active: true,
+    active: false,
     name: "header:browse",
     to: "/data/list",
     isDarkButton: true
@@ -15,9 +13,9 @@ export default [
     to: "/user/list"
   },
   {
-    active: SITE_CONFIG.PAGES.ACTIVE,
+    active: true,
     cell: PagesMenuItem,
     isLazy: true,
-    name: "header:menu_secondary.pages."
+    name: "header:menu_secondary.pages.title"
   }
 ];

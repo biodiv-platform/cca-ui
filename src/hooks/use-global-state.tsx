@@ -3,7 +3,6 @@ import { axCheckUserGroupMember } from "@services/app.service";
 import { axGetTree } from "@services/pages.service";
 import { AUTHWALL } from "@static/events";
 import { getParsedUser, removeCookies } from "@utils/auth";
-// import { getLanguageId } from "@utils/i18n";
 import { useRouter } from "next/router";
 import { DefaultSeo } from "next-seo";
 import useTranslation from "next-translate/useTranslation";
@@ -104,7 +103,6 @@ export const GlobalStateProvider = ({ initialState, children }: GlobalStateProvi
 
       pages,
       setPages,
-      // fetchPages,
       getPageTree,
 
       user,

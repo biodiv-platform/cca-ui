@@ -4,7 +4,6 @@ import NextLink from "@components/@core/next-link";
 import useTranslation from "next-translate/useTranslation";
 import React from "react";
 
-import GroupedSubMenu from "./grouped-sub-menu";
 import SubMenu from "./sub-menu";
 
 const buttonProps = {
@@ -39,24 +38,20 @@ export default function MenuItems(props) {
   const isDropdown = rows.length > 0 || CCell;
   const { t } = useTranslation();
 
-  const isContributeMenu = name === "header:menu_primary.contribute.";
-
   return isDropdown ? (
     <Menu placement="bottom-end" isLazy={isLazy}>
       {({ isOpen }) => (
         <>
           <MenuButton data-label={name} role="button" tabIndex={0}>
             {NameIcon && <NameIcon mr={1} />}
-            {t(`${name}title`)}
+            {t(`${name}`)}
             <ChevronDownIcon mt={[1, 0]} float={["right", "none"]} />
           </MenuButton>
           {(isLazy ? isOpen : true) ? (
             CCell ? (
               <CCell />
-            ) : isContributeMenu ? (
-              <GroupedSubMenu rows={rows} prefix={name} />
             ) : (
-              <SubMenu rows={rows} prefix={name} />
+              <SubMenu rows={rows} prefix={""} />
             )
           ) : null}
         </>

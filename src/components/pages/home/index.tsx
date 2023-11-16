@@ -23,14 +23,14 @@ export default function HomePageComponent({ featured }) {
           <Carousel />
           <Mission />
           <WhyThisPortal />
-          <Posts featured={featured} />
+          <Posts featured={featured.featured} />
         </>
       ) : (
         <>
-          {featured.gallerySlider.length > 0 && featured.showGallery && (
-            <GroupCarousel info={featured} />
+          {featured.groupdata.gallerySlider.length > 0 && featured.groupdata.showGallery && (
+            <GroupCarousel featured={featured.groupdata.gallerySlider} />
           )}
-          {featured.showDesc && <GroupHome info={featured} />}
+          {featured.groupdata.showDesc && <GroupHome info={featured.groupdata} />}
         </>
       )}
       <CTA />

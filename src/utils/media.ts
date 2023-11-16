@@ -5,9 +5,7 @@ import notification from "./notification";
 
 export const RESOURCE_CTX = {
   MY_UPLOADS: "MY_UPLOADS",
-  OBSERVATION: "OBSERVATION",
   PAGES: "PAGES",
-  SPECIES: "SPECIES",
   USERGROUPS: "USERGROUPS"
 };
 

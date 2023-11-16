@@ -13,14 +13,17 @@ interface PageEditFormProps {
 
 export default function PageEditForm({ page }: PageEditFormProps): JSX.Element {
   const { t } = useTranslation();
-  const { fetchPages } = useGlobalState();
+  const { getPageTree } = useGlobalState();
   const router = useLocalRouter();
 
   const defaultValues = {
     title: page.title,
     content: page.content,
     sticky: page.sticky,
-    languageId: page.languageId
+    languageId: page.languageId,
+    showInFooter: page.showInFooter,
+    showInPrimaryHeader: page.showInPrimaryHeader,
+    showInSecondaryHeader: page.showInSecondaryHeader
   };
 
   const handleOnPageEdit = async (payload) => {
@@ -33,8 +36,8 @@ export default function PageEditForm({ page }: PageEditFormProps): JSX.Element {
       languageId: undefined
     });
     if (success) {
+      await getPageTree();
       notification(t("page:update.success"), NotificationType.Success);
-      await fetchPages();
       router.push(`/page/show/${page.id}`, true);
     } else {
       notification(t("page:update.failure"));
