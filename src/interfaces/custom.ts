@@ -1,4 +1,4 @@
-import { UserGroupIbp } from "./cca";
+import { UserGroupIbp } from "./userGroup";
 
 export enum Role {
   Any = "ANY",
