@@ -1,6 +1,6 @@
 import { ChevronDownIcon } from "@chakra-ui/icons";
 import { Button, Link, Menu, MenuButton } from "@chakra-ui/react";
-import NextLink from "@components/@core/next-link";
+import LocalLink from "@components/@core/local-link";
 import useTranslation from "next-translate/useTranslation";
 import React from "react";
 
@@ -13,7 +13,7 @@ const buttonProps = {
 };
 
 const SimpleLink = ({ children, to, params, isDarkButton }) => (
-  <NextLink href={to} params={params} prefixGroup={true}>
+  <LocalLink href={to} params={params} prefixGroup={true}>
     {isDarkButton ? (
       <Button {...buttonProps}>
         <Link>{children}</Link>
@@ -21,7 +21,7 @@ const SimpleLink = ({ children, to, params, isDarkButton }) => (
     ) : (
       <Link>{children}</Link>
     )}
-  </NextLink>
+  </LocalLink>
 );
 
 export default function MenuItems(props) {

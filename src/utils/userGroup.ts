@@ -1,5 +1,5 @@
 import SITE_CONFIG from "@configs/site-config";
-import { UserGroupIbp } from "@interfaces/cca";
+import { UserGroupIbp } from "@interfaces/userGroup";
 import { DEFAULT_GROUP } from "@static/constants";
 import { stringify } from "@utils/query-string";
 
