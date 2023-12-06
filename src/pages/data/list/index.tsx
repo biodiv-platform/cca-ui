@@ -18,9 +18,12 @@ export const getServerSideProps = async (ctx) => {
     language: ctx.locale,
     ...ctx.query,
     offset: ctx.query.offset || 0,
-    limit: LIST_PAGINATION_LIMIT,
-    usergroups: currentGroup?.id
+    limit: LIST_PAGINATION_LIMIT
   };
+
+  if (currentGroup && currentGroup.id) {
+    payload.usergroups = currentGroup.id;
+  }
 
   const aggregationData = await axGetDataListAggregation(payload);
 
