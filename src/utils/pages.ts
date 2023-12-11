@@ -58,13 +58,15 @@ export const convertToMenuFormat = (
   data,
   basePath = "/page/",
   showInPrimaryHeader = false,
-  showInSecondaryHeader = false
+  showInSecondaryHeader = false,
+  prefixGroup = true
 ) => {
   const convertNode = (node) => {
     const menuNode = {
       name: node.title,
       to: basePath + node.id,
-      rows: []
+      rows: [],
+      prefixGroup: prefixGroup
     };
 
     const filteredChildren = (node.children || []).filter((child) => {

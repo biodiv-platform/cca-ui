@@ -12,8 +12,8 @@ const buttonProps = {
   style: { width: "120px", height: "32px" }
 };
 
-const SimpleLink = ({ children, to, params, isDarkButton }) => (
-  <LocalLink href={to} params={params} prefixGroup={true}>
+const SimpleLink = ({ children, to, params, isDarkButton, prefixGroup }) => (
+  <LocalLink href={to} params={params} prefixGroup={prefixGroup}>
     {isDarkButton ? (
       <Button {...buttonProps}>
         <Link>{children}</Link>
@@ -33,7 +33,8 @@ export default function MenuItems(props) {
     cell: CCell,
     params,
     isLazy,
-    isDarkButton
+    isDarkButton,
+    prefixGroup
   } = props;
   const isDropdown = rows.length > 0 || CCell;
   const { t } = useTranslation();
@@ -58,7 +59,7 @@ export default function MenuItems(props) {
       )}
     </Menu>
   ) : (
-    <SimpleLink to={to} params={params} isDarkButton={isDarkButton}>
+    <SimpleLink to={to} params={params} isDarkButton={isDarkButton} prefixGroup={prefixGroup}>
       {NameIcon && <NameIcon mr={1} />}
       {t(`${name}`)}
     </SimpleLink>
