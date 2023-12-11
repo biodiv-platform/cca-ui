@@ -10,5 +10,7 @@
   "follower_removed": "हटाए गए अनुयायी",
   "load_more_activity": "अधिक गतिविधि लोड करें",
   "permission_added": "अनुमति जोड़ी गई",
-  "permission_removed": "अनुमति हटा दी गई"
+  "permission_removed": "अनुमति हटा दी गई",
+  "posted_resource": "समूह में पोस्ट किया गया",
+  "removed_resoruce": "हटाए गए संसाधन"
 }
