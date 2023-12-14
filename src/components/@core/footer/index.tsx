@@ -90,11 +90,13 @@ export default function Footer() {
           </Stack>
           <div>
             <SimpleGrid columns={{ base: 1, md: 2 }} spacing={4}>
-              {footerPages.map((page) => (
-                <NextLink href={`/page/show/${page.id}`} key={page.id}>
-                  <Link>{page.title}</Link>
-                </NextLink>
-              ))}
+              {footerPages
+                .filter((page) => page.showInFooter !== false)
+                .map((page) => (
+                  <NextLink href={`/page/show/${page.id}`} key={page.id}>
+                    <Link>{page.title}</Link>
+                  </NextLink>
+                ))}
             </SimpleGrid>
           </div>
         </SimpleGrid>

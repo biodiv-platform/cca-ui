@@ -22,8 +22,8 @@ export default function PageEditForm({ page }: PageEditFormProps): JSX.Element {
     sticky: page.sticky,
     languageId: page.languageId,
     showInFooter: page.showInFooter,
-    showInPrimaryHeader: page.showInPrimaryHeader,
-    showInSecondaryHeader: page.showInSecondaryHeader
+    showInPrimaryMenu: page.showInPrimaryMenu,
+    showInSecondaryMenu: page.showInSecondaryMenu
   };
 
   const handleOnPageEdit = async (payload) => {

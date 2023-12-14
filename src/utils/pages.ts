@@ -57,8 +57,9 @@ export const preProcessContent = (content) =>
 export const convertToMenuFormat = (
   data,
   basePath = "/page/",
-  showInPrimaryHeader = false,
-  showInSecondaryHeader = false,
+  showInPrimaryMenu = false,
+  showInSecondaryMenu = false,
+  showInFooter = false,
   prefixGroup = true
 ) => {
   const convertNode = (node) => {
@@ -71,8 +72,9 @@ export const convertToMenuFormat = (
 
     const filteredChildren = (node.children || []).filter((child) => {
       return (
-        (child.showInPrimaryHeader || !showInPrimaryHeader) &&
-        (child.showInSecondaryHeader || !showInSecondaryHeader)
+        (child.showInPrimaryMenu || !showInPrimaryMenu) &&
+        (child.showInSecondaryMenu || !showInSecondaryMenu) &&
+        (child.showInFooter || !showInFooter)
       );
     });
 
@@ -85,8 +87,9 @@ export const convertToMenuFormat = (
 
   const filteredData = data.filter((node) => {
     return (
-      (node.showInPrimaryHeader || !showInPrimaryHeader) &&
-      (node.showInSecondaryHeader || !showInSecondaryHeader)
+      (node.showInPrimaryMenu || !showInPrimaryMenu) &&
+      (node.showInSecondaryMenu || !showInSecondaryMenu) &&
+      (node.showInFooter || !showInFooter)
     );
   });
 

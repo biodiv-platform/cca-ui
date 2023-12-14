@@ -8,7 +8,7 @@ import React, { useEffect, useMemo, useState } from "react";
 
 import GroupPost from "./group-post";
 
-export default function Group({ datatableId, groups, defaultGroups }) {
+export default function Group({ ccaId, groups, defaultGroups }) {
   const { isLoggedIn } = useGlobalState();
 
   const [hideFeature, setHideFeature] = useState(true);
@@ -28,7 +28,7 @@ export default function Group({ datatableId, groups, defaultGroups }) {
         <GroupPost
           groups={groups}
           selectedDefault={defaultGroup}
-          resourceId={datatableId}
+          resourceId={ccaId}
           saveUserGroupsFunc={axUpdateUsergroup}
         />
       </Box>

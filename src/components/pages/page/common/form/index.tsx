@@ -57,8 +57,8 @@ export default function PageForm({
         parentId: hideParentId ? Yup.number().notRequired() : Yup.number().required(),
         sticky: Yup.boolean().required(),
         showInFooter: Yup.boolean(),
-        showInPrimaryHeader: Yup.boolean(),
-        showInSecondaryHeader: Yup.boolean()
+        showInPrimaryMenu: Yup.boolean(),
+        showInSecondaryMenu: Yup.boolean()
       })
     ),
     defaultValues
@@ -90,8 +90,8 @@ export default function PageForm({
         )}
         <SwitchField name="sticky" mb={2} label={t("page:form.is_sidebar")} />
         <SwitchField name="showInFooter" mb={2} label={t("Show in Footer")} />
-        <SwitchField name="showInPrimaryHeader" mb={2} label={t("Show in Primary Header")} />
-        <SwitchField name="showInSecondaryHeader" mb={2} label={t("Show in Secondary Header")} />
+        <SwitchField name="showInPrimaryMenu" mb={2} label={t("Show in Primary Menu")} />
+        <SwitchField name="showInSecondaryMenu" mb={2} label={t("Show in Secondary Menu")} />
         <SubmitButton mb={16}>{submitLabel}</SubmitButton>
       </form>
     </FormProvider>

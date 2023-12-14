@@ -29,7 +29,6 @@ function MainApp({ Component, pageProps, user, groups, currentGroup, languageId 
     <GlobalStateProvider initialState={{ user, groups, currentGroup, languageId }}>
       <ChakraProvider theme={customTheme}>
         <NavBar />
-
         <div className="content">
           {config.header && (
             <>

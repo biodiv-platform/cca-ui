@@ -68,6 +68,6 @@ export interface PageUpdate {
   url?: string;
   sticky?: boolean;
   showInFooter?: boolean;
-  showInPrimaryHeader?: boolean;
-  showInSecondaryHeader?: boolean;
+  showInPrimaryMenu?: boolean;
+  showInSecondaryMenu?: boolean;
 }

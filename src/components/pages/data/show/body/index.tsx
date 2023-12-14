@@ -1,4 +1,4 @@
-import { Center, Divider, Stack } from "@chakra-ui/react";
+import { Center, Divider } from "@chakra-ui/react";
 import Activity from "@components/@core/activity";
 import { Container } from "@components/@core/container";
 import { axAddAcitivityComment } from "@services/cca.service";
@@ -23,9 +23,7 @@ export default function ShowBody() {
           </Center>
         </div>
       ))}
-      <Stack>
-        <Group datatableId={header.id} groups={groups} defaultGroups={usergroupsAsIntegers || []} />
-      </Stack>
+      <Group ccaId={header.id} groups={groups} defaultGroups={usergroupsAsIntegers || []} />
       <Center className="no-print">
         <Divider mb={10} borderColor="gray.400" variant="dashed" />
       </Center>

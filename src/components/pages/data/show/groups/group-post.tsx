@@ -82,19 +82,20 @@ export default function GroupPost({
 
   return (
     <Box>
-      <SimpleGrid columns={2}>
-        <Heading>👥 {t("Groups")}</Heading>
-
-        <Button
-          mb={2}
-          variant="link"
-          rightIcon={<EditIcon />}
-          colorScheme="blue"
-          ref={editButtonRef}
-          onClick={onEditClick}
-        >
-          {t("common:edit")}
-        </Button>
+      <SimpleGrid columns={3}>
+        <Heading>
+          👥 {t("Groups")}
+          <Button
+            mb={6}
+            variant="link"
+            rightIcon={<EditIcon />}
+            colorScheme="blue"
+            size="lg"
+            className="no-print"
+            ref={editButtonRef}
+            onClick={onEditClick}
+          />
+        </Heading>
       </SimpleGrid>
 
       <SimpleGrid columns={columns || defaultGridColumns} spacing={4} hidden={isOpen}>
@@ -111,7 +112,7 @@ export default function GroupPost({
       </SimpleGrid>
 
       <Collapse in={isOpen} unmountOnExit={true}>
-        <Input mb={12} onChange={onQuery} placeholder={t("header:search")} />
+        <Input mb={6} onChange={onQuery} placeholder={t("header:search")} />
         {groups?.length > 0 ? (
           <CheckBoxItems
             gridColumns={columns || defaultGridColumns}
