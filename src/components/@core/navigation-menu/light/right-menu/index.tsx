@@ -51,22 +51,19 @@ export default function RightMenu({ isOpen }: IMenuProps) {
 
   const groupPage = `/group/${processUserGroupName(currentGroup.name)}/page/`;
 
+  const isGroup = currentGroup.id ? true : false;
+
   const outputMenuFormat = currentGroup.id
     ? convertToMenuFormat(pages, groupPage, false, true, false)
     : convertToMenuFormat(pages, "/page/", false, true, false);
 
   return (
     <RightMenuContainer data-expanded={isOpen} className="fade">
-      {items
-        .filter((item) => item.isDarkButton)
-        .map((item) => (
-          <MainItems key={item.name} {...item} prefixGroup={true} />
-        ))}
-      {outputMenuFormat.map((item) => (
-        <MainItems key={item.name} {...item} />
-      ))}
       {activeItems.map((item) => (
-        <MainItems key={item.name} {...item} />
+        <MainItems key={item.name} {...item} prefixGroup={isGroup} />
+      ))}
+      {outputMenuFormat.map((item) => (
+        <MainItems key={item.name} {...item} prefixGroup={false} />
       ))}
     </RightMenuContainer>
   );

@@ -43,11 +43,22 @@ export default function MenuItems(props) {
     <Menu placement="bottom-end" isLazy={isLazy}>
       {({ isOpen }) => (
         <>
-          <MenuButton data-label={name} role="button" tabIndex={0}>
-            {NameIcon && <NameIcon mr={1} />}
-            {t(`${name}`)}
-            <ChevronDownIcon mt={[1, 0]} float={["right", "none"]} />
-          </MenuButton>
+          <div style={{ display: "flex", alignItems: "center", marginLeft: "20px" }}>
+            <SimpleLink
+              to={to}
+              params={params}
+              isDarkButton={isDarkButton}
+              prefixGroup={prefixGroup}
+            >
+              {NameIcon && <NameIcon mr={1} />}
+              {t(`${name}`)}
+            </SimpleLink>
+            {isDropdown && (
+              <MenuButton data-label={name} role="button" tabIndex={0}>
+                <ChevronDownIcon mt={[1, 0]} float={["right", "none"]} />
+              </MenuButton>
+            )}
+          </div>
           {(isLazy ? isOpen : true) ? (
             CCell ? (
               <CCell />
