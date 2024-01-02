@@ -44,8 +44,6 @@ const RightMenuContainer = styled.div`
   }
 `;
 
-const activeItems = items.filter(({ active = true }) => active);
-
 export default function RightMenu({ isOpen }: IMenuProps) {
   const { pages, currentGroup } = useGlobalState();
 
@@ -57,13 +55,19 @@ export default function RightMenu({ isOpen }: IMenuProps) {
     ? convertToMenuFormat(pages, groupPage, false, true, false)
     : convertToMenuFormat(pages, "/page/", false, true, false);
 
+  const activeItems = items.filter(({ active }) => active === true);
+  const darkItems = items.filter(({ isDarkButton }) => isDarkButton === true);
+
   return (
     <RightMenuContainer data-expanded={isOpen} className="fade">
-      {activeItems.map((item) => (
+      {darkItems.map((item) => (
         <MainItems key={item.name} {...item} prefixGroup={isGroup} />
       ))}
       {outputMenuFormat.map((item) => (
         <MainItems key={item.name} {...item} prefixGroup={false} />
+      ))}
+      {activeItems.map((item) => (
+        <MainItems key={item.name} {...item} prefixGroup={isGroup} />
       ))}
     </RightMenuContainer>
   );
