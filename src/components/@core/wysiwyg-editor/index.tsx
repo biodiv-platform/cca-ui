@@ -32,7 +32,7 @@ export default function WYSIWYGEditor({ uploadHandler, ...props }: WYSIWYGEditor
         convert_urls: false,
         plugins: ["link", "table", "code", "lists", uploadHandler ? "image" : "na"],
         toolbar:
-          "undo redo | bold italic numlist bullist | alignleft aligncenter alignright alignjustify | link image table | code",
+          "image undo paste-as-text redo  bold italic alignleft aligncenter alignright alignjustify link table bullist numlist outdent indent help code",
         images_upload_handler: uploadHandler,
         images_upload_base_path: "/"
       }}

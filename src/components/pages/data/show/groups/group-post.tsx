@@ -62,11 +62,11 @@ export default function GroupPost({
 
     if (success) {
       setFinalGroups(postedGroups || []);
-      notification(t("Groups updated sucessfully"), NotificationType.Success);
+      notification(t("group:edit.success"), NotificationType.Success);
       editButtonRef.current.focus();
       onClose();
     } else {
-      notification(t("Groups_update_failed"), NotificationType.Error);
+      notification(t("group:edit.error"), NotificationType.Error);
     }
   };
 
@@ -84,7 +84,7 @@ export default function GroupPost({
     <Box>
       <SimpleGrid columns={3}>
         <Heading>
-          👥 {t("Groups")}
+          👥 {t("common:usergroups")}
           <Button
             mb={6}
             variant="link"

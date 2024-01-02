@@ -1,7 +1,4 @@
-import useGlobalState from "@hooks/use-global-state";
-import { UserGroup } from "@interfaces/userGroup";
 import { axGetMapAndAggregation, axSearchCCAData, axSearchMapCCAData } from "@services/cca.service";
-import { axGetUserGroupList, getAuthorizedUserGroupById } from "@services/usergroup.service";
 import { isBrowser, LIST_PAGINATION_LIMIT } from "@static/constants";
 import { stringify } from "@utils/query-string";
 import useTranslation from "next-translate/useTranslation";
@@ -33,11 +30,6 @@ interface ResponseListContextProps {
   setIsSearching;
   query;
   setQuery;
-
-  userGroup?: UserGroup[];
-  authorizedUserGroupList?: UserGroup[];
-  hasUgAccess?: boolean;
-  loggedInUserGroups?: UserGroup[];
 }
 
 interface ResponseListProviderProps {
@@ -93,21 +85,6 @@ export const ResponseListProvider = ({
     NProgress.done();
     setIsLoading(false);
   };
-
-  const [loggedInUserGroups, setLoggedInUserGroups] = useState<any[]>([]);
-  const [hasUgAccess, setHasUgAdminAccess] = useState<boolean>(false);
-  const [authorizedUserGroupList, setAuthorizedUserGroupList] = useState<any[]>([]);
-  const { isLoggedIn } = useGlobalState();
-
-  useEffect(() => {
-    if (isLoggedIn) {
-      axGetUserGroupList().then(({ data }) => setLoggedInUserGroups(data));
-      getAuthorizedUserGroupById().then(({ data }) => {
-        setHasUgAdminAccess(data?.isAdmin || false);
-        setAuthorizedUserGroupList(data?.ugList || []);
-      });
-    }
-  }, [isLoggedIn]);
 
   useEffect(() => {
     if (isBrowser) {
@@ -182,10 +159,7 @@ export const ResponseListProvider = ({
         isSearching,
         setIsSearching,
         query,
-        setQuery,
-        loggedInUserGroups,
-        hasUgAccess,
-        authorizedUserGroupList
+        setQuery
       }}
     >
       {children}

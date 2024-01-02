@@ -5,13 +5,13 @@ import {
   AccordionPanel,
   Box
 } from "@chakra-ui/react";
-// import useTranslation from "next-translate/useTranslation";
+import useTranslation from "next-translate/useTranslation";
 import React from "react";
 
-import FilterCheckboxes, { FilterCheckboxesProps } from "./checkboxs";
+import FilterCheckboxes, { FilterCheckboxesProps } from "./checkboxes";
 
 export default function CheckboxFilterPanel(props: FilterCheckboxesProps) {
-  // const { t } = useTranslation();
+  const { t } = useTranslation();
 
   return (
     <AccordionItem>
@@ -19,8 +19,7 @@ export default function CheckboxFilterPanel(props: FilterCheckboxesProps) {
         <>
           <AccordionButton>
             <Box flex={1} textAlign="left">
-              {/* {props.label || t(props.translateKey + "title")} */}
-              User Groups
+              {props.label || t(props.translateKey + "title")}
             </Box>
             <AccordionIcon />
           </AccordionButton>
