@@ -6,13 +6,10 @@ import { axUpdateUsergroup } from "@services/cca.service";
 import { hasAccess } from "@utils/auth";
 import React, { useEffect, useMemo, useState } from "react";
 
-import useResponseList from "../../list/use-response-list";
 import GroupPost from "./group-post";
 
-export default function Group({ ccaId, groups, defaultGroups }) {
+export default function Group({ ccaId, groups, defaultGroups, memberGroups }) {
   const { isLoggedIn } = useGlobalState();
-
-  const { authorizedUserGroupList } = useResponseList();
 
   const [hideFeature, setHideFeature] = useState(true);
 
@@ -24,11 +21,14 @@ export default function Group({ ccaId, groups, defaultGroups }) {
     () => groups?.filter((item) => defaultGroups?.includes(item.id)),
     []
   );
+
+  const filteredGroups = groups.filter((group) => memberGroups[group.id]);
+
   return (
     <Box m={4} className="white-box" data-hidden={!SITE_CONFIG.USERGROUP.ACTIVE && hideFeature}>
       <Box m={4}>
         <GroupPost
-          groups={authorizedUserGroupList}
+          groups={filteredGroups}
           selectedDefault={defaultGroup}
           resourceId={ccaId}
           saveUserGroupsFunc={axUpdateUsergroup}
