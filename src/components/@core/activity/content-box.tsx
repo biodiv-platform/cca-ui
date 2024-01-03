@@ -11,7 +11,7 @@ const ContentBox = ({ activity }: { activity: ShowActivityIbp }) => {
 
   switch (at) {
     case ACTIVITY_TYPE.POSTED_RESOURCE:
-    case ACTIVITY_TYPE.REMOVED_RESORUCE:
+    case ACTIVITY_TYPE.REMOVED_RESOURCE:
       const ad1 = JSON.parse(activity.activityIbp?.activityDescription || "{}");
       return (
         <Box>

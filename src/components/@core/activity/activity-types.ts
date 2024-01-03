@@ -11,6 +11,6 @@ export default {
   PERMISSION_REMOVED: "Permission removed",
   PERMISSION_ADDED: "Permission added",
   POSTED_RESOURCE: "Posted resource",
-  REMOVED_RESORUCE: "Removed resoruce",
+  REMOVED_RESOURCE: "Removed resource",
   UNFEATURED: "UnFeatured"
 };

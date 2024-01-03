@@ -5,7 +5,6 @@ import React from "react";
 
 import JoinUserGroup from "../../common/join-group";
 import useGroupListFilter from "../use-group-list";
-import IconsList from "./icons-list";
 
 export const UserGroupListTableRows = [
   {
@@ -31,24 +30,6 @@ export const UserGroupListTableRows = [
         </Link>
       </NextLink>
     )
-  },
-  {
-    Header: "Species Groups",
-    accessor: "speciesGroupIds",
-    style: { width: "24rem" },
-    Cell: ({ value }) => {
-      const { speciesGroups } = useGroupListFilter();
-      return <IconsList items={speciesGroups} type="species" values={value} />;
-    }
-  },
-  {
-    Header: "Habitats",
-    accessor: "habitatIds",
-    style: { width: "24rem" },
-    Cell: ({ value }) => {
-      const { habitat } = useGroupListFilter();
-      return <IconsList items={habitat} type="habitat" values={value} />;
-    }
   },
   {
     Header: "Participants",
