@@ -1,6 +1,6 @@
 import "keen-slider/keen-slider.min.css";
 
-import { Box, Center, SimpleGrid } from "@chakra-ui/react";
+import { Box, SimpleGrid } from "@chakra-ui/react";
 import { useKeenSlider } from "keen-slider/react";
 import React, { useState } from "react";
 
@@ -49,32 +49,28 @@ export default function GroupCarousel({ featured }) {
   );
 
   return (
-    <Center>
-      <Box pt={10} className="container" width={"50%"}>
-        <SimpleGrid
-          columns={{ base: 1, md: 3 }}
-          borderRadius="md"
-          overflow="hidden"
-          mb={10}
-          bg="gray.300"
-          color="white"
-        >
-          <Box gridColumn={{ md: "1/3" }} position="relative">
-            <Box ref={sliderRef} className="keen-slider fade">
-              {featured.map((o) => (
-                <Slide resource={o} key={o.id} />
-              ))}
-            </Box>
-            <SlideInfo
-              size={featured.length}
-              resource={featured[currentSlide]}
-              currentSlide={currentSlide}
-              scrollTo={iSlider?.current?.moveToIdx}
-            />
-          </Box>
-          <Sidebar resource={featured[currentSlide]} />
-        </SimpleGrid>
+    <SimpleGrid
+      columns={{ base: 1, md: 3 }}
+      borderRadius="md"
+      overflow="hidden"
+      mb={10}
+      bg="gray.300"
+      color="white"
+    >
+      <Box gridColumn={{ md: "1/3" }} position="relative">
+        <Box ref={sliderRef} className="keen-slider fade">
+          {featured.map((o) => (
+            <Slide resource={o} key={o.id} />
+          ))}
+        </Box>
+        <SlideInfo
+          size={featured.length}
+          resource={featured[currentSlide]}
+          currentSlide={currentSlide}
+          scrollTo={iSlider?.current?.moveToIdx}
+        />
       </Box>
-    </Center>
+      <Sidebar resource={featured[currentSlide]} />
+    </SimpleGrid>
   );
 }
