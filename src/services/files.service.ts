@@ -1,5 +1,5 @@
 import { ENDPOINT, LOCAL_ASSET_PREFIX } from "@static/constants";
-import { http } from "@utils/http";
+import { formDataHeaders, http } from "@utils/http";
 import { nanoid } from "nanoid";
 
 export const axUploadResource = async (file: File, dir = "pages") => {
@@ -23,7 +23,7 @@ export const axUploadResource = async (file: File, dir = "pages") => {
  * @param {IDBObservationAsset} resource
  * @returns
  */
-export const axUploadUserResource = async (resource: File, directory, nestedPath?: string) => {
+export const axUploadUserGroupResource = async (resource: File, directory, nestedPath?: string) => {
   try {
     const formData = new FormData();
     formData.append("hash", nanoid());
@@ -33,9 +33,7 @@ export const axUploadUserResource = async (resource: File, directory, nestedPath
     nestedPath && formData.append("nestedFolder", nestedPath);
 
     const { data } = await http.post(`${ENDPOINT.FILES}/upload/resource-upload`, formData, {
-      headers: {
-        "Content-Type": "multipart/form-data"
-      }
+      headers: formDataHeaders
     });
 
     return { success: true, data: data.uri };

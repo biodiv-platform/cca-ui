@@ -300,6 +300,18 @@ export const axUpdateParticipationUsers = async (payload) => {
   }
 };
 
+export const axUpdateUsergroup = async (payload) => {
+  try {
+    const { data } = await http.put(`${ENDPOINT.CCA}/v1/data/update/usergroup`, payload);
+
+    return { success: true, data };
+  } catch (e) {
+    console.error(e);
+
+    return { success: false, data: {} };
+  }
+};
+
 export const axAddAcitivityComment = async (payload) => {
   try {
     await waitForAuth();

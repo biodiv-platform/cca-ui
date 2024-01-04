@@ -10,5 +10,7 @@
   "follower_removed": "removed follower",
   "load_more_activity": "load more activity",
   "permission_added": "permission added",
-  "permission_removed": "permission removed"
+  "permission_removed": "permission removed",
+  "posted_resource": "posted to group",
+  "removed_resource": "removed resource"
 }

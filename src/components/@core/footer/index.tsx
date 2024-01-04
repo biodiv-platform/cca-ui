@@ -47,9 +47,11 @@ const SocialButton = ({ children, label, href }) => (
 
 export default function Footer() {
   const { t, lang } = useTranslation();
-  const { pages } = useGlobalState();
+  const { pages, currentGroup } = useGlobalState();
 
-  const footerPages = useMemo(() => getFooterLinks(pages, lang), [pages]);
+  const footerPages = useMemo(() => {
+    return currentGroup.id ? pages : getFooterLinks(pages, lang);
+  }, [pages, currentGroup.id, lang]);
 
   return (
     <Box bg="gray.100" color="gray.700" className="no-print">
@@ -88,11 +90,13 @@ export default function Footer() {
           </Stack>
           <div>
             <SimpleGrid columns={{ base: 1, md: 2 }} spacing={4}>
-              {footerPages.map((page) => (
-                <NextLink href={`/page/show/${page.id}`} key={page.id}>
-                  <Link>{page.title}</Link>
-                </NextLink>
-              ))}
+              {footerPages
+                .filter((page) => page.showInFooter !== false)
+                .map((page) => (
+                  <NextLink href={`/page/show/${page.id}`} key={page.id}>
+                    <Link>{page.title}</Link>
+                  </NextLink>
+                ))}
             </SimpleGrid>
           </div>
         </SimpleGrid>

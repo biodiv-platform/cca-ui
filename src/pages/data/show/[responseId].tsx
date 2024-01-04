@@ -1,6 +1,7 @@
 import ErrorPage from "@components/pages/_error";
 import ResponseShowPageComponent from "@components/pages/data/show";
 import { TemplateResponseShowProvider } from "@components/pages/data/show/use-template-response-show";
+import { axGroupList } from "@services/app.service";
 import {
   axGetTemplateResponseById,
   axGetTemplateResponseList,
@@ -10,7 +11,7 @@ import {
 import { getUserIBPsByIds } from "@services/user.service";
 import { FORM_TYPE } from "@static/constants";
 import { canEditData } from "@utils/auth";
-import { capitalize } from "@utils/basic";
+import { absoluteUrl, capitalize } from "@utils/basic";
 import React from "react";
 
 const ResponseShowPage = (props) =>
@@ -62,6 +63,9 @@ export const getServerSideProps = async (ctx) => {
 
   const [owner, ...editors] = await getUserIBPsByIds([response.userId, ...response.allowedUsers]);
 
+  const aURL = absoluteUrl(ctx).href;
+  const { groups } = await axGroupList(aURL);
+
   return {
     props: {
       success: true,
@@ -69,7 +73,8 @@ export const getServerSideProps = async (ctx) => {
       template,
       response,
       canEdit,
-      header
+      header,
+      groups
     }
   };
 };

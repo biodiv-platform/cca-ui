@@ -1,6 +1,6 @@
 import { ChevronDownIcon, ChevronUpIcon } from "@chakra-ui/icons";
 import { Box, chakra, IconButton, Stack, useDisclosure } from "@chakra-ui/react";
-import NextLink from "next/link";
+import LocalLink from "@components/@core/local-link";
 import React from "react";
 
 function LinkLayout({ isActive, children }) {
@@ -26,7 +26,7 @@ const LinkChildren = ({ page, currentPageId, linkType }) => {
 
   return (
     <LinkLayout isActive={isActive}>
-      <NextLink href={`/page/${linkType}/${page.id}`}>
+      <LocalLink prefixGroup={true} href={`/page/${linkType}/${page.id}`}>
         <chakra.a
           flexGrow={1}
           px={3}
@@ -39,7 +39,7 @@ const LinkChildren = ({ page, currentPageId, linkType }) => {
           </Box>
           {page.title}
         </chakra.a>
-      </NextLink>
+      </LocalLink>
     </LinkLayout>
   );
 };
@@ -51,7 +51,7 @@ export const LinkParent = ({ page, currentPageId, linkType }) => {
   return (
     <Stack spacing={2}>
       <LinkLayout isActive={isActive}>
-        <NextLink href={`/page/${linkType}/${page.id}`}>
+        <LocalLink prefixGroup={true} href={`/page/${linkType}/${page.id}`}>
           <chakra.a
             flexGrow={1}
             px={3}
@@ -61,7 +61,7 @@ export const LinkParent = ({ page, currentPageId, linkType }) => {
           >
             {page.title}
           </chakra.a>
-        </NextLink>
+        </LocalLink>
         {page.children.length > 0 && (
           <IconButton
             variant="none"

@@ -3,6 +3,18 @@ import loadImage from "blueimp-load-image";
 
 import notification from "./notification";
 
+export const RESOURCE_CTX = {
+  MY_UPLOADS: "MY_UPLOADS",
+  PAGES: "PAGES",
+  USERGROUPS: "USERGROUPS"
+};
+
+const RESOURCE_CTX_MAP = {
+  MY_UPLOADS: "myUploads",
+  PAGES: "pages",
+  USERGROUPS: "userGroups"
+};
+
 export function resizeImage(file: File, max = 1000): Promise<any> {
   return new Promise((resolve) => {
     loadImage(
@@ -45,6 +57,12 @@ export const getResourceThumbnail = (resourceUrl, size = "?h=64") => {
   return resourceUrl ? `${resourceUrl.replace("/raw/", "/crop/")}${size}` : undefined;
 };
 
+export const getNextResourceThumbnail = (resourceType, resourceUrl, size) => {
+  return resourceUrl
+    ? `${ENDPOINT.FILES}/get/crop/${RESOURCE_CTX_MAP[resourceType]}/${resourceUrl}${size}`
+    : undefined;
+};
+
 export const getUserImage = (resourceUrl, name, w = 50) => {
   return resourceUrl
     ? resourceUrl.startsWith("http")
@@ -53,8 +71,27 @@ export const getUserImage = (resourceUrl, name, w = 50) => {
     : `/api/avatar?t=${name}&s=${w}`;
 };
 
+export const getResourceRAW = (resourceType, resourceUrl) => {
+  return resourceUrl
+    ? `${ENDPOINT.FILES}/get/raw/${RESOURCE_CTX_MAP[resourceType]}/${resourceUrl}`
+    : undefined;
+};
+
 export const getTraitIcon = (resourceUrl, w = 40) => {
   return resourceUrl.startsWith("/next-assets/")
     ? resourceUrl
     : `${ENDPOINT.FILES}/get/crop/traits${resourceUrl}?w=${w}`;
 };
+
+export const getGroupImage = (resourceUrl) => {
+  return `${ENDPOINT.FILES}/get/crop/userGroups${resourceUrl}`;
+};
+
+export const getGroupImageThumb = (resourceUrl, height = 32) => {
+  return resourceUrl
+    ? `${ENDPOINT.FILES}/get/crop/userGroups${resourceUrl}?h=${height}`
+    : `/next-assets/species/Unknown.svg`;
+};
+
+export const getLocalIcon = (icon, type = "species") =>
+  `/next-assets/${type}/${icon || "Unknown"}.svg`;

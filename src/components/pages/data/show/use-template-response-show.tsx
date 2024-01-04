@@ -9,6 +9,7 @@ interface TemplateResponseShowContextProps {
   header;
   templateGroups;
   canEdit;
+  groups;
 }
 
 interface TemplateResponseShowProviderProps {
@@ -17,6 +18,7 @@ interface TemplateResponseShowProviderProps {
   response;
   header;
   canEdit;
+  groups;
   children;
 }
 
@@ -30,6 +32,7 @@ export const TemplateResponseShowProvider = ({
   response,
   header,
   canEdit,
+  groups,
   children
 }: TemplateResponseShowProviderProps) => {
   const splitTableAndAccordians = (fields) => {
@@ -64,6 +67,7 @@ export const TemplateResponseShowProvider = ({
         header,
         templateGroups,
         canEdit,
+        groups,
         response
       }}
     >

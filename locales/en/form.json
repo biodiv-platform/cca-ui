@@ -57,6 +57,25 @@
   "terms": "By submitting this form, you agree that the photos or videos you are submitting are taken by you, or you have permission of the copyright holder to upload them on creative commons licenses.",
   "type": "Type",
   "updated_on": "Updated On",
+  "upload_status": {
+    "failed": "Failed",
+    "pending": "Pending",
+    "uploaded": "Uploaded to Draft Media",
+    "uploading": "Uploading"
+  },
+  "uploader": {
+    "browse": "Browse",
+    "description": "(Only JPG, JPEG, PNG, MP3 ,MP4 files will be accepted)",
+    "device": "From Device",
+    "draft": "From Draft Media",
+    "label": "Drop file(s) here",
+    "label_release": "Ready to upload",
+    "old_form": "Upload Form (Classic)",
+    "predicting": "Generating Predictions...",
+    "processing": "Processing",
+    "upload": "Upload",
+    "uploading": "Uploading..."
+  },
   "validations": {
     "short_name": "Only lowercase alphabets and hyphens are allowed"
   }

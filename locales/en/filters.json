@@ -53,5 +53,8 @@
     "taxon_role_title": "Taxonomy Roles",
     "title": "User",
     "username": "User Name"
+  },
+  "usergroup": {
+    "title": "User Groups"
   }
 }

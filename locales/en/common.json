@@ -27,6 +27,7 @@
   "navigation": "Navigation",
   "next": "Next",
   "no_data": "No Data",
+  "no_groups_joined": "You have not joined any group",
   "no_results": "No Results",
   "notifications": {
     "invalid_credentials": "The username or password you entered is incorrect.",
@@ -37,11 +38,13 @@
   "or": "or",
   "owner": "Owner",
   "prev": "Previous",
+  "read_more": "Read More",
   "save": "Save",
   "search": "Search",
   "site": {
     "title": "Community Conserved Areas"
   },
   "view": "View",
-  "unknown": "Unknown"
+  "unknown": "Unknown",
+  "usergroups": "Groups"
 }

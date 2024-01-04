@@ -1,9 +1,9 @@
+import { useLocalRouter } from "@components/@core/local-link";
 import useGlobalState from "@hooks/use-global-state";
 import { PageCreate } from "@interfaces/pages";
 import { axCreatePage } from "@services/pages.service";
 import { dateToUTC } from "@utils/date";
 import notification, { NotificationType } from "@utils/notification";
-import { useRouter } from "next/router";
 import useTranslation from "next-translate/useTranslation";
 import React from "react";
 
@@ -11,8 +11,8 @@ import PageForm from "../common/form";
 
 export default function PageCreateForm(): JSX.Element {
   const { t } = useTranslation();
-  const { user, fetchPages, languageId } = useGlobalState();
-  const router = useRouter();
+  const { user, currentGroup, languageId } = useGlobalState();
+  const router = useLocalRouter();
 
   const defaultValues = {
     content: "",
@@ -31,13 +31,13 @@ export default function PageCreateForm(): JSX.Element {
       autherId: user?.id,
       autherName: user?.name,
       showInFooter: false,
+      userGroupId: currentGroup.id,
       date: dateToUTC().format()
     };
     const { success, data } = await axCreatePage(payload);
     if (success) {
       notification(t("page:create.success"), NotificationType.Success);
-      await fetchPages();
-      router.push(`/page/show/${data?.id}`);
+      router.push(`/page/show/${data?.id}`, true);
     } else {
       notification(t("page:create.failure"));
     }

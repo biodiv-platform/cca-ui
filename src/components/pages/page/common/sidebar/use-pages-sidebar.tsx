@@ -1,7 +1,6 @@
 import useGlobalState from "@hooks/use-global-state";
-import { Role } from "@interfaces/custom";
 import { axUpdateTree } from "@services/pages.service";
-import { hasAccess } from "@utils/auth";
+import { axCheckUserGroupFounderOrAdmin } from "@services/usergroup.service";
 import notification, { NotificationType } from "@utils/notification";
 import useTranslation from "next-translate/useTranslation";
 import React, { createContext, useContext, useEffect, useState } from "react";
@@ -34,13 +33,13 @@ export const UsePagesSidebarProvider = ({
   children
 }: UsePagesSidebarProviderProps) => {
   const { t } = useTranslation();
-  const { pages, setPages } = useGlobalState();
+  const { currentGroup, pages, setPages } = useGlobalState();
   const [isLoading, setIsLoading] = useState<boolean>();
   const [isEditing, setIsEditing] = useState<boolean>();
   const [canEdit, setCanEdit] = useState(false);
 
   useEffect(() => {
-    setCanEdit(hasAccess([Role.Admin]));
+    axCheckUserGroupFounderOrAdmin(currentGroup.id, true).then(setCanEdit);
   }, []);
 
   useEffect(() => {

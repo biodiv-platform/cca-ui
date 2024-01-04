@@ -60,3 +60,26 @@ export const authorizedPageSSR = (
     }
   }
 };
+
+/**
+ * Improved version of `authorizedPageSSR` redirects to login if user is not authorized
+ *
+ * @param {*} allowedRoles
+ * @param {*} ctx
+ * @return {*}
+ */
+export const authorizedPageSSP = (allowedRoles, ctx) => {
+  const isLoggedIn = hasAccess([Role.Any], ctx);
+
+  if (!hasAccess(allowedRoles, ctx)) {
+    if (isLoggedIn) throwUnauthorized(ctx);
+
+    return {
+      redirect: {
+        permanant: false,
+        destination: `/login?forward=${encode(ctx?.asPath || ctx?.resolvedUrl)}`
+      },
+      props: {}
+    };
+  }
+};

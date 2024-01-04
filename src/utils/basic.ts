@@ -30,3 +30,21 @@ export const getByPath = (obj, path) => {
 
   return obj;
 };
+
+export const absoluteUrl = (ctx, asPath?, setLocalhost?) => {
+  let protocol = "https:";
+  let host = ctx?.req
+    ? ctx.req.headers["x-forwarded-host"] || ctx.req.headers["host"]
+    : window.location.host;
+  if (host?.indexOf("localhost") > -1) {
+    if (setLocalhost) {
+      host = setLocalhost;
+    }
+    protocol = "http:";
+  }
+
+  return new URL(`${protocol}//${host}${asPath || ctx?.resolvedUrl || ctx?.req?.url || ""}`);
+};
+
+export const removeEmptyKeys = (obj = {}): any =>
+  Object.fromEntries(Object.entries(obj).filter(([, v]) => (Array.isArray(v) ? v.length : v)));

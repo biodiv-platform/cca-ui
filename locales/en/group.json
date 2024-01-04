@@ -1,0 +1,100 @@
+{
+  "about": {
+    "closed_group": "Closed Group",
+    "open_group": "Open Group",
+    "title": "About"
+  },
+  "admin": {
+    "error": "There was some error while updating Administrators",
+    "founder": "Founders",
+    "moderator": "Moderators",
+    "no_access": "to update custom fields or group rules please contact administrator",
+    "title": "Group Administrators",
+    "updated": "Group Administrators Updated Successfully"
+  },
+  "confirm_closed_group": "This is a closed group, Membership request has to be approved by a moderator. Press OK to send join request",
+  "confirm_leave": "Leave Group?",
+  "create": {
+    "error": "There was some error while creating Group",
+    "success": "Group Created Successfully",
+    "title": "Create a Group"
+  },
+  "delete_member": "Are you sure you want to delete?",
+  "edit": {
+    "error": "There was some error while updating Group",
+    "success": "Group Updated Successfully",
+    "title": "Edit Group"
+  },
+  "homepage_customization": {
+    "about_us": "About Us",
+    "add_options": "Add Options",
+    "back": "Back to List",
+    "default": "Default",
+    "failure": "Unable to Save changes",
+    "gallery": "Gallery",
+    "gallery_setup": {
+      "alert": "Please save changes to re-order",
+      "create": "Create Gallery Image",
+      "save_order": "Save Gallery Image(s) Order",
+      "show_image_upload": "Show Image Uploader",
+      "title": "Gallery Setup"
+    },
+    "observation_map": "Show Grid Map",
+    "remove": {
+      "failure": "Unable to remove Gallery Image",
+      "success": "Deleted Gallery Image Successfully"
+    },
+    "reorder": {
+      "failure": "Unable to save Gallery List  order",
+      "success": "Gallery List reordered successfully"
+    },
+    "resources": {
+      "error": "Enter valid observation id",
+      "imageurl": "Choose Gallery Image",
+      "link": "Show Page Link",
+      "new_image": "Image Upload",
+      "title": "Title"
+    },
+    "save": "Save Homepage Details",
+    "show_desc": "Show Description",
+    "success": "Updated changes successfully",
+    "table": {
+      "actions": "Actions",
+      "description": "Description",
+      "enabled": "Enabled",
+      "image": "Image",
+      "more_link": "Link",
+      "title": "Title"
+    },
+    "title": "Homepage Customization",
+    "update": {
+      "failure": "Unable to Update Homepage Details",
+      "success": "Homepage Details Updated successfully",
+      "title": "Update"
+    }
+  },
+  "icon": "Icon",
+  "invalid_wkt": "Enter Valid WKT String",
+  "invite": "Type user name or email",
+  "invite_founders": "Invite Founders",
+  "invite_moderators": "Invite Moderators",
+  "join": "Join Group",
+  "join_without_invitation": "Allow user to join the group without invitation",
+  "leave": "Leave Group",
+  "list": {
+    "title": "Groups"
+  },
+  "member": {
+    "joined": "Group joined successfully",
+    "joined_error": "Unable to join Group",
+    "left": "Group left successfully",
+    "left_error": "Unable to leave Group",
+    "requested": "Group join request sent"
+  },
+  "name": "Group Name",
+  "save": "Create Group",
+  "spatial_coverge": "Spatial Coverage",
+  "tags": "Tags",
+  "update": "Update Group",
+  "update_admin": "Update Administrators"
+}

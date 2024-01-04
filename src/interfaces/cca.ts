@@ -1,3 +1,5 @@
+import { UserGroupCCA } from "./userGroup";
+
 export interface CCAField {
   fieldId?: string;
   name?: string;
@@ -13,4 +15,11 @@ export interface CCATemplate {
   description?: string;
   shortName?: string;
   fields?: CCAField[];
+}
+
+export interface CCAUserPermission {
+  validatePermissionCCA?: number;
+  userGroupMember?: UserGroupCCA[];
+  userGroupFeature?: UserGroupCCA[];
+  following?: boolean;
 }

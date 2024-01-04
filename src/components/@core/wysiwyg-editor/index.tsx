@@ -53,7 +53,7 @@ export default function WYSIWYGEditor({ uploadHandler, ...props }: WYSIWYGEditor
           uploadHandler ? "image" : "na"
         ],
         toolbar:
-          "image undo paste-as-text redo  bold italic alignleft aligncenter alignright bullist numlist outdent indent help code",
+          "image undo paste-as-text redo  bold italic alignleft aligncenter alignright alignjustify bullist link numlist table outdent indent help code",
         images_upload_handler: uploadHandler,
         images_upload_base_path: "/",
         valid_elements: "*[*]",

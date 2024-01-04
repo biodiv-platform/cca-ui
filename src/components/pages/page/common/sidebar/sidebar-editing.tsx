@@ -1,6 +1,6 @@
 import "react-sortable-tree/style.css";
 
-import { useRouter } from "next/router";
+import { useLocalRouter } from "@components/@core/local-link";
 import React from "react";
 import SortableTree from "react-sortable-tree";
 
@@ -8,7 +8,7 @@ import usePagesSidebar from "./use-pages-sidebar";
 
 export default function SidebarEditing() {
   const p = usePagesSidebar();
-  const router = useRouter();
+  const router = useLocalRouter();
 
   return (
     <SortableTree
@@ -19,7 +19,7 @@ export default function SidebarEditing() {
       scaffoldBlockPxWidth={24}
       generateNodeProps={({ node }) => ({
         onClick: () => {
-          router.push(`/page/${p.linkType}/${node.id}`);
+          router.push(`/page/${p.linkType}/${node.id}`, true);
         },
         style: {
           background:

@@ -10,5 +10,17 @@ export default function PageShowPage({ success, data }) {
 
 export const getServerSideProps = async (ctx) => {
   const props = await axGetPageByID(ctx.query.pageId, "full");
+  if (!props.success || props.data?.isDeleted) return { notFound: true };
+
+  if (props.data.url) {
+    return {
+      redirect: {
+        permanant: false,
+        destination: props.data.url
+      },
+      props: {}
+    };
+  }
+
   return { props };
 };
