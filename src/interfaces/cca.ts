@@ -1,4 +1,4 @@
-import { UserGroupIbp } from "./userGroup";
+import { UserGroupCCA } from "./userGroup";
 
 export interface CCAField {
   fieldId?: string;
@@ -18,8 +18,8 @@ export interface CCATemplate {
 }
 
 export interface CCAUserPermission {
-  validatePermissionCCA?: number /* int64 */[];
-  userGroupMember?: UserGroupIbp[];
-  userGroupFeature?: UserGroupIbp[];
+  validatePermissionCCA?: number;
+  userGroupMember?: UserGroupCCA[];
+  userGroupFeature?: UserGroupCCA[];
   following?: boolean;
 }

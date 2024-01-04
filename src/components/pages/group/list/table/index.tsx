@@ -1,5 +1,5 @@
 import { Input } from "@chakra-ui/react";
-import { BasicTable, ResponsiveContainer } from "@components/@core/table";
+import { BasicTable, ResponsiveContainer } from "@components/@core/basic-table";
 import debounce from "debounce-promise";
 import useTranslation from "next-translate/useTranslation";
 import React, { useState } from "react";

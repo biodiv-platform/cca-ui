@@ -11,8 +11,6 @@ import GroupAdministratorsEditForm from "./group-administrator-edit-form";
 import GroupHomePageCustomization from "./homepage-customization";
 
 interface GroupEditPageProps {
-  customFieldList;
-  allCustomField;
   groupInfo;
   groupRules;
   founders;

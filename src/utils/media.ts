@@ -11,10 +11,7 @@ export const RESOURCE_CTX = {
 
 const RESOURCE_CTX_MAP = {
   MY_UPLOADS: "myUploads",
-  OBSERVATION: "observations",
   PAGES: "pages",
-  SPECIES_FIELD: "img",
-  SPECIES: "img",
   USERGROUPS: "userGroups"
 };
 

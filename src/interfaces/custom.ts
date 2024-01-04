@@ -1,4 +1,4 @@
-import { UserGroupIbp } from "./userGroup";
+import { UserGroupCCA } from "./userGroup";
 
 export enum Role {
   Any = "ANY",
@@ -12,6 +12,6 @@ export enum Role {
   ExtDataContributor = "ROLE_EXTDATACONTRIBUTOR"
 }
 
-export interface UserGroupIbpExtended extends UserGroupIbp {
+export interface UserGroupCCAExtended extends UserGroupCCA {
   nameLocal?;
 }

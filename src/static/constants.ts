@@ -1,5 +1,5 @@
 import SITE_CONFIG from "@configs/site-config";
-import { UserGroupIbpExtended } from "@interfaces/custom";
+import { UserGroupCCAExtended } from "@interfaces/custom";
 
 export const isBrowser = typeof window !== `undefined`;
 
@@ -21,7 +21,7 @@ export const ENDPOINT = {
   RAW: `${API_ENDPOINT}biodiv`
 };
 
-export const DEFAULT_GROUP: UserGroupIbpExtended = {
+export const DEFAULT_GROUP: UserGroupCCAExtended = {
   id: null as any,
   icon: `${ENDPOINT.FILES}${SITE_CONFIG.SITE.ICON}`,
   name: SITE_CONFIG.SITE.TITLE[SITE_CONFIG.LANG.DEFAULT],

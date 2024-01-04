@@ -6,111 +6,7 @@ export interface AuthenticationDTO {
   credentials?: UserDTO;
   groupId?: number; // int64
 }
-export interface BulkGroupPostingData {
-  userGroupList?: number /* int64 */[];
-  ugObvFilterDataList?: UserGroupObvFilterData[];
-}
-export interface BulkGroupUnPostingData {
-  userGroupList?: number /* int64 */[];
-  observationList?: number /* int64 */[];
-}
-export interface CustomFieldCreateData {
-  name?: string;
-  dataType?: string;
-  fieldType?: string;
-  iconURL?: string;
-  notes?: string;
-  units?: string;
-  userGroupId?: number; // int64
-  defaultValue?: string;
-  displayOrder?: number; // int32
-  isMandatory?: boolean;
-  allowedParticipation?: boolean;
-  values?: CustomFieldValuesCreateData[];
-}
-export interface CustomFieldData {
-  cfId?: number; // int64
-  cfName?: string;
-  dataType?: string;
-  fieldType?: string;
-  cfIconUrl?: string;
-  cfNotes?: string;
-  defaultValue?: string;
-  units?: string;
-  displayOrder?: number; // int32
-  allowedParticipation?: boolean;
-  customFieldValues?: CustomFieldValuesData;
-}
-export interface CustomFieldDetails {
-  customFields?: CustomFields;
-  cfValues?: CustomFieldValues[];
-  defaultValue?: string;
-  displayOrder?: number; // int32
-  isMandatory?: boolean;
-  allowedParticipation?: boolean;
-}
-export interface CustomFieldFactsInsert {
-  userGroupId?: number; // int64
-  customFieldId?: number; // int64
-  observationId?: number; // int64
-  singleCategorical?: number; // int64
-  multipleCategorical?: number /* int64 */[];
-  minValue?: string;
-  maxValue?: string;
-  textBoxValue?: string;
-}
-export interface CustomFieldFactsInsertData {
-  factsCreateData?: CustomFieldFactsInsert;
-  mailData?: MailData;
-}
-export interface CustomFieldObservationData {
-  userGroupId?: number; // int64
-  customField?: CustomFieldData[];
-}
-export interface CustomFieldPermission {
-  userGroupId?: number; // int64
-  allowedCfId?: number /* int64 */[];
-}
-export interface CustomFieldReordering {
-  cfId?: number; // int64
-  displayOrder?: number; // int64
-}
-export interface CustomFieldUGData {
-  customFieldId?: number; // int64
-  defaultValue?: string;
-  displayOrder?: number; // int32
-  isMandatory?: boolean;
-  allowedParticipation?: boolean;
-}
-export interface CustomFieldValues {
-  id?: number; // int64
-  customFieldId?: number; // int64
-  values?: string;
-  iconURL?: string;
-  notes?: string;
-}
-export interface CustomFieldValuesCreateData {
-  value?: string;
-  iconURL?: string;
-  notes?: string;
-}
-export interface CustomFieldValuesData {
-  fieldTextData?: string;
-  singleCategoricalData?: CustomFieldValues;
-  multipleCategoricalData?: CustomFieldValues[];
-  minRange?: string;
-  maxRange?: string;
-}
-export interface CustomFields {
-  id?: number; // int64
-  authorId?: number; // int64
-  name?: string;
-  dataType?: string;
-  fieldType?: string;
-  units?: string;
-  iconURL?: string;
-  notes?: string;
-}
+
 export interface DocumentMailData {
   documentId?: number; // int64
   createdOn?: string; // date-time
@@ -145,7 +41,6 @@ export interface GroupGallerySlider {
   id?: number; // int64
   ugId?: number; // int64
   fileName?: string;
-  observationId?: number; // int64
   authorId?: number; // int64
   authorName?: string;
   authorImage?: string;
@@ -157,7 +52,6 @@ export interface GroupGallerySlider {
 export interface GroupHomePageData {
   showGallery?: boolean;
   showStats?: boolean;
-  showRecentObservation?: boolean;
   showGridMap?: boolean;
   showPartners?: boolean;
   showDesc?: boolean;
@@ -166,31 +60,8 @@ export interface GroupHomePageData {
   gallerySlider?: GroupGallerySlider[];
 }
 export interface MailData {
-  observationData?: ObservationMailData;
   documentMailData?: DocumentMailData;
   userGroupData?: UserGroupMailData[];
-  speciesData?: SpeciesMailData;
-}
-export interface Newsletter {
-  id?: number; // int64
-  version?: number; // int64
-  date?: string; // date-time
-  title?: string;
-  userGroupId?: number; // int64
-  displayOrder?: number; // int32
-  languageId?: number; // int64
-  parentId?: number; // int64
-  showInFooter?: boolean;
-  sticky?: boolean;
-}
-export interface ObservationMailData {
-  observationId?: number; // int64
-  location?: string;
-  observedOn?: string; // date-time
-  iconURl?: string;
-  scientificName?: string;
-  commonName?: string;
-  authorId?: number; // int64
 }
 export interface ReorderingHomePage {
   galleryId?: number; // int64
@@ -200,22 +71,11 @@ export interface ShowFilterRule {
   hasSpatialRule?: boolean;
   spartialRuleList?: UserGroupSpatialData[];
   hasTaxonomicRule?: boolean;
-  taxonomicRuleList?: UserGroupTaxonomicRule[];
   hasUserRule?: boolean;
   hasCreatedOnDateRule?: boolean;
   createdOnDateRuleList?: UserGroupCreatedOnDateRule[];
-  hasObservedOnDateRule?: boolean;
-  observedOnDateRule?: UserGroupObservedonDateRule[];
-}
-export interface SpeciesMailData {
-  speciesId?: number; // int64
-  speciesName?: string;
-  iconUrl?: string;
-  authorId?: number; // int64
 }
 export interface Stats {
-  species?: number; // int64
-  observation?: number; // int64
   maps?: number; // int64
   documents?: number; // int64
   discussions?: number; // int64
@@ -266,7 +126,6 @@ export interface UserGroup {
   newFilterRule?: string;
   showGallery?: boolean;
   showStats?: boolean;
-  showRecentObservations?: boolean;
   showGridMap?: boolean;
   showPartners?: boolean;
   showDesc?: boolean;
@@ -285,8 +144,6 @@ export interface UserGroupCreateData {
   icon?: string;
   domainName?: string;
   name?: string;
-  speciesGroup?: number /* int64 */[];
-  habitatId?: number /* int64 */[];
   neLatitude?: number; // double
   neLongitude?: number; // double
   swLatitude?: number; // double
@@ -342,10 +199,8 @@ export interface UserGroupFilterRemove {
 }
 export interface UserGroupFilterRuleInputData {
   hasUserRule?: boolean;
-  taxonomicIdList?: number /* int64 */[];
   spartialDataList?: string[];
   createdOnDateList?: UserGroupFilterDate[];
-  observedOnDateList?: UserGroupFilterDate[];
 }
 
 export interface Featured {
@@ -363,14 +218,13 @@ export interface Featured {
 export interface UserGroupHomePageEditData {
   showGallery?: boolean;
   showStats?: boolean;
-  showRecentObservation?: boolean;
   showGridMap?: boolean;
   showPartners?: boolean;
   showDesc?: boolean;
   description?: string;
   gallerySlider?: GroupGallerySlider[];
 }
-export interface UserGroupIbp {
+export interface UserGroupCCA {
   id?: number; // int64
   name?: string;
   icon?: string;
@@ -393,29 +247,13 @@ export interface UserGroupMailData {
 export interface UserGroupMappingCreateData {
   mailData?: MailData;
   userGroups?: number /* int64 */[];
-  ugFilterData?: UserGroupObvFilterData;
 }
 export interface UserGroupMemberRole {
   userGroupId?: number; // int64
   roleId?: number; // int64
   getsUserId?: number; // int64
 }
-export interface UserGroupObservedonDateRule {
-  id?: number; // int64
-  userGroupId?: number; // int64
-  fromDate?: string; // date-time
-  toDate?: string; // date-time
-  isEnabled?: boolean;
-}
-export interface UserGroupObvFilterData {
-  observationId?: number; // int64
-  latitude?: number; // double
-  longitude?: number; // double
-  createdOnDate?: string; // date-time
-  observedOnDate?: string; // date-time
-  taxonomyId?: number; // int64
-  authorId?: number; // int64
-}
+
 export interface UserGroupPermissions {
   userMemberRole?: UserGroupMemberRole[];
   userFeatureRole?: UserGroupMemberRole[];
@@ -424,19 +262,6 @@ export interface UserGroupSpatialData {
   id?: number; // int64
   userGroupId?: number; // int64
   spatialData?: string;
-  isEnabled?: boolean;
-}
-export interface UserGroupSpeciesCreateData {
-  userGroupIds?: number /* int64 */[];
-}
-export interface UserGroupSpeciesGroup {
-  userGroupId?: number; // int64
-  speciesGroupId?: number; // int64
-}
-export interface UserGroupTaxonomicRule {
-  id?: number; // int64
-  userGroupId?: number; // int64
-  taxonomyId?: number; // int64
   isEnabled?: boolean;
 }
 export interface UserGroupWKT {

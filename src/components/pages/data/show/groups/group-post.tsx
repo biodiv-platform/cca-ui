@@ -1,6 +1,6 @@
 import { Box, Button, Collapse, Heading, Input, SimpleGrid, useDisclosure } from "@chakra-ui/react";
 import EditIcon from "@icons/edit";
-import { UserGroupIbp } from "@interfaces/userGroup";
+import { UserGroupCCA } from "@interfaces/userGroup";
 import { DEFAULT_GROUP } from "@static/constants";
 import { waitForAuth } from "@utils/auth";
 import notification, { NotificationType } from "@utils/notification";
@@ -12,8 +12,8 @@ import CheckBoxItems from "../../user-groups/checkbox";
 import GroupBox from "./group-box";
 
 interface IGroupPostProps {
-  groups: UserGroupIbp[] | undefined;
-  selectedDefault: UserGroupIbp[] | undefined;
+  groups: UserGroupCCA[] | undefined;
+  selectedDefault: UserGroupCCA[] | undefined;
   resourceId;
   saveUserGroupsFunc;
   columns?;

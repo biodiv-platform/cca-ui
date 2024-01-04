@@ -1,4 +1,4 @@
-import { UserGroupIbpExtended } from "@interfaces/custom";
+import { UserGroupCCAExtended } from "@interfaces/custom";
 import { axCheckUserGroupMember } from "@services/app.service";
 import { axGetTree } from "@services/pages.service";
 import { AUTHWALL } from "@static/events";
@@ -16,9 +16,9 @@ interface GlobalStateContextProps {
   isLoggedIn: boolean;
   logOut;
 
-  groups?: UserGroupIbpExtended[];
+  groups?: UserGroupCCAExtended[];
 
-  currentGroup: UserGroupIbpExtended;
+  currentGroup: UserGroupCCAExtended;
   isCurrentGroupMember?: boolean;
   setIsCurrentGroupMember;
   languageId?;

@@ -1,12 +1,12 @@
 import SITE_CONFIG from "@configs/site-config";
-import { UserGroupIbp } from "@interfaces/userGroup";
+import { UserGroupCCA } from "@interfaces/userGroup";
 import { DEFAULT_GROUP } from "@static/constants";
 import { stringify } from "@utils/query-string";
 
 import { getGroupImage } from "./media";
 
-export const transformUserGroupList = (list: UserGroupIbp[]): UserGroupIbp[] => {
-  return list.map((group: UserGroupIbp) => ({
+export const transformUserGroupList = (list: UserGroupCCA[]): UserGroupCCA[] => {
+  return list.map((group: UserGroupCCA) => ({
     ...group,
     webAddress: group.webAddress?.startsWith("/")
       ? SITE_CONFIG.SITE.URL + group.webAddress
@@ -16,10 +16,10 @@ export const transformUserGroupList = (list: UserGroupIbp[]): UserGroupIbp[] => 
 };
 
 export const findCurrentUserGroup = (
-  groups: UserGroupIbp[],
+  groups: UserGroupCCA[],
   currentURL: string,
   lang?: string
-): UserGroupIbp => {
+): UserGroupCCA => {
   const defaultGroup = {
     ...DEFAULT_GROUP,
     name: SITE_CONFIG.SITE.TITLE?.[lang || SITE_CONFIG.LANG.DEFAULT] || DEFAULT_GROUP.name
@@ -28,13 +28,13 @@ export const findCurrentUserGroup = (
   return (
     (currentURL &&
       groups.find(
-        (group: UserGroupIbp) => group.webAddress && currentURL.startsWith(group.webAddress)
+        (group: UserGroupCCA) => group.webAddress && currentURL.startsWith(group.webAddress)
       )) ||
     defaultGroup
   );
 };
 
-export const getManifestURL = (group: UserGroupIbp) => {
+export const getManifestURL = (group: UserGroupCCA) => {
   const { name, icon } = group;
   return `/api/manifest.json?${stringify({ name, icon })}`;
 };

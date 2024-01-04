@@ -80,21 +80,6 @@ export const axUserGroupUpdate = async (payload, userGroupId) => {
   }
 };
 
-export const axUserGroupDatatableUpdate = async (userGroupId, groupList) => {
-  try {
-    const { data } = await http.put(
-      `${ENDPOINT.USERGROUP}/v1/group/update/data-table/${userGroupId}`,
-      {
-        userGroupIds: groupList
-      }
-    );
-    return { success: true, data };
-  } catch (e) {
-    console.error(e);
-    return { success: false, data: [] };
-  }
-};
-
 export const axUserGroupRemoveAdminMembers = async (userGroupId, userId) => {
   try {
     const { data } = await http.get(`${ENDPOINT.USERGROUP}/v1/group/remove/members`, {
@@ -210,130 +195,6 @@ export const axLeaveUserGroup = async (userGroupId) => {
   }
 };
 
-//USERGROUP-CUSTOM-FIELD-API(s)
-export const axGetAllCustomFields = async (ctx) => {
-  try {
-    const { data } = await http.get(`${ENDPOINT.USERGROUP}/v1/customfield/all`, {
-      params: { ctx }
-    });
-    return { success: true, data };
-  } catch (e) {
-    console.error(e);
-    return { success: false, data: e };
-  }
-};
-
-export const axGetAllCustomFieldOptionsById = async (observationId, userGroupId, cfId) => {
-  try {
-    const { data } = await http.get(
-      `${ENDPOINT.USERGROUP}/v1/customfield/options/${observationId}/${userGroupId}/${cfId}`
-    );
-    return { success: true, data };
-  } catch (e) {
-    console.error(e);
-    return { success: false, data: e };
-  }
-};
-
-export const axGetUserGroupCustomField = async (userGroupId, ctx) => {
-  try {
-    const { data } = await http.get(`${ENDPOINT.USERGROUP}/v1/customfield/group/${userGroupId}`, {
-      params: { ctx }
-    });
-    return { success: true, data };
-  } catch (e) {
-    console.error(e);
-    return { success: false, data: e };
-  }
-};
-
-export const axRemoveCustomField = async (userGroupId, customFieldId) => {
-  try {
-    const { data } = await http.put(
-      `${ENDPOINT.USERGROUP}/v1/customfield/remove/${userGroupId}/${customFieldId}`
-    );
-    return { success: true, data };
-  } catch (e) {
-    console.error(e);
-    return { success: false, data: [] };
-  }
-};
-
-export const axAddCustomField = async (payload) => {
-  try {
-    const { data } = await http.post(`${ENDPOINT.USERGROUP}/v1/customfield/create`, payload);
-    return { success: true, data };
-  } catch (e) {
-    console.error(e);
-    return { success: false, data: [] };
-  }
-};
-
-export const axAddExsistingCustomField = async (userGroupId, payload) => {
-  try {
-    const { data } = await http.post(
-      `${ENDPOINT.USERGROUP}/v1/customfield/add/${userGroupId}`,
-      payload
-    );
-    return { success: true, data };
-  } catch (e) {
-    console.error(e);
-    return { success: false, data: [] };
-  }
-};
-
-export const axReorderCustomField = async (userGroupId, payload) => {
-  try {
-    const { data } = await http.put(
-      `${ENDPOINT.USERGROUP}/v1/customfield/reordering/${userGroupId}`,
-      payload
-    );
-    return { success: true, data };
-  } catch (e) {
-    console.error(e);
-    return { success: false, data: [] };
-  }
-};
-
-export const axGetUserGroupRules = async (userGroupId, ctx) => {
-  try {
-    const { data } = await http.get(
-      `${ENDPOINT.INTEGRATOR}/v1/services/filterRule/show/${userGroupId}`,
-      { params: { ctx } }
-    );
-    return { success: true, data };
-  } catch (e) {
-    console.error(e);
-    return { success: false, data: e };
-  }
-};
-
-export const axAddUserGroupRule = async (userGroupId, payload) => {
-  try {
-    const { data } = await http.post(
-      `${ENDPOINT.INTEGRATOR}/v1/services/filterRule/add/${userGroupId}`,
-      payload
-    );
-    return { success: true, data };
-  } catch (e) {
-    console.error(e);
-    return { success: false, data: [] };
-  }
-};
-
-export const axRemoveUserGroupRule = async (userGroupId, payload) => {
-  try {
-    const { data } = await http.post(
-      `${ENDPOINT.INTEGRATOR}/v1/services/filterRule/remove/${userGroupId}`,
-      payload
-    );
-    return { success: true, data };
-  } catch (e) {
-    console.error(e);
-    return { success: false, data: [] };
-  }
-};
-
 export const axGetGroupHompageDetails = async (userGroupId) => {
   try {
     const { data } = await plainHttp.get(`${ENDPOINT.USERGROUP}/v1/group/homePage/${userGroupId}`);
@@ -394,19 +255,6 @@ export const getAuthorizedUserGroupById = async () => {
   } catch (e) {
     console.error(e);
     return { success: false };
-  }
-};
-
-export const axcustomFieldEditDetails = async (userGroupId, customFieldId, payload) => {
-  try {
-    const { data } = await http.put(
-      `${ENDPOINT.USERGROUP}/v1/customfield/edit/${userGroupId}/${customFieldId}`,
-      payload
-    );
-    return { success: true, data };
-  } catch (e) {
-    console.error(e);
-    return { success: false, data: [] };
   }
 };
 

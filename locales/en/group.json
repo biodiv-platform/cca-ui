@@ -39,9 +39,7 @@
       "show_image_upload": "Show Image Uploader",
       "title": "Gallery Setup"
     },
-    "module_stats": "Module Stats",
     "observation_map": "Show Grid Map",
-    "recent_observation": "Recent Observation",
     "remove": {
       "failure": "Unable to remove Gallery Image",
       "success": "Deleted Gallery Image Successfully"
@@ -55,7 +53,6 @@
       "imageurl": "Choose Gallery Image",
       "link": "Show Page Link",
       "new_image": "Image Upload",
-      "obs_id": "Observation Id",
       "title": "Title"
     },
     "save": "Save Homepage Details",
@@ -95,31 +92,6 @@
     "requested": "Group join request sent"
   },
   "name": "Group Name",
-  "rules": {
-    "add": {
-      "failure": "Unable to add Usergroup rule",
-      "success": "Created successfully",
-      "title": "Create Group Rule"
-    },
-    "input_types": {
-      "spatial": "Add Spatial Rule",
-      "taxonomy": "Add taxonomic Rule",
-      "title": "Select Input Type",
-      "user": "Aggregate observation of all group members"
-    },
-    "remove": {
-      "failure": "unable to delete user group rule",
-      "success": "user group rule deleted"
-    },
-    "table": {
-      "actions": "Actions",
-      "read_less": "Read Less",
-      "read_more": "Read More",
-      "rule_type": "Rule Type",
-      "value": "Value"
-    },
-    "title": "Group Rules"
-  },
   "save": "Create Group",
   "spatial_coverge": "Spatial Coverage",
   "tags": "Tags",
