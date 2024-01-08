@@ -26,6 +26,7 @@
     "auto-toc": "^0.0.6",
     "axios": "^1.1.2",
     "base64-url": "^2.3.3",
+    "blockhash-core": "^0.1.0",
     "blueimp-load-image": "^5.16.0",
     "boring-avatars": "^1.7.0",
     "cogo-toast": "^4.2.3",

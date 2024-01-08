@@ -2,11 +2,13 @@ import { ENDPOINT, LOCAL_ASSET_PREFIX } from "@static/constants";
 import { formDataHeaders, http } from "@utils/http";
 import { nanoid } from "nanoid";
 
-export const axUploadResource = async (file: File, dir = "pages") => {
+export const axUploadResource = async (file: File, dir = "pages", nestedPath?: string) => {
   const formData = new FormData();
   formData.append("hash", LOCAL_ASSET_PREFIX + nanoid());
   formData.append("directory", dir);
   formData.append("upload", file, file.name);
+  formData.append("resource", "true");
+  nestedPath && formData.append("nestedFolder", nestedPath);
 
   const { data } = await http.post(`${ENDPOINT.FILES}/upload/resource-upload`, formData, {
     headers: {

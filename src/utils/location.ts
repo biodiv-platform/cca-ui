@@ -1,5 +1,7 @@
 import SITE_CONFIG from "@configs/site-config";
 
+import { parseEXIF } from "./date";
+
 export const getMapCenter = (zoomDiff, extra = {}) => ({
   ...SITE_CONFIG.MAP.CENTER,
   bearing: 0,
@@ -59,4 +61,35 @@ export const stringToFeature = (costr) => {
     console.error(e);
     return [];
   }
+};
+
+const ConvertDMSToDD = (dms, direction) => {
+  try {
+    const [degrees, minutes, seconds] = dms.split(",");
+
+    const m1 = Number(minutes) / 60;
+    const s1 = Number(seconds) / (60 * 60);
+    const d1 = Number(degrees);
+
+    let dd = d1 + m1 + s1;
+
+    if (direction === "S" || direction === "W") dd *= -1;
+
+    return Number(dd.toFixed(4));
+  } catch (e) {
+    console.warn("Unable to parse GPS");
+  }
+};
+
+export const CleanExif = (data, blockHash) => {
+  if (!data) return {};
+
+  const exif = data.getAll();
+
+  return {
+    latitude: ConvertDMSToDD(exif?.GPSInfo?.GPSLatitude, exif?.GPSInfo?.GPSLatitudeRef),
+    longitude: ConvertDMSToDD(exif?.GPSInfo?.GPSLongitude, exif?.GPSInfo?.GPSLongitudeRef),
+    dateCreated: parseEXIF(exif?.Exif?.DateTimeOriginal),
+    blockHash
+  };
 };

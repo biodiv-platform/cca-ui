@@ -18,7 +18,8 @@ export const ENDPOINT = {
   PAGES: `${API_ENDPOINT}pages-api/api`,
   USER: `${API_ENDPOINT}user-api/api`,
   USERGROUP: `${API_ENDPOINT}userGroup-api/api`,
-  RAW: `${API_ENDPOINT}biodiv`
+  RAW: `${API_ENDPOINT}biodiv`,
+  RESOURCES: `${API_ENDPOINT}resources-api/api`
 };
 
 export const DEFAULT_GROUP: UserGroupCCAExtended = {
@@ -116,3 +117,10 @@ export const OPTION_SEPRATOR = "|";
 export const MENU_PORTAL_TARGET = isBrowser ? document.body : undefined;
 
 export const LIST_PAGINATION_LIMIT = 10;
+
+export const ACCEPTED_FILE_TYPES = {
+  "image/*": [".jpg", ".jpeg", ".JPG", ".png", ".PNG"],
+  "video/*": [".mp4", ".MP4"],
+  "audio/*": [".wav", ".mp3"],
+  "application/zip": [".zip"]
+};

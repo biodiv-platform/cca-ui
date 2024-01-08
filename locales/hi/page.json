@@ -8,6 +8,7 @@
   "form": {
     "content": "विषय",
     "description": "विवरण मेटाडाटा",
+    "gallery": "गैलरी",
     "is_sidebar": "साइडबार में दिखाएं",
     "language": "भाषा",
     "parent": "मूल पृष्ठ",

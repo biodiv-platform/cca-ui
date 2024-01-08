@@ -119,7 +119,7 @@ export const axSaveParticipation = async (payload) => {
   }
 };
 
-export const axUpdateParticipation = async (payload) => {
+export const  axUpdateParticipation = async (payload) => {
   try {
     const { data } = await http.put(`${ENDPOINT.CCA}/v1/data/update`, payload);
 

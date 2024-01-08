@@ -6,7 +6,7 @@ import { TextBoxField } from "@components/form/text";
 import SITE_CONFIG from "@configs/site-config";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { PageShowMinimal } from "@interfaces/pages";
-import { axUploadEditorPageResource } from "@services/pages.service";
+import { axRemovePageGalleryImage, axUploadEditorPageResource } from "@services/pages.service";
 import dynamic from "next/dynamic";
 import useTranslation from "next-translate/useTranslation";
 import React, { useMemo } from "react";
@@ -14,6 +14,7 @@ import { FormProvider, useForm } from "react-hook-form";
 import * as Yup from "yup";
 
 import usePagesSidebar from "../sidebar/use-pages-sidebar";
+import { PageGalleryField } from "./gallery-field";
 
 const WYSIWYGField = dynamic(() => import("@components/form/wysiwyg"), { ssr: false });
 
@@ -73,6 +74,11 @@ export default function PageForm({
           name="content"
           label={t("page:form.content")}
           uploadHandler={axUploadEditorPageResource}
+        />
+        <PageGalleryField
+          name="galleryData"
+          label={t("page:form.gallery")}
+          onRemoveCallback={axRemovePageGalleryImage}
         />
         {!hideParentId && (
           <SimpleGrid columns={{ md: 2 }} spacing={4}>
