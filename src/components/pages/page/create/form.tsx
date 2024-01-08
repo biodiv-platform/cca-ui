@@ -18,7 +18,10 @@ export default function PageCreateForm(): JSX.Element {
     content: "",
     parentId: 0,
     sticky: true,
-    languageId
+    languageId,
+    showInFooter: false,
+    showInPrimaryMenu: false,
+    showInSecondaryMenu: false
   };
 
   const handleOnPageEdit = async (values) => {
@@ -30,7 +33,6 @@ export default function PageCreateForm(): JSX.Element {
       url: null,
       autherId: user?.id,
       autherName: user?.name,
-      showInFooter: false,
       userGroupId: currentGroup.id,
       date: dateToUTC().format()
     };
