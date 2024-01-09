@@ -15,10 +15,10 @@ import {
   Stack
 } from "@chakra-ui/react";
 import styled from "@emotion/styled";
-import { axUploadResource } from "@services/files.service";
-import { axGetLicenseList } from "@services/resources.service";
+import { axUploadUserGroupResource } from "@services/files.service";
+import { DETAILEDLICENSES } from "@static/constants";
 import { resizeImage } from "@utils/image";
-import { getResourceRAW, RESOURCE_CTX } from "@utils/media";
+import { getNextResourceThumbnail, RESOURCE_CTX } from "@utils/media";
 import notification from "@utils/notification";
 import useTranslation from "next-translate/useTranslation";
 import React, { useEffect, useState } from "react";
@@ -87,7 +87,7 @@ export const PageGalleryField = ({
   const [isProcessing, setIsProcessing] = useState(false);
   const { formState, register } = useFormContext();
   const { fields, append, remove, move } = useFieldArray({ name, keyName: "hId" });
-  // const [licenses, setLicenses] = useState<any[]>();
+  const [licenses, setLicenses] = useState<any[]>();
 
   const onDrop = async (files) => {
     if (!files?.length) return;
@@ -95,9 +95,12 @@ export const PageGalleryField = ({
     setIsProcessing(true);
     for (const file of files) {
       const [fileSm] = await resizeImage(file);
-      const { success, data } = await axUploadResource(new File([fileSm], file.name), "pages");
+      const { success, data } = await axUploadUserGroupResource(
+        new File([fileSm], file.name),
+        "pages"
+      );
       if (success) {
-        append({ id: null, fileName: data });
+        append({ fileName: data });
       } else {
         notification(t("user:update_error"));
       }
@@ -119,11 +122,9 @@ export const PageGalleryField = ({
     }
   };
 
-  // useEffect(() => {
-  //   axGetLicenseList().then(({ data }) => {
-  //     setLicenses(data);
-  //   });
-  // }, []);
+  useEffect(() => {
+    setLicenses(DETAILEDLICENSES);
+  }, []);
 
   return (
     <FormControl
@@ -176,7 +177,7 @@ export const PageGalleryField = ({
               <Stack>
                 <AspectRatio ratio={1440 / 300}>
                   <Image
-                    src={getResourceRAW(RESOURCE_CTX.PAGES, item?.fileName)}
+                    src={getNextResourceThumbnail(RESOURCE_CTX.PAGES, item?.fileName, "?h=200")}
                     alt={item?.fileName}
                     objectFit="cover"
                     borderRadius="md"
@@ -187,18 +188,18 @@ export const PageGalleryField = ({
                   {...register(`${name}.${index}.attribution`)}
                   placeholder={t("form:attribution")}
                 />
-                {/* {licenses && (
+                {licenses && (
                   <Select
                     {...register(`${name}.${index}.licenseId`)}
-                    defaultValue={licenses[0].value}
+                    defaultValue={licenses[0]?.id}
                   >
                     {licenses.map((l) => (
-                      <option value={l.value} key={l.value}>
-                        {l.label}
+                      <option value={l.id} key={l.id}>
+                        {l.name}
                       </option>
                     ))}
                   </Select>
-                )} */}
+                )}
                 <SimpleGrid columns={2} spacing={2}>
                   <IconButton
                     onClick={() => move(index, index - 1)}

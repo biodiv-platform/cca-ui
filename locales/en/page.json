@@ -12,7 +12,13 @@
     "is_sidebar": "Show in Sidebar",
     "language": "Language",
     "parent": "Parent Page",
-    "title": "Title"
+    "title": "Title",
+    "type": {
+      "content": "Content",
+      "redirect": "Redirect",
+      "title": "Type"
+    },
+    "url": "URL"
   },
   "no_parent": "No Parent",
   "remove": {
