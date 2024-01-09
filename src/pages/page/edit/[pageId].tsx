@@ -1,4 +1,4 @@
-import { authorizedPageSSR } from "@components/auth/auth-redirect";
+import { authorizedPageSSP } from "@components/auth/auth-redirect";
 import PageEditPageComponent from "@components/pages/page/edit";
 import { Role } from "@interfaces/custom";
 import { axGetPageByID } from "@services/pages.service";
@@ -11,7 +11,7 @@ export default function PageEditPage({ success, data }) {
 }
 
 export const getServerSideProps = async (ctx) => {
-  authorizedPageSSR([Role.Admin, Role.DataCurator, Role.TemplateCurator], ctx);
+  authorizedPageSSP([Role.Any], ctx);
   const props = await axGetPageByID(ctx.query.pageId, "full");
   return { props };
 };
