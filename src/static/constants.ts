@@ -107,7 +107,8 @@ export const DETAILEDLICENSES = [
 
 export const RESOURCE_TYPE = {
   CCA_DATA: "ccaData",
-  CCA_TEMPLATE: "ccaTemplate"
+  CCA_TEMPLATE: "ccaTemplate",
+  PAGE: "page"
 };
 
 export const RESOURCE_SIZE = {

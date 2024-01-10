@@ -1,8 +1,9 @@
-import { Box, SimpleGrid } from "@chakra-ui/react";
+import { Box, GridItem, SimpleGrid } from "@chakra-ui/react";
 import { SelectInputField } from "@components/form/select";
 import { SubmitButton } from "@components/form/submit-button";
 import { SwitchField } from "@components/form/switch";
 import { TextBoxField } from "@components/form/text";
+import { TextAreaField } from "@components/form/textarea";
 import SITE_CONFIG from "@configs/site-config";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { PageShowMinimal } from "@interfaces/pages";
@@ -17,6 +18,7 @@ import * as Yup from "yup";
 import { PAGE_TYPE_OPTIONS, PAGE_TYPES } from "../data";
 import usePagesSidebar from "../sidebar/use-pages-sidebar";
 import { PageGalleryField } from "./gallery-field";
+import { SocialPreviewField } from "./social-preview";
 
 const WYSIWYGField = dynamic(() => import("@components/form/wysiwyg"), { ssr: false });
 
@@ -57,14 +59,32 @@ export default function PageForm({
     resolver: yupResolver(
       Yup.object().shape({
         title: Yup.string().required(),
-        languageId: hideParentId ? Yup.number().notRequired() : Yup.number().required(),
-        description: Yup.string().notRequired(),
-        content: Yup.string().required(),
+        pageType: Yup.string().required(),
+        description: Yup.string().nullable(),
+        galleryData: Yup.array().of(
+          Yup.object().shape({
+            id: Yup.mixed().nullable(),
+            fileName: Yup.string().required()
+          })
+        ),
+        url: Yup.string()
+          .nullable()
+          .when("pageType", {
+            is: (v) => v === PAGE_TYPES.REDIRECT,
+            then: Yup.string().required("URL is required")
+          }),
+        content: Yup.string()
+          .nullable()
+          .when("pageType", {
+            is: (v) => v === PAGE_TYPES.CONTENT,
+            then: Yup.string().required("Content is required")
+          }),
         parentId: hideParentId ? Yup.number().notRequired() : Yup.number().required(),
         sticky: Yup.boolean().required(),
         showInFooter: Yup.boolean(),
         showInPrimaryMenu: Yup.boolean(),
-        showInSecondaryMenu: Yup.boolean()
+        showInSecondaryMenu: Yup.boolean(),
+        allowComments: Yup.boolean().required()
       })
     ),
     defaultValues
@@ -75,14 +95,29 @@ export default function PageForm({
   return (
     <FormProvider {...hForm}>
       <form onSubmit={hForm.handleSubmit(onSubmit)}>
-        <TextBoxField name="title" label={t("page:form.title")} />
-        <TextBoxField name="description" label={t("page:form.description")} />
-        <SelectInputField
-          name="pageType"
-          label={t("page:form.type.title")}
-          options={contentTypeOptions}
-          shouldPortal={true}
-        />
+        <SimpleGrid columns={{ md: 6 }} spacing={4}>
+          <GridItem colSpan={4}>
+            <TextBoxField name="title" label={t("page:form.title")} />
+          </GridItem>
+          <GridItem colSpan={2}>
+            <SelectInputField
+              name="pageType"
+              label={t("page:form.type.title")}
+              options={contentTypeOptions}
+              shouldPortal={true}
+            />
+          </GridItem>
+        </SimpleGrid>
+
+        <SimpleGrid columns={{ md: 6 }} spacing={4}>
+          <GridItem colSpan={4}>
+            <TextAreaField name="description" label={t("page:form.description")} />
+          </GridItem>
+          <GridItem colSpan={2}>
+            <SocialPreviewField name="socialPreview" label={t("page:form.social_preview")} />
+          </GridItem>
+        </SimpleGrid>
+
         <Box hidden={isPageTypeRedirect}>
           <WYSIWYGField
             name="content"
@@ -95,7 +130,9 @@ export default function PageForm({
             onRemoveCallback={axRemovePageGalleryImage}
           />
         </Box>
-        <TextBoxField name="url" label={t("page:form.url")} hidden={!isPageTypeRedirect} />
+        <Box hidden={!isPageTypeRedirect}>
+          <TextBoxField name="url" label={t("page:form.url")} />
+        </Box>
         {!hideParentId && (
           <SimpleGrid columns={{ md: 2 }} spacing={4}>
             <SelectInputField
@@ -111,9 +148,10 @@ export default function PageForm({
           </SimpleGrid>
         )}
         <SwitchField name="sticky" mb={2} label={t("page:form.is_sidebar")} />
-        <SwitchField name="showInFooter" mb={2} label={t("Show in Footer")} />
-        <SwitchField name="showInPrimaryMenu" mb={2} label={t("Show in Primary Menu")} />
-        <SwitchField name="showInSecondaryMenu" mb={2} label={t("Show in Secondary Menu")} />
+        <SwitchField name="showInFooter" mb={2} label={t("page:form.is_footer")} />
+        <SwitchField name="showInPrimaryMenu" mb={2} label={t("page:form.is_primary_menu")} />
+        <SwitchField name="showInSecondaryMenu" mb={2} label={t("page:form.is_secondary_menu")} />
+        <SwitchField name="allowComments" mb={2} label={t("page:form.is_allow_comments")} />
         <SubmitButton mb={16}>{submitLabel}</SubmitButton>
       </form>
     </FormProvider>

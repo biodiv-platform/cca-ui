@@ -7,7 +7,6 @@ export const axUploadResource = async (file: File, dir = "pages") => {
   formData.append("hash", LOCAL_ASSET_PREFIX + nanoid());
   formData.append("directory", dir);
   formData.append("upload", file, file.name);
-  formData.append("resource", "true");
 
   const { data } = await http.post(`${ENDPOINT.FILES}/upload/resource-upload`, formData, {
     headers: {

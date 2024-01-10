@@ -20,6 +20,7 @@ export default function PageCreateForm(): JSX.Element {
     sticky: true,
     languageId,
     pageType: PAGE_TYPES.CONTENT,
+    allowComments: false,
     showInFooter: false,
     showInPrimaryMenu: false,
     showInSecondaryMenu: false
