@@ -1,4 +1,5 @@
 import { SimpleGrid } from "@chakra-ui/react";
+import { useLocalRouter } from "@components/@core/local-link";
 import { PhoneNumberInputField } from "@components/form/phone-number";
 import { SelectInputField } from "@components/form/select";
 import { SubmitButton } from "@components/form/submit-button";
@@ -10,7 +11,6 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import CheckIcon from "@icons/check";
 import { axUpdateUserAbout } from "@services/user.service";
 import notification, { NotificationType } from "@utils/notification";
-import { useRouter } from "next/router";
 import useTranslation from "next-translate/useTranslation";
 import React from "react";
 import { FormProvider, useForm } from "react-hook-form";
@@ -20,7 +20,7 @@ import { UserEditPageComponentProps } from "..";
 
 export default function UserAboutTab({ user, isAdmin }: UserEditPageComponentProps) {
   const { t } = useTranslation();
-  const router = useRouter();
+  const router = useLocalRouter();
 
   const hForm = useForm<any>({
     mode: "onBlur",
@@ -68,7 +68,7 @@ export default function UserAboutTab({ user, isAdmin }: UserEditPageComponentPro
     const { success } = await axUpdateUserAbout({ id: user.id, ...payload });
     if (success) {
       notification(t("user:updated"), NotificationType.Success);
-      router.push(`/user/show/${user.id}`);
+      router.push(`/user/show/${user.id}`, true);
     } else {
       notification(t("user:update_error"));
     }
