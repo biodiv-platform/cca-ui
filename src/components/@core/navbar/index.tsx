@@ -1,5 +1,6 @@
 import { CloseIcon, HamburgerIcon } from "@chakra-ui/icons";
 import { Box, Flex, HStack, IconButton, Link, Stack, useDisclosure } from "@chakra-ui/react";
+import SITE_CONFIG from "@configs/site-config";
 import dynamic from "next/dynamic";
 import React from "react";
 
@@ -32,7 +33,7 @@ export default function NavBar() {
               onClick={isOpen ? onClose : onOpen}
               className="no-print"
             />
-            <Link href="\">
+            <Link href={SITE_CONFIG.SITE.URL}>
               <img
                 src={`/next-assets/logo.png?w=128&h=20&preserve=true`}
                 alt={"name"}

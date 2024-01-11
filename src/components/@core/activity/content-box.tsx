@@ -20,6 +20,7 @@ const ContentBox = ({ activity }: { activity: ShowActivityIbp }) => {
         </Box>
       );
     case ACTIVITY_TYPE.ADDED_A_COMMENT:
+      return <CommentRender html={activity?.commentsIbp?.body} />;
     case ACTIVITY_TYPE.PERMISSION_ADDED:
     case ACTIVITY_TYPE.PERMISSION_REMOVED:
     case ACTIVITY_TYPE.FOLLOWER_ADDED:

@@ -1,4 +1,5 @@
 import { ENDPOINT } from "@static/constants";
+import { waitForAuth } from "@utils/auth";
 import { formDataHeaders, http, plainHttp } from "@utils/http";
 import { treeToFlat } from "@utils/pages.util";
 import { nanoid } from "nanoid";
@@ -82,5 +83,30 @@ export const axCreatePage = async (payload) => {
   } catch (e) {
     console.error(e);
     return { success: false, data: {} };
+  }
+};
+
+export const axRemovePageGalleryImage = async (pageId, galleryId) => {
+  try {
+    const { data } = await http.put(
+      `${ENDPOINT.PAGES}/v1/page/gallery/remove/${pageId}/${galleryId}`
+    );
+
+    return { success: true, data };
+  } catch (e) {
+    console.error(e);
+
+    return { success: false, data: {} };
+  }
+};
+
+export const axAddPageComment = async (payload) => {
+  try {
+    await waitForAuth();
+    const { data } = await http.post(`${ENDPOINT.PAGES}/v1/page/add/comment`, payload);
+    return { success: true, data };
+  } catch (e) {
+    console.error(e);
+    return { success: false, data: [] };
   }
 };

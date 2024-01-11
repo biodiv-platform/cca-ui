@@ -8,10 +8,22 @@
   "form": {
     "content": "Content",
     "description": "Description Metadata",
+    "gallery": "Gallery",
+    "is_allow_comments": "Allow Comments",
+    "is_footer": "Show in Footer",
+    "is_primary_menu": "Show in Primary Menu",
+    "is_secondary_menu": "Show in Secondary Menu",
     "is_sidebar": "Show in Sidebar",
     "language": "Language",
     "parent": "Parent Page",
-    "title": "Title"
+    "social_preview": "Social Preview",
+    "title": "Title",
+    "type": {
+      "content": "Content",
+      "redirect": "Redirect",
+      "title": "Type"
+    },
+    "url": "URL"
   },
   "no_parent": "No Parent",
   "remove": {

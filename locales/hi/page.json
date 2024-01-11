@@ -8,10 +8,22 @@
   "form": {
     "content": "विषय",
     "description": "विवरण मेटाडाटा",
+    "gallery": "गैलरी",
+    "is_allow_comments": "टिप्पणियों की अनुमति दें",
+    "is_footer": "फ़ुटर में दिखाएँ",
+    "is_primary_menu": "प्राथमिक मेनू में दिखाएँ",
+    "is_secondary_menu": "सेकेंडरी मेनू में दिखाएँ",
     "is_sidebar": "साइडबार में दिखाएं",
     "language": "भाषा",
     "parent": "मूल पृष्ठ",
-    "title": "शीर्षक"
+    "social_preview": "सामाजिक पूर्वावलोकन",
+    "title": "शीर्षक",
+    "type": {
+      "content": "विषय",
+      "redirect": "पुनर्निर्देशन",
+      "title": "टाइप"
+    },
+    "url": "यूआरएल"
   },
   "no_parent": "कोई माता-पिता नहीं",
   "remove": {

@@ -1,0 +1,160 @@
+.textarea {
+  min-height: 6rem;
+  border-radius: 0.25rem;
+  border: 1px solid var(--chakra-colors-gray-300);
+}
+.textarea .textarea__highlighter,
+.textarea .textarea__input {
+  padding: 8px 1rem;
+}
+.textarea .textarea__suggestions {
+  position: absolute;
+  padding: 0.25rem;
+  border-radius: 0.25rem;
+  border: 1px solid var(--chakra-colors-gray-300);
+}
+
+[aria-invalid="true"] > div > div {
+  border-color: var(--chakra-colors-red-500) !important;
+  box-shadow: 0 0 0 1px var(--chakra-colors-red-500) !important;
+}
+
+.custom-checkbox-group > div {
+  margin-bottom: 0 !important;
+}
+
+.places-search > div:first-child {
+  width: 100%;
+}
+
+.gray-box,
+.white-box,
+.hover-box {
+  background: var(--chakra-colors-white);
+  border: 1px solid var(--chakra-colors-gray-300);
+  border-radius: 0.5rem;
+  display: inline-block;
+  width: 100%;
+}
+
+.gray-box {
+  border: 0;
+  background: var(--chakra-colors-gray-100);
+}
+
+.hover-box {
+  transition: all 0.3s ease-out;
+  top: 0px;
+  position: relative;
+}
+.hover-box:hover {
+  transition: all 0.2s ease-out;
+  box-shadow: 0px 4px 8px rgba(38, 38, 38, 0.2);
+}
+
+.container,
+.container-fluid {
+  width: 100%;
+  padding-right: 1.5rem;
+  padding-left: 1.5rem;
+  margin-right: auto;
+  margin-left: auto;
+}
+.container.mt,
+.container-fluid.mt {
+  margin-top: 1rem;
+}
+
+@media (min-width: 1280px) {
+  .container {
+    max-width: 1280px;
+  }
+}
+.text-elipsis {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: block;
+}
+
+.elipsis,
+.elipsis-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.elipsis-2 {
+  -webkit-line-clamp: 2;
+}
+
+.chakra-input,
+.chakra-select,
+.flatpickr-input {
+  background: white !important;
+}
+
+.gray-box .lazyload-wrapper {
+  height: 100%;
+}
+
+.chakra-modal__overlay {
+  z-index: 5;
+}
+
+.chakra-badge {
+  line-height: normal;
+}
+
+.chakra-tabs.nospace [role="tabpanel"] {
+  padding: 0;
+}
+
+.tox-tinymce-aux,
+.react-datepicker-popper {
+  z-index: 1500 !important;
+}
+
+/* big arrow glitch when styles are not loaded on time */
+.flatpickr-calendar:not(.open) {
+  height: 0;
+  width: 0;
+  overflow: hidden;
+}
+
+/* google autocomplete suggestions */
+.pac-container {
+  z-index: 9999;
+}
+
+.rsw-editor {
+  background: white;
+  min-height: 128px !important;
+}
+
+/* For pages */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.article a {
+  scroll-margin-top: 5rem;
+}
+
+.splide__slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.table-responsive {
+  overflow-x: auto;
+  max-width: 70vw;
+}
+
+.table-responsive td {
+  white-space: nowrap;
+}

@@ -5,6 +5,7 @@ import notification, { NotificationType } from "@utils/notification";
 import useTranslation from "next-translate/useTranslation";
 import React from "react";
 
+import { transformPagePayload } from "../common/data";
 import PageForm from "../common/form";
 
 interface PageEditFormProps {
@@ -16,25 +17,14 @@ export default function PageEditForm({ page }: PageEditFormProps): JSX.Element {
   const { getPageTree } = useGlobalState();
   const router = useLocalRouter();
 
-  const defaultValues = {
-    title: page.title,
-    content: page.content,
-    sticky: page.sticky,
-    languageId: page.languageId,
-    showInFooter: page.showInFooter,
-    showInPrimaryMenu: page.showInPrimaryMenu,
-    showInSecondaryMenu: page.showInSecondaryMenu
-  };
-
   const handleOnPageEdit = async (payload) => {
-    const { success } = await axUpdatePage({
-      id: page.id,
-      pageType: page.pageType,
-      url: page.url,
-      showInFooter: page.showInFooter,
-      ...payload,
-      languageId: undefined
-    });
+    const { success } = await axUpdatePage(
+      transformPagePayload(payload, {
+        id: page.id,
+        parentId: undefined,
+        pageIndex: undefined
+      })
+    );
     if (success) {
       await getPageTree();
       notification(t("page:update.success"), NotificationType.Success);
@@ -46,7 +36,7 @@ export default function PageEditForm({ page }: PageEditFormProps): JSX.Element {
 
   return (
     <PageForm
-      defaultValues={defaultValues}
+      defaultValues={page}
       submitLabel={t("page:update.title")}
       onSubmit={handleOnPageEdit}
       hideParentId={true}

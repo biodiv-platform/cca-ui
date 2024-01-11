@@ -94,9 +94,21 @@ export const LICENSES = [
   "CC-PUBLIC-DOMAIN"
 ];
 
+export const DETAILEDLICENSES = [
+  { id: 828, name: "UNSPECIFIED", url: null },
+  { id: 821, name: "CC_PUBLIC_DOMAIN", url: "https://creativecommons.org/publicdomain/zero/1.0/" },
+  { id: 822, name: "CC_BY", url: "https://creativecommons.org/licenses/by/4.0/" },
+  { id: 823, name: "CC_BY_SA", url: "https://creativecommons.org/licenses/by-sa/4.0/" },
+  { id: 825, name: "CC_BY_NC", url: "https://creativecommons.org/licenses/by-nc/4.0/" },
+  { id: 826, name: "CC_BY_NC_SA", url: "https://creativecommons.org/licenses/by-nc-sa/4.0/" },
+  { id: 827, name: "CC_BY_NC_ND", url: "https://creativecommons.org/licenses/by-nc-nd/4.0/" },
+  { id: 824, name: "CC_BY_ND", url: "https://creativecommons.org/licenses/by-nd/4.0/" }
+];
+
 export const RESOURCE_TYPE = {
   CCA_DATA: "ccaData",
-  CCA_TEMPLATE: "ccaTemplate"
+  CCA_TEMPLATE: "ccaTemplate",
+  PAGE: "page"
 };
 
 export const RESOURCE_SIZE = {
@@ -116,3 +128,10 @@ export const OPTION_SEPRATOR = "|";
 export const MENU_PORTAL_TARGET = isBrowser ? document.body : undefined;
 
 export const LIST_PAGINATION_LIMIT = 10;
+
+export const ACCEPTED_FILE_TYPES = {
+  "image/*": [".jpg", ".jpeg", ".JPG", ".png", ".PNG"],
+  "video/*": [".mp4", ".MP4"],
+  "audio/*": [".wav", ".mp3"],
+  "application/zip": [".zip"]
+};

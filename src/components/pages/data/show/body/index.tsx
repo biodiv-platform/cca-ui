@@ -22,37 +22,49 @@ export default function ShowBody() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    axMemberGroupListByUserId(user.id).then((response) => {
-      if (response.success) {
-        setMemberGroups(response.data);
-        setLoading(false);
+    const fetchMemberData = async () => {
+      if (user.id) {
+        const { success, data } = await axMemberGroupListByUserId(user.id);
+        if (success) {
+          setMemberGroups(data);
+        }
+      } else {
+        setMemberGroups([]);
       }
-    });
-  }, []);
+      setLoading(false);
+    };
+    fetchMemberData();
+  }, [user.id]);
 
   if (loading) {
     return <p>Loading...</p>;
   }
+
+  const renderDivider = () => (
+    <Center className="no-print">
+      <Divider mb={10} borderColor="gray.400" variant="dashed" />
+    </Center>
+  );
+
   return (
     <Container py={16}>
       {templateGroups.map((tg, index) => (
         <div key={index}>
           <ShowSection {...tg} />
-          <Center className="no-print">
-            <Divider mb={10} borderColor="gray.400" variant="dashed" />
-          </Center>
+          {renderDivider()}
         </div>
       ))}
-      <Group
-        ccaId={header.id}
-        groups={groups}
-        memberGroups={memberGroups}
-        defaultGroups={usergroupsAsIntegers || []}
-      />
-      <Center className="no-print">
-        <Divider mb={10} borderColor="gray.400" variant="dashed" />
-      </Center>
-
+      {user.id && (
+        <>
+          <Group
+            ccaId={header.id}
+            groups={groups}
+            memberGroups={memberGroups}
+            defaultGroups={usergroupsAsIntegers || []}
+          />
+          {renderDivider()}
+        </>
+      )}
       <Activity
         resourceId={header.id}
         resourceType={RESOURCE_TYPE.CCA_DATA}
