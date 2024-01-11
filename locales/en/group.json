@@ -8,7 +8,7 @@
     "error": "There was some error while updating Administrators",
     "founder": "Founders",
     "moderator": "Moderators",
-    "no_access": "to update custom fields or group rules please contact administrator",
+    "no_access": "Contact administrator",
     "title": "Group Administrators",
     "updated": "Group Administrators Updated Successfully"
   },

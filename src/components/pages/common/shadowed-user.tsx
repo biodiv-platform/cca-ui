@@ -1,8 +1,8 @@
 import { Avatar, Flex, Link } from "@chakra-ui/react";
+import LocalLink from "@components/@core/local-link";
 import styled from "@emotion/styled";
 import { UserIbp } from "@interfaces/activity";
 import { getUserImage } from "@utils/media";
-import NextLink from "next/link";
 import React from "react";
 
 const UserBox = styled.div`
@@ -25,7 +25,7 @@ export default function ShadowedUser({
 }) {
   return (
     <UserBox>
-      <NextLink href={`/user/show/${user?.id}`}>
+      <LocalLink href={`/user/show/${user?.id}`} prefixGroup={true}>
         <Link color="white">
           <Flex alignItems="center">
             {avatar && (
@@ -40,7 +40,7 @@ export default function ShadowedUser({
             <div className="elipsis-2">{user?.name}</div>
           </Flex>
         </Link>
-      </NextLink>
+      </LocalLink>
     </UserBox>
   );
 }

@@ -9,7 +9,7 @@ export default function ContactAdmin() {
 
   return (
     <Box mb={4}>
-      <BlueLink href={SITE_CONFIG.FOOTER.SOCIAL.MAIL.URL} isExternal={true}>
+      <BlueLink href={SITE_CONFIG.FOOTER.MAIL} isExternal={true}>
         {t("group:admin.no_access")}
       </BlueLink>
     </Box>

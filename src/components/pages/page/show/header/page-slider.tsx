@@ -6,18 +6,11 @@ import Slider from "react-slick";
 
 interface PageSliderProps {
   images?;
-  description;
-  pageId;
 }
 
-export function PageSlider({ images, description, pageId }: PageSliderProps) {
-  const [licenses, setLicenses] = useState({});
-
+export function PageSlider({ images }: PageSliderProps) {
+  const [licenses, setLicenses] = useState<any>([]);
   const carouselHeight = { base: "200px", md: "380px" };
-
-  console.warn("licenses", licenses);
-  console.warn("pageId", pageId);
-  console.warn("description", description);
 
   // Settings for the slider
   const settings = {
@@ -55,19 +48,29 @@ export function PageSlider({ images, description, pageId }: PageSliderProps) {
         {/* Slider */}
         <Slider {...settings}>
           {images.map((image, index) => (
-            <Box
-              key={index}
-              height={carouselHeight}
-              position="relative"
-              backgroundImage={getNextResourceThumbnail(
-                RESOURCE_CTX.PAGES,
-                image.fileName,
-                RESOURCE_SIZE.PAGE
+            <>
+              <Box
+                key={index}
+                height={carouselHeight}
+                position="relative"
+                backgroundImage={getNextResourceThumbnail(
+                  RESOURCE_CTX.PAGES,
+                  image.fileName,
+                  RESOURCE_SIZE.PAGE
+                )}
+                backgroundPosition="center"
+                backgroundRepeat="no-repeat"
+                backgroundSize="cover"
+              />
+              {image.attribution && (
+                <Box position="absolute" left={0} bottom={0} p={4}>
+                  {image.caption} by {image.attribution} (
+                  {licenses.filter((license) => license.id === image.licenseId)[0]?.name ||
+                    "Unknown"}
+                  )
+                </Box>
               )}
-              backgroundPosition="center"
-              backgroundRepeat="no-repeat"
-              backgroundSize="cover"
-            />
+            </>
           ))}
         </Slider>
       </Box>
