@@ -39,17 +39,32 @@ const postProcessValue = (field, value, othersValue?) => {
   }
 
   if (field.type === FORM_TYPE.GEOMETRY && value?.length) {
-    return {
+    const transformedValue = {
       type: "FeatureCollection",
-      features: value?.map((v) => ({
-        type: "Feature",
-        properties: {},
-        geometry: {
-          type: v.type,
-          coordinates: v.coordinates
+      features: value?.map((v) => {
+        if (Array.isArray(v)) {
+          return {
+            type: "Feature",
+            properties: {},
+            geometry: {
+              type: v[0].geometry.type,
+              coordinates: v[0].geometry.coordinates
+            }
+          };
+        } else {
+          return {
+            type: "Feature",
+            properties: {},
+            geometry: {
+              type: v.type,
+              coordinates: v.coordinates
+            }
+          };
         }
-      }))
+      })
     };
+
+    return transformedValue;
   }
 
   return value;
