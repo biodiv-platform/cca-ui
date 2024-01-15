@@ -1,6 +1,6 @@
-import SITE_CONFIG from "@configs/site-config";
 import { defaultViewState } from "@biodiv-platform/naksha-commons";
 import { NakshaGmapsView } from "@biodiv-platform/naksha-gmaps-view";
+import SITE_CONFIG from "@configs/site-config";
 import React from "react";
 
 import useTemplateResponseShow from "../use-template-response-show";

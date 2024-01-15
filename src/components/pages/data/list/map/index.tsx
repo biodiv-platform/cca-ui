@@ -1,6 +1,6 @@
+import { GMAPS_LIBRARIES, mapboxToGmapsViewState } from "@biodiv-platform/naksha-commons";
 import { Box } from "@chakra-ui/layout";
 import SITE_CONFIG from "@configs/site-config";
-import { GMAPS_LIBRARIES, mapboxToGmapsViewState } from "@biodiv-platform/naksha-commons";
 import { GoogleMap, LoadScriptNext, Marker, MarkerClusterer } from "@react-google-maps/api";
 import { getMapCenter } from "@utils/location";
 import React, { useMemo, useRef, useState } from "react";
