@@ -217,10 +217,10 @@
   resolved "https://registry.yarnpkg.com/@biodiv-platform/naksha-commons/-/naksha-commons-4.4.9.tgz#27826fc261cdc2fa0553fef34ada701c0a52dabb"
   integrity sha512-Z1xRglP0u3Ld7nAd1EkI+uGiLYYX/U8dOZEBHoPUiSZ2GoYgENgwkniCUeF2FXARV5DHkXnEC0PjoAS527dcZA==
 
-"@biodiv-platform/naksha-gmaps-draw@4.5.2":
-  version "4.5.2"
-  resolved "https://registry.yarnpkg.com/@biodiv-platform/naksha-gmaps-draw/-/naksha-gmaps-draw-4.5.2.tgz#36e619bc1eaddfda859c63f5ef36b6e1edb1bd94"
-  integrity sha512-4+LZZxMQCYbeAG75mhur8DmTPlXMGT4RvxDxVRrfCYZ+m9HFHcoya2yG6Ketp4MgNzePr6zl4hrlZmBgiLYyXg==
+"@biodiv-platform/naksha-gmaps-draw@4.5.3-beta.1":
+  version "4.5.3-beta.1"
+  resolved "https://registry.yarnpkg.com/@biodiv-platform/naksha-gmaps-draw/-/naksha-gmaps-draw-4.5.3-beta.1.tgz#e9ca90d883c18b9343cebe57a91af52d4101c5cf"
+  integrity sha512-ZLX+d8pD8GZ/+WDfi/AAmksbV8zpjsNsv0Q4iw+wF3fZFFjKAEAgJiCce+ZFZyd0pM3oz+0wnlbaxB/0KyAjHQ==
   dependencies:
     "@biodiv-platform/naksha-commons" "*"
     "@turf/bbox" "^6.5.0"
@@ -4570,13 +4570,13 @@ murmurhash-js@^1.0.0:
   resolved "https://registry.yarnpkg.com/murmurhash-js/-/murmurhash-js-1.0.0.tgz#b06278e21fc6c37fa5313732b0412bcb6ae15f51"
   integrity sha512-TvmkNhkv8yct0SVBSy+o8wYzXjE4Zz3PCesbfs8HiCXXdcTuocApFv11UWlNFWKYsP2okqrhb7JNlSm9InBhIw==
 
-naksha-components-react@^4.5.6-beta.1:
-  version "4.5.6-beta.1"
-  resolved "https://registry.yarnpkg.com/naksha-components-react/-/naksha-components-react-4.5.6-beta.1.tgz#e192e1be2a2939d4273977d77e6fe3b1e0d6044b"
-  integrity sha512-3cgBdWcg+cIhKFeJ6TvXSo3CXraFpAZCAEOrBg8wumMkqpivRQdBSrnduIhkIMFKBkBrcjLMLg/9s9FtD+BO3Q==
+naksha-components-react@^4.5.6-beta.2:
+  version "4.5.6-beta.2"
+  resolved "https://registry.yarnpkg.com/naksha-components-react/-/naksha-components-react-4.5.6-beta.2.tgz#3416783b805d73caca320e85c64293778250c232"
+  integrity sha512-b6NRlx3Vyz35NN4gnFSW/I2Ri7Fts/hu6JJKl6qIDIhJWVIqMqbilOmWbjA+8l2tpEPjqpLfqkdU3ELOxBV9cg==
   dependencies:
     "@biodiv-platform/eslint-preset" "4.4.9"
-    "@biodiv-platform/naksha-gmaps-draw" "4.5.2"
+    "@biodiv-platform/naksha-gmaps-draw" "4.5.3-beta.1"
     "@biodiv-platform/naksha-gmaps-view" "4.4.9"
     "@biodiv-platform/naksha-mapbox-draw" "4.4.9"
     "@biodiv-platform/naksha-mapbox-list" "4.5.0"
