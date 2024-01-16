@@ -1,7 +1,7 @@
 import { Button } from "@chakra-ui/react";
 import { BasicTable, ResponsiveContainer } from "@components/@core/basic-table";
 import { Container } from "@components/@core/container";
-import NextLink from "@components/@core/next-link";
+import LocalLink from "@components/@core/local-link";
 import PageHeading from "@components/@core/page-heading";
 import AddIcon from "@icons/add";
 import { axGetAllTemplates } from "@services/cca.service";
@@ -39,11 +39,11 @@ export default function TemplateListComponent() {
     <Container>
       <NextSeo title={t("template:templates")} />
       <PageHeading title={t("template:templates")} icon="🗃">
-        <NextLink href="/template/create">
+        <LocalLink href="/template/create" prefixGroup={true}>
           <Button as="a" colorScheme="green" leftIcon={<AddIcon />}>
             {t("common:add")}
           </Button>
-        </NextLink>
+        </LocalLink>
       </PageHeading>
 
       <ResponsiveContainer mb={16}>

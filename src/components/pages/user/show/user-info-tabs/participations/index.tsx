@@ -1,7 +1,7 @@
 import { ArrowForwardIcon } from "@chakra-ui/icons";
 import { ResponsiveContainer } from "@components/@core/basic-table";
 import BlueLink from "@components/@core/blue-link";
-import NextLink from "@components/@core/next-link";
+import LocalLink from "@components/@core/local-link";
 import { axGetUserParticipations } from "@services/cca.service";
 import { timeAgoUTC } from "@utils/date";
 import { findTitleFromHeader } from "@utils/field";
@@ -29,11 +29,11 @@ const userParticipationColumns = [
     name: "Action",
     selector: (row) => row.id,
     cell: ({ id }) => (
-      <NextLink href={`/data/show/${id}`}>
+      <LocalLink href={`/data/show/${id}`} prefixGroup={true}>
         <BlueLink>
           View <ArrowForwardIcon />
         </BlueLink>
-      </NextLink>
+      </LocalLink>
     )
   }
 ];

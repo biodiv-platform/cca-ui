@@ -21,7 +21,7 @@ import useTranslation from "next-translate/useTranslation";
 import React, { useMemo } from "react";
 
 import ExternalBlueLink from "../blue-link/external";
-import NextLink from "../next-link";
+import LocalLink from "../local-link";
 
 const SocialButton = ({ children, label, href }) => (
   <chakra.button
@@ -93,9 +93,9 @@ export default function Footer() {
               {footerPages
                 .filter((page) => page.showInFooter !== false)
                 .map((page) => (
-                  <NextLink href={`/page/show/${page.id}`} key={page.id}>
+                  <LocalLink href={`/page/show/${page.id}`} key={page.id} prefixGroup={true}>
                     <Link>{page.title}</Link>
-                  </NextLink>
+                  </LocalLink>
                 ))}
             </SimpleGrid>
           </div>

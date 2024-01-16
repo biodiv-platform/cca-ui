@@ -1,6 +1,6 @@
 import { Box, Button, chakra, SimpleGrid } from "@chakra-ui/react";
 import { Container } from "@components/@core/container";
-import NextLink from "@components/@core/next-link";
+import LocalLink from "@components/@core/local-link";
 import SITE_CONFIG from "@configs/site-config";
 import AddIcon from "@icons/add";
 import HeartIcon from "@icons/heart";
@@ -13,7 +13,7 @@ const Feature = (props) => (
     <chakra.p mb={4} lineHeight="tall" fontSize="lg" color={"gray.500"}>
       {props.children}
     </chakra.p>
-    <NextLink href={props.href}>
+    <LocalLink href={props.href} prefixGroup={true}>
       <Button
         w={{ base: "full", sm: "auto" }}
         onClick={props.onClick}
@@ -23,7 +23,7 @@ const Feature = (props) => (
       >
         {props.actionText}
       </Button>
-    </NextLink>
+    </LocalLink>
   </Box>
 );
 

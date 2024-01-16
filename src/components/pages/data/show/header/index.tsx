@@ -15,7 +15,7 @@ import {
   useDisclosure
 } from "@chakra-ui/react";
 import { Container } from "@components/@core/container";
-import NextLink from "@components/@core/next-link";
+import LocalLink from "@components/@core/local-link";
 import Tooltip from "@components/@core/tooltip";
 import SITE_CONFIG from "@configs/site-config";
 import useGlobalState from "@hooks/use-global-state";
@@ -78,7 +78,7 @@ export default function ShowHeader() {
         <Heading mb={4} fontWeight="semibold">
           {title}
           {canEdit && (
-            <NextLink href={`/data/edit/${header.id}`}>
+            <LocalLink href={`/data/edit/${header.id}`} prefixGroup={true}>
               <IconButton
                 size="lg"
                 className="no-print"
@@ -90,7 +90,7 @@ export default function ShowHeader() {
                 icon={<EditIcon />}
                 ml={3}
               />
-            </NextLink>
+            </LocalLink>
           )}
           {isLoggedIn && (
             <IconButton

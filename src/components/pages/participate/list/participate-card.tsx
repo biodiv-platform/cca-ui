@@ -1,6 +1,6 @@
 import { ArrowForwardIcon } from "@chakra-ui/icons";
 import { Badge, Box, Button, Flex } from "@chakra-ui/react";
-import NextLink from "@components/@core/next-link";
+import LocalLink from "@components/@core/local-link";
 import useTranslation from "next-translate/useTranslation";
 import React from "react";
 
@@ -30,7 +30,7 @@ export default function ParticipateCard({ template }) {
       <Box mb={4} title={template.description} noOfLines={1}>
         {template.description}
       </Box>
-      <NextLink href={`/participate/${template.templateId}`}>
+      <LocalLink href={`/participate/${template.templateId}`} prefixGroup={true}>
         <Button
           as="a"
           colorScheme="blue"
@@ -40,7 +40,7 @@ export default function ParticipateCard({ template }) {
         >
           {t("template:participate")}
         </Button>
-      </NextLink>
+      </LocalLink>
     </Box>
   );
 }

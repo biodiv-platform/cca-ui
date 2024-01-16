@@ -1,7 +1,7 @@
 import { DeleteIcon, ViewIcon } from "@chakra-ui/icons";
 import { Link } from "@chakra-ui/layout";
 import { Button } from "@chakra-ui/react";
-import NextLink from "@components/@core/next-link";
+import LocalLink from "@components/@core/local-link";
 import TimeAgo from "@components/pages/common/timeago";
 import EditIcon from "@icons/edit";
 import { axDeleteTemplate } from "@services/cca.service";
@@ -33,11 +33,11 @@ export const ListColumns = [
       const { t } = useTranslation();
 
       return (
-        <NextLink href={`/template/edit/${value}`}>
+        <LocalLink href={`/template/edit/${value}`} prefixGroup={true}>
           <Link>
             <EditIcon /> {t("common:edit")}
           </Link>
-        </NextLink>
+        </LocalLink>
       );
     }
   },
@@ -48,11 +48,11 @@ export const ListColumns = [
       const { t } = useTranslation();
 
       return (
-        <NextLink href={`/data/table/${value}`}>
+        <LocalLink href={`/data/table/${value}`} prefixGroup={true}>
           <Link>
             <ViewIcon /> {t("common:view")}
           </Link>
-        </NextLink>
+        </LocalLink>
       );
     }
   },

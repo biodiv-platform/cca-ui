@@ -1,11 +1,11 @@
 import { Box, Link, Stack, Text } from "@chakra-ui/react";
-import NextLink from "@components/@core/next-link";
+import LocalLink from "@components/@core/local-link";
 import { FORM_TYPE } from "@static/constants";
 import useTranslation from "next-translate/useTranslation";
 import React, { useMemo } from "react";
 
 const NavigationLink = ({ href, children }) => (
-  <NextLink href={href}>
+  <LocalLink href={href} prefixGroup={true}>
     <Link
       fontSize={"sm"}
       rounded={"md"}
@@ -18,7 +18,7 @@ const NavigationLink = ({ href, children }) => (
     >
       {children}
     </Link>
-  </NextLink>
+  </LocalLink>
 );
 
 export default function ToC({ templateFields }) {

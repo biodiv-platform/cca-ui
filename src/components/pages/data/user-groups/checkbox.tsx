@@ -1,4 +1,5 @@
 import { Box, Flex, Image, SimpleGrid, useCheckbox, useCheckboxGroup } from "@chakra-ui/react";
+import { getGroupImageThumb } from "@utils/media";
 import React from "react";
 
 interface ITraitInputProps {
@@ -64,7 +65,13 @@ const CheckBoxItems = ({
                 boxSize="2rem"
                 mr={2}
                 objectFit="contain"
-                src={o.id === "null" ? o.icon : o.icon + "?h=32"}
+                src={
+                  o.id === "null"
+                    ? o.icon
+                    : o.icon.startsWith("http")
+                    ? o.icon + "?h=32"
+                    : getGroupImageThumb(o.icon)
+                }
                 alt={o.name}
               />
               <Box lineHeight="1rem" className="elipsis-2">

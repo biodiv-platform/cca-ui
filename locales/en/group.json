@@ -92,6 +92,7 @@
     "requested": "Group join request sent"
   },
   "name": "Group Name",
+  "post": "Post to Group",
   "save": "Create Group",
   "spatial_coverge": "Spatial Coverage",
   "tags": "Tags",
