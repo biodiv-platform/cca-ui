@@ -1,7 +1,7 @@
 import { ArrowForwardIcon, ChevronRightIcon } from "@chakra-ui/icons";
 import { Box, Flex, useDisclosure } from "@chakra-ui/react";
 import BlueLink from "@components/@core/blue-link";
-import NextLink from "@components/@core/next-link";
+import LocalLink from "@components/@core/local-link";
 import PageHeading from "@components/@core/page-heading";
 import OTPModal from "@components/auth/otp-modal";
 import { PhoneNumberInputField } from "@components/form/phone-number";
@@ -127,9 +127,9 @@ function SignInForm({ onSuccess, redirect = true, forward }: ISignInFormProps) {
           />
           <Flex justifyContent="space-between" alignItems="center">
             <SubmitButton rightIcon={<ArrowForwardIcon />}>{t("auth:form.submit")}</SubmitButton>
-            <NextLink href="/register/forgotPassword">
+            <LocalLink href="/register/forgotPassword" prefixGroup={true}>
               <BlueLink display="block">{t("auth:forgot_password_link")}</BlueLink>
-            </NextLink>
+            </LocalLink>
           </Flex>
         </form>
       </FormProvider>
@@ -141,12 +141,12 @@ function SignInForm({ onSuccess, redirect = true, forward }: ISignInFormProps) {
       <Oauth text={t("auth:with_google")} onSuccess={onOAuthSuccess} />
 
       {t("auth:sign_up")}
-      <NextLink href="/register">
+      <LocalLink href="/register" prefixGroup={true}>
         <BlueLink ml={2}>
           {t("auth:sign_up_link")}
           <ChevronRightIcon />
         </BlueLink>
-      </NextLink>
+      </LocalLink>
 
       <OTPModal isOpen={isOpen} onClose={onClose} user={user} />
     </>

@@ -1,5 +1,5 @@
 import { Link, MenuItem, MenuList } from "@chakra-ui/react";
-import NextLink from "@components/@core/next-link";
+import LocalLink from "@components/@core/local-link";
 import SITE_CONFIG from "@configs/site-config";
 import useGlobalState from "@hooks/use-global-state";
 import notification from "@utils/notification";
@@ -30,9 +30,9 @@ export default function SubMenu({ rows, prefix = "" }) {
                 {label}
               </Link>
             ) : (
-              <NextLink href={toLink} params={item.params} prefixGroup={true}>
+              <LocalLink href={toLink} params={item.params} prefixGroup={true}>
                 <Link w="full">{label}</Link>
-              </NextLink>
+              </LocalLink>
             )}
           </MenuItem>
         );

@@ -1,6 +1,6 @@
 import { Box, Button, chakra, Image, SimpleGrid } from "@chakra-ui/react";
 import { Container } from "@components/@core/container";
-import NextLink from "@components/@core/next-link";
+import LocalLink from "@components/@core/local-link";
 import SITE_CONFIG from "@configs/site-config";
 import useTranslation from "next-translate/useTranslation";
 import React from "react";
@@ -33,11 +33,11 @@ export default function WhyThisPortal() {
           <chakra.p mb={6} textAlign="left" color={"gray.500"} fontSize="lg">
             {t("home:why_portal.description")}
           </chakra.p>
-          <NextLink href={SITE_CONFIG.PAGES.ABOUT[lang]}>
+          <LocalLink href={SITE_CONFIG.PAGES.ABOUT[lang]} prefixGroup={true}>
             <Button w={{ base: "full", sm: "auto" }} size="lg" colorScheme="blue" as="a">
               {t("common:learn_more")}
             </Button>
-          </NextLink>
+          </LocalLink>
         </Box>
       </SimpleGrid>
     </Container>

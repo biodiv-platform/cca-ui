@@ -1,6 +1,6 @@
 import { Box, chakra, Heading, Image, Link, List, ListItem, SimpleGrid } from "@chakra-ui/react";
 import { Container } from "@components/@core/container";
-import NextLink from "@components/@core/next-link";
+import LocalLink from "@components/@core/local-link";
 import SITE_CONFIG from "@configs/site-config";
 import { findTitleFromHeader, renderSimpleValue } from "@utils/field";
 import { getResourceThumbnail } from "@utils/media";
@@ -30,7 +30,7 @@ export default function Posts({ featured }) {
             return (
               <Box borderRadius="lg" overflow="hidden" key={f.id} shadow="xl" bg="white">
                 <Box position="relative" w="full" h="160px">
-                  <NextLink href={`/data/show/${f.id}`}>
+                  <LocalLink href={`/data/show/${f.id}`} prefixGroup={true}>
                     <Link textDecoration="none" _hover={{ textDecoration: "none" }}>
                       <Image
                         transform="scale(1.0)"
@@ -51,7 +51,7 @@ export default function Posts({ featured }) {
                         </Heading>
                       </Box>
                     </Link>
-                  </NextLink>
+                  </LocalLink>
                 </Box>
                 <Box p={4} h="154px">
                   <List spacing={1}>

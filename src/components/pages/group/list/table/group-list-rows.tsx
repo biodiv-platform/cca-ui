@@ -1,5 +1,5 @@
 import { Flex, Image, Link, Text } from "@chakra-ui/react";
-import NextLink from "@components/@core/next-link";
+import LocalLink from "@components/@core/local-link";
 import useTranslation from "next-translate/useTranslation";
 import React from "react";
 
@@ -12,7 +12,7 @@ export const UserGroupListTableRows = [
     accessor: "name",
     style: { width: "12rem" },
     Cell: ({ cell, value }) => (
-      <NextLink href={cell.row.original.webAddress}>
+      <LocalLink href={cell.row.original.webAddress} prefixGroup={true}>
         <Link w="full">
           <Flex alignItems="center">
             <Image
@@ -28,7 +28,7 @@ export const UserGroupListTableRows = [
             <Text lineHeight="1rem">{value}</Text>
           </Flex>
         </Link>
-      </NextLink>
+      </LocalLink>
     )
   },
   {

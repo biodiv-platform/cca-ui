@@ -1,7 +1,7 @@
 import { ArrowForwardIcon } from "@chakra-ui/icons";
 import { Box, Button, chakra, GridItem, SimpleGrid } from "@chakra-ui/react";
 import { Container } from "@components/@core/container";
-import NextLink from "@components/@core/next-link";
+import LocalLink from "@components/@core/local-link";
 import useTranslation from "next-translate/useTranslation";
 import React from "react";
 
@@ -28,7 +28,7 @@ export default function Mission() {
             </chakra.p>
           </GridItem>
           <GridItem display="flex" alignItems="center" justifyContent={{ md: "flex-end" }}>
-            <NextLink href="/data/list">
+            <LocalLink href="/data/list" prefixGroup={true}>
               <Button
                 w={{ base: "full", sm: "auto" }}
                 size="lg"
@@ -38,7 +38,7 @@ export default function Mission() {
               >
                 {t("header:browse")}
               </Button>
-            </NextLink>
+            </LocalLink>
           </GridItem>
         </SimpleGrid>
       </Container>

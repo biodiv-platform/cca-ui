@@ -3,25 +3,26 @@ import useGlobalState from "@hooks/use-global-state";
 import LoginIcon from "@icons/login";
 import { FORWARD_BLACKLIST } from "@static/constants";
 import { encode } from "base64-url";
-import NextLink from "next/link";
 import { useRouter } from "next/router";
 import useTranslation from "next-translate/useTranslation";
-import React, { useMemo } from "react";
+import React, { useEffect, useState } from "react";
 
+import LocalLink from "../local-link";
 import Tooltip from "../tooltip";
 
 export default function NavbarAuthOption() {
   const { user, isLoggedIn, isPreviewMode } = useGlobalState();
   const { t } = useTranslation();
   const router = useRouter();
+  const [params, setParams] = useState({});
 
-  const forward = useMemo(
-    () =>
+  useEffect(() => {
+    setParams(
       FORWARD_BLACKLIST.find((u) => router.asPath.includes(u))
-        ? "/login"
-        : `/login?forward=${encode(router.asPath)}`,
-    [router.asPath]
-  );
+        ? {}
+        : { forward: encode(router.asPath) }
+    );
+  }, [router.asPath]);
 
   return (
     <Box ml={4} hidden={isPreviewMode}>
@@ -32,25 +33,25 @@ export default function NavbarAuthOption() {
           </MenuButton>
           <MenuList>
             <MenuItem>
-              <NextLink href={`/user/show/${user.id}`} passHref={true}>
+              <LocalLink href={`/user/show/${user.id}`} params={params} prefixGroup={true}>
                 <Link>{user.name}</Link>
-              </NextLink>
+              </LocalLink>
             </MenuItem>
             <MenuItem>
-              <NextLink href="/logout" passHref={true}>
+              <LocalLink href="/logout" params={params} prefixGroup={true}>
                 <Link>{t("auth:sign_out")}</Link>
-              </NextLink>
+              </LocalLink>
             </MenuItem>
           </MenuList>
         </Menu>
       ) : (
-        <NextLink href={forward} passHref={true}>
+        <LocalLink href="/login" params={params} prefixGroup={true}>
           <Link lineHeight={1}>
             <Tooltip title={t("header:login_register")}>
               <LoginIcon fontSize="2xl" />
             </Tooltip>
           </Link>
-        </NextLink>
+        </LocalLink>
       )}
     </Box>
   );

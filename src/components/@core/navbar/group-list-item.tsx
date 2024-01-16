@@ -11,12 +11,13 @@ import {
   MenuList,
   Text
 } from "@chakra-ui/react";
-import NextLink from "@components/@core/next-link";
 import SITE_CONFIG from "@configs/site-config";
 import useGlobalState from "@hooks/use-global-state";
 import debounce from "debounce-promise";
 import useTranslation from "next-translate/useTranslation";
 import React, { useState } from "react";
+
+import LocalLink from "../local-link";
 
 const GroupListItem = () => {
   const { groups, currentGroup } = useGlobalState();
@@ -44,18 +45,18 @@ const GroupListItem = () => {
         py={1}
         {...extraProps}
       >
-        Groups
+        {t("header:menu_primary.groups.title")}
       </MenuButton>
       <MenuList h="18rem" w="360px" overflowY="scroll">
         <Box px={2}>
           <Input w="full" onChange={onQuery} placeholder={t("header:search")} />
         </Box>
         <MenuItem minH="3rem">
-          <NextLink href="/group/list" prefixGroup={true}>
+          <LocalLink href="/group/list" prefixGroup={true}>
             <Link w="full">
               {t("header:menu_primary.groups.see_all")} <ArrowForwardIcon />
             </Link>
-          </NextLink>
+          </LocalLink>
         </MenuItem>
 
         {filterGroups?.map((g) => {
@@ -65,7 +66,7 @@ const GroupListItem = () => {
 
           return (
             <MenuItem key={g.id} minH="3rem">
-              <NextLink href={groupURL}>
+              <LocalLink href={groupURL}>
                 <Link w="full">
                   <Flex alignItems="center">
                     <Image
@@ -79,7 +80,7 @@ const GroupListItem = () => {
                     <Text lineHeight="1rem">{g.name}</Text>
                   </Flex>
                 </Link>
-              </NextLink>
+              </LocalLink>
             </MenuItem>
           );
         })}

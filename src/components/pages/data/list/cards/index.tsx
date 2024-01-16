@@ -1,6 +1,6 @@
 import { Box, Flex, Image, List, ListItem } from "@chakra-ui/react";
 import Loading from "@components/@core/loading";
-import NextLink from "@components/@core/next-link";
+import LocalLink from "@components/@core/local-link";
 import { renderSimpleValue } from "@utils/field";
 import { getResourceThumbnail } from "@utils/media";
 import React, { useEffect, useRef, useState } from "react";
@@ -13,7 +13,7 @@ export const Card = ({ response, onHover, isTruncated }) => {
   const handleOnCardHover = () => onHover(response);
 
   return (
-    <NextLink href={`/data/show/${response.id}`}>
+    <LocalLink href={`/data/show/${response.id}`} prefixGroup={true}>
       <Box
         as="a"
         target="_blank"
@@ -50,7 +50,7 @@ export const Card = ({ response, onHover, isTruncated }) => {
           {thumb && <Image boxSize="64px" src={thumb} borderRadius="md" ml={4} flexShrink={0} />}
         </Flex>
       </Box>
-    </NextLink>
+    </LocalLink>
   );
 };
 

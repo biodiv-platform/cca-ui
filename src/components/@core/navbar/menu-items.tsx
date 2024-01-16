@@ -8,7 +8,7 @@ import useTranslation from "next-translate/useTranslation";
 import React from "react";
 
 import MainItems from "../../@core/navigation-menu/common/menu-items";
-import NextLink from "../next-link";
+import LocalLink from "../local-link";
 import Search from "./search";
 
 interface NavLinkProps {
@@ -21,11 +21,11 @@ const NavLink = ({ children, href, hidden }: NavLinkProps) => {
   const extraProps = { _hover: { bg: "gray.200" } };
 
   return (
-    <NextLink href={href}>
+    <LocalLink href={href} prefixGroup={true}>
       <Link px={2} py={1} rounded={"md"} {...extraProps} hidden={hidden}>
         {children}
       </Link>
-    </NextLink>
+    </LocalLink>
   );
 };
 

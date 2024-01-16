@@ -59,7 +59,11 @@ export default function GalleryEditForm({ setIsEdit, setGalleryList, editGallery
           isRequired={true}
           label={t("group:homepage_customization.resources.title")}
         />
-        <TextBoxField name="moreLinks" label={t("group:homepage_customization.resources.link")} />
+        <TextBoxField
+          name="moreLinks"
+          isRequired={true}
+          label={t("group:homepage_customization.resources.link")}
+        />
 
         <ImageUploaderField
           label={t("group:homepage_customization.resources.imageurl")}
