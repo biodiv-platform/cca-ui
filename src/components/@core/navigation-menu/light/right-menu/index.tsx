@@ -1,7 +1,6 @@
 import styled from "@emotion/styled";
 import useGlobalState from "@hooks/use-global-state";
 import { convertToMenuFormat } from "@utils/pages";
-import { processUserGroupName } from "@utils/userGroup";
 import { Mq } from "mq-styled-components";
 import React from "react";
 
@@ -47,13 +46,9 @@ const RightMenuContainer = styled.div`
 export default function RightMenu({ isOpen }: IMenuProps) {
   const { pages, currentGroup } = useGlobalState();
 
-  const groupPage = `/group/${processUserGroupName(currentGroup.name)}/page/`;
-
   const isGroup = currentGroup.id ? true : false;
 
-  const outputMenuFormat = currentGroup.id
-    ? convertToMenuFormat(pages, groupPage, false, true, false)
-    : convertToMenuFormat(pages, "/page/", false, true, false);
+  const outputMenuFormat = convertToMenuFormat(pages, "/page/", false, true, false);
 
   const activeItems = items.filter(({ active }) => active === true);
   const darkItems = items.filter(({ isDarkButton }) => isDarkButton === true);
@@ -64,7 +59,7 @@ export default function RightMenu({ isOpen }: IMenuProps) {
         <MainItems key={item.name} {...item} prefixGroup={isGroup} />
       ))}
       {outputMenuFormat.map((item) => (
-        <MainItems key={item.name} {...item} prefixGroup={false} />
+        <MainItems key={item.name} {...item} prefixGroup={isGroup} />
       ))}
       {activeItems.map((item) => (
         <MainItems key={item.name} {...item} prefixGroup={isGroup} />

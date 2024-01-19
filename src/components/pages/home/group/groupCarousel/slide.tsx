@@ -8,7 +8,7 @@ export default function Slide({ resource }) {
   const SlideImage = () => (
     <Image
       src={getNextResourceThumbnail(resourceType, resource?.fileName, RESOURCE_SIZE.PREVIEW)}
-      h={{ base: 240, md: 420, lg: 500 }}
+      h={{ base: 200, md: 380 }}
       w="full"
       objectFit="cover"
       loading="lazy"
