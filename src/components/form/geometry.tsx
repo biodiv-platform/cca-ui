@@ -1,4 +1,5 @@
-import { Search2Icon } from "@chakra-ui/icons";
+import { GMAP_FEATURE_TYPES, NakshaGmapsDraw } from "@biodiv-platform/naksha-gmaps-draw";
+import { CheckCircleIcon, CloseIcon, Search2Icon } from "@chakra-ui/icons";
 import {
   Button,
   FormControl,
@@ -6,11 +7,14 @@ import {
   FormHelperText,
   Input,
   InputGroup,
-  InputLeftElement
+  InputLeftElement,
+  useDisclosure
 } from "@chakra-ui/react";
 import SITE_CONFIG from "@configs/site-config";
 import styled from "@emotion/styled";
-import { GMAP_FEATURE_TYPES, NakshaGmapsDraw } from "@ibp/naksha-gmaps-draw";
+import DeleteIcon from "@icons/delete";
+import FileIcon from "@icons/file";
+import LocationIcon from "@icons/location";
 import { namedFormErrorMessage } from "@utils/field";
 import { getMapCenter } from "@utils/location";
 import useTranslation from "next-translate/useTranslation";
@@ -18,6 +22,7 @@ import React, { useRef } from "react";
 import { useController } from "react-hook-form";
 
 import { FormLabel } from "./common";
+import CustomModal from "./custom-modal";
 
 const MapContainerBox = styled.div`
   position: relative;
@@ -60,6 +65,7 @@ export const GeometryField = ({
   const gmapsSearchRef = useRef<any>(null);
   const { t } = useTranslation();
   const { field, fieldState } = useController({ name, defaultValue: [] });
+  const { isOpen, onClose } = useDisclosure();
 
   return (
     <FormControl isInvalid={!!fieldState.error} mb={mb} isRequired={isRequired} {...props}>
@@ -99,7 +105,23 @@ export const GeometryField = ({
           importInputComponent={
             <Input name="raw-input" placeholder={t("form:geometry_hint")} required={false} mx={4} />
           }
+          importModalComponent={
+            <CustomModal
+              isOpen={isOpen}
+              onClose={onClose}
+              nakshaImport={undefined}
+              geoJSONImport={undefined}
+            />
+          }
           importButtonComponent={
+            <Button type="button" placeholder={t("common:add")} children="Add" />
+          }
+          importDeleteIcon={<DeleteIcon />}
+          importLocationIcon={<LocationIcon />}
+          importFileIcon={<FileIcon />}
+          importSuccessIcon={<CheckCircleIcon />}
+          importFailureIcon={<CloseIcon />}
+          importButtonComponentModal={
             <Button type="button" placeholder={t("common:add")} children="Import" />
           }
         />
