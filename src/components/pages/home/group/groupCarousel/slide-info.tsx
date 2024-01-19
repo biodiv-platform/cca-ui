@@ -1,13 +1,9 @@
-import { Avatar, Box, Flex, Link, Text, useBreakpointValue } from "@chakra-ui/react";
-import LocalLink from "@components/@core/local-link";
-import { getUserImage } from "@utils/media";
-import useTranslation from "next-translate/useTranslation";
+import { Box, Flex, useBreakpointValue } from "@chakra-ui/react";
 import React from "react";
 
 import Indicators from "./indicators";
 
-export default function SlideInfo({ resource, size, currentSlide, scrollTo }) {
-  const { t } = useTranslation();
+export default function SlideInfo({ size, currentSlide, scrollTo }) {
   const showIndicators = useBreakpointValue({ base: false, md: true });
 
   return (
@@ -20,33 +16,6 @@ export default function SlideInfo({ resource, size, currentSlide, scrollTo }) {
       p={6}
     >
       <Flex justifyContent="space-between" alignItems="flex-end">
-        {resource?.authorId > 1 ? (
-          <LocalLink
-            key={resource.authorId}
-            href={`/user/show/${resource.authorId}`}
-            prefixGroup={true}
-          >
-            <Link>
-              <Flex alignItems="center">
-                <Avatar
-                  mr={2}
-                  flexShrink={0}
-                  size="sm"
-                  name={resource.authorName}
-                  src={getUserImage(resource.authorImage, resource.authorName)}
-                />
-                <Box className="credits-text">
-                  <Text lineHeight="1em" fontSize="xs">
-                    {t("home:observed_by")}
-                  </Text>
-                  <div>{resource.authorName}</div>
-                </Box>
-              </Flex>
-            </Link>
-          </LocalLink>
-        ) : (
-          <div />
-        )}
         {showIndicators && size > 1 && (
           <div>
             <Indicators size={size} currentSlide={currentSlide} scrollTo={scrollTo} />

@@ -12,7 +12,7 @@ import axios from "axios";
  */
 export const axLogin = async (payload) => {
   try {
-    const { data } = await axios.post(`${ENDPOINT.USER}/v1/authenticate/login`, stringify(payload));
+    const { data } = await axios.post(`${ENDPOINT.USERGROUP}/v1/group/login`, stringify(payload));
     return { success: true, data };
   } catch (e) {
     return { success: false, data: e.response.data };

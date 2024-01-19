@@ -48,12 +48,11 @@ export default function GroupCarousel({ featured }) {
     ]
   );
 
-  return (
+  return featured[currentSlide].title ? (
     <SimpleGrid
       columns={{ base: 1, md: 3 }}
       borderRadius="md"
       overflow="hidden"
-      mb={10}
       bg="gray.300"
       color="white"
     >
@@ -65,12 +64,24 @@ export default function GroupCarousel({ featured }) {
         </Box>
         <SlideInfo
           size={featured.length}
-          resource={featured[currentSlide]}
           currentSlide={currentSlide}
           scrollTo={iSlider?.current?.moveToIdx}
         />
       </Box>
       <Sidebar resource={featured[currentSlide]} />
     </SimpleGrid>
+  ) : (
+    <Box gridColumn={{ md: "1/3" }} position="relative">
+      <Box ref={sliderRef} className="keen-slider fade">
+        {featured.map((o) => (
+          <Slide resource={o} key={o.id} />
+        ))}
+      </Box>
+      <SlideInfo
+        size={featured.length}
+        currentSlide={currentSlide}
+        scrollTo={iSlider?.current?.moveToIdx}
+      />
+    </Box>
   );
 }

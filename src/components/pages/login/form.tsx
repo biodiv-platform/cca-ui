@@ -127,7 +127,7 @@ function SignInForm({ onSuccess, redirect = true, forward }: ISignInFormProps) {
           />
           <Flex justifyContent="space-between" alignItems="center">
             <SubmitButton rightIcon={<ArrowForwardIcon />}>{t("auth:form.submit")}</SubmitButton>
-            <LocalLink href="/register/forgotPassword" prefixGroup={true}>
+            <LocalLink href="/register/forgotPassword">
               <BlueLink display="block">{t("auth:forgot_password_link")}</BlueLink>
             </LocalLink>
           </Flex>
@@ -141,7 +141,7 @@ function SignInForm({ onSuccess, redirect = true, forward }: ISignInFormProps) {
       <Oauth text={t("auth:with_google")} onSuccess={onOAuthSuccess} />
 
       {t("auth:sign_up")}
-      <LocalLink href="/register" prefixGroup={true}>
+      <LocalLink href="/register">
         <BlueLink ml={2}>
           {t("auth:sign_up_link")}
           <ChevronRightIcon />

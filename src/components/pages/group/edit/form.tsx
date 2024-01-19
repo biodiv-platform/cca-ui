@@ -99,12 +99,7 @@ export default function UserGroupEditForm({ groupInfo, userGroupId }: IuserGroup
           <ImageUploaderField label="Logo" name="icon" />
         </SimpleGrid>
         <CheckboxField name="allowUserToJoin" label={t("group:join_without_invitation")} />
-        <AreaDrawField
-          label={t("group:spatial_coverge")}
-          name={"spacialCoverage"}
-          isRequired={true}
-        />
-
+        <AreaDrawField label={t("group:spatial_coverge")} name={"spacialCoverage"} />
         <SubmitButton mb={8}>{t("group:update")}</SubmitButton>
       </form>
     </FormProvider>
