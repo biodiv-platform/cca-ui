@@ -1,3 +1,5 @@
+import { defaultViewState } from "@biodiv-platform/naksha-commons";
+import { NakshaGmapsView } from "@biodiv-platform/naksha-gmaps-view";
 import {
   AspectRatio,
   Box,
@@ -8,8 +10,6 @@ import {
   UnorderedList
 } from "@chakra-ui/react";
 import SITE_CONFIG from "@configs/site-config";
-import { defaultViewState } from "@ibp/naksha-commons";
-import { NakshaGmapsView } from "@ibp/naksha-gmaps-view";
 import { FORM_TYPE } from "@static/constants";
 import { formatDate, formatDateRange, formatYear } from "@utils/date";
 import { optionLabelShow } from "@utils/field";
