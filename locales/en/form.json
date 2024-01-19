@@ -17,7 +17,7 @@
   "field_id": "Field Id",
   "find_gmaps": "Search from Google Maps",
   "geometry": "Geometry",
-  "geometry_hint": "Enter Latitude,Longitude in decimals",
+  "geometry_hint": "Enter Latitude,Longitude",
   "help_text": "Help Text",
   "is_filterable": "Filterable",
   "is_required": "Required",
