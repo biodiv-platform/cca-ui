@@ -37,6 +37,10 @@ export default function Posts({ featured }) {
                         src={imageSrc || "/next-assets/cca-fallback.svg"}
                         objectFit="cover"
                         boxSize="full"
+                        alt="/next-assets/cca-fallback.svg"
+                        width={"full"}
+                        height={"full"}
+                        loading="lazy"
                       />
                       <Box
                         left={0}

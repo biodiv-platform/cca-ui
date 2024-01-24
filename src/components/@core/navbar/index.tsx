@@ -34,11 +34,7 @@ export default function NavBar() {
               className="no-print"
             />
             <Link href={SITE_CONFIG.SITE.URL}>
-              <img
-                src={`/next-assets/logo.png?w=128&h=20&preserve=true`}
-                alt={"name"}
-                width={150}
-              />
+              <img src={`/next-assets/logo.png`} alt={"cca logo"} width={150} />
             </Link>
           </Flex>
           <Flex alignItems="center" className="no-print">

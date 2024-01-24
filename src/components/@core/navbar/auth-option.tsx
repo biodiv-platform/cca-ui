@@ -45,10 +45,10 @@ export default function NavbarAuthOption() {
           </MenuList>
         </Menu>
       ) : (
-        <LocalLink href="/login" params={params} prefixGroup={true}>
+        <LocalLink href="/login" params={params} prefixGroup={true} >
           <Link lineHeight={1}>
             <Tooltip title={t("header:login_register")}>
-              <LoginIcon fontSize="2xl" />
+              <LoginIcon fontSize="2xl" aria-label="Login or Register"/>
             </Tooltip>
           </Link>
         </LocalLink>

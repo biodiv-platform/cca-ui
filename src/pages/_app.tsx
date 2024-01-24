@@ -28,10 +28,10 @@ function MainApp({ Component, pageProps, user, groups, currentGroup, languageId 
   return (
     <GlobalStateProvider initialState={{ user, groups, currentGroup, languageId }}>
       <ChakraProvider theme={customTheme}>
-        <NavBar />
         <div className="content">
           {config.header && (
             <>
+              <NavBar />
               <NavigationMenuLight />
             </>
           )}
