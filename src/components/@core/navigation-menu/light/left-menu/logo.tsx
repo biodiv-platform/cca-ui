@@ -14,6 +14,10 @@ const JoinUserGroup = dynamic(() => import("@components/pages/group/common/join-
   ssr: false
 });
 
+const CreatePagesButton = dynamic(() => import("./create-pages-button"), {
+  ssr: false
+});
+
 const Logo = styled.div`
   width: fit-content;
   display: flex;
@@ -96,6 +100,7 @@ export default function PrimaryLogo({ isOpen, onToggle }) {
             isCurrentGroupMember={isCurrentGroupMember}
             setIsCurrentGroupMember={setIsCurrentGroupMember}
           />
+          <CreatePagesButton label={t("header:create_pages")} />
           <EditLinkButton label={t("header:group_edit")} />
         </>
       )}
