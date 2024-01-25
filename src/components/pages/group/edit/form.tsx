@@ -9,7 +9,6 @@ import useGlobalState from "@hooks/use-global-state";
 import { UserGroupEditData } from "@interfaces/userGroup";
 import { axUserGroupUpdate } from "@services/usergroup.service";
 import notification, { NotificationType } from "@utils/notification";
-import { processUserGroupName } from "@utils/userGroup";
 import useTranslation from "next-translate/useTranslation";
 import React from "react";
 import { FormProvider, useForm } from "react-hook-form";
@@ -79,10 +78,10 @@ export default function UserGroupEditForm({ groupInfo, userGroupId }: IuserGroup
       swLongitude: spacialCoverage?.se?.[0]
     };
 
-    const { success, data } = await axUserGroupUpdate(payload, userGroupId);
+    const { success } = await axUserGroupUpdate(payload, userGroupId);
     if (success) {
       notification(t("group:edit.success"), NotificationType.Success);
-      router.push(`/group/${processUserGroupName(data.name)}/show`, false, {}, true);
+      router.push(`/`, true, {}, true);
     } else {
       notification(t("group:edit.error"));
     }

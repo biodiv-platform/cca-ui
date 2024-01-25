@@ -1,11 +1,17 @@
 {
   "about": "के बारे में",
   "browse": "सीसीए ब्राउज़ करें",
+  "create_pages": "पेज बनाएं",
   "login_register": "लॉग इन/रजिस्टर",
   "menu_primary": {
     "groups": {
       "see_all": "सभी देखें",
       "title": "समूह"
+    }
+  },
+  "menu_secondary": {
+    "pages": {
+      "empty": "कोई पेज नहीं"
     }
   },
   "pages": "पृष्ठों",

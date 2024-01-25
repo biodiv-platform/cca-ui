@@ -6,7 +6,7 @@ import React from "react";
 const createGroup = () => <CreateGroupPage />;
 
 createGroup.getInitialProps = async (ctx) => {
-  authorizedPageSSR([Role.Any], ctx, false);
+  authorizedPageSSR([Role.Admin], ctx, false);
   return {};
 };
 
