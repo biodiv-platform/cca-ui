@@ -42,8 +42,7 @@ export default function WhyThisPortal() {
           </chakra.p>
           <LocalLink href={SITE_CONFIG.PAGES.ABOUT[lang]} prefixGroup={true}>
             <Button w={{ base: "full", sm: "auto" }} size="lg" colorScheme="blue" as="a">
-              {/* {t("common:learn_more")} */}
-              About Us
+              {t("common:learn_more")}
             </Button>
           </LocalLink>
         </Box>
