@@ -55,7 +55,7 @@ export default function MenuItems(props) {
             </SimpleLink>
             {isDropdown && (
               <MenuButton data-label={name} role="button" tabIndex={0}>
-                <ChevronDownIcon mt={[1, 0]} float={["right", "none"]} />
+                <ChevronDownIcon mt={[1, 0]} float={["right", "none"]} aria-label="Open Menu" />
               </MenuButton>
             )}
           </div>

@@ -37,6 +37,7 @@ const GroupListItem = () => {
     <Menu>
       <MenuButton
         as={Link}
+        role="button"
         rounded="md"
         variant="link"
         cursor="pointer"

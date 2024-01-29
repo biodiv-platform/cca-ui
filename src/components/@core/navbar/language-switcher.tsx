@@ -33,7 +33,13 @@ export default function LanguageSwitcher() {
 
   return (
     <Menu>
-      <MenuButton as={Link} role="button" ml={4} hidden={isPreviewMode}>
+      <MenuButton
+        as={Link}
+        role="button"
+        ml={4}
+        hidden={isPreviewMode}
+        aria-label="Switch Language"
+      >
         <TranslateIcon fontSize="xl" />
       </MenuButton>
       <MenuList>

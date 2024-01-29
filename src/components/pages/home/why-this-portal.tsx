@@ -18,7 +18,14 @@ export default function WhyThisPortal() {
         spacingY={{ base: 10, md: 32 }}
         spacingX={{ base: 10, md: 24 }}
       >
-        <Image src="/next-assets/home-human-chain.jpg" borderRadius="lg" shadow="2xl" />
+        <Image
+          src="/next-assets/home-human-chain.webp"
+          borderRadius="lg"
+          shadow="2xl"
+          alt="home-human-chain"
+          max-width="100%"
+          height="auto"
+        />
         <Box>
           <chakra.h2
             mb={6}
