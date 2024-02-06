@@ -83,10 +83,10 @@ export const axResetPassword = async (payload) => {
   }
 };
 
-export const axUserSearch = async (name) => {
+export const axEsUserAutoComplete = async (name, userGroupId?) => {
   try {
-    const { data } = await plainHttp.get(`${ENDPOINT.USER}/v1/user/autocomplete`, {
-      params: { name }
+    const { data } = await plainHttp.get(`${ENDPOINT.USER}/v1/user/ibp/autocomplete`, {
+      params: { name, userGroupId }
     });
     return { success: true, data: data.map((o) => ({ ...o, display: o.name })) };
   } catch (e) {

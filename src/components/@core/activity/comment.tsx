@@ -1,6 +1,6 @@
 import { Box, Button, FormControl, FormLabel } from "@chakra-ui/react";
 import useGlobalState from "@hooks/use-global-state";
-import { axUserSearch } from "@services/auth.service";
+import { axEsUserAutoComplete } from "@services/auth.service";
 import { ACTIVITY_UPDATED } from "@static/events";
 import notification, { NotificationType } from "@utils/notification";
 import useTranslation from "next-translate/useTranslation";
@@ -17,7 +17,7 @@ export default function Comment({ resourceId, resourceType, focusRef, commentFun
     if (!q) {
       return;
     }
-    axUserSearch(q).then(({ data }) => callback(data));
+    axEsUserAutoComplete(q).then(({ data }) => callback(data));
   };
 
   const onTextChange = (e, value) => {
