@@ -15,7 +15,7 @@ export default function PermissionEdit() {
     setAuthor(_author);
 
     const data = await getUserIBPsByIds(response.allowedUsers);
-    setUsers(data.map((user) => ({ label: user.name, value: user.id })));
+    setUsers(data.map((user) => ({ label: `${user.name} (${user.id})`, value: user.id })));
   };
 
   useEffect(() => {

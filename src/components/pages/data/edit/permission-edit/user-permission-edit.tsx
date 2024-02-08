@@ -30,7 +30,11 @@ export default function UserPermissionEditor({ initialUsers, author }) {
 
   const onUserQuery = async (q) => {
     const { data } = await axEsUserAutoComplete(q);
-    return data.map((tag) => ({ label: tag.name, value: tag.id, version: tag.version }));
+    return data.map((tag) => ({
+      label: `${tag.name} (${tag.id})`,
+      value: tag.id,
+      version: tag.version
+    }));
   };
 
   const hForm = useForm<any>({

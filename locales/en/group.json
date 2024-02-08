@@ -5,13 +5,13 @@
     "title": "About"
   },
   "admin": {
-    "error": "There was some error while updating Administrators",
+    "error": "There was some error while updating Users",
     "founder": "Founders",
     "moderator": "Moderators",
     "no_access": "Contact administrator",
-    "title": "Group Administrators",
+    "title": "Group Users",
     "view_members": "View All Members",
-    "updated": "Group Administrators Updated Successfully"
+    "updated": "Group Users Updated Successfully"
   },
   "confirm_closed_group": "This is a closed group, Membership request has to be approved by a moderator. Press OK to send join request",
   "confirm_leave": "Leave Group?",
@@ -98,5 +98,5 @@
   "spatial_coverge": "Spatial Coverage",
   "tags": "Tags",
   "update": "Update Group",
-  "update_admin": "Update Administrators"
+  "update_admin": "Update Users"
 }

@@ -56,7 +56,15 @@ export default function Comment({ resourceId, resourceType, focusRef, commentFun
           allowSpaceInQuery={true}
           onChange={onTextChange}
         >
-          <Mention trigger="@" data={onMentionQuery} />
+          <Mention
+            trigger="@"
+            data={onMentionQuery}
+            renderSuggestion={({ name, id }, focused) => (
+              <div className={`user ${focused ? "focused" : ""}`}>
+                <div>{`${name} (${id})`}</div>
+              </div>
+            )}
+          />
         </MentionsInput>
       </FormControl>
       <Button colorScheme="blue" onClick={handleOnComment}>
