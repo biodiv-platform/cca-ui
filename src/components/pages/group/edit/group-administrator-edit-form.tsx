@@ -6,7 +6,8 @@ import {
   AccordionPanel,
   Box
 } from "@chakra-ui/react";
-import { useLocalRouter } from "@components/@core/local-link";
+import BlueLink from "@components/@core/blue-link";
+import LocalLink, { useLocalRouter } from "@components/@core/local-link";
 import { SubmitButton } from "@components/form/submit-button";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { axAddGroupAdminMembers, axUserGroupRemoveAdminMembers } from "@services/usergroup.service";
@@ -65,10 +66,12 @@ export default function GroupAdministratorsEditForm({ founders, moderators, user
   const handleFormSubmit = async (values) => {
     const founderData = discardExistingAdministrators(values.founders, founderIds);
     const moderatorData = discardExistingAdministrators(values.moderators, moderatorIds);
+    const membersData = transformMemberPayload(values.members);
     const payload = {
       userGroupId,
       founderIds: founderData.idsList,
       moderatorsIds: moderatorData.idsList,
+      memberIds: membersData.idsList,
       founderEmail: founderData.emailList,
       moderatorsEmail: moderatorData.emailList
     };
@@ -109,6 +112,17 @@ export default function GroupAdministratorsEditForm({ founders, moderators, user
                 label="Moderators"
                 onRemove={(o) => onMemberRemoved(o, moderatorIds)}
               />
+              <AdminInviteField
+                name="members"
+                label="Add Members"
+                onRemove={(o) => onMemberRemoved(o, [])}
+              />
+              <Box mb={4}>
+                <LocalLink href={"/user/list"} prefixGroup={true}>
+                  <BlueLink display="block">{t("group:admin.view_members")}</BlueLink>
+                </LocalLink>
+              </Box>
+
               <SubmitButton>{t("group:update_admin")}</SubmitButton>
             </form>
           </FormProvider>

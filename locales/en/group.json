@@ -10,6 +10,7 @@
     "moderator": "Moderators",
     "no_access": "Contact administrator",
     "title": "Group Administrators",
+    "view_members": "View All Members",
     "updated": "Group Administrators Updated Successfully"
   },
   "confirm_closed_group": "This is a closed group, Membership request has to be approved by a moderator. Press OK to send join request",

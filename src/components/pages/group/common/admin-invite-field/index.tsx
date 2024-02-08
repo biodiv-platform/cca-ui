@@ -22,7 +22,11 @@ export default function ManageGroupAdministratorsField({
 
   const onUserQuery = async (q) => {
     const { data } = await axEsUserAutoComplete(q, currentGroup?.id);
-    return data.map((tag) => ({ label: tag.name, value: tag.id, version: tag.version }));
+    return data.map((tag) => ({
+      label: `${tag.name} (${tag.id})`,
+      value: tag.id,
+      version: tag.version
+    }));
   };
 
   const handleEventCallback = async (value, event, setSelected) => {
