@@ -14,7 +14,7 @@ import {
 import { SelectAsyncInputField } from "@components/form/select-async";
 import { SubmitButton } from "@components/form/submit-button";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { axUserSearch } from "@services/auth.service";
+import { axEsUserAutoComplete } from "@services/auth.service";
 import { axUpdateParticipationUsers } from "@services/cca.service";
 import notification, { NotificationType } from "@utils/notification";
 import useTranslation from "next-translate/useTranslation";
@@ -29,8 +29,12 @@ export default function UserPermissionEditor({ initialUsers, author }) {
   const { response, setResponse, isEdit, setIsEdit } = useTemplateResponseEdit();
 
   const onUserQuery = async (q) => {
-    const { data } = await axUserSearch(q);
-    return data.map((tag) => ({ label: tag.name, value: tag.id, version: tag.version }));
+    const { data } = await axEsUserAutoComplete(q);
+    return data.map((tag) => ({
+      label: `${tag.name} (${tag.id})`,
+      value: tag.id,
+      version: tag.version
+    }));
   };
 
   const hForm = useForm<any>({

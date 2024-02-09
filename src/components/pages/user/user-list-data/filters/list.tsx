@@ -14,11 +14,11 @@ import React from "react";
 import EmailFilter from "./email";
 import InstituteFilter from "./institute";
 import Location from "./location/map-area";
+import UserFilter from "./name-of-user";
 import PhoneNumberFilter from "./phone";
 import ProfessionFilter from "./profession";
 import SexTypeFilter from "./sex-type";
 import TimeFilter from "./time";
-import UserFilter from "./user";
 import UserGroupFilter from "./user-group";
 import UserNameFilter from "./username";
 
@@ -69,7 +69,7 @@ export default function FiltersList() {
           <>
             <AccordionButton>
               <Box flex={1} textAlign="left">
-                {t("filters:user.title")}
+                {t("filters:user.name_of_user")}
               </Box>
               <AccordionIcon />
             </AccordionButton>

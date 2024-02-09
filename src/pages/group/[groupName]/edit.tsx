@@ -35,8 +35,11 @@ export const getServerSideProps = async (ctx) => {
         groupInfo,
         homePageDetails,
         userGroupId: currentGroup.id,
-        founders: data.founderList.map(({ name: label, id: value }) => ({ label, value })),
-        moderators: data.moderatorList.map(({ name: label, id: value }) => ({ label, value }))
+        founders: data.founderList.map(({ name, id }) => ({ label: `${name} (${id})`, value: id })),
+        moderators: data.moderatorList.map(({ name, id }) => ({
+          label: `${name} (${id})`,
+          value: id
+        }))
       }
     };
   }
