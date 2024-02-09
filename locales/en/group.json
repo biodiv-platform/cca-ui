@@ -9,7 +9,7 @@
     "founder": "Founders",
     "moderator": "Moderators",
     "no_access": "Contact administrator",
-    "title": "Group Users",
+    "title": "User Roles",
     "view_members": "View All Members",
     "updated": "Group Users Updated Successfully"
   },
@@ -97,6 +97,5 @@
   "save": "Create Group",
   "spatial_coverge": "Spatial Coverage",
   "tags": "Tags",
-  "update": "Update Group",
-  "update_admin": "Update Users"
+  "update": "Update Group"
 }
