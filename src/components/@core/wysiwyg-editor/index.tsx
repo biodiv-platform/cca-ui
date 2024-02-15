@@ -56,6 +56,19 @@ export default function WYSIWYGEditor({ uploadHandler, ...props }: WYSIWYGEditor
           "image undo paste-as-text redo  bold italic alignleft aligncenter alignright alignjustify bullist link numlist table outdent indent help code",
         images_upload_handler: uploadHandler,
         images_upload_base_path: "/",
+        link_class_list: [
+          { title: "None", value: "" },
+          { title: "Card", value: "preview-card" }
+        ],
+        image_class_list: [
+          { title: "None", value: "" },
+          { title: "Left", value: "img-wrap-left" },
+          { title: "Right", value: "img-wrap-right" }
+        ],
+        content_style: `
+          .img-wrap-left { float: left; margin-right: 40px; }
+          .img-wrap-right { float: right; margin-left: 40px; }
+        `,
         valid_elements: "*[*]",
         valid_children: "+body[style]",
         verify_html: false,
