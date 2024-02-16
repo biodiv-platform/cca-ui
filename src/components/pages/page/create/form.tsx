@@ -22,8 +22,7 @@ export default function PageCreateForm(): JSX.Element {
     pageType: PAGE_TYPES.CONTENT,
     allowComments: false,
     showInFooter: false,
-    showInPrimaryMenu: false,
-    showInSecondaryMenu: false
+    showInMenu: false
   };
 
   const handleOnPageEdit = async (values) => {

@@ -120,9 +120,7 @@ export const removeCardWrapperParagraphs = (html) => {
 export const convertToMenuFormat = (
   data,
   basePath = "/page/",
-  showInPrimaryMenu = false,
-  showInSecondaryMenu = false,
-  showInFooter = false,
+  showInMenu = false,
   prefixGroup = true
 ) => {
   const convertNode = (node) => {
@@ -134,11 +132,7 @@ export const convertToMenuFormat = (
     };
 
     const filteredChildren = (node.children || []).filter((child) => {
-      return (
-        (child.showInPrimaryMenu || !showInPrimaryMenu) &&
-        (child.showInSecondaryMenu || !showInSecondaryMenu) &&
-        (child.showInFooter || !showInFooter)
-      );
+      return child.showInMenu || !showInMenu;
     });
 
     if (filteredChildren.length > 0) {
@@ -149,11 +143,7 @@ export const convertToMenuFormat = (
   };
 
   const filteredData = data.filter((node) => {
-    return (
-      (node.showInPrimaryMenu || !showInPrimaryMenu) &&
-      (node.showInSecondaryMenu || !showInSecondaryMenu) &&
-      (node.showInFooter || !showInFooter)
-    );
+    return node.showInMenu || !showInMenu;
   });
 
   return filteredData.map((node) => convertNode(node));
