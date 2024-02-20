@@ -117,12 +117,7 @@ export const removeCardWrapperParagraphs = (html) => {
   }
 };
 
-export const convertToMenuFormat = (
-  data,
-  basePath = "/page/",
-  showInMenu = false,
-  prefixGroup = true
-) => {
+export const convertToMenuFormat = (data, basePath = "/page/", prefixGroup = true) => {
   const convertNode = (node) => {
     const menuNode = {
       name: node.title,
@@ -131,20 +126,8 @@ export const convertToMenuFormat = (
       prefixGroup: prefixGroup
     };
 
-    const filteredChildren = (node.children || []).filter((child) => {
-      return child.showInMenu || !showInMenu;
-    });
-
-    if (filteredChildren.length > 0) {
-      menuNode.rows = filteredChildren.map((child) => convertNode(child));
-    }
-
     return menuNode;
   };
 
-  const filteredData = data.filter((node) => {
-    return node.showInMenu || !showInMenu;
-  });
-
-  return filteredData.map((node) => convertNode(node));
+  return data.map((node) => convertNode(node));
 };

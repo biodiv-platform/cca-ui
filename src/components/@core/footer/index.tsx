@@ -86,6 +86,7 @@ export default function Footer() {
           <div>
             <SimpleGrid columns={{ base: 1, md: 2 }} spacing={4}>
               {pages
+                .flatMap((page) => [page, ...page.children])
                 .filter((page) => page.showInFooter !== false)
                 .map((page) => (
                   <LocalLink href={`/page/show/${page.id}`} key={page.id} prefixGroup={true}>
