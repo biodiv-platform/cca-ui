@@ -48,11 +48,7 @@ export default function RightMenu({ isOpen }: IMenuProps) {
 
   const isGroup = currentGroup.id ? true : false;
 
-  const outputMenuFormat = convertToMenuFormat(
-    pages.flatMap((page) => [page, ...page.children]).filter((page) => page.showInFooter !== false),
-    "/page/",
-    true
-  );
+  const outputMenuFormat = convertToMenuFormat(pages, "/page/", true, true);
 
   const activeItems = items.filter(({ active }) => active === true);
   const darkItems = items.filter(({ isDarkButton }) => isDarkButton === true);
