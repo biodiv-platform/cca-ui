@@ -46,6 +46,12 @@
   }
 }
 
+hr {
+  border-width: 0.15rem;
+  margin-top: 2em !important;
+  margin-bottom: 2em !important;
+}
+
 @media screen and (max-width: 426px) {
   .epc {
     width: 100%;
@@ -129,4 +135,3 @@ h6,
 .places-search > div:first-child {
   width: 100%;
 }
-

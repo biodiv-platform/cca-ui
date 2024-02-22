@@ -64,6 +64,9 @@ const SITE_CONFIG_EXAMPLE = {
   CCA: {
     TITLE_FIELD_IDS: ["1"],
     FEATURED_IDS: [1, 2, 3, 4]
+  },
+  USERGROUP: {
+    ACTIVE: true
   }
 };
 
