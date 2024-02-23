@@ -172,7 +172,7 @@ export const axCheckUserGroupFounderOrAdmin = async (userGroupId, cleanCheck?) =
   } catch (e) {
     console.error(e);
   }
-  return cleanCheck ? hasAccess([Role.Admin]) : !userGroupId;
+  return cleanCheck ? hasAccess([Role.Admin, Role.PageEditor]) : !userGroupId;
 };
 
 export const axJoinUserGroup = async (userGroupId) => {

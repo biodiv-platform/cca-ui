@@ -2,7 +2,10 @@
   "about": "के बारे में",
   "browse": "सीसीए ब्राउज़ करें",
   "create_pages": "पेज बनाएं",
-  "login_register": "लॉग इन/रजिस्टर",
+  "group_edit": "समूह संपादित करें",
+  "logged_user_only": "कृपया समूह में शामिल होने के लिए लॉगिन करें",
+  "login_register": "लॉग इन/रजिस्टर करें",
+  "member_only": "कृपया सीसीए अपलोड करने के लिए समूह में शामिल हों",
   "menu_primary": {
     "groups": {
       "see_all": "सभी देखें",
@@ -11,12 +14,13 @@
   },
   "menu_secondary": {
     "pages": {
-      "empty": "कोई पेज नहीं"
+      "empty": "कोई पेज नहीं",
+      "title": "पृष्ठों"
     }
   },
-  "pages": "पृष्ठों",
   "participate": "भाग लेना",
   "search": "खोज",
   "templates": "टेम्पलेट्स",
+  "toggle_menu": "मेनू टॉगल करें",
   "users": "उपयोगकर्ताओं"
 }

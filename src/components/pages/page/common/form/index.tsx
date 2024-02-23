@@ -1,10 +1,18 @@
-import { Box, GridItem, SimpleGrid } from "@chakra-ui/react";
+import {
+  Accordion,
+  AccordionButton,
+  AccordionIcon,
+  AccordionItem,
+  AccordionPanel,
+  Box,
+  GridItem,
+  SimpleGrid
+} from "@chakra-ui/react";
 import { SelectInputField } from "@components/form/select";
 import { SubmitButton } from "@components/form/submit-button";
 import { SwitchField } from "@components/form/switch";
 import { TextBoxField } from "@components/form/text";
 import { TextAreaField } from "@components/form/textarea";
-import SITE_CONFIG from "@configs/site-config";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { PageShowMinimal } from "@interfaces/pages";
 import { axRemovePageGalleryImage, axUploadEditorPageResource } from "@services/pages.service";
@@ -49,11 +57,6 @@ export default function PageForm({
     [pages]
   );
 
-  const languageOptions = useMemo(
-    () => Object.values(SITE_CONFIG.LANG.LIST).map((o) => ({ label: o.NAME, value: o.ID })),
-    []
-  );
-
   const hForm = useForm<any>({
     mode: "onChange",
     resolver: yupResolver(
@@ -82,8 +85,7 @@ export default function PageForm({
         parentId: hideParentId ? Yup.number().notRequired() : Yup.number().required(),
         sticky: Yup.boolean().required(),
         showInFooter: Yup.boolean(),
-        showInPrimaryMenu: Yup.boolean(),
-        showInSecondaryMenu: Yup.boolean(),
+        showInMenu: Yup.boolean(),
         allowComments: Yup.boolean().required()
       })
     ),
@@ -109,50 +111,76 @@ export default function PageForm({
           </GridItem>
         </SimpleGrid>
 
-        <SimpleGrid columns={{ md: 6 }} spacing={4}>
-          <GridItem colSpan={4}>
-            <TextAreaField name="description" label={t("page:form.description")} />
-          </GridItem>
-          <GridItem colSpan={2}>
-            <SocialPreviewField name="socialPreview" label={t("page:form.social_preview")} />
-          </GridItem>
-        </SimpleGrid>
-
         <Box hidden={isPageTypeRedirect}>
           <WYSIWYGField
             name="content"
             label={t("page:form.content")}
             uploadHandler={axUploadEditorPageResource}
           />
-          <PageGalleryField
-            name="galleryData"
-            label={t("page:form.gallery")}
-            onRemoveCallback={axRemovePageGalleryImage}
-          />
         </Box>
+
         <Box hidden={!isPageTypeRedirect}>
           <TextBoxField name="url" label={t("page:form.url")} />
         </Box>
-        {!hideParentId && (
-          <SimpleGrid columns={{ md: 2 }} spacing={4}>
-            <SelectInputField
-              name="languageId"
-              label={t("page:form.language")}
-              options={languageOptions}
-            />
-            <SelectInputField
-              name="parentId"
-              label={t("page:form.parent")}
-              options={parentOptions}
-            />
-          </SimpleGrid>
-        )}
-        <SwitchField name="sticky" mb={2} label={t("page:form.is_sidebar")} />
-        <SwitchField name="showInFooter" mb={2} label={t("page:form.is_footer")} />
-        <SwitchField name="showInPrimaryMenu" mb={2} label={t("page:form.is_primary_menu")} />
-        <SwitchField name="showInSecondaryMenu" mb={2} label={t("page:form.is_secondary_menu")} />
-        <SwitchField name="allowComments" mb={2} label={t("page:form.is_allow_comments")} />
-        <SubmitButton mb={16}>{submitLabel}</SubmitButton>
+
+        <Box hidden={isPageTypeRedirect}>
+          <Accordion allowToggle>
+            <AccordionItem
+              mb={8}
+              bg="white"
+              border="1px solid var(--chakra-colors-gray-300)"
+              borderRadius="md"
+            >
+              <AccordionButton _expanded={{ bg: "gray.100" }}>
+                <Box flex={1} textAlign="left">
+                  🖼️ {t("page:form.gallery")}
+                </Box>
+                <AccordionIcon />
+              </AccordionButton>
+              <AccordionPanel>
+                <Box hidden={isPageTypeRedirect}>
+                  <PageGalleryField
+                    name="galleryData"
+                    label={t("page:form.gallery")}
+                    onRemoveCallback={axRemovePageGalleryImage}
+                  />
+                </Box>
+                <SocialPreviewField name="socialPreview" label={t("page:form.social_preview")} />
+              </AccordionPanel>
+            </AccordionItem>
+          </Accordion>
+        </Box>
+        <Accordion allowToggle>
+          <AccordionItem
+            mb={8}
+            bg="white"
+            border="1px solid var(--chakra-colors-gray-300)"
+            borderRadius="md"
+          >
+            <AccordionButton _expanded={{ bg: "gray.100" }}>
+              <Box flex={1} textAlign="left">
+                📝 {t("page:form.meta_data")}
+              </Box>
+              <AccordionIcon />
+            </AccordionButton>
+            <AccordionPanel>
+              <TextAreaField name="description" label={t("page:form.description")} />
+              {!hideParentId && (
+                <SelectInputField
+                  name="parentId"
+                  label={t("page:form.parent")}
+                  options={parentOptions}
+                  shouldPortal={true}
+                />
+              )}
+              <SwitchField name="sticky" mb={2} label={t("page:form.is_sidebar")} />
+              <SwitchField name="showInMenu" mb={2} label={t("page:form.is_menu")} />
+              <SwitchField name="showInFooter" mb={2} label={t("page:form.is_footer")} />
+              <SwitchField name="allowComments" mb={2} label={t("page:form.is_allow_comments")} />
+            </AccordionPanel>
+          </AccordionItem>
+        </Accordion>
+        <SubmitButton>{submitLabel}</SubmitButton>
       </form>
     </FormProvider>
   );

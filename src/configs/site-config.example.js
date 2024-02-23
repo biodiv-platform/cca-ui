@@ -15,6 +15,9 @@ const SITE_CONFIG_EXAMPLE = {
     API_ENDPOINT: "http://localhost:8010/proxy/",
     API_ENDPOINT_SSR: "http://localhost:8010/proxy/",
     ICON: "/logo.svg",
+    TITLE: {
+      en: "Community Conserved Areas"
+    },
     URL: "http://localhost:3000"
   },
   TOKENS: {
@@ -61,6 +64,9 @@ const SITE_CONFIG_EXAMPLE = {
   CCA: {
     TITLE_FIELD_IDS: ["1"],
     FEATURED_IDS: [1, 2, 3, 4]
+  },
+  USERGROUP: {
+    ACTIVE: true
   }
 };
 

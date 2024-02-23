@@ -48,7 +48,7 @@ export default function RightMenu({ isOpen }: IMenuProps) {
 
   const isGroup = currentGroup.id ? true : false;
 
-  const outputMenuFormat = convertToMenuFormat(pages, "/page/", false, true, false);
+  const outputMenuFormat = convertToMenuFormat(pages, "/page/", true, true);
 
   const activeItems = items.filter(({ active }) => active === true);
   const darkItems = items.filter(({ isDarkButton }) => isDarkButton === true);
