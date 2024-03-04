@@ -147,7 +147,7 @@ export default function TemplateParticipateComponent({ template }) {
                   <CheckboxField mt={6} name="terms" label={t("form:terms")} />
                               {/* Informative message near the SubmitButton */}
           <Text color="gray.500" mt={4}>
-            By Submitting You creates a CCA with basic info
+            
           </Text>
                   <SubmitButton>{t("form:submit")}</SubmitButton>
                 </AccordionPanel>
