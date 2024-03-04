@@ -84,6 +84,8 @@ export default function TemplateParticipateComponent({ template }) {
       ?.scrollIntoView({ behavior: "smooth", block: "center" });
   };
 
+  // ...
+
   return (
     <Container key={lang}>
       <PageHeading mb={4} title={template.name} icon="📝" />
@@ -96,7 +98,6 @@ export default function TemplateParticipateComponent({ template }) {
               {templateGroups.map(({ heading, fields }) => (
                 <AccordionItem key={heading?.fieldId}>
                   <AccordionButton
-                    isDisabled={heading?.name === "Basic Information"}
                     justifyContent="space-between" // Align the icon to the right
                   >
                     {heading ? (
@@ -128,19 +129,22 @@ export default function TemplateParticipateComponent({ template }) {
                         <ParticipateTemplateFieldRenderer field={field} />
                       </Box>
                     ))}
+                  </AccordionPanel>
 
+                  {/* Move UserGroups, CheckboxField, and SubmitButton here */}
+                  {heading?.name === "Basic Information" && (
                     <Box display="flex" flexDirection="column" mt={6}>
                       <UserGroups name="userGroupId" label={t("group:post")} />
                       <CheckboxField mt={2} name="terms" label={t("form:terms")} />
-
-                      <Box display="flex" alignItems="center">
+                      {/* Submit Button and accompanying text */}
+                      <Box display="flex" alignItems="center" mt={4}>
                         <SubmitButton>{t("form:submit")}</SubmitButton>
                         <Text color="gray.500" ml={4}>
                           (Submit to Create CCA with Basic Information)
                         </Text>
                       </Box>
                     </Box>
-                  </AccordionPanel>
+                  )}
                 </AccordionItem>
               ))}
             </Accordion>
