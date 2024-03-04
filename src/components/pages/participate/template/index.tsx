@@ -18,11 +18,11 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import useGlobalState from "@hooks/use-global-state";
 import { axSaveParticipation } from "@services/cca.service";
 import { FORM_TYPE } from "@static/constants";
-import { arrayOfSize, splitIntoGroups, toFlatSaveData } from "@utils/field";
+import { splitIntoGroups, toFlatSaveData } from "@utils/field";
 import notification, { NotificationType } from "@utils/notification";
 import { buildValidationRules } from "@utils/validation";
 import useTranslation from "next-translate/useTranslation";
-import React, { useEffect, useMemo } from "react";
+import React, { useMemo } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import * as Yup from "yup";
 
@@ -33,7 +33,7 @@ export default function TemplateParticipateComponent({ template }) {
   const router = useLocalRouter();
   const { currentGroup } = useGlobalState();
 
-  const [formSchema, templateFields, templateGroups, groupFieldsEnabled] = useMemo(() => {
+  const [formSchema, templateFields, templateGroups] = useMemo(() => {
     const newFields = buildValidationRules(template.fields);
     const hForm = Object.fromEntries(
       newFields
@@ -41,8 +41,7 @@ export default function TemplateParticipateComponent({ template }) {
         .map((field) => [field.fieldId, field.rule])
     );
     const groupFields = splitIntoGroups(newFields);
-    const groupFieldsEnabled = arrayOfSize(groupFields.length);
-    return [hForm, newFields, groupFields, groupFieldsEnabled];
+    return [hForm, newFields, groupFields];
   }, [lang]);
 
   const hForm = useForm<any>({
@@ -85,16 +84,6 @@ export default function TemplateParticipateComponent({ template }) {
       ?.scrollIntoView({ behavior: "smooth", block: "center" });
   };
 
-  useEffect(() => {
-    templateGroups.forEach(({ heading }) => {
-      if (heading) {
-        console.log("Heading Name:", heading.name);
-      }
-    });
-  }, [templateGroups]);
-
-  // ...
-
   return (
     <Container key={lang}>
       <PageHeading mb={4} title={template.name} icon="📝" />
@@ -104,7 +93,7 @@ export default function TemplateParticipateComponent({ template }) {
         <FormProvider {...hForm}>
           <form onSubmit={hForm.handleSubmit(handleOnSubmit, handleOnSubmitInvalid)}>
             <Accordion defaultIndex={[0]} allowMultiple={true}>
-              {templateGroups.map(({ heading, fields }, index) => (
+              {templateGroups.map(({ heading, fields }) => (
                 <AccordionItem key={heading?.fieldId}>
                   <AccordionButton
                     isDisabled={heading?.name === "Basic Information"}
