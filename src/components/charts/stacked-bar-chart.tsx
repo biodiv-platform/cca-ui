@@ -62,7 +62,7 @@ export default function StackedBarChart({
 
     const groups = data.map((o) => o[groupKey]);
 
-    const x: any = scaleBand()
+    const x = scaleBand()
       .domain(groups)
       .range([0, ro.width - ml - mr])
       .padding(barPadding);
@@ -91,27 +91,23 @@ export default function StackedBarChart({
       ...data.map((o) => subGroupKeys.map((k) => o[k]).reduce((a, b) => a + b, 0))
     );
 
-    // Add Y axis
-    const y: any = scaleLinear()
+    const y = scaleLinear()
       .domain([0, max])
-      .range([h - mt - mb, 0]);
+      .range([h - mt - mb, 10]);
 
     svg
       .select(".y-axis")
       .join("g")
       .call(axisLeft(y) as any);
 
-    // stack per subgroup
     const stackedData = stack().keys(subGroupKeys)(data);
 
-    // show the bars
     svg
       .select(".chart")
       .selectAll("g")
       .data(stackedData)
       .join("g")
       .selectAll("rect")
-      // second time loop per subgroup to add all rectangles
       .data((d) => d)
       .join("rect")
       .on("mouseover", tipHelpers.mouseover)
@@ -121,7 +117,22 @@ export default function StackedBarChart({
       .attr("y", (d) => y(d[1]))
       .attr("height", (d) => y(d[0]) - y(d[1]))
       .attr("width", x.bandwidth())
-      .attr("fill", (_, i) => barColors[i % barColors.length]); // Use specified bar colors
+      .attr("fill", (_, i) => barColors[i % barColors.length]);
+
+    // Add text for bar values
+    svg
+      .select(".chart")
+      .selectAll(".bar-value")
+      .data(stackedData)
+      .join("g")
+      .selectAll(".bar-value-text")
+      .data((d) => d)
+      .join("text")
+      .attr("class", "bar-value-text")
+      .attr("x", (d) => x(d?.data[groupKey]) + x.bandwidth() / 2)
+      .attr("y", (d) => y(d[1]) - 5) // Adjust the position of the text
+      .attr("text-anchor", "middle")
+      .text((d) => d[1] - d[0]); // Show the difference between upper and lower values of the bar
   }, [containerRef, ro?.width, h, data]);
 
   return (

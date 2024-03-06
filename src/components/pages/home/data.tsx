@@ -74,6 +74,19 @@ export const StackedBarChartData = [
   }
 ];
 
+const colours = [
+  "#1f77b4",
+  "#ff7f0e",
+  "#2ca02c",
+  "#d62728",
+  "#9467bd",
+  "#8c564b",
+  "#e377c2",
+  "#7f7f7f",
+  "#bcbd22",
+  "#17becf"
+];
+
 export const renderChart = (chartData, index, isStackedView = false) => {
   console.warn("chartData", chartData);
 
@@ -90,7 +103,8 @@ export const renderChart = (chartData, index, isStackedView = false) => {
           meta={ChartMeta}
           tooltipRenderer={TooltipRenderer}
           rotateLabels={true}
-          h={400}
+          h={600}
+          barColors={colours}
         />
       ) : (
         <HorizontalBarChart
@@ -99,7 +113,11 @@ export const renderChart = (chartData, index, isStackedView = false) => {
             Name,
             Value: value
           }))}
-          meta={{ ...HorizontalChartMeta, countTitle: chartData?.Title, barColor: "#319795" }}
+          meta={{
+            ...HorizontalChartMeta,
+            countTitle: chartData?.Title,
+            barColor: colours
+          }}
           barPadding={0.1}
           mt={10}
           mr={100}
@@ -169,4 +187,3 @@ export const generateChartDataForAll = (aggregationData, filtersList) => {
     .map((dataKey) => generateChartData(dataKey, aggregationData[dataKey]))
     .filter((chartData) => chartData !== null);
 };
-

@@ -262,6 +262,20 @@ export const axGetFiltersListByShortName = async (params) => {
   }
 };
 
+export const axGetChartFiltersListByShortName = async (params) => {
+  try {
+    const { data } = await plainHttp.get(`${ENDPOINT.CCA}/v1/template/filter/chart/fields`, {
+      params
+    });
+
+    return { success: true, data };
+  } catch (e) {
+    console.error(e);
+
+    return { success: false, data: {} };
+  }
+};
+
 export const axGetUserParticipations = async (params) => {
   try {
     const { data } = await plainHttp.get(`${ENDPOINT.CCA}/v1/data/myList/?${stringify(params)}`);

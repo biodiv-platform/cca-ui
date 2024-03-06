@@ -2,8 +2,8 @@ import HomePageComponent from "@components/pages/home";
 import SITE_CONFIG from "@configs/site-config";
 import { axGroupList } from "@services/app.service";
 import {
+  axGetChartFiltersListByShortName,
   axGetDataListAggregation,
-  axGetFiltersListByShortName,
   axGetTemplateResponseList,
   axSearchMapCCAData
 } from "@services/cca.service";
@@ -26,16 +26,17 @@ export const getServerSideProps = async (ctx) => {
     query: ""
   };
 
-  const { data: aggregationData } = await axGetDataListAggregation(payload);
+  const { data: aggregationData } = await axGetDataListAggregation({ isChart: true });
 
   const { data: featured } = await axGetTemplateResponseList({
     id: SITE_CONFIG.CCA.FEATURED_IDS.toString(),
     language: ctx.locale
   });
 
-  const { data: filtersList } = await axGetFiltersListByShortName({
+  const { data: filtersList } = await axGetChartFiltersListByShortName({
     shortName: ctx.query?.shortName,
-    language: ctx.locale
+    language: ctx.locale,
+    isChart: true
   });
 
   const { data: ccaMapResponse } = await axSearchMapCCAData(payload);

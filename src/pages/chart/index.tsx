@@ -1,8 +1,8 @@
 import ChartComponent from "@components/pages/chart";
 import { axGroupList } from "@services/app.service";
 import {
+  axGetChartFiltersListByShortName,
   axGetDataListAggregation,
-  axGetFiltersListByShortName,
   axSearchMapCCAData
 } from "@services/cca.service";
 import { axGetGroupHompageDetails } from "@services/usergroup.service";
@@ -20,15 +20,15 @@ export const getServerSideProps = async (ctx) => {
   const { data: groupdata } = await axGetGroupHompageDetails(currentGroup?.id);
 
   const payload = {
-    language: ctx.locale,
-    query: ""
+    isChart: true
   };
 
   const { data: aggregationData } = await axGetDataListAggregation(payload);
 
-  const { data: filtersList } = await axGetFiltersListByShortName({
+  const { data: filtersList } = await axGetChartFiltersListByShortName({
     shortName: ctx.query?.shortName,
-    language: ctx.locale
+    language: ctx.locale,
+    isChart: true
   });
 
   const { data: ccaMapResponse } = await axSearchMapCCAData(payload);

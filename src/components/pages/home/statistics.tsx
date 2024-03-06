@@ -86,7 +86,7 @@ export default function Statistics(featured) {
                     height={carouselHeight}
                     position="relative"
                     backgroundPosition="center"
-                    backgroundRepeat="no-repeat"
+                    backgroundRepeat="repeat"
                     backgroundSize="cover"
                   >
                     {renderChart(chartDataList[index], index)}

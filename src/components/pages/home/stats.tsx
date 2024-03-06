@@ -39,7 +39,6 @@ export default function Stats({ filtersList, featured }) {
   const handleChartClick = (index) => {
     setSelectedChartIndex(index);
   };
-
   const renderChart = (chartData, index) => {
     switch (chartData?.Type) {
       case "MULTI_SELECT_CHECKBOX":
@@ -129,7 +128,7 @@ export default function Stats({ filtersList, featured }) {
           </ul>
         </Box>
         <Box flex="1" ml="200px">
-          <Flex justifyContent="flex-end" mb={10}>
+          <Flex justifyContent="flex-end" mb={10} mt={10}>
             <Button onClick={toggleView}>
               {isStackedView ? "Switch to Horizontal View" : "Switch to Vertical View"}
             </Button>
@@ -139,10 +138,13 @@ export default function Stats({ filtersList, featured }) {
               key={index}
               className="white-box"
               id={`chart-${index}`}
-              mt={index === 0 ? "0" : "10"}
+              mt={index === 0 ? "50px" : selectedChartIndex === index ? "150px" : "10px"}
               mb={10}
+              transition="margin 0.3s ease-in-out"
             >
-              <BoxHeading>📊 {chartData?.Title}</BoxHeading>
+              <BoxHeading styles={{ bg: selectedChartIndex === index ? "gray.100" : "" }}>
+                📊 {chartData?.Title}
+              </BoxHeading>
               <Box p={20}>{renderChart(chartData, index)}</Box>
             </Box>
           ))}
