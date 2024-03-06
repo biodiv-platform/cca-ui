@@ -1,18 +1,16 @@
-import HomePageComponent from "@components/pages/home";
-import SITE_CONFIG from "@configs/site-config";
+import ChartComponent from "@components/pages/chart";
 import { axGroupList } from "@services/app.service";
 import {
   axGetDataListAggregation,
   axGetFiltersListByShortName,
-  axGetTemplateResponseList,
   axSearchMapCCAData
 } from "@services/cca.service";
 import { axGetGroupHompageDetails } from "@services/usergroup.service";
 import { absoluteUrl } from "@utils/basic";
 import React from "react";
 
-function index({ featured }) {
-  return <HomePageComponent featured={featured} />;
+export default function PageShowPage({ chartData }) {
+  return <ChartComponent chartData={chartData} />;
 }
 
 export const getServerSideProps = async (ctx) => {
@@ -28,11 +26,6 @@ export const getServerSideProps = async (ctx) => {
 
   const { data: aggregationData } = await axGetDataListAggregation(payload);
 
-  const { data: featured } = await axGetTemplateResponseList({
-    id: SITE_CONFIG.CCA.FEATURED_IDS.toString(),
-    language: ctx.locale
-  });
-
   const { data: filtersList } = await axGetFiltersListByShortName({
     shortName: ctx.query?.shortName,
     language: ctx.locale
@@ -42,8 +35,7 @@ export const getServerSideProps = async (ctx) => {
 
   return {
     props: {
-      featured: {
-        featured: featured,
+      chartData: {
         groupdata: groupdata,
         aggregationData: aggregationData,
         filtersList: filtersList,
@@ -52,5 +44,3 @@ export const getServerSideProps = async (ctx) => {
     }
   };
 };
-
-export default index;
