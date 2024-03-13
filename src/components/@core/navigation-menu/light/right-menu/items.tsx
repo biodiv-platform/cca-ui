@@ -2,6 +2,11 @@ import PagesMenuItem from "./pages-menu-item";
 
 export default [
   {
+    name: "Show in Charts",
+    to: "/chart",
+    isDarkButton: true
+  },
+  {
     name: "header:browse",
     to: "/data/list",
     isDarkButton: true

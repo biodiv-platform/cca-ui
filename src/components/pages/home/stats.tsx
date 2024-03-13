@@ -1,11 +1,12 @@
-import { Box, Button, Flex, Text } from "@chakra-ui/react";
+import { Box, Button, Flex, SimpleGrid } from "@chakra-ui/react";
 import BoxHeading from "@components/@core/activity/box-heading";
+import { Histogram } from "@components/charts/histogram";
 import HorizontalBarChart from "@components/charts/horizontal-bar-chart";
 import PieV3 from "@components/charts/pie-v3";
 import StackedBarChart from "@components/charts/stacked-bar-chart";
 import React, { useState } from "react";
 
-import { ChartMeta, generateChartDataForAll, TooltipRenderer } from "./data";
+import { ChartMeta, generateChartDataForAll, HistogramData, TooltipRenderer } from "./data";
 
 const HorizontalChartMeta = {
   countTitle: "cca's",
@@ -14,31 +15,29 @@ const HorizontalChartMeta = {
   hideXAxis: true
 };
 
+//schemeBrBG
 const colours = [
-  "#1f77b4",
-  "#ff7f0e",
-  "#2ca02c",
-  "#d62728",
-  "#9467bd",
-  "#8c564b",
-  "#e377c2",
-  "#7f7f7f",
-  "#bcbd22",
-  "#17becf"
+  "#543005",
+  "#8c510a",
+  "#bf812d",
+  "#dfc27d",
+  "#f6e8c3",
+  "#f5f5f5",
+  "#c7eae5",
+  "#80cdc1",
+  "#35978f",
+  "#01665e",
+  "#003c30"
 ];
 
 export default function Stats({ filtersList, featured }) {
   const chartDataList = generateChartDataForAll(featured.aggregationData, filtersList);
-  const [isStackedView, setIsStackedView] = useState(false);
-  const [selectedChartIndex, setSelectedChartIndex] = useState(null);
+  const [isStackedView, setIsStackedView] = useState(true);
 
   const toggleView = () => {
     setIsStackedView((prevState) => !prevState);
   };
 
-  const handleChartClick = (index) => {
-    setSelectedChartIndex(index);
-  };
   const renderChart = (chartData, index) => {
     switch (chartData?.Type) {
       case "MULTI_SELECT_CHECKBOX":
@@ -53,7 +52,7 @@ export default function Stats({ filtersList, featured }) {
             meta={ChartMeta}
             tooltipRenderer={TooltipRenderer}
             rotateLabels={true}
-            h={600}
+            h={300}
             barColors={colours}
           />
         ) : (
@@ -95,61 +94,30 @@ export default function Stats({ filtersList, featured }) {
             labelKey="Name"
           />
         );
-      // case "NUMBER":
-      //   return <Histogram key={index} data={HistogramData} width={800} height={400} />;
-      // default:
-      //   return null;
+      case "NUMBER":
+        return <Histogram key={index} data={HistogramData} width={800} height={400} />;
+      default:
+        return null;
     }
   };
 
   return (
-    <Box className="container">
-      <Flex>
-        <Box position="fixed" left="100" top="30%" transform="translateY(-50%)" borderRadius="md">
-          <Text fontSize="lg" fontWeight="bold" mb={2}>
-            Quick Navigation
-          </Text>
-          <ul style={{ listStyleType: "disc", marginLeft: "1rem" }}>
-            {chartDataList.map((chartData, index) => (
-              <li key={index}>
-                <a
-                  href={`#chart-${index}`}
-                  style={{
-                    textDecoration: "none",
-                    color: index === selectedChartIndex ? "teal.500" : "gray.600",
-                    fontWeight: index === selectedChartIndex ? "bold" : "normal"
-                  }}
-                  onClick={() => handleChartClick(index)}
-                >
-                  {chartData?.Title}
-                </a>
-              </li>
-            ))}
-          </ul>
-        </Box>
-        <Box flex="1" ml="200px">
-          <Flex justifyContent="flex-end" mb={10} mt={10}>
-            <Button onClick={toggleView}>
-              {isStackedView ? "Switch to Horizontal View" : "Switch to Vertical View"}
-            </Button>
-          </Flex>
-          {chartDataList.map((chartData, index) => (
-            <Box
-              key={index}
-              className="white-box"
-              id={`chart-${index}`}
-              mt={index === 0 ? "50px" : selectedChartIndex === index ? "150px" : "10px"}
-              mb={10}
-              transition="margin 0.3s ease-in-out"
-            >
-              <BoxHeading styles={{ bg: selectedChartIndex === index ? "gray.100" : "" }}>
-                📊 {chartData?.Title}
-              </BoxHeading>
-              <Box p={20}>{renderChart(chartData, index)}</Box>
-            </Box>
-          ))}
-        </Box>
+    <Box className="container" pt={20}>
+      <Flex justifyContent="flex-end" mb={10} mt={10}>
+        <Button onClick={toggleView}>
+          {isStackedView ? "Switch to Horizontal View" : "Switch to Vertical View"}
+        </Button>
       </Flex>
+      <SimpleGrid columns={[1, 1, 1, 2]} spacing={4}>
+        {chartDataList.map((chartData, index) => (
+          <Box key={index} className="white-box" mb={10}>
+            <BoxHeading styles={{ bg: "gray.200" }}>📊 {chartData?.Title}</BoxHeading>
+            <Box bg="gray.100" p={20}>
+              {renderChart(chartData, index)}
+            </Box>
+          </Box>
+        ))}
+      </SimpleGrid>
     </Box>
   );
 }
