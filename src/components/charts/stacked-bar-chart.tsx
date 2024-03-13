@@ -82,7 +82,7 @@ export default function StackedBarChart({
         .attr("transform", "rotate(-60)")
         .text(function (d) {
           // Check label length and add ellipsis if it exceeds a threshold
-          const labelThreshold = 10; // Adjust this threshold as needed
+          const labelThreshold = 6; // Adjust this threshold as needed
           return d.length > labelThreshold ? d.substring(0, labelThreshold) + "..." : d;
         });
     }

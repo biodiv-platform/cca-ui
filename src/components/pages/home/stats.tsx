@@ -103,7 +103,7 @@ export default function Stats({ filtersList, featured }) {
 
   return (
     <Box className="container" pt={20}>
-      <Flex justifyContent="flex-end" mb={10} mt={10}>
+      <Flex justifyContent="flex-end" mb={10} mt={10} hidden={true}>
         <Button onClick={toggleView}>
           {isStackedView ? "Switch to Horizontal View" : "Switch to Vertical View"}
         </Button>
