@@ -6,6 +6,7 @@ import React, { useEffect, useRef } from "react";
 
 import useResizeObserver from "./hooks/use-resize-observer";
 import { tooltipHelpers, useTooltip } from "./hooks/use-tooltip";
+import Legend from "./legend";
 
 interface StackedBarChartProps {
   h?: number;
@@ -17,6 +18,7 @@ interface StackedBarChartProps {
 
   barPadding?: number;
   rotateLabels?: boolean;
+  showValues?: boolean;
 
   data: any[];
   meta: { groupKey: string; subGroupKeys };
@@ -36,6 +38,7 @@ export default function StackedBarChart({
 
   barPadding = 0.2,
   rotateLabels,
+  showValues,
 
   data,
   meta: { groupKey, subGroupKeys },
@@ -71,7 +74,7 @@ export default function StackedBarChart({
       .select(".x-axis")
       .join("g")
       .attr("transform", `translate(0,${h - mt - mb})`)
-      .call(axisBottom(x).tickSizeOuter(0) as any);
+      .call(axisBottom(x).tickSize(0) as any);
 
     if (rotateLabels) {
       xAxis
@@ -85,6 +88,16 @@ export default function StackedBarChart({
           const labelThreshold = 6; // Adjust this threshold as needed
           return d.length > labelThreshold ? d.substring(0, labelThreshold) + "..." : d;
         });
+    }
+
+    if (showValues) {
+      xAxis
+        .selectAll("text")
+        .style("text-anchor", "end")
+        .attr("dx", "-.8em")
+        .attr("dy", ".15em")
+        .attr("transform", "rotate(-60)")
+        .text("");
     }
 
     const max = Math.max(
@@ -145,6 +158,7 @@ export default function StackedBarChart({
         </g>
       </svg>
       <div className="tooltip" />
+      <Legend keys={data} colors={barColors} />
     </div>
   );
 }

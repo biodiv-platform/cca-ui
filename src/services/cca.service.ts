@@ -186,6 +186,20 @@ export const axGetDataListAggregation = async (params) => {
   }
 };
 
+export const axGetChartDataListAggregation = async (params) => {
+  try {
+    const { data } = await plainHttp.get(
+      `${ENDPOINT.CCA}/v1/data/chart?${stringify(params)}`
+    );
+
+    return { success: true, data};
+  } catch (e) {
+    console.error(e);
+
+    return { success: false, data: [], aggregation: {} };
+  }
+};
+
 export const axGetDataListMap = async (params?) => {
   try {
     const { data } = await plainHttp.get(

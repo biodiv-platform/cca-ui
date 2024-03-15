@@ -19,7 +19,7 @@ export const HorizontalChartMeta = {
 
 export const TooltipRenderer = (data) => {
   return `<b>${data[ChartMeta.groupKey]}</b><br/>
-  <nobr> ${data?.cca} cca's</nobr>`;
+  <nobr> ${data?.cca} CCAs</nobr>`;
 };
 
 export const HistogramData = [
@@ -183,7 +183,12 @@ export const generateChartDataForAll = (aggregationData, filtersList) => {
   };
 
   // Filter out null values in case of unmatched dataKey and filters
-  return Object.keys(aggregationData)
+  const chartDataArray = Object.keys(aggregationData)
     .map((dataKey) => generateChartData(dataKey, aggregationData[dataKey]))
-    .filter((chartData) => chartData !== null);
+    .filter((chartData): chartData is NonNullable<typeof chartData> => chartData !== null);
+
+  // Filter out empty chart data objects
+  const nonEmptyChartDataArray = chartDataArray.filter((chartData) => chartData.data.length > 0);
+
+  return nonEmptyChartDataArray;
 };

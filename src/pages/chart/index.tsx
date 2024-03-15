@@ -1,11 +1,6 @@
 import ChartComponent from "@components/pages/chart";
 import { axGroupList } from "@services/app.service";
-import {
-  axGetChartFiltersListByShortName,
-  axGetDataListAggregation,
-  axSearchMapCCAData
-} from "@services/cca.service";
-import { axGetGroupHompageDetails } from "@services/usergroup.service";
+import { axGetChartFiltersListByShortName, axGetDataListAggregation } from "@services/cca.service";
 import { absoluteUrl } from "@utils/basic";
 import React from "react";
 
@@ -17,11 +12,22 @@ export const getServerSideProps = async (ctx) => {
   const aURL = absoluteUrl(ctx).href;
   const { currentGroup } = await axGroupList(aURL);
 
-  const { data: groupdata } = await axGetGroupHompageDetails(currentGroup?.id);
+  interface Payload {
+    isChart: boolean;
+    language: any;
+    query: string;
+    usergroups?: number;
+  }
 
-  const payload = {
-    isChart: true
+  const payload: Payload = {
+    isChart: true,
+    language: ctx.locale,
+    query: ""
   };
+
+  if (currentGroup?.id) {
+    payload.usergroups = currentGroup.id;
+  }
 
   const { data: aggregationData } = await axGetDataListAggregation(payload);
 
@@ -31,15 +37,11 @@ export const getServerSideProps = async (ctx) => {
     isChart: true
   });
 
-  const { data: ccaMapResponse } = await axSearchMapCCAData(payload);
-
   return {
     props: {
       chartData: {
-        groupdata: groupdata,
         aggregationData: aggregationData,
-        filtersList: filtersList,
-        totalCount: ccaMapResponse.length
+        filtersList: filtersList
       }
     }
   };

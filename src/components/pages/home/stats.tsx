@@ -1,5 +1,7 @@
-import { Box, Button, Flex, SimpleGrid } from "@chakra-ui/react";
+import { ArrowForwardIcon } from "@chakra-ui/icons";
+import { Box, Button, Center, Container, Flex, SimpleGrid, Text } from "@chakra-ui/react";
 import BoxHeading from "@components/@core/activity/box-heading";
+import LocalLink from "@components/@core/local-link";
 import { Histogram } from "@components/charts/histogram";
 import HorizontalBarChart from "@components/charts/horizontal-bar-chart";
 import PieV3 from "@components/charts/pie-v3";
@@ -22,7 +24,6 @@ const colours = [
   "#bf812d",
   "#dfc27d",
   "#f6e8c3",
-  "#f5f5f5",
   "#c7eae5",
   "#80cdc1",
   "#35978f",
@@ -32,6 +33,8 @@ const colours = [
 
 export default function Stats({ filtersList, featured }) {
   const chartDataList = generateChartDataForAll(featured.aggregationData, filtersList);
+
+  console.warn("chartDataList", chartDataList);
   const [isStackedView, setIsStackedView] = useState(true);
 
   const toggleView = () => {
@@ -45,13 +48,20 @@ export default function Stats({ filtersList, featured }) {
         return isStackedView ? (
           <StackedBarChart
             key={index}
-            data={chartData?.data.map(({ Name, value }) => ({
-              group: Name,
-              cca: value
-            }))}
+            data={
+              chartData?.data
+                .map(({ Name, value }) => ({
+                  group: Name,
+                  cca: value
+                }))
+                // .sort((a, b) => a.cca - b.cca) // Sort in ascending order by 'cca' value
+                // .sort((a, b) => b.cca - a.cca) // Sort in descending order by 'cca' value
+                // .sort((a, b) => b.group.localeCompare(a.group)) // Sort in descending order by 'group' (Name)
+                .sort((a, b) => a.group.localeCompare(b.group)) // Sort in ascending order by 'group' (Name)
+            }
             meta={ChartMeta}
             tooltipRenderer={TooltipRenderer}
-            rotateLabels={true}
+            showValues={true}
             h={300}
             barColors={colours}
           />
@@ -69,7 +79,7 @@ export default function Stats({ filtersList, featured }) {
             }}
             barPadding={0.1}
             mt={10}
-            mr={100}
+            mr={30}
             mb={10}
             ml={300}
           />
@@ -101,7 +111,7 @@ export default function Stats({ filtersList, featured }) {
     }
   };
 
-  return (
+  return chartDataList.length ? (
     <Box className="container" pt={20}>
       <Flex justifyContent="flex-end" mb={10} mt={10} hidden={true}>
         <Button onClick={toggleView}>
@@ -111,13 +121,27 @@ export default function Stats({ filtersList, featured }) {
       <SimpleGrid columns={[1, 1, 1, 2]} spacing={4}>
         {chartDataList.map((chartData, index) => (
           <Box key={index} className="white-box" mb={10}>
-            <BoxHeading styles={{ bg: "gray.200" }}>📊 {chartData?.Title}</BoxHeading>
-            <Box bg="gray.100" p={20}>
-              {renderChart(chartData, index)}
-            </Box>
+            <BoxHeading styles={{ bg: "gray.100" }}>📊 {chartData?.Title}</BoxHeading>
+            <Box p={10}>{renderChart(chartData, index)}</Box>
           </Box>
         ))}
       </SimpleGrid>
     </Box>
+  ) : (
+    <Container>
+      <Center textAlign="center" height="calc(100vh - var(--heading-height))">
+        <div>
+          <Text fontSize="xl" mb={4}>
+            {"No charts Available"}
+          </Text>
+
+          <LocalLink prefixGroup={true} href="/participate/list">
+            <Button as="a" colorScheme="blue" rightIcon={<ArrowForwardIcon />}>
+              {"Participate"}
+            </Button>
+          </LocalLink>
+        </div>
+      </Center>
+    </Container>
   );
 }

@@ -2,10 +2,8 @@ import HomePageComponent from "@components/pages/home";
 import SITE_CONFIG from "@configs/site-config";
 import { axGroupList } from "@services/app.service";
 import {
-  axGetChartFiltersListByShortName,
-  axGetDataListAggregation,
+  axGetChartDataListAggregation,
   axGetTemplateResponseList,
-  axSearchMapCCAData
 } from "@services/cca.service";
 import { axGetGroupHompageDetails } from "@services/usergroup.service";
 import { absoluteUrl } from "@utils/basic";
@@ -21,25 +19,31 @@ export const getServerSideProps = async (ctx) => {
 
   const { data: groupdata } = await axGetGroupHompageDetails(currentGroup?.id);
 
-  const payload = {
+  interface Payload {
+    language: any;
+    query: string;
+    usergroups?: number;
+  }
+
+  const payload: Payload = {
     language: ctx.locale,
     query: ""
   };
 
-  const { data: aggregationData } = await axGetDataListAggregation({ isChart: true });
+  if (currentGroup?.id) {
+    payload.usergroups = currentGroup.id;
+  }
+
+
+  const { data: aggregationData } = await axGetChartDataListAggregation(payload);
 
   const { data: featured } = await axGetTemplateResponseList({
     id: SITE_CONFIG.CCA.FEATURED_IDS.toString(),
     language: ctx.locale
   });
 
-  const { data: filtersList } = await axGetChartFiltersListByShortName({
-    shortName: ctx.query?.shortName,
-    language: ctx.locale,
-    isChart: true
-  });
 
-  const { data: ccaMapResponse } = await axSearchMapCCAData(payload);
+
 
   return {
     props: {
@@ -47,8 +51,6 @@ export const getServerSideProps = async (ctx) => {
         featured: featured,
         groupdata: groupdata,
         aggregationData: aggregationData,
-        filtersList: filtersList,
-        totalCount: ccaMapResponse.length
       }
     }
   };

@@ -1,19 +1,24 @@
 import React from "react";
 
 export default function Legend({ keys, colors }) {
+  const getColor = (index) => colors[index % colors.length]; // Function to cycle through colors
   return (
     <div
       className="legend"
       style={{
         marginTop: "0.25rem",
-        textAlign: "center",
-        textTransform: "capitalize"
+        textAlign: "left",
+        textTransform: "capitalize",
+        padding: "1rem"
       }}
     >
       {keys.map((k, i) => (
-        <small key={i}>
-          <span style={{ color: colors[i] }}>&#9632;</span> {k}&emsp;
-        </small>
+        <div key={i} style={{ display: "flex", alignItems: "center" }}>
+          <span style={{ color: getColor(i), marginRight: "0.5rem" }}>&#9632;</span>
+          <small>
+            {k.group} - {k.cca}
+          </small>
+        </div>
       ))}
     </div>
   );
