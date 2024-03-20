@@ -6,8 +6,6 @@ import Stats from "../home/stats";
 import { ChartHeader } from "./header";
 
 export default function ChartComponent({ chartData }) {
-  console.warn("chartData", chartData);
-
   const chartDataList = generateChartDataForAll(chartData.aggregationData, chartData.filtersList);
 
   const quickNavLinks = chartDataList.map((data, index) => ({

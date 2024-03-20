@@ -83,7 +83,7 @@ export default function Stats({ filtersList, featured }) {
             key={index}
             className="white-box"
             style={{
-              scrollMarginTop: "80px"
+              scrollMarginTop: "150px"
             }}
             id={`chart-${index}`}
             ref={(ref) => (chartRefs.current[index] = ref)}

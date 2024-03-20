@@ -12,9 +12,10 @@ export const ChartHeader = ({ quickNavLinks }: ChartHeaderProps) => {
   return (
     <>
       <Box
-        py={4}
+        pb={4}
         position="sticky"
-        top={0}
+        top={10}
+        pt={10}
         zIndex={1}
         backdropFilter="saturate(180%) blur(20px)"
         pl={4}

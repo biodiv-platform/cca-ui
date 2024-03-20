@@ -2,7 +2,7 @@ import PagesMenuItem from "./pages-menu-item";
 
 export default [
   {
-    name: "Show in Charts",
+    name: "Statistics",
     to: "/chart",
     isDarkButton: true
   },

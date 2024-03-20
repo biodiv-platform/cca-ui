@@ -7,10 +7,12 @@ import React from "react";
 export default function Statistics(featured) {
   const { t } = useTranslation();
 
-
-  const sumOfArea = featured.featured.aggregationData?.numericAggregation.reduce((accumulator, currentValue) => {
-    return accumulator + (Object.values(currentValue)[0] as { value?: number }).value || 0;
-  }, 0);
+  const sumOfArea = featured.featured.aggregationData?.numericAggregation.reduce(
+    (accumulator, currentValue) => {
+      return accumulator + (Object.values(currentValue)[0] as { value?: number }).value || 0;
+    },
+    0
+  );
 
   return (
     <Box borderRadius="lg" overflow="hidden" shadow="xl" bg="white">
@@ -37,8 +39,10 @@ export default function Statistics(featured) {
               loading="lazy"
             />
             <Box p={7} h="154px">
-              <chakra.p fontSize="lg">
-                Total number of CCAs documented : {featured.featured.aggregationData.total}
+              <chakra.p fontSize="lg">Total number of CCAs documented :</chakra.p>
+
+              <chakra.p fontSize="2xl" color={"black"}>
+                {featured.featured.aggregationData.total}
               </chakra.p>
             </Box>
           </Box>
@@ -61,7 +65,10 @@ export default function Statistics(featured) {
               loading="lazy"
             />
             <Box p={7} h="154px">
-              <chakra.p fontSize="lg">Total area covered by documented CCAs: {parseFloat(sumOfArea.toFixed(2)) } hectares</chakra.p>
+              <chakra.p fontSize="lg">Total area (hectares) covered by documented CCAs: </chakra.p>
+              <chakra.p fontSize="2xl" color={"black"}>
+                {parseFloat(sumOfArea.toFixed(2))}
+              </chakra.p>
             </Box>
           </Box>
 
@@ -69,7 +76,7 @@ export default function Statistics(featured) {
             <Box textAlign="center">
               <LocalLink href="/chart" prefixGroup={true}>
                 <Button size="lg" colorScheme="blue" as="a">
-                  {t("Show in Charts")}
+                  {t("Statistics")}
                 </Button>
               </LocalLink>
             </Box>

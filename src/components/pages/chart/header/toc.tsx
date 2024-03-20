@@ -39,7 +39,6 @@ export function TableOfContents({ quickNavLinks }) {
       </PopoverTrigger>
       <PopoverContent>
         <PopoverBody maxH="20rem" overflow="auto">
-          {/* Render quickNavLinks in the Table of Contents */}
           <ToCContainer className="toc">
             <ul>
               {quickNavLinks.map((link, index) => (
