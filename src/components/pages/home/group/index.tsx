@@ -7,12 +7,12 @@ import { getInjectableHTML } from "@utils/text";
 import useTranslation from "next-translate/useTranslation";
 import React from "react";
 
-export default function GroupHome({ info, mb = 10 }) {
+export default function GroupHome({ info }) {
   const { currentGroup } = useGlobalState();
   const { t } = useTranslation();
 
   return (
-    <Box bg="gray.100" mb={mb}>
+    <Box bg="gray.100">
       <Container py={10}>
         <SimpleGrid columns={{ base: 1, md: 5 }} spacing={4}>
           <GridItem colSpan={4}>
@@ -29,7 +29,6 @@ export default function GroupHome({ info, mb = 10 }) {
             <chakra.p maxW="6xl" fontSize="lg" mx={{ lg: "auto" }} color={"gray.500"}>
               <Box
                 id="description"
-                mb={mb}
                 dangerouslySetInnerHTML={{
                   __html: getInjectableHTML(info.description)
                 }}

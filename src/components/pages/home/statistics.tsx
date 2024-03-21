@@ -1,4 +1,4 @@
-import { Box, Button, chakra, Image, SimpleGrid } from "@chakra-ui/react";
+import { Box, Button, chakra, GridItem, Image, SimpleGrid } from "@chakra-ui/react";
 import { Container } from "@components/@core/container";
 import LocalLink from "@components/@core/local-link";
 import useTranslation from "next-translate/useTranslation";
@@ -15,9 +15,9 @@ export default function Statistics(featured) {
   );
 
   return (
-    <Box borderRadius="lg" overflow="hidden" shadow="xl" bg="white">
+    <Box borderRadius="lg" overflow="hidden" bg="white">
       <Container>
-        <SimpleGrid columns={{ base: 1, md: 3 }} py={12} spacing={10}>
+        <SimpleGrid columns={{ base: 1, md: 2 }} py={12} spacing={10}>
           <Box
             display="flex"
             justifyContent="center"
@@ -71,16 +71,24 @@ export default function Statistics(featured) {
               </chakra.p>
             </Box>
           </Box>
+        </SimpleGrid>
 
-          <Box display="flex" justifyContent="center" alignItems="center" height="100%">
-            <Box textAlign="center">
-              <LocalLink href="/chart" prefixGroup={true}>
-                <Button size="lg" colorScheme="blue" as="a">
-                  {t("Statistics")}
-                </Button>
-              </LocalLink>
-            </Box>
-          </Box>
+        <SimpleGrid columns={{ base: 1, md: 5 }} spacing={3} mb={6}>
+          <GridItem colSpan={4}>
+            <chakra.p mb={6} textAlign="left" color={"gray.500"} fontSize="lg">
+              The data shown here only consists of the community conserved areas (CCAs) that are
+              documented on the web portal which are only a fraction of the total number of CCAs in
+              India. The data is not verified through any peer-review processes or government
+              authorities
+            </chakra.p>
+          </GridItem>
+          <GridItem display="flex" alignItems="center" justifyContent={{ md: "flex-end" }}>
+            <LocalLink href="/chart" prefixGroup={true}>
+              <Button size="lg" colorScheme="blue" as="a">
+                {t("Statistics")}
+              </Button>
+            </LocalLink>
+          </GridItem>
         </SimpleGrid>
       </Container>
     </Box>
