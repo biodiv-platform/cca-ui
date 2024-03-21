@@ -24,8 +24,8 @@ export default function HomePageComponent({ featured }) {
           <Carousel />
           <Mission />
           <WhyThisPortal />
-          <Posts featured={featured.featured} />
           <Statistics featured={featured} />
+          <Posts featured={featured.featured} />
         </>
       ) : (
         <>

@@ -102,8 +102,8 @@ export default function Stats({ statsData }) {
     <Container>
       <Center textAlign="center" height="calc(100vh - var(--heading-height))">
         <div>
-          <Text fontSize="xl" mb={4}>
-            {"No charts Available"}
+          <Text fontSize="2xl" mb={4}>
+            {"There are no charts available"}
           </Text>
 
           <LocalLink prefixGroup={true} href="/participate/list">

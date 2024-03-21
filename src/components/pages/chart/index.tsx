@@ -15,7 +15,7 @@ export default function ChartComponent({ chartData }) {
 
   return (
     <Box position="relative">
-      {quickNavLinks.length && <ChartHeader quickNavLinks={quickNavLinks} />}
+      {quickNavLinks?.size && <ChartHeader quickNavLinks={quickNavLinks} />}
       <Stats statsData={statsData} />
     </Box>
   );

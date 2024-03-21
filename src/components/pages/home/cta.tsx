@@ -31,7 +31,7 @@ export default function CTA() {
   const { t, lang } = useTranslation();
 
   return (
-    <Box bg="gray.100">
+    <Box>
       <Container py={12}>
         <SimpleGrid columns={{ base: 1, md: 2 }} spacingX={20} spacingY={10}>
           <Feature
