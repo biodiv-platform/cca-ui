@@ -7,7 +7,7 @@ import PieV3 from "@components/charts/pie-v3";
 import StackedBarChart from "@components/charts/stacked-bar-chart";
 import React, { useRef } from "react";
 
-import { ChartMeta, generateChartDataForAll, HistogramData, TooltipRenderer } from "./data";
+import { ChartMeta, HistogramData, TooltipRenderer } from "./data";
 
 //schemeBrBG
 const colours = [
@@ -23,9 +23,7 @@ const colours = [
   "#003c30"
 ];
 
-export default function Stats({ chartData }) {
-  const chartDataList = generateChartDataForAll(chartData.aggregationData, chartData.filtersList);
-
+export default function Stats({ statsData }) {
   const renderChart = (chartData, index) => {
     switch (chartData?.Type) {
       case "MULTI_SELECT_CHECKBOX":
@@ -75,10 +73,10 @@ export default function Stats({ chartData }) {
 
   const chartRefs = useRef<(HTMLDivElement | null)[]>([]);
 
-  return chartDataList.length ? (
+  return statsData.length ? (
     <Box className="container">
       <SimpleGrid columns={[1, 1, 1, 2]} spacing={4}>
-        {chartDataList.map((chartData, index) => (
+        {statsData.map((chartData, index) => (
           <Box
             key={index}
             className="white-box"

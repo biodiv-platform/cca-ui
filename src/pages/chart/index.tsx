@@ -4,7 +4,7 @@ import { axGetChartFiltersListByShortName, axGetDataListAggregation } from "@ser
 import { absoluteUrl } from "@utils/basic";
 import React from "react";
 
-export default function PageShowPage({ chartData }) {
+export default function ChartShowPage({ chartData }) {
   return <ChartComponent chartData={chartData} />;
 }
 

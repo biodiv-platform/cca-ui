@@ -1,19 +1,22 @@
 import { Box } from "@chakra-ui/react";
 import React from "react";
 
+import { generateChartDataForAll } from "../home/data";
 import Stats from "../home/stats";
 import { ChartHeader } from "./header";
 
 export default function ChartComponent({ chartData }) {
-  const quickNavLinks = chartData.filtersList.map((data, index) => ({
-    title: data.name,
+  const statsData = generateChartDataForAll(chartData.aggregationData, chartData.filtersList);
+
+  const quickNavLinks = statsData.map((data, index) => ({
+    title: data.Title,
     href: `#chart-${index}`
   }));
 
   return (
     <Box position="relative">
-      <ChartHeader quickNavLinks={quickNavLinks} />
-      <Stats chartData={chartData} />
+      {quickNavLinks.length && <ChartHeader quickNavLinks={quickNavLinks} />}
+      <Stats statsData={statsData} />
     </Box>
   );
 }
