@@ -23,8 +23,8 @@ const colours = [
   "#003c30"
 ];
 
-export default function Stats({ filtersList, featured }) {
-  const chartDataList = generateChartDataForAll(featured.aggregationData, filtersList);
+export default function Stats({ chartData }) {
+  const chartDataList = generateChartDataForAll(chartData.aggregationData, chartData.filtersList);
 
   const renderChart = (chartData, index) => {
     switch (chartData?.Type) {

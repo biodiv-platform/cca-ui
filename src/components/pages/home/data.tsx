@@ -158,33 +158,36 @@ interface ChartDataItem {
 }
 
 export const generateChartDataForAll = (aggregationData, filtersList) => {
-  const generateChartData = (dataKey: string, aggregationValues: Record<string, any>) => {
-    const filter = filtersList.find((filter) => filter.fieldId === dataKey);
-    if (!filter) {
-      console.warn(`Matching filter not found for ${dataKey}`);
-      return null; // Return null if no matching filter to handle gracefully
-    }
-
+  const generateChartData = (filter, aggregationValues: Record<string, any>) => {
     const chartData = {
       Title: filter.name,
       Type: filter.type,
-      data: [] as ChartDataItem[] // Explicitly specify the type of chartData.data
+      data: [] as ChartDataItem[]
     };
 
-    // Including all categories directly, including different "Others"
-    Object.keys(aggregationValues).forEach((key) => {
-      chartData.data.push({
-        Name: key,
-        value: aggregationValues[key]
-      });
+    // Iterate through value options to check for corresponding aggregation data
+    filter.valueOptions.forEach((option) => {
+      const value = aggregationValues[option.value];
+      if (value !== undefined) {
+        chartData.data.push({
+          Name: option.value.replace("|?", ""),
+          value: value
+        });
+      }
     });
 
     return chartData;
   };
 
-  // Filter out null values in case of unmatched dataKey and filters
-  const chartDataArray = Object.keys(aggregationData)
-    .map((dataKey) => generateChartData(dataKey, aggregationData[dataKey]))
+  const chartDataArray = filtersList
+    .map((filter) => {
+      const aggregationValues = aggregationData[filter.fieldId];
+      if (!aggregationValues) {
+        console.warn(`Aggregation data not found for ${filter.name}`);
+        return null;
+      }
+      return generateChartData(filter, aggregationValues);
+    })
     .filter((chartData): chartData is NonNullable<typeof chartData> => chartData !== null);
 
   // Filter out empty chart data objects
