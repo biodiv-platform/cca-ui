@@ -3,11 +3,19 @@ import { Box, Button, Center, Container, SimpleGrid, Text } from "@chakra-ui/rea
 import BoxHeading from "@components/@core/activity/box-heading";
 import LocalLink from "@components/@core/local-link";
 import { Histogram } from "@components/charts/histogram";
+import HorizontalBarChart from "@components/charts/horizontal-bar-chart";
 import PieV3 from "@components/charts/pie-v3";
 import StackedBarChart from "@components/charts/stacked-bar-chart";
+import { cleanAggregationData } from "@utils/field";
 import React, { useRef } from "react";
 
-import { ChartMeta, HistogramData, TooltipRenderer } from "./data";
+import {
+  ChartMeta,
+  generateChartDataForAll,
+  HistogramData,
+  HorizontalChartMeta,
+  TooltipRenderer
+} from "./data";
 
 //schemeBrBG
 const colours = [
@@ -23,7 +31,12 @@ const colours = [
   "#003c30"
 ];
 
-export default function Stats({ statsData }) {
+export default function Stats({ chartData }) {
+  const statsData = generateChartDataForAll(
+    cleanAggregationData(chartData.stats.aggregation),
+    chartData.filtersList
+  );
+
   const renderChart = (chartData, index) => {
     switch (chartData?.Type) {
       case "MULTI_SELECT_CHECKBOX":
@@ -64,6 +77,23 @@ export default function Stats({ statsData }) {
             labelKey="Name"
           />
         );
+      case "StateDistribution":
+        return (
+          <HorizontalBarChart
+            data={dataForChart}
+            meta={{
+              ...HorizontalChartMeta,
+              countTitle: chartData?.Title,
+              barColor: colours
+            }}
+            barPadding={0.1}
+            mt={0}
+            mr={30}
+            mb={0}
+            ml={150}
+            h={500}
+          />
+        );
       case "NUMBER":
         return <Histogram key={index} data={HistogramData} width={800} height={400} />;
       default:
@@ -72,6 +102,22 @@ export default function Stats({ statsData }) {
   };
 
   const chartRefs = useRef<(HTMLDivElement | null)[]>([]);
+
+  const dataForChart = Object.entries(chartData.stats.satewiseAggregation)
+    .map(([state, count]) => ({
+      Name: state.toUpperCase(),
+      Value: count
+    }))
+    .filter((item) => item.Name !== "?")
+    .sort((a, b) => (b.Value as number) - (a.Value as number));
+
+  const stateData = {
+    Title: "State distribution",
+    Type: "StateDistribution",
+    data: dataForChart
+  };
+
+  statsData.unshift(stateData);
 
   return statsData.length ? (
     <Box className="container">

@@ -1,6 +1,9 @@
 import ChartComponent from "@components/pages/chart";
 import { axGroupList } from "@services/app.service";
-import { axGetChartFiltersListByShortName, axGetDataListAggregation } from "@services/cca.service";
+import {
+  axGetChartDataListAggregation,
+  axGetChartFiltersListByShortName
+} from "@services/cca.service";
 import { absoluteUrl } from "@utils/basic";
 import React from "react";
 
@@ -29,7 +32,7 @@ export const getServerSideProps = async (ctx) => {
     payload.usergroups = currentGroup.id;
   }
 
-  const { data: aggregationData } = await axGetDataListAggregation(payload);
+  const { data: stats } = await axGetChartDataListAggregation(payload);
 
   const { data: filtersList } = await axGetChartFiltersListByShortName({
     shortName: ctx.query?.shortName,
@@ -40,8 +43,8 @@ export const getServerSideProps = async (ctx) => {
   return {
     props: {
       chartData: {
-        aggregationData: aggregationData,
-        filtersList: filtersList
+        filtersList: filtersList,
+        stats: stats
       }
     }
   };
