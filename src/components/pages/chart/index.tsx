@@ -11,7 +11,7 @@ export default function ChartComponent({ chartData }) {
   }));
 
   const stateData = {
-    Title: "State distribution",
+    Title: "Statewise distribution of documented CCAs",
     href: `#chart-${0}`
   };
 

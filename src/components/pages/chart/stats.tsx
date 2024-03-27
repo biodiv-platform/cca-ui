@@ -81,7 +81,7 @@ export default function Stats({ chartData }) {
     .sort((a, b) => (b.Value as number) - (a.Value as number));
 
   const stateData = {
-    Title: "State distribution",
+    Title: "Statewise distribution of documented CCAs",
     Type: "StateDistribution",
     data: dataForChart
   };
