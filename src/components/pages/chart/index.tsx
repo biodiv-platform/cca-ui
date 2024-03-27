@@ -7,15 +7,8 @@ import { ChartHeader } from "./header";
 export default function ChartComponent({ chartData }) {
   const quickNavLinks = chartData.filtersList.map((data, index) => ({
     title: data.name,
-    href: `#chart-${index + 1}`
+    href: `#chart-${index}`
   }));
-
-  const stateData = {
-    title: "State distribution",
-    href: `#chart-${0}`
-  };
-
-  quickNavLinks.unshift(stateData);
 
   return (
     <Box position="relative">

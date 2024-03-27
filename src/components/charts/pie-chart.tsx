@@ -4,7 +4,7 @@ import { select } from "d3-selection";
 import { arc, pie } from "d3-shape";
 import React, { useEffect, useRef } from "react";
 
-const PieV3 = (props) => {
+const PieChart = (props) => {
   const svgRef = useRef(null);
 
   useEffect(() => {
@@ -112,4 +112,4 @@ const PieV3 = (props) => {
   );
 };
 
-export default PieV3;
+export default PieChart;
