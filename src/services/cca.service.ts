@@ -131,6 +131,18 @@ export const axUpdateParticipation = async (payload) => {
   }
 };
 
+export const axUpdateLocation = async (payload) => {
+  try {
+    const { data } = await http.put(`${ENDPOINT.CCA}/v1/data/update/location`, payload);
+
+    return { success: true, data };
+  } catch (e) {
+    console.error(e);
+
+    return { success: false, data: {} };
+  }
+};
+
 export const axToggleDocumentFollow = async (isFollow, id) => {
   try {
     const { data } = await http.put(`${ENDPOINT.CCA}/v1/data/update/followers`, {
@@ -188,11 +200,9 @@ export const axGetDataListAggregation = async (params) => {
 
 export const axGetChartDataListAggregation = async (params) => {
   try {
-    const { data } = await plainHttp.get(
-      `${ENDPOINT.CCA}/v1/data/chart?${stringify(params)}`
-    );
+    const { data } = await plainHttp.get(`${ENDPOINT.CCA}/v1/data/chart?${stringify(params)}`);
 
-    return { success: true, data};
+    return { success: true, data };
   } catch (e) {
     console.error(e);
 

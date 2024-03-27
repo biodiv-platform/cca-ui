@@ -84,7 +84,7 @@ export default function Stats({ chartData }) {
             meta={{
               ...HorizontalChartMeta,
               countTitle: chartData?.Title,
-              barColor: colours
+              barColor: ["#3182CE"]
             }}
             barPadding={0.1}
             mt={0}

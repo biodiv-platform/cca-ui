@@ -2,7 +2,7 @@ import { Button, HStack } from "@chakra-ui/react";
 import { SubmitButton } from "@components/form/submit-button";
 import ParticipateTemplateFieldRenderer from "@components/pages/participate/template/participate-template-field-renderer";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { axUpdateParticipation } from "@services/cca.service";
+import { axUpdateLocation, axUpdateParticipation, getLoactionInfo } from "@services/cca.service";
 import { reverseFlatSaveData, toFlatSaveData } from "@utils/field";
 import notification, { NotificationType } from "@utils/notification";
 import { generateValidationStatement } from "@utils/validation";
@@ -32,13 +32,54 @@ export default function FieldEditor({ field, onClose }) {
       ccaFieldValues: toFlatSaveData([field], values)
     };
 
-    const { success, data } = await axUpdateParticipation(paylod);
-    if (success) {
-      notification(t("form:saved.success"), NotificationType.Success);
-      setResponse(data);
-      onClose();
-    } else {
+    if (field.type === "GEOMETRY") {
+      try {
+        const { success, data } = await axUpdateParticipation(paylod);
+        console.warn("data.centroid", data.centroid);
+
+        if (success) {
+          const { data: locationInfo, success: locationSuccess } = await getLoactionInfo(
+            data.centroid
+          );
+
+          console.warn("locationInfo", locationInfo);
+
+          if (locationSuccess) {
+            const { state, district, tahsil } = locationInfo;
+
+            const location = {
+              id: response.id,
+
+              location: { state, district, tahsil }
+            };
+
+            console.warn("location", location);
+
+            const { success: updateSuccess } = await axUpdateLocation(location);
+
+            if (updateSuccess) {
+              notification(t("form:saved.success"), NotificationType.Success);
+              setResponse(data);
+              onClose();
+              return;
+            }
+          }
+        } else {
+          notification(t("form:saved.error"));
+        }
+      } catch (e) {
+        console.error(e);
+      }
       notification(t("form:saved.error"));
+    } else {
+      const { success, data } = await axUpdateParticipation(paylod);
+      if (success) {
+        notification(t("form:saved.success"), NotificationType.Success);
+        setResponse(data);
+        onClose();
+      } else {
+        notification(t("form:saved.error"));
+      }
     }
   };
 
