@@ -1,14 +1,21 @@
 import { Box } from "@chakra-ui/react";
 import React from "react";
 
-import Stats from "../home/stats";
 import { ChartHeader } from "./header";
+import Stats from "./stats";
 
 export default function ChartComponent({ chartData }) {
   const quickNavLinks = chartData.filtersList.map((data, index) => ({
-    title: data.name,
-    href: `#chart-${index}`
+    Title: data.name,
+    href: `#chart-${index + 1}`
   }));
+
+  const stateData = {
+    Title: "State distribution",
+    href: `#chart-${0}`
+  };
+
+  quickNavLinks.unshift(stateData);
 
   return (
     <Box position="relative">

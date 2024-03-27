@@ -2,11 +2,11 @@ import { ArrowForwardIcon } from "@chakra-ui/icons";
 import { Box, Button, Center, Container, SimpleGrid, Text } from "@chakra-ui/react";
 import BoxHeading from "@components/@core/activity/box-heading";
 import LocalLink from "@components/@core/local-link";
+import HorizontalBarChart from "@components/charts/horizontal-bar-chart";
 import StackedBarChart from "@components/charts/stacked-bar-chart";
+import { ChartMeta, generateChartData, HorizontalChartMeta, TooltipRenderer } from "@utils/chart";
 import { cleanAggregationData } from "@utils/field";
 import React, { useRef } from "react";
-
-import { ChartMeta, generateChartDataForAll, TooltipRenderer } from "./data";
 
 //schemeBrBG
 const colours = [
@@ -23,7 +23,7 @@ const colours = [
 ];
 
 export default function Stats({ chartData }) {
-  const statsData = generateChartDataForAll(
+  const statsData = generateChartData(
     cleanAggregationData(chartData.stats.aggregation),
     chartData.filtersList
   );
@@ -48,12 +48,45 @@ export default function Stats({ chartData }) {
             barColors={colours}
           />
         );
+      case "StateDistribution":
+        return (
+          <HorizontalBarChart
+            data={dataForChart}
+            meta={{
+              ...HorizontalChartMeta,
+              countTitle: chartData?.Title,
+              barColor: ["teal"]
+            }}
+            barPadding={0.1}
+            mt={0}
+            mr={30}
+            mb={0}
+            ml={150}
+            h={500}
+          />
+        );
       default:
         return null;
     }
   };
 
   const chartRefs = useRef<(HTMLDivElement | null)[]>([]);
+
+  const dataForChart = Object.entries(chartData.stats.satewiseAggregation)
+    .map(([state, count]) => ({
+      Name: state.toUpperCase(),
+      Value: count
+    }))
+    .filter((item) => item.Name !== "?")
+    .sort((a, b) => (b.Value as number) - (a.Value as number));
+
+  const stateData = {
+    Title: "State distribution",
+    Type: "StateDistribution",
+    data: dataForChart
+  };
+
+  statsData.unshift(stateData);
 
   return statsData.length ? (
     <Box className="container">

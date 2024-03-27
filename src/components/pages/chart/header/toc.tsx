@@ -1,6 +1,7 @@
 import { Button, Popover, PopoverBody, PopoverContent, PopoverTrigger } from "@chakra-ui/react";
 import styled from "@emotion/styled";
 import MenuIcon from "@icons/menu";
+import useTranslation from "next-translate/useTranslation";
 import React from "react";
 
 const ToCContainer = styled.div`
@@ -24,6 +25,8 @@ const ToCContainer = styled.div`
 `;
 
 export function TableOfContents({ quickNavLinks }) {
+  const { t } = useTranslation();
+
   return (
     <Popover placement="bottom-start">
       <PopoverTrigger>
@@ -43,7 +46,7 @@ export function TableOfContents({ quickNavLinks }) {
             <ul>
               {quickNavLinks.map((link, index) => (
                 <li key={index}>
-                  <a href={link.href}>{link.title}</a>
+                  <a href={link.href}>{link.Title}</a>
                 </li>
               ))}
             </ul>

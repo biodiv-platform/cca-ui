@@ -1,10 +1,7 @@
 import HomePageComponent from "@components/pages/home";
 import SITE_CONFIG from "@configs/site-config";
 import { axGroupList } from "@services/app.service";
-import {
-  axGetChartDataListAggregation,
-  axGetTemplateResponseList,
-} from "@services/cca.service";
+import { axGetChartDataListAggregation, axGetTemplateResponseList } from "@services/cca.service";
 import { axGetGroupHompageDetails } from "@services/usergroup.service";
 import { absoluteUrl } from "@utils/basic";
 import React from "react";
@@ -34,7 +31,6 @@ export const getServerSideProps = async (ctx) => {
     payload.usergroups = currentGroup.id;
   }
 
-
   const { data: aggregationData } = await axGetChartDataListAggregation(payload);
 
   const { data: featured } = await axGetTemplateResponseList({
@@ -42,15 +38,12 @@ export const getServerSideProps = async (ctx) => {
     language: ctx.locale
   });
 
-
-
-
   return {
     props: {
       featured: {
         featured: featured,
         groupdata: groupdata,
-        aggregationData: aggregationData,
+        aggregationData: aggregationData
       }
     }
   };

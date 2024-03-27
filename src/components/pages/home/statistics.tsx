@@ -31,13 +31,7 @@ export default function Statistics(featured) {
             color={"gray.500"}
             borderColor={"teal.600"}
           >
-            <Image
-              src={
-                "https://www.iccaregistry.org/assets/icons/data_summary/all_icca_records-c53a2d6d10445d4d08c1809c09c92e1e7a0af98a454986f5a98919d3c7f50dac.svg"
-              }
-              h="60px"
-              loading="lazy"
-            />
+            <Image src="/next-assets/document.svg" h="60px" loading="lazy" />
             <Box p={7} h="154px">
               <chakra.p fontSize="lg">Total number of CCAs documented :</chakra.p>
 
@@ -59,11 +53,7 @@ export default function Statistics(featured) {
             color={"gray.500"}
             borderColor={"teal.600"}
           >
-            <Image
-              src="https://www.iccaregistry.org/assets/icons/data_summary/total_terrestrial_plus_marine_plus_coastal_km-93a9fc837c4e1b7b8103936edc096c6e893d52d262d349a43a04b8f2f17aad90.svg"
-              h="60px"
-              loading="lazy"
-            />
+            <Image src="/next-assets/people.svg" h="60px" loading="lazy" />
             <Box p={7} h="154px">
               <chakra.p fontSize="lg">Total area (hectares) covered by documented CCAs: </chakra.p>
               <chakra.p fontSize="2xl" color={"black"}>
