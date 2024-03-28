@@ -111,7 +111,7 @@ export default function HorizontalBarChart({
   }, [containerRef, ro?.width, h, data, barColor]);
 
   const tipHelpers = tooltipHelpers(tip, (data) => {
-    return `<b>${data.Name}</b><br/><nobr>${data.Value}</nobr>`;
+    return `<b>${data.Name}</b><br/><nobr>${data.Value} CCAs</nobr>`;
   });
 
   return (
