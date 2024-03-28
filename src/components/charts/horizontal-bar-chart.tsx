@@ -19,12 +19,11 @@ interface HorizontalBarChartProps {
 
   data: any[];
   meta: {
-    titleKey: string;
-    countKey: string;
-    countTitle?: string;
-    barColor?: string | string[]; // Change barColor to accept array of strings
-    hideXAxis?: boolean;
+    groupKey: string;
+    subGroupKey: string;
   };
+  barColor?: string | string[];
+  hideXAxis?: boolean;
 }
 
 export default function HorizontalBarChart({
@@ -40,7 +39,9 @@ export default function HorizontalBarChart({
   displayCountKey = false,
 
   data,
-  meta: { titleKey, countKey, countTitle, barColor, hideXAxis }
+  meta: { groupKey, subGroupKey },
+  barColor = ["teal"],
+  hideXAxis
 }: HorizontalBarChartProps) {
   const containerRef = useRef(null);
   const svgRef = useRef(null);
@@ -53,7 +54,7 @@ export default function HorizontalBarChart({
 
     svg.select(".content").attr("transform", `translate(${ml},${mt})`);
 
-    const max = Math.max(...data.map((o) => o[countKey]));
+    const max = Math.max(...data.map((o) => o[subGroupKey]));
 
     const x = scaleLinear()
       .domain([0, max])
@@ -69,7 +70,7 @@ export default function HorizontalBarChart({
 
     const y = scaleBand()
       .range([0, h - mt - mb])
-      .domain(data.map((d) => d[titleKey]))
+      .domain(data.map((d) => d[groupKey]))
       .padding(barPadding);
 
     svg
@@ -78,15 +79,15 @@ export default function HorizontalBarChart({
       .attr("transform", `translate(${leftOffset},0)`)
       .call(axisLeft(y).tickSizeOuter(0) as any);
 
-    //Bars
+    // Bars
     svg
       .select(".chart")
       .selectAll("rect")
       .data(data)
       .join("rect")
       .attr("x", x(0) + leftOffset)
-      .attr("y", (d) => y(d[titleKey]))
-      .attr("width", (d) => (d[countKey] ? x(d[countKey]) : 0))
+      .attr("y", (d) => y(d[groupKey]))
+      .attr("width", (d) => (d[subGroupKey] ? x(d[subGroupKey]) : 0))
       .attr("height", y.bandwidth())
       .attr("fill", (d, i) => {
         if (Array.isArray(barColor)) {
@@ -102,9 +103,9 @@ export default function HorizontalBarChart({
       .data(data)
       .join("text")
       .attr("font-size", 10)
-      .attr("y", (d) => y(d[titleKey]) + y.bandwidth() / 2 + 4)
-      .attr("x", (d) => x(d[countKey]) + 3 + leftOffset)
-      .text((d) => (displayCountKey ? `${d[countKey]} ${countTitle || countKey}` : d[countKey]));
+      .attr("y", (d) => y(d[groupKey]) + y.bandwidth() / 2 + 4)
+      .attr("x", (d) => x(d[subGroupKey]) + 3 + leftOffset)
+      .text((d) => (displayCountKey ? `${d[subGroupKey]} ${subGroupKey}` : d[subGroupKey]));
   }, [containerRef, ro?.width, h, data, barColor]);
 
   return (

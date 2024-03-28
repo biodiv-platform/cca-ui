@@ -1,7 +1,7 @@
 import React from "react";
 
 export default function Legend({ keys, colors }) {
-  const getColor = (index) => colors[index % colors.length]; // Function to cycle through colors
+  const getColor = (index) => colors[index % colors.length];
   return (
     <div
       className="legend"
@@ -16,7 +16,7 @@ export default function Legend({ keys, colors }) {
         <div key={i} style={{ display: "flex", alignItems: "center" }}>
           <span style={{ color: getColor(i), marginRight: "0.5rem" }}>&#9632;</span>
           <small>
-            {k.group} - {k.cca}
+            {k.Name} - {k.Value}
           </small>
         </div>
       ))}

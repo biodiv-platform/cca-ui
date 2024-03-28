@@ -21,8 +21,7 @@ interface StackedBarChartProps {
   showValues?: boolean;
 
   data: any[];
-  meta: { groupKey: string; subGroupKeys };
-
+  meta: { groupKey: string; subGroupKey: string };
   tooltipRenderer;
 
   barColors?: string[]; // Add a prop to specify bar colors
@@ -41,11 +40,11 @@ export default function StackedBarChart({
   showValues,
 
   data,
-  meta: { groupKey, subGroupKeys },
+  meta: { groupKey, subGroupKey },
 
   tooltipRenderer,
 
-  barColors = ["#319795"] // Default to empty array if not provided
+  barColors = ["teal"]
 }: StackedBarChartProps) {
   const containerRef = useRef(null);
   const svgRef = useRef(null);
@@ -100,9 +99,7 @@ export default function StackedBarChart({
         .text("");
     }
 
-    const max = Math.max(
-      ...data.map((o) => subGroupKeys.map((k) => o[k]).reduce((a, b) => a + b, 0))
-    );
+    const max = Math.max(...data.map((o) => o[subGroupKey]));
 
     const y = scaleLinear()
       .domain([0, max])
@@ -113,7 +110,7 @@ export default function StackedBarChart({
       .join("g")
       .call(axisLeft(y) as any);
 
-    const stackedData = stack().keys(subGroupKeys)(data);
+    const stackedData = stack().keys([subGroupKey])(data);
 
     svg
       .select(".chart")

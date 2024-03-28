@@ -1,24 +1,17 @@
 export const ChartMeta = {
-  groupKey: "group",
-  subGroupKeys: ["cca"],
-  subGroupColors: ["#3182CE", "#E53E3E"]
+  groupKey: "Name",
+  subGroupKey: "Value"
 };
 
 export const TooltipRenderer = (data) => {
+  console.warn("data", data);
   return `<b>${data[ChartMeta.groupKey]}</b><br/>
-  <nobr> ${data?.cca} CCAs</nobr>`;
-};
-
-export const HorizontalChartMeta = {
-  countTitle: "cca's",
-  titleKey: "Name",
-  countKey: "Value",
-  hideXAxis: true
+  <nobr> ${data?.Value} CCAs</nobr>`;
 };
 
 interface ChartDataItem {
   Name: string;
-  value: any;
+  Value: any;
 }
 
 export const generateChartData = (aggregationData, filtersList) => {
@@ -35,7 +28,7 @@ export const generateChartData = (aggregationData, filtersList) => {
       if (value !== undefined) {
         chartData.data.push({
           Name: option.value.replace("|?", ""),
-          value: value
+          Value: value
         });
       }
     });

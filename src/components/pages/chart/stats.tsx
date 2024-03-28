@@ -4,7 +4,7 @@ import BoxHeading from "@components/@core/activity/box-heading";
 import LocalLink from "@components/@core/local-link";
 import HorizontalBarChart from "@components/charts/horizontal-bar-chart";
 import StackedBarChart from "@components/charts/stacked-bar-chart";
-import { ChartMeta, HorizontalChartMeta, TooltipRenderer } from "@utils/chart";
+import { ChartMeta, TooltipRenderer } from "@utils/chart";
 import useTranslation from "next-translate/useTranslation";
 import React, { useMemo, useRef } from "react";
 
@@ -32,9 +32,7 @@ export default function Stats({ statsData }) {
         return (
           <StackedBarChart
             key={index}
-            data={chartData?.data
-              .map(({ Name, value }) => ({ group: Name, cca: value }))
-              .sort((a, b) => a.group.localeCompare(b.group))}
+            data={chartData?.data}
             meta={ChartMeta}
             tooltipRenderer={TooltipRenderer}
             showValues={true}
@@ -47,11 +45,7 @@ export default function Stats({ statsData }) {
           <HorizontalBarChart
             key={index}
             data={chartData?.data}
-            meta={{
-              ...HorizontalChartMeta,
-              countTitle: chartData?.Title,
-              barColor: ["teal"]
-            }}
+            meta={ChartMeta}
             barPadding={0.1}
             mt={0}
             mr={30}
