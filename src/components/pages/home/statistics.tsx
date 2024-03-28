@@ -55,7 +55,7 @@ export default function Statistics(featured) {
           >
             <Image src="/next-assets/people.svg" h="60px" loading="lazy" />
             <Box p={7} h="154px">
-              <chakra.p fontSize="lg">Total area (hectares) covered by documented CCAs: </chakra.p>
+              <chakra.p fontSize="lg">{t("home:statistics.total_area")} </chakra.p>
               <chakra.p fontSize="2xl" color={"black"}>
                 {parseFloat(sumOfArea.toFixed(2))}
               </chakra.p>
@@ -66,16 +66,13 @@ export default function Statistics(featured) {
         <SimpleGrid columns={{ base: 1, md: 5 }} spacing={3} mb={6}>
           <GridItem colSpan={4}>
             <chakra.p mb={6} textAlign="left" color={"gray.500"} fontSize="lg">
-              The data shown here only consists of the community conserved areas (CCAs) that are
-              documented on the web portal which are only a fraction of the total number of CCAs in
-              India. The data is not verified through any peer-review processes or government
-              authorities
+              {t("home:statistics.description")}
             </chakra.p>
           </GridItem>
           <GridItem display="flex" alignItems="center" justifyContent={{ md: "flex-end" }}>
             <LocalLink href="/chart" prefixGroup={true}>
               <Button size="lg" colorScheme="blue" as="a">
-                {t("Statistics")}
+                {t("home:statistics.title")}
               </Button>
             </LocalLink>
           </GridItem>

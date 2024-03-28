@@ -4,11 +4,10 @@ import BoxHeading from "@components/@core/activity/box-heading";
 import LocalLink from "@components/@core/local-link";
 import HorizontalBarChart from "@components/charts/horizontal-bar-chart";
 import StackedBarChart from "@components/charts/stacked-bar-chart";
-import { ChartMeta, generateChartData, HorizontalChartMeta, TooltipRenderer } from "@utils/chart";
-import { cleanAggregationData } from "@utils/field";
-import React, { useRef } from "react";
+import { ChartMeta, HorizontalChartMeta, TooltipRenderer } from "@utils/chart";
+import useTranslation from "next-translate/useTranslation";
+import React, { useMemo, useRef } from "react";
 
-//schemeBrBG
 const colours = [
   "#543005",
   "#8c510a",
@@ -22,12 +21,10 @@ const colours = [
   "#003c30"
 ];
 
-export default function Stats({ chartData }) {
-  const statsData = generateChartData(
-    cleanAggregationData(chartData.stats.aggregation),
-    chartData.filtersList
-  );
+export default function Stats({ statsData }) {
+  const { t } = useTranslation();
 
+  const chartRefs = useRef<(HTMLDivElement | null)[]>([]);
   const renderChart = (chartData, index) => {
     switch (chartData?.Type) {
       case "MULTI_SELECT_CHECKBOX":
@@ -36,10 +33,7 @@ export default function Stats({ chartData }) {
           <StackedBarChart
             key={index}
             data={chartData?.data
-              .map(({ Name, value }) => ({
-                group: Name,
-                cca: value
-              }))
+              .map(({ Name, value }) => ({ group: Name, cca: value }))
               .sort((a, b) => a.group.localeCompare(b.group))}
             meta={ChartMeta}
             tooltipRenderer={TooltipRenderer}
@@ -48,10 +42,11 @@ export default function Stats({ chartData }) {
             barColors={colours}
           />
         );
-      case "StateDistribution":
+      case "Statewise distribution":
         return (
           <HorizontalBarChart
-            data={dataForChart}
+            key={index}
+            data={chartData?.data}
             meta={{
               ...HorizontalChartMeta,
               countTitle: chartData?.Title,
@@ -70,47 +65,27 @@ export default function Stats({ chartData }) {
     }
   };
 
-  const chartRefs = useRef<(HTMLDivElement | null)[]>([]);
-
-  const dataForChart = Object.entries(chartData.stats.satewiseAggregation)
-    .map(([state, count]) => ({
-      Name: state.toUpperCase(),
-      Value: count
-    }))
-    .filter((item) => item.Name !== "?")
-    .sort((a, b) => (b.Value as number) - (a.Value as number));
-
-  const stateData = {
-    Title: "Statewise distribution of documented CCAs",
-    Type: "StateDistribution",
-    data: dataForChart
-  };
-
-  statsData.unshift(stateData);
+  const charts = useMemo(
+    () =>
+      statsData.map((chartData, index) => (
+        <Box
+          key={index}
+          className="white-box"
+          style={{ scrollMarginTop: "150px" }}
+          id={`chart-${index}`}
+          ref={(ref) => (chartRefs.current[index] = ref)}
+        >
+          <BoxHeading styles={{ bgColor: "gray.100" }}>📊 {chartData?.Title}</BoxHeading>
+          <Box p={10}>{renderChart(chartData, index)}</Box>
+        </Box>
+      )),
+    [statsData]
+  );
 
   return statsData.length ? (
     <Box className="container">
       <SimpleGrid columns={[1, 1, 1, 2]} spacing={4}>
-        {statsData.map((chartData, index) => (
-          <Box
-            key={index}
-            className="white-box"
-            style={{
-              scrollMarginTop: "150px"
-            }}
-            id={`chart-${index}`}
-            ref={(ref) => (chartRefs.current[index] = ref)}
-          >
-            <BoxHeading
-              styles={{
-                bgColor: "gray.100"
-              }}
-            >
-              📊 {chartData?.Title}
-            </BoxHeading>
-            <Box p={10}>{renderChart(chartData, index)}</Box>
-          </Box>
-        ))}
+        {charts}
       </SimpleGrid>
     </Box>
   ) : (
@@ -118,12 +93,11 @@ export default function Stats({ chartData }) {
       <Center textAlign="center" height="calc(100vh - var(--heading-height))">
         <div>
           <Text fontSize="2xl" mb={4}>
-            {"There are no charts available"}
+            {t("chart:no_charts_available")}
           </Text>
-
           <LocalLink prefixGroup={true} href="/participate/list">
             <Button as="a" colorScheme="blue" rightIcon={<ArrowForwardIcon />}>
-              {"Participate"}
+              {t("chart:participate")}
             </Button>
           </LocalLink>
         </div>

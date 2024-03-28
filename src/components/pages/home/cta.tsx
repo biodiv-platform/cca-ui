@@ -31,23 +31,21 @@ export default function CTA() {
   const { t, lang } = useTranslation();
 
   return (
-    <Box>
-      <Container py={12}>
-        <SimpleGrid columns={{ base: 1, md: 2 }} spacingX={20} spacingY={10}>
-          <Feature
-            href="/participate/list"
-            actionText={t("home:cta.participate.action")}
-            children={t("home:cta.participate.description")}
-            icon={AddIcon}
-          />
-          <Feature
-            href={SITE_CONFIG.PAGES.DONATE[lang]}
-            actionText={t("home:cta.donate.action")}
-            children={t("home:cta.donate.description")}
-            icon={HeartIcon}
-          />
-        </SimpleGrid>
-      </Container>
-    </Box>
+    <Container py={12}>
+      <SimpleGrid columns={{ base: 1, md: 2 }} spacingX={20} spacingY={10}>
+        <Feature
+          href="/participate/list"
+          actionText={t("home:cta.participate.action")}
+          children={t("home:cta.participate.description")}
+          icon={AddIcon}
+        />
+        <Feature
+          href={SITE_CONFIG.PAGES.DONATE[lang]}
+          actionText={t("home:cta.donate.action")}
+          children={t("home:cta.donate.description")}
+          icon={HeartIcon}
+        />
+      </SimpleGrid>
+    </Container>
   );
 }
