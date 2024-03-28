@@ -1,12 +1,14 @@
 import { Box } from "@chakra-ui/react";
 import { generateChartData } from "@utils/chart";
 import { cleanAggregationData } from "@utils/field";
+import useTranslation from "next-translate/useTranslation";
 import React, { useMemo } from "react";
 
 import { ChartHeader } from "./header";
 import Stats from "./stats";
 
 export default function ChartComponent({ chartData }) {
+  const { t } = useTranslation();
   const statsData = useMemo(() => {
     const aggregationData = cleanAggregationData(chartData.stats.aggregation);
     return generateChartData(aggregationData, chartData.filtersList);
@@ -21,7 +23,7 @@ export default function ChartComponent({ chartData }) {
     .sort((a, b) => (b.Value as number) - (a.Value as number));
 
   const stateData = dataForChart.length > 0 && {
-    Title: "Statewise distribution",
+    Title: t("chart:statewise_distribution"),
     Type: "Statewise distribution",
     data: dataForChart
   };
