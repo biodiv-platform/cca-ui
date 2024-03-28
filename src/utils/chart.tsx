@@ -4,7 +4,6 @@ export const ChartMeta = {
 };
 
 export const TooltipRenderer = (data) => {
-  console.warn("data", data);
   return `<b>${data[ChartMeta.groupKey]}</b><br/>
   <nobr> ${data?.Value} CCAs</nobr>`;
 };

@@ -4,6 +4,7 @@ import { select } from "d3-selection";
 import React, { useEffect, useRef } from "react";
 
 import useResizeObserver from "./hooks/use-resize-observer";
+import { tooltipHelpers, useTooltip } from "./hooks/use-tooltip";
 
 interface HorizontalBarChartProps {
   h?: number;
@@ -28,16 +29,13 @@ interface HorizontalBarChartProps {
 
 export default function HorizontalBarChart({
   h = 300,
-
   mt = 10,
   mr = 64,
   mb = 20,
   ml = 60,
-
   barPadding = 0.2,
   leftOffset = 0,
   displayCountKey = false,
-
   data,
   meta: { groupKey, subGroupKey },
   barColor = ["teal"],
@@ -46,6 +44,7 @@ export default function HorizontalBarChart({
   const containerRef = useRef(null);
   const svgRef = useRef(null);
   const ro = useResizeObserver(containerRef);
+  const tip = useTooltip(containerRef);
 
   useEffect(() => {
     if (!ro?.width || !data.length) return;
@@ -95,7 +94,10 @@ export default function HorizontalBarChart({
         } else {
           return barColor ? barColor : `hsl(${(i * 360) / data.length}, 70%, 50%)`;
         }
-      });
+      })
+      .on("mouseover", (_, d) => tipHelpers.mouseover(_, { data: d }))
+      .on("mousemove", tipHelpers.mousemove)
+      .on("mouseleave", tipHelpers.mouseleave);
 
     svg
       .select(".chart")
@@ -108,6 +110,10 @@ export default function HorizontalBarChart({
       .text((d) => (displayCountKey ? `${d[subGroupKey]} ${subGroupKey}` : d[subGroupKey]));
   }, [containerRef, ro?.width, h, data, barColor]);
 
+  const tipHelpers = tooltipHelpers(tip, (data) => {
+    return `<b>${data.Name}</b><br/><nobr>${data.Value}</nobr>`;
+  });
+
   return (
     <div ref={containerRef} style={{ position: "relative" }}>
       <svg width={ro?.width} height={h} ref={svgRef}>
@@ -117,6 +123,7 @@ export default function HorizontalBarChart({
           <g className="chart" />
         </g>
       </svg>
+      <div className="tooltip" />
     </div>
   );
 }
