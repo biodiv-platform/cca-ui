@@ -1,4 +1,4 @@
-import { Box, Button, chakra, Image, SimpleGrid } from "@chakra-ui/react";
+import { Box, Button, chakra, GridItem, Image, SimpleGrid } from "@chakra-ui/react";
 import { Container } from "@components/@core/container";
 import LocalLink from "@components/@core/local-link";
 import SITE_CONFIG from "@configs/site-config";
@@ -40,11 +40,13 @@ export default function WhyThisPortal() {
           <chakra.p mb={6} textAlign="left" color={"gray.500"} fontSize="lg">
             {t("home:why_portal.description")}
           </chakra.p>
-          <LocalLink href={SITE_CONFIG.PAGES.ABOUT[lang]} prefixGroup={true}>
-            <Button w={{ base: "full", sm: "auto" }} size="lg" colorScheme="blue" as="a">
-              {t("common:learn_more")}
-            </Button>
-          </LocalLink>
+          <GridItem display="flex" alignItems="center" justifyContent={{ md: "flex-end" }}>
+            <LocalLink href={SITE_CONFIG.PAGES.ABOUT[lang]} prefixGroup={true}>
+              <Button w={{ base: "full", sm: "auto" }} size="lg" colorScheme="blue" as="a">
+                {t("common:learn_more")}
+              </Button>
+            </LocalLink>
+          </GridItem>
         </Box>
       </SimpleGrid>
     </Container>

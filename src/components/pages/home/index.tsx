@@ -9,6 +9,7 @@ import GroupHome from "./group";
 import GroupCarousel from "./group/groupCarousel";
 import Mission from "./mission";
 import Posts from "./posts";
+import Statistics from "./statistics";
 import WhyThisPortal from "./why-this-portal";
 
 export default function HomePageComponent({ featured }) {
@@ -23,6 +24,7 @@ export default function HomePageComponent({ featured }) {
           <Carousel />
           <Mission />
           <WhyThisPortal />
+          <Statistics featured={featured} />
           <Posts featured={featured.featured} />
         </>
       ) : (
@@ -31,6 +33,7 @@ export default function HomePageComponent({ featured }) {
             <GroupCarousel featured={featured.groupdata.gallerySlider} />
           )}
           {featured.groupdata.showDesc && <GroupHome info={featured.groupdata} />}
+          <Statistics featured={featured} />
         </>
       )}
       <CTA />

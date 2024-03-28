@@ -10,6 +10,8 @@ module.exports = {
     "rgx:/data/": ["template", "activity", "filters"],
     "/group/[groupName]": ["home"],
     "/group/[groupName]/show": ["home"],
+    "/group/[groupName]/chart": ["chart"],
+    "/chart": ["chart"],
     "rgx:/admin": ["admin"],
     "rgx:/page/": ["page", "activity"],
     "rgx:/participate/": ["template"],

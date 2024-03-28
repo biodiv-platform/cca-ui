@@ -18,10 +18,10 @@ export default function NavBar() {
         backdropFilter="saturate(180%) blur(5px)"
         bg="whiteAlpha.800"
         id="menu"
-        position="fixed"
         width="100%"
         zIndex={4}
         shadow="md"
+        position={"fixed"}
       >
         <Flex h={16} alignItems="center" justifyContent="space-between" w="full" px={4}>
           <Flex alignItems="center" justifyContent="center" gap={4}>
