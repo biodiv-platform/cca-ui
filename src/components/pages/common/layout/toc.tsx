@@ -1,11 +1,11 @@
 import { Box, Link, Stack, Text } from "@chakra-ui/react";
-import LocalLink from "@components/@core/local-link";
+import NextLink from "@components/@core/next-link";
 import { FORM_TYPE } from "@static/constants";
 import useTranslation from "next-translate/useTranslation";
 import React, { useMemo } from "react";
 
 const NavigationLink = ({ href, children }) => (
-  <LocalLink href={href} prefixGroup={true}>
+  <NextLink href={href}>
     <Link
       fontSize={"sm"}
       rounded={"md"}
@@ -18,12 +18,18 @@ const NavigationLink = ({ href, children }) => (
     >
       {children}
     </Link>
-  </LocalLink>
+  </NextLink>
 );
 
-export default function ToC({ templateFields }) {
+export default function ToC({ templateFields, isEdit = true }) {
   const { t } = useTranslation();
-  const headings = useMemo(() => templateFields.filter((tf) => tf.type === FORM_TYPE.HEADING), []);
+  const headings = useMemo(
+    () =>
+      templateFields.filter((tf) =>
+        isEdit ? tf.type === FORM_TYPE.HEADING : tf.isRequired === true
+      ),
+    []
+  );
 
   return (
     <Box position="sticky" top="var(--content-top)">
