@@ -145,7 +145,6 @@ export default function PageForm({
                     onRemoveCallback={axRemovePageGalleryImage}
                   />
                 </Box>
-                <SocialPreviewField name="socialPreview" label={t("page:form.social_preview")} />
               </AccordionPanel>
             </AccordionItem>
           </Accordion>
@@ -164,7 +163,6 @@ export default function PageForm({
               <AccordionIcon />
             </AccordionButton>
             <AccordionPanel>
-              <TextAreaField name="description" label={t("page:form.description")} />
               {!hideParentId && (
                 <SelectInputField
                   name="parentId"
@@ -173,6 +171,12 @@ export default function PageForm({
                   shouldPortal={true}
                 />
               )}
+              <SimpleGrid columns={{ base: 1, md: 4 }} spacing={{ base: 0, md: 4 }}>
+                <Box gridColumn="1/4">
+                  <TextAreaField name="description" label={t("page:form.description")} />
+                </Box>
+                <SocialPreviewField name="socialPreview" label={t("page:form.social_preview")} />
+              </SimpleGrid>
               <SwitchField name="sticky" mb={2} label={t("page:form.is_sidebar")} />
               <SwitchField name="showInMenu" mb={2} label={t("page:form.is_menu")} />
               <SwitchField name="showInFooter" mb={2} label={t("page:form.is_footer")} />

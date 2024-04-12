@@ -58,7 +58,8 @@ export default function WYSIWYGEditor({ uploadHandler, ...props }: WYSIWYGEditor
         images_upload_base_path: "/",
         link_class_list: [
           { title: "None", value: "" },
-          { title: "Card", value: "preview-card" }
+          { title: "Card", value: "preview-card" },
+          { title: "Banner", value: "banner-card" }
         ],
         image_class_list: [
           { title: "None", value: "" },
