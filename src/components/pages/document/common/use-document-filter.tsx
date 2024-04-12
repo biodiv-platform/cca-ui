@@ -2,7 +2,6 @@ import useDidUpdateEffect from "@hooks/use-did-update-effect";
 import useGlobalState from "@hooks/use-global-state";
 import { DocumentData } from "@interfaces/custom";
 import { UserGroupIbp } from "@interfaces/document";
-// import { UserGroupIbp } from "@interfaces/document";
 import { axGroupList } from "@services/app.service";
 import { axGetListData } from "@services/document.service";
 import { isBrowser } from "@static/constants";
