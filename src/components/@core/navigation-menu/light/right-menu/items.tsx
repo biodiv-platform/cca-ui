@@ -13,6 +13,11 @@ export default [
   },
   {
     active: true,
+    name: "header:documents",
+    to: "/document/list"
+  },
+  {
+    active: true,
     name: "header:users",
     to: "/user/list"
   },

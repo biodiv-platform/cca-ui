@@ -1,5 +1,6 @@
 import { ENDPOINT } from "@static/constants";
-import { plainHttp } from "@utils/http";
+import { waitForAuth } from "@utils/auth";
+import { http, plainHttp } from "@utils/http";
 
 export const axListActivity = async (objectType, objectId, offset = 0, limit = 3) => {
   try {
@@ -14,6 +15,17 @@ export const axListActivity = async (objectType, objectId, offset = 0, limit = 3
       hasMore: res.data.activity.length === limit,
       commentCount: res.data.commentCount
     };
+  } catch (e) {
+    console.error(e);
+    return { success: false, data: [] };
+  }
+};
+
+export const axAddDocumentComment = async (payload) => {
+  try {
+    await waitForAuth();
+    const { data } = await http.post(`${ENDPOINT.DOCUMENT}/v1/services/add/comment`, payload);
+    return { success: true, data };
   } catch (e) {
     console.error(e);
     return { success: false, data: [] };

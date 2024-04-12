@@ -16,3 +16,17 @@ export enum Role {
 export interface UserGroupCCAExtended extends UserGroupCCA {
   nameLocal?;
 }
+
+export interface ResourceDocument {
+  resourceURL: string;
+  size: string;
+  timestamp: number;
+}
+
+export interface DocumentData {
+  l: any[];
+  mvp: Record<string, unknown>;
+  ag?: any;
+  n: number;
+  hasMore: boolean;
+}

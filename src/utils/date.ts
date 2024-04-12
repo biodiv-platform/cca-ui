@@ -10,6 +10,7 @@ dayjs.extend(UTCPlugin);
 const FORMAT_TIMESTAMP = "DD-MM-YYYY hh:mm A";
 const FORMAT_DATE_TIMESTAMP = "DD-MM-YYYY";
 const FORMAT_YEAR_TIMESTAMP = "YYYY";
+const FORMAT_DATE_READABLE_TIMESTAMP = "D MMMM YYYY";
 const FORMAT_EXIF_TIMESTAMP = "YYYY:MM:DD HH:mm:ss";
 
 export const dateToUTC = (ts?) => (ts ? dayjs(ts, FORMAT_DATE_TIMESTAMP).utc() : dayjs().utc());
@@ -26,6 +27,9 @@ export const parseDateRange = (ts) => (ts ? ts.map((i) => parseDate(i)) : []);
 export const formatDateRange = (ts) => (ts ? ts.map((i) => formatDate(i)) : []);
 
 export const timeAgoUTC = (ts) => dayjs(ts).utc().fromNow();
+
+export const formatDateReadableFromUTC = (ts) =>
+  dayjs.utc(ts).local().format(FORMAT_DATE_READABLE_TIMESTAMP);
 
 export const parseEXIF = (ts) => ts && dayjs(ts, FORMAT_EXIF_TIMESTAMP).toDate();
 /**

@@ -1,5 +1,17 @@
 {
   "clear": "{{filterCount}} फ़िल्टर साफ़ करें",
+  "data_quality": {
+    "flag": {
+      "flagged": "चिह्नित किए गए",
+      "title": "झंडा",
+      "unflagged": "जिनमें फ्लैग नहीं किए"
+    },
+    "title": "आधार सामग्री की गुणवत्ता"
+  },
+  "document_title": "शीर्षक",
+  "item_type": {
+    "title": "वस्तु का प्रकार"
+  },
   "location": {
     "district": "ज़िला",
     "map": {

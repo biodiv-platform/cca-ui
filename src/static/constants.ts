@@ -11,10 +11,12 @@ export const ENDPOINT = {
   ACTIVITY: `${API_ENDPOINT}activity-api/api`,
   API: `${SITE_CONFIG.SITE.URL}/api`,
   CCA: `${API_ENDPOINT}cca-api/api`,
+  DOCUMENT: `${API_ENDPOINT}document-api/api`,
   ESMODULE: `${API_ENDPOINT}esmodule-api/api`,
   FILES: `${API_ENDPOINT}files-api/api`,
   INTEGRATOR: `${API_ENDPOINT}cca-integrator-api/api`,
   NAKSHA: `https://indiabiodiversity.org/naksha-api/api`,
+  RESOURCES: `${API_ENDPOINT}resources-api/api`,
   PAGES: `${API_ENDPOINT}pages-api/api`,
   USER: `${API_ENDPOINT}user-api/api`,
   USERGROUP: `${API_ENDPOINT}userGroup-api/api`,
@@ -108,6 +110,8 @@ export const DETAILEDLICENSES = [
 export const RESOURCE_TYPE = {
   CCA_DATA: "ccaData",
   CCA_TEMPLATE: "ccaTemplate",
+  DOCUMENT: "document",
+  OBSERVATION: "observation",
   PAGE: "page"
 };
 

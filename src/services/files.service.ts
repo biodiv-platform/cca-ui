@@ -1,4 +1,5 @@
-import { ENDPOINT, LOCAL_ASSET_PREFIX } from "@static/constants";
+import { MyUpload } from "@interfaces/files";
+import { ENDPOINT, LOCAL_ASSET_PREFIX, RESOURCE_TYPE } from "@static/constants";
 import { formDataHeaders, http } from "@utils/http";
 import { nanoid } from "nanoid";
 
@@ -41,4 +42,39 @@ export const axUploadUserGroupResource = async (resource: File, directory, neste
     console.error(e);
     return { success: false };
   }
+};
+
+export const axListMyUploads = async (module = RESOURCE_TYPE.OBSERVATION) => {
+  try {
+    const { data } = await http.get(`${ENDPOINT.FILES}/upload/my-uploads`, { params: { module } });
+    return { success: true, data };
+  } catch (e) {
+    console.error(e);
+    return { success: false, data: [] };
+  }
+};
+
+export const axRemoveMyUploads = async ({ path }) => {
+  try {
+    await http.post(`${ENDPOINT.FILES}/upload/remove-file`, {
+      path
+    });
+    return { success: true };
+  } catch (e) {
+    console.error(e);
+    return { success: false };
+  }
+};
+
+export const axUploadDocumentResource = async (document: File): Promise<MyUpload> => {
+  const formData = new FormData();
+  formData.append("hash", LOCAL_ASSET_PREFIX + nanoid());
+  formData.append("module", "document");
+  formData.append("upload", document, document.name);
+
+  const { data } = await http.post(`${ENDPOINT.FILES}/upload/my-uploads`, formData, {
+    headers: formDataHeaders
+  });
+
+  return data;
 };

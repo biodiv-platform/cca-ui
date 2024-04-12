@@ -10,6 +10,7 @@
   "download": "Download",
   "edit": "Edit",
   "home": "Home",
+  "information": "Information",
   "learn_more": "Learn More",
   "license": "All content on this portal is under CC-BY License unless otherwise specified.",
   "list": {
@@ -37,6 +38,7 @@
   },
   "or": "or",
   "owner": "Owner",
+  "post_to_groups": "Post to Groups",
   "prev": "Previous",
   "read_more": "Read More",
   "save": "Save",
