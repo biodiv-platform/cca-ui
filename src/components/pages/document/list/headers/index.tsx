@@ -1,4 +1,6 @@
-import { Box, Flex, Select, Stack, Tab, TabList, Tabs, Text } from "@chakra-ui/react";
+import { Box, Button, Flex, Select, Stack, Tab, TabList, Tabs, Text } from "@chakra-ui/react";
+import LocalLink from "@components/@core/local-link";
+import useGlobalState from "@hooks/use-global-state";
 import { sortByOptions, viewTabs } from "@static/documnet-list";
 import { format } from "indian-number-format";
 import useTranslation from "next-translate/useTranslation";
@@ -10,12 +12,24 @@ export default function ListHeader() {
   const { filter, setFilter, documentData } = useDocumentFilter();
   const { t } = useTranslation();
 
+  const { user } = useGlobalState();
+
+  const hasCreateAccess = user?.roles?.some((role) =>
+    ["ROLE_ADMIN", "ROLE_DOCUMENT_CONTRIBUTOR"].includes(role)
+  );
+
   const handleOnSort = (e) => {
     const v = e?.target?.value;
     setFilter((_draft) => {
       _draft.f.offset = 0;
       _draft.f.sort = `${v}`;
     });
+  };
+
+  const buttonProps = {
+    colorScheme: "blue",
+    _hover: { bg: "blue.600" },
+    style: { height: "32px", width: "10rem" }
   };
 
   return (
@@ -39,9 +53,15 @@ export default function ListHeader() {
           </TabList>
         </Tabs>
         <Stack isInline={true} spacing={4} mb={4}>
+          <Box hidden={!hasCreateAccess}>
+            <LocalLink href={"/document/create"} prefixGroup={true}>
+              <Button {...buttonProps}>{t("document:create.title")}</Button>
+            </LocalLink>
+          </Box>
           <Box>
             <Select
               maxW="10rem"
+              height="32px"
               aria-label={t("common:list.sort_by")}
               value={filter?.sort}
               onChange={handleOnSort}

@@ -4,6 +4,7 @@ import { useLocalRouter } from "@components/@core/local-link";
 import { SubmitButton } from "@components/form/submit-button";
 import UserGroups from "@components/pages/data/user-groups";
 import { yupResolver } from "@hookform/resolvers/yup";
+import useGlobalState from "@hooks/use-global-state";
 import CheckIcon from "@icons/check";
 import { axCreateDocument } from "@services/document.service";
 import { DEFAULT_BIB_FIELDS, DEFAULT_BIB_FIELDS_SCHEMA } from "@static/document";
@@ -34,6 +35,8 @@ export default function DocumentCreatePageComponent({ documentTypes, licensesLis
     schema: DEFAULT_BIB_FIELDS_SCHEMA,
     fields: DEFAULT_BIB_FIELDS
   });
+
+  const { currentGroup } = useGlobalState();
 
   const hForm = useForm<any>({
     mode: "onChange",
@@ -76,7 +79,7 @@ export default function DocumentCreatePageComponent({ documentTypes, licensesLis
       speciesGroupIds: [],
       habitatIds: [],
       docCoverageData: [],
-      userGroupId: [],
+      userGroupId: currentGroup.id && currentGroup.id > 0 ? [currentGroup.id.toString()] : [],
       licenseId: licensesList?.[0]?.value
     }
   });
