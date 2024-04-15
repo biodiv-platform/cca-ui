@@ -51,7 +51,6 @@ export default function DocumentHeader({ document }: DocumentHeaderProps) {
     RESOURCE_SIZE.TWITTER
   );
 
-  console.warn("document", document);
   return (
     <>
       <NextSeo

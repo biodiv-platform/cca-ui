@@ -10,7 +10,7 @@ const DocumentCreatePage = ({ documentTypes, licensesList }) => (
 );
 
 DocumentCreatePage.getInitialProps = async (ctx) => {
-  authorizedPageSSR([Role.Any], ctx);
+  authorizedPageSSR([Role.Admin, Role.DocumentContributor], ctx);
 
   const { data: licensesList } = await axGetLicenseList();
   const { data: documentTypes } = await axGetDocumentTypes();

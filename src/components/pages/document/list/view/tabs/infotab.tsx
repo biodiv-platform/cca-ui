@@ -45,7 +45,6 @@ const MetaBlock = ({ icon, children, isHtml, tooltip }: MetaBlockProps) =>
 
 export default function InfoTab({ document, flags, user }: InfoTabInterface) {
   const { t } = useTranslation();
-  // const { habitats, species } = useDocumentFilter();
   const { currentGroup } = useGlobalState();
 
   return (

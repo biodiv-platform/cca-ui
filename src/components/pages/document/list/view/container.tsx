@@ -112,8 +112,6 @@ export default function Container({ o }) {
           <TabPanels height={["fit-content"]} className="tab-content" position="relative">
             <TabPanel>
               <InfoTab
-                habitatIds={o.habitatIds}
-                specieIds={o.speciesGroupIds}
                 document={o.document}
                 user={o.userIbp}
                 flags={o.flag[0] ? o.flag.map((item) => ({ flag: item, user: o.userIbp })) : null}

@@ -10,7 +10,8 @@ export enum Role {
   DataCurator = "ROLE_DATACURATOR",
   TemplateCurator = "ROLE_TEMPLATECURATOR",
   ExtDataContributor = "ROLE_EXTDATACONTRIBUTOR",
-  PageEditor = "ROLE_PAGE_EDITOR"
+  PageEditor = "ROLE_PAGE_EDITOR",
+  DocumentContributor = "ROLE_DOCUMENT_CONTRIBUTOR"
 }
 
 export interface UserGroupCCAExtended extends UserGroupCCA {

@@ -47,7 +47,7 @@
 }
 
 .banner {
-  display: inline-block;
+  display: flex;
   width: 100%;
   border: 1px solid var(--chakra-colors-gray-300);
   margin-bottom: 1rem;
@@ -59,13 +59,13 @@
 }
 
 .banner img {
-  background: var(--chakra-colors-gray-100);
-  height: 180px;
-  width: 100%;
+  flex: 0 0 70%;
+  max-width: 30%;
   object-fit: cover;
 }
 
 .banner > div {
+  flex: 1;
   padding: 1rem;
 }
 
@@ -74,7 +74,6 @@
   font-weight: bold;
   margin-bottom: 0.5rem;
   display: -webkit-box;
-  -webkit-line-clamp: 1;
   -webkit-box-orient: vertical;
   overflow: hidden;
   color: var(--chakra-colors-gray-700);
@@ -84,7 +83,6 @@
   margin: 0 !important;
   font-size: 0.9rem !important;
   display: -webkit-box;
-  -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
   color: var(--chakra-colors-gray-500);
