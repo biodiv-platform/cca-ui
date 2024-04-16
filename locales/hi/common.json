@@ -1,4 +1,17 @@
 {
+  "actions": {
+    "flag": {
+      "category": "वर्ग",
+      "flags": {
+        "date_inappropriate": "अनुचित तिथि",
+        "details_inappropriate": "अनुचित विवरण",
+        "location_inappropriate": "अनुचित स्थान"
+      },
+      "notes": "टिप्पणियाँ",
+      "others_flagged": "जो लोग ध्वजांकित करते हैं",
+      "title": "शीर्षक"
+    }
+  },
   "activity": "गतिविधि",
   "add": "जोड़ें",
   "cancel": "रद्द करें",

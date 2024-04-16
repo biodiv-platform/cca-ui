@@ -18,25 +18,31 @@ DocumentListPage.config = {
   footer: false
 };
 
-DocumentListPage.getInitialProps = async (ctx) => {
+export const getServerSideProps = async (ctx) => {
   const nextOffset = (Number(ctx.query.offset) || LIST_PAGINATION_LIMIT) + LIST_PAGINATION_LIMIT;
 
   const aURL = absoluteUrl(ctx).href;
   const { currentGroup } = await axGroupList(aURL);
 
-  const initialFilterParams = { ...DEFAULT_FILTER, ...ctx.query, userGroupList: currentGroup?.id };
+  const initialFilterParams = { ...DEFAULT_FILTER, ...ctx.query };
+
+  if (currentGroup?.id) {
+    initialFilterParams.userGroupList = currentGroup.id;
+  }
   const { data } = await axGetListData(initialFilterParams);
 
   return {
-    documentData: {
-      l: data.documentList,
-      n: data.totalCount,
-      ag: data.aggregationData,
-      mvp: {},
-      hasMore: true
-    },
-    nextOffset,
-    initialFilterParams
+    props: {
+      documentData: {
+        l: data.documentList,
+        n: data.totalCount,
+        ag: data.aggregationData,
+        mvp: {},
+        hasMore: true
+      },
+      nextOffset,
+      initialFilterParams
+    }
   };
 };
 
