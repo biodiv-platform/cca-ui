@@ -12,7 +12,7 @@ import {
 } from "@services/document.service";
 import { RESOURCE_TYPE } from "@static/constants";
 import { getDocumentURL } from "@utils/document";
-import { getDocumentPath } from "@utils/media";
+import { getDocumentFilePath, getDocumentPath } from "@utils/media";
 import React, { useEffect, useState } from "react";
 
 import Activity from "./activity";
@@ -37,7 +37,7 @@ interface DocumentShowProps {
   showViewer;
 }
 
-export default function DocumentShowComponent({ document, showViewer }: DocumentShowProps) {
+export default function DocumentShowComponent({ document }: DocumentShowProps) {
   const { isLoggedIn } = useGlobalState();
   const [permission, setPermission] = useState<DocumentUserPermission>();
   const documentPath = getDocumentURL(document);
@@ -50,14 +50,33 @@ export default function DocumentShowComponent({ document, showViewer }: Document
     }
   }, [isLoggedIn]);
 
+  const getFileExtension = (fileName) => {
+    return fileName.split(".").pop()?.toLowerCase();
+  };
+
+  const fileExtension = getFileExtension(getDocumentURL(document));
+
+  const renderDocument = (fileExtension: string | undefined) => {
+    switch (fileExtension) {
+      case "pdf":
+        return <DocumentIframe className="fadeInUp delay-2" src={getDocumentPath(documentPath)} />;
+      case "mp4":
+        return (
+          <Box>
+            <video width="100%" controls>
+              <source src={getDocumentFilePath(documentPath)} type="video/mp4" />
+            </video>
+          </Box>
+        );
+    }
+  };
+
   return (
     <div className="container mt">
       <DocumentHeader document={document} />
       <SimpleGrid columns={[1, 1, 3, 3]} spacing={[1, 1, 4, 4]}>
         <Box gridColumn="1/3">
-          {showViewer && (
-            <DocumentIframe className="fadeInUp delay-2" src={getDocumentPath(documentPath)} />
-          )}
+          {renderDocument(fileExtension)}
           <DocumentInfo d={document} />
 
           {SITE_CONFIG.USERGROUP.ACTIVE && (

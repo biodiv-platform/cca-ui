@@ -46,6 +46,11 @@ export default function PageForm({
   const { t } = useTranslation();
   const { pages } = usePagesSidebar();
 
+  const getPageShowInMenu = (pages, id) => {
+    const { showInMenu = true } = pages.find((page) => page.id === id) || {};
+    return showInMenu;
+  };
+
   const [parentOptions, contentTypeOptions] = useMemo(
     () => [
       [
@@ -178,7 +183,12 @@ export default function PageForm({
                 <SocialPreviewField name="socialPreview" label={t("page:form.social_preview")} />
               </SimpleGrid>
               <SwitchField name="sticky" mb={2} label={t("page:form.is_sidebar")} />
-              <SwitchField name="showInMenu" mb={2} label={t("page:form.is_menu")} />
+              <SwitchField
+                name="showInMenu"
+                mb={2}
+                label={t("page:form.is_menu")}
+                disabled={!getPageShowInMenu(pages, defaultValues?.parentId)}
+              />
               <SwitchField name="showInFooter" mb={2} label={t("page:form.is_footer")} />
               <SwitchField name="allowComments" mb={2} label={t("page:form.is_allow_comments")} />
             </AccordionPanel>

@@ -45,7 +45,8 @@
   "doi": "DOI",
   "download": {
     "citation": "Citation",
-    "pdf": "PDF"
+    "pdf": "PDF",
+    "title": "Download"
   },
   "edit": {
     "error": "There was an error updating this document",
@@ -83,7 +84,7 @@
       "title": "Scientific names"
     }
   },
-  "social_preview":"Social Preview",
+  "social_preview": "Social Preview",
   "tags": {
     "not_found": "No Tags(s) found",
     "title": "Tags"

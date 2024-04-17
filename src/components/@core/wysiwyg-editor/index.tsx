@@ -59,7 +59,8 @@ export default function WYSIWYGEditor({ uploadHandler, ...props }: WYSIWYGEditor
         link_class_list: [
           { title: "None", value: "" },
           { title: "Card", value: "preview-card" },
-          { title: "Banner", value: "banner-card" }
+          { title: "Banner", value: "banner-card" },
+          { title: "Video", value: "video" }
         ],
         image_class_list: [
           { title: "None", value: "" },

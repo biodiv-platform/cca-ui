@@ -46,6 +46,7 @@ export interface PageShowMinimal {
   id?: number; // int64
   title?: string;
   content?: string;
+  parentId?: number;
 }
 export interface PageTree {
   id?: number; // int64

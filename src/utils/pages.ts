@@ -62,6 +62,11 @@ export const getLinkCard = ({ href, image, title, description }: any, id, cardCl
       </a>`;
 };
 
+export const getIframe = ({ href }: any, id, width, height) => {
+  return `
+  <p><iframe id="${id}" src="${href}" width="${width}" height="${height}" frameborder="0" allowfullscreen="allowfullscreen"></iframe></p>`;
+};
+
 export const addCustomStyle = (content) => {
   let customStyle = "";
 
@@ -77,24 +82,28 @@ export const addCustomStyle = (content) => {
 };
 
 export const preProcessContent = (content) => {
-  let c1 = content;
+  let processedContent = content;
 
-  [...c1.matchAll(/<a.+preview-card.+<\/a>/gm)].forEach(([v], index) => {
-    const href = /<a[\s\S]*?href=["']([^"]+)["'][\s\S]*?>/g.exec(v)?.[1];
-    const previewTag = getLinkCard({ href }, `epc-${index}`, "epc");
-    c1 = c1.replace(v, previewTag);
+  const replacements = [
+    { regex: /<a.+preview-card.+<\/a>/gm, cardType: "epc" },
+    { regex: /<a.+banner-card.+<\/a>/gm, cardType: "banner" },
+    { regex: /<a.+video.+<\/a>/gm, cardType: "video" }
+  ];
+
+  replacements.forEach(({ regex, cardType }, index) => {
+    processedContent = processedContent.replace(regex, (match) => {
+      const href = /<a[\s\S]*?href=["']([^"']+)["']/?.exec(match)?.[1];
+      if (cardType === "video") {
+        return getIframe({ href }, `video-${index}`, "100%", "315");
+      } else {
+        return getLinkCard({ href }, `${cardType}-${index}`, cardType);
+      }
+    });
   });
 
-  // Replace each occurrence of banner-card
-  [...c1.matchAll(/<a.+banner-card.+<\/a>/gm)].forEach(([v], index) => {
-    const href = /<a[\s\S]*?href=["']([^"]+)["'][\s\S]*?>/g.exec(v)?.[1];
-    const previewTag = getLinkCard({ href }, `banner-${index}`, "banner");
-    c1 = c1.replace(v, previewTag);
-  });
+  processedContent = addCustomStyle(processedContent);
 
-  c1 = addCustomStyle(c1);
-
-  return c1
+  return processedContent
     .replace(/\<table/g, '<div class="table-responsive"><table')
     .replace(/\<\/table\>/g, "</table></div>");
 };
