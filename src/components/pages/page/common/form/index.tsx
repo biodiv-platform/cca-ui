@@ -15,7 +15,11 @@ import { TextBoxField } from "@components/form/text";
 import { TextAreaField } from "@components/form/textarea";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { PageShowMinimal } from "@interfaces/pages";
-import { axRemovePageGalleryImage, axUploadEditorPageResource } from "@services/pages.service";
+import {
+  axRemovePageGalleryImage,
+  axUploadEditorPageResource,
+  axUploadMediaEditorPageResource
+} from "@services/pages.service";
 import { translateOptions } from "@utils/i18n";
 import dynamic from "next/dynamic";
 import useTranslation from "next-translate/useTranslation";
@@ -121,6 +125,7 @@ export default function PageForm({
             name="content"
             label={t("page:form.content")}
             uploadHandler={axUploadEditorPageResource}
+            fileUploadHandler={axUploadMediaEditorPageResource}
           />
         </Box>
 

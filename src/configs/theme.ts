@@ -48,7 +48,6 @@ export const customTheme = extendTheme(
   withProse({
     baseStyle: {
       a: {
-        // color: "#2E75C2",
         color: "blue.500",
         wordBreak: "break-all"
       },

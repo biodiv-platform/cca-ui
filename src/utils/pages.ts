@@ -76,18 +76,29 @@ export const addCustomStyle = (content) => {
   return content + customStyle;
 };
 
+export const getIframe = ({ href }: any, id, width, height) => {
+  return `
+  <p><iframe id="${id}" src="${href}" width="${width}" height="${height}" frameborder="0" allowfullscreen="allowfullscreen"></iframe></p>`;
+};
+
 export const preProcessContent = (content) => {
   let processedContent = content;
 
   const replacements = [
     { regex: /<a.+preview-card.+<\/a>/gm, cardType: "epc" },
-    { regex: /<a.+banner-card.+<\/a>/gm, cardType: "banner" }
+    { regex: /<a.+banner-card.+<\/a>/gm, cardType: "banner" },
+    { regex: /<a.+video.+<\/a>/gm, cardType: "video" }
   ];
 
   replacements.forEach(({ regex, cardType }, index) => {
     processedContent = processedContent.replace(regex, (match) => {
       const href = /<a[\s\S]*?href=["']([^"']+)["']/?.exec(match)?.[1];
-      return getLinkCard({ href }, `${cardType}-${index}`, cardType);
+
+      if (cardType === "video") {
+        return getIframe({ href }, `video-${index}`, "100%", "315");
+      } else {
+        return getLinkCard({ href }, `${cardType}-${index}`, cardType);
+      }
     });
   });
 

@@ -1,7 +1,10 @@
 import { Box, Button } from "@chakra-ui/react";
 import { SwitchField } from "@components/form/switch";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { axUploadEditorPageResource } from "@services/pages.service";
+import {
+  axUploadEditorPageResource,
+  axUploadMediaEditorPageResource
+} from "@services/pages.service";
 import { axUpdateGroupHomePageDetails } from "@services/usergroup.service";
 import notification, { NotificationType } from "@utils/notification";
 import dynamic from "next/dynamic";
@@ -90,6 +93,7 @@ export default function HomePageCustomizationForm({ userGroupId, homePageDetails
             name="description"
             label={t("form:description")}
             uploadHandler={axUploadEditorPageResource}
+            fileUploadHandler={axUploadMediaEditorPageResource}
           />
         </form>
       </FormProvider>

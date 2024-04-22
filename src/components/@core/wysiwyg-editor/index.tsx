@@ -15,14 +15,18 @@ import "tinymce/plugins/media";
 
 import { Editor } from "@tinymce/tinymce-react";
 import React from "react";
-import { axUploadMediaEditorPageResource } from "@services/pages.service";
 
 interface WYSIWYGEditorProps {
+  fileUploadHandler?;
   uploadHandler?;
   [key: string]: any;
 }
 
-export default function WYSIWYGEditor({ uploadHandler, ...props }: WYSIWYGEditorProps) {
+export default function WYSIWYGEditor({
+  fileUploadHandler,
+  uploadHandler,
+  ...props
+}: WYSIWYGEditorProps) {
   return (
     <Editor
       {...props}
@@ -45,7 +49,7 @@ export default function WYSIWYGEditor({ uploadHandler, ...props }: WYSIWYGEditor
         images_upload_handler: uploadHandler,
         images_upload_base_path: "/",
         file_picker_types: "media",
-        file_picker_callback: axUploadMediaEditorPageResource,
+        file_picker_callback: fileUploadHandler,
 
         link_class_list: [
           { title: "None", value: "" },

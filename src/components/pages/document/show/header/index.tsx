@@ -59,10 +59,14 @@ export default function DocumentHeader({ document }: DocumentHeaderProps) {
           locale: lang,
           url: SITE_CONFIG.SITE.URL + router.asPath,
           title: document?.document?.title,
-          images: ogImage ? [{ url: ogImage }] : undefined,
+          images: ogImage ? [{ url: ogImage }] : [{ url: "/next-assets/document-icon.svg" }],
           description: document?.document?.notes
         }}
         title={document?.document?.title}
+        twitter={{
+          site: SITE_CONFIG.SITE.URL,
+          cardType: "summary_large_image"
+        }}
       />
 
       <SimpleGrid columns={[1, 1, 4, 4]} mb={4} className="fadeInUp">
