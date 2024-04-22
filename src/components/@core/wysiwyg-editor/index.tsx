@@ -11,9 +11,11 @@ import "tinymce/plugins/link";
 import "tinymce/plugins/lists";
 import "tinymce/plugins/table";
 import "tinymce/themes/silver/theme";
+import "tinymce/plugins/media";
 
 import { Editor } from "@tinymce/tinymce-react";
 import React from "react";
+import { axUploadMediaEditorPageResource } from "@services/pages.service";
 
 interface WYSIWYGEditorProps {
   uploadHandler?;
@@ -27,40 +29,28 @@ export default function WYSIWYGEditor({ uploadHandler, ...props }: WYSIWYGEditor
       init={{
         skin: false,
         width: "100%",
-        height: "300px",
+        height: "600px",
         relative_urls: false,
         convert_urls: false,
         plugins: [
-          "advlist",
-          "paste",
-          "autolink",
-          "lists",
           "link",
-          "image",
-          "charmap",
-          "print",
-          "preview",
-          "anchor",
-          "help",
-          "searchreplace",
-          "visualblocks",
-          "code",
-          "insertdatetime",
-          "media",
           "table",
-          "paste",
-          "wordcount",
-          uploadHandler ? "image" : "na"
+          "code",
+          "lists",
+          uploadHandler ? "image" : "na",
+          uploadHandler ? "media" : "na"
         ],
         toolbar:
-          "image undo paste-as-text redo  bold italic alignleft aligncenter alignright alignjustify bullist link numlist table outdent indent help code",
+          "image media undo paste-as-text redo  bold italic alignleft aligncenter alignright alignjustify numlist bullist link table outdent indent help code ",
         images_upload_handler: uploadHandler,
         images_upload_base_path: "/",
+        file_picker_types: "media",
+        file_picker_callback: axUploadMediaEditorPageResource,
+
         link_class_list: [
           { title: "None", value: "" },
           { title: "Card", value: "preview-card" },
-          { title: "Banner", value: "banner-card" },
-          { title: "Video", value: "video" }
+          { title: "Banner", value: "banner-card" }
         ],
         image_class_list: [
           { title: "None", value: "" },
