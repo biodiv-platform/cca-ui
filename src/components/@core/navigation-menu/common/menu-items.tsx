@@ -9,7 +9,7 @@ import SubMenu from "./sub-menu";
 const buttonProps = {
   colorScheme: "blue",
   _hover: { bg: "blue.600" },
-  style: { width: "120px", height: "32px" }
+  style: { height: "32px" }
 };
 
 const SimpleLink = ({ children, to, params, isDarkButton, prefixGroup }) => (

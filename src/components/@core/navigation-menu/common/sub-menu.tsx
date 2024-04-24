@@ -14,29 +14,30 @@ export default function SubMenu({ rows, prefix = "" }) {
   const { t, lang } = useTranslation();
   const { isCurrentGroupMember, isLoggedIn } = useGlobalState();
 
+  const memoizedRows = useMemo(
+    () =>
+      rows.map((item) => ({
+        label: item.name && t(prefix + item.name),
+        toLink: getPageLink(lang, item.to)
+      })),
+    [rows, lang, prefix, t]
+  );
+
   return (
     <MenuList>
-      {rows.map((item) => {
-        const [label, toLink] = useMemo(
-          () => [item.name && t(prefix + item.name), getPageLink(lang, item.to)],
-          [lang]
-        );
-
-        // explicit false check is necessary to avoid button flickr
-        return (
-          <MenuItem key={item.name}>
-            {isLoggedIn && item.memberOnly && isCurrentGroupMember === false ? (
-              <Link w="full" onClick={() => notification(t("header:member_only"))}>
-                {label}
-              </Link>
-            ) : (
-              <LocalLink href={toLink} params={item.params} prefixGroup={true}>
-                <Link w="full">{label}</Link>
-              </LocalLink>
-            )}
-          </MenuItem>
-        );
-      })}
+      {memoizedRows.map((item, index) => (
+        <MenuItem key={index}>
+          {isLoggedIn && item.memberOnly && isCurrentGroupMember === false ? (
+            <Link w="full" onClick={() => notification(t("header:member_only"))}>
+              {item.label}
+            </Link>
+          ) : (
+            <LocalLink href={item.toLink} params={rows[index].params} prefixGroup={true}>
+              <Link w="full">{item.label}</Link>
+            </LocalLink>
+          )}
+        </MenuItem>
+      ))}
     </MenuList>
   );
 }
