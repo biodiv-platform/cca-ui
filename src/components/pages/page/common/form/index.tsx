@@ -187,8 +187,7 @@ export default function PageForm({
                 </Box>
                 <SocialPreviewField
                   name="socialPreview"
-                  label={t("page:form.social_preview")}
-                  hint={t("page:form.recommended_social_preview")}
+                  label={t("form:social_preview")}
                 />
               </SimpleGrid>
               <SwitchField name="sticky" mb={2} label={t("page:form.is_sidebar")} />

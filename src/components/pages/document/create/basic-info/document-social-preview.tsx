@@ -107,7 +107,12 @@ export const DocumentSocialPreviewField = ({
           ) : isProcessing ? (
             <p>{t("common:loading")}</p>
           ) : (
-            <p>{t("form:uploader.label")}</p>
+            <p>
+              <span style={{ display: "block" }}>{t("form:uploader.label")}</span>
+              <span style={{ display: "block", fontSize: "0.8em" }}>
+                {t("form:recommended_social_preview")}
+              </span>
+            </p>
           )}
         </Container>
       </div>

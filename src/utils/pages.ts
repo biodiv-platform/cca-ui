@@ -159,9 +159,9 @@ export const convertToMenuFormat = (
     return menuNode;
   };
 
-  const filteredData = data.filter((node) => {
+  const filteredData = data?.filter((node) => {
     return node.showInMenu || !showInMenu;
   });
 
-  return filteredData.map((node) => convertNode(node));
+  return filteredData?.map((node) => convertNode(node));
 };
