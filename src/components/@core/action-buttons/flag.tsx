@@ -38,7 +38,7 @@ import * as Yup from "yup";
 import LocalLink from "../local-link";
 import SimpleActionButton from "./simple";
 
-interface IFlagObservationProps {
+interface IFlagProps {
   initialFlags: FlagShow[] | undefined;
   resourceType?;
   resourceId;
@@ -60,11 +60,11 @@ export interface FlagShow {
 export default function FlagActionButton({
   initialFlags,
   resourceId,
-  resourceType = "observation",
+  resourceType = "document",
   userId,
   flagFunc,
   unFlagFunc
-}: IFlagObservationProps) {
+}: IFlagProps) {
   const { t } = useTranslation();
   const [flags, setFlags] = useState(initialFlags);
 

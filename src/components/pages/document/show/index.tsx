@@ -1,4 +1,5 @@
 import { Box, SimpleGrid } from "@chakra-ui/react";
+import Activity from "@components/@core/activity";
 import SITE_CONFIG from "@configs/site-config";
 import styled from "@emotion/styled";
 import useGlobalState from "@hooks/use-global-state";
@@ -15,7 +16,6 @@ import { getDocumentURL } from "@utils/document";
 import { getDocumentFilePath, getDocumentPath } from "@utils/media";
 import React, { useEffect, useState } from "react";
 
-import Activity from "./activity";
 import Groups from "./groups";
 import DocumentHeader from "./header";
 import DocumentInfo from "./info";
@@ -85,7 +85,7 @@ export default function DocumentShowComponent({ document }: DocumentShowProps) {
               observationGroups={document?.userGroupIbp}
               featured={document?.featured}
               permission={permission}
-              resourceType={RESOURCE_TYPE.OBSERVATION}
+              resourceType={RESOURCE_TYPE.DOCUMENT}
               saveUserGroupsFunc={axDocumentSaveUserGroups}
               featureFunc={axDocumentGroupsFeature}
               unfeatureFunc={axDocumentGroupsUnFeature}

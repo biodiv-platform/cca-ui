@@ -44,7 +44,7 @@ export const axUploadUserGroupResource = async (resource: File, directory, neste
   }
 };
 
-export const axListMyUploads = async (module = RESOURCE_TYPE.OBSERVATION) => {
+export const axListMyUploads = async (module = RESOURCE_TYPE.DOCUMENT) => {
   try {
     const { data } = await http.get(`${ENDPOINT.FILES}/upload/my-uploads`, { params: { module } });
     return { success: true, data };

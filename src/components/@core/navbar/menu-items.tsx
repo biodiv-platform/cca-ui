@@ -34,11 +34,11 @@ export default function MenuItems() {
   const { t } = useTranslation();
   const { isPreviewMode } = useGlobalState();
 
-  const [pages, setDefaultValue] = useState<any[]>();
+  const [pages, setPages] = useState<any[]>();
 
   useEffect(() => {
     axGetTree("").then(({ data }) => {
-      setDefaultValue(data || []);
+      setPages(data || []);
     });
   }, []);
 

@@ -111,7 +111,6 @@ export const RESOURCE_TYPE = {
   CCA_DATA: "ccaData",
   CCA_TEMPLATE: "ccaTemplate",
   DOCUMENT: "document",
-  OBSERVATION: "observation",
   PAGE: "page"
 };
 
