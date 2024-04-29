@@ -66,14 +66,17 @@ const CheckBoxItems = ({
                 mr={2}
                 objectFit="contain"
                 src={
-                  o.id === "null"
-                    ? o.icon
-                    : o.icon.startsWith("http")
-                    ? o.icon + "?h=32"
-                    : getGroupImageThumb(o.icon)
+                  o.icon
+                    ? o.id === "null"
+                      ? o.icon
+                      : o.icon.startsWith("http")
+                      ? o.icon + "?h=32"
+                      : getGroupImageThumb(o.icon)
+                    : ""
                 }
                 alt={o.name}
               />
+
               <Box lineHeight="1rem" className="elipsis-2">
                 {o.name}
               </Box>
