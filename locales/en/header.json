@@ -2,6 +2,7 @@
   "about": "About",
   "browse": "Browse CCAs",
   "create_pages": "Create Pages",
+  "documents": "Documents",
   "group_edit": "Edit Group",
   "logged_user_only": "Please login to join the group",
   "login_register": "Log In/Register",
@@ -24,6 +25,7 @@
   },
   "participate": "Participate",
   "search": "Search",
+  "stats": "Statistics",
   "toggle_menu": "toggle menu",
   "templates": "Templates",
   "users": "Users"

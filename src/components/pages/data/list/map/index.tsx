@@ -3,7 +3,7 @@ import { Box } from "@chakra-ui/layout";
 import SITE_CONFIG from "@configs/site-config";
 import { GoogleMap, LoadScriptNext, Marker, MarkerClusterer } from "@react-google-maps/api";
 import { getMapCenter } from "@utils/location";
-import React, { useMemo, useRef, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 
 import useResponseList from "../use-response-list";
 import InfoCard from "./info-card";
@@ -16,6 +16,14 @@ export default function Map() {
     () => mapboxToGmapsViewState(getMapCenter(3.8, { maxZoom: 8 }) as any),
     []
   );
+
+  useEffect(() => {
+    if (mapRef.current && map.length > 0) {
+      const bounds = new window.google.maps.LatLngBounds();
+      map.forEach((marker) => bounds.extend(marker));
+      mapRef.current.fitBounds(bounds);
+    }
+  }, [map]);
 
   const onMarkerClick = (responseId) => window.open(`/data/show/${responseId}`, "_blank");
 
@@ -36,7 +44,9 @@ export default function Map() {
           mapContainerStyle={{ height: "100%", width: "100%" }}
           zoom={viewPort.zoom}
           center={viewPort.center}
-          ref={mapRef}
+          onLoad={(map) => {
+            mapRef.current = map;
+          }}
           options={{ gestureHandling: "greedy" }}
         >
           {hoveredCard && <Marker animation={"1" as any} position={hoveredCard} />}

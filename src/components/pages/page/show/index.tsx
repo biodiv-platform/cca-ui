@@ -1,4 +1,4 @@
-import { Box, SimpleGrid } from "@chakra-ui/react";
+import { GridItem, SimpleGrid } from "@chakra-ui/react";
 import Activity from "@components/@core/activity";
 import { Container } from "@components/@core/container";
 import { axAddPageComment } from "@services/pages.service";
@@ -19,9 +19,8 @@ export default function PageShowPageComponent({ page }: PageShowPageComponentPro
     <UsePagesSidebarProvider currentPage={page} linkType="show">
       <NextPageHeader page={page} />
       <Container my={8}>
-        <SimpleGrid columns={{ base: 1, md: 4 }} spacing={{ base: 0, md: 10 }}>
-          <PagesSidebar />
-          <Box gridColumn={{ md: "2/5" }}>
+        <SimpleGrid columns={{ md: 7 }} spacing={{ base: 0, md: 8 }}>
+          <GridItem colSpan={{ md: 5 }}>
             <Content html={page.content} />
             {page.allowComments && (
               <Activity
@@ -30,7 +29,10 @@ export default function PageShowPageComponent({ page }: PageShowPageComponentPro
                 commentFunc={axAddPageComment}
               />
             )}
-          </Box>
+          </GridItem>
+          <GridItem colSpan={{ md: 2 }} pt={6}>
+            <PagesSidebar />
+          </GridItem>
         </SimpleGrid>
       </Container>
     </UsePagesSidebarProvider>

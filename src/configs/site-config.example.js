@@ -48,7 +48,8 @@ const SITE_CONFIG_EXAMPLE = {
     PARTICIPATE_ID: {
       en: 1,
       hi: 1
-    }
+    },
+    NAVBAR_ID: [5965]
   },
   FOOTER: {
     FACEBOOK: "https://www.facebook.com/x",

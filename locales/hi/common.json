@@ -1,4 +1,17 @@
 {
+  "actions": {
+    "flag": {
+      "category": "वर्ग",
+      "flags": {
+        "date_inappropriate": "अनुचित तिथि",
+        "details_inappropriate": "अनुचित विवरण",
+        "location_inappropriate": "अनुचित स्थान"
+      },
+      "notes": "टिप्पणियाँ",
+      "others_flagged": "जो लोग ध्वजांकित करते हैं",
+      "title": "शीर्षक"
+    }
+  },
   "activity": "गतिविधि",
   "add": "जोड़ें",
   "cancel": "रद्द करें",
@@ -10,6 +23,7 @@
   "download": "डाउनलोड",
   "edit": "संपादित करें",
   "home": "घर",
+  "information": "जानकारी",
   "learn_more": "और अधिक जानें",
   "license": "इस पोर्टल पर सभी सामग्री CC-BY लाइसेंस के अंतर्गत है जब तक कि अन्यथा निर्दिष्ट न हो।",
   "list": {
@@ -36,6 +50,7 @@
   },
   "or": "या",
   "owner": "मालिक",
+  "post_to_groups": "समूहों में पोस्ट करें",
   "prev": "पहले का",
   "save": "सहेजें",
   "search": "खोज",

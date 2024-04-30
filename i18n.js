@@ -8,6 +8,7 @@ module.exports = {
     "*": ["common", "header", "auth", "form", "group"],
     "/": ["home"],
     "rgx:/data/": ["template", "activity", "filters"],
+    "rgx:/document/": ["document", "observation", "filters", "activity"],
     "/group/[groupName]": ["home"],
     "/group/[groupName]/show": ["home"],
     "/group/[groupName]/chart": ["chart"],

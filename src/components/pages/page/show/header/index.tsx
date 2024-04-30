@@ -39,7 +39,7 @@ export const NextPageHeader = ({ page }) => {
         bgImage="url('/next-assets/page-cover.svg')"
         color="white"
         h="380px"
-        position="relative"
+        position="sticky"
       >
         {page.galleryData?.length ? <PageSlider images={page.galleryData} /> : null}
         <PageHeading description={page.description}>{page.title}</PageHeading>

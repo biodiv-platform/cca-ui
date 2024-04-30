@@ -1,5 +1,17 @@
 {
   "clear": "Clear {{filterCount}} Filter(s)",
+  "data_quality": {
+    "flag": {
+      "flagged": "Flagged",
+      "title": "Flag",
+      "unflagged": "Unflagged"
+    },
+    "title": "Data Quality"
+  },
+  "document_title": "Title",
+  "item_type": {
+    "title": "Item Type"
+  },
   "location": {
     "district": "District",
     "map": {

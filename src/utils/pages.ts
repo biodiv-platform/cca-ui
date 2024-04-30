@@ -49,11 +49,11 @@ export const treeToFlat = (children: any[], parentId = 0) =>
     []
   );
 
-export const getLinkCard = ({ href, image, title, description }: any, id) => {
+export const getLinkCard = ({ href, image, title, description }: any, id, cardClass) => {
   const emptyImage = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'/%3E";
 
   return `
-      <a href="${href}" rel="noopener noreferrer" class="epc" id="${id}">
+      <a href="${href}" rel="noopener noreferrer" class="${cardClass}" id="${id}">
         <img alt="${title}" src="${image || emptyImage}"/>
         <div>
           <div class="label" title="${title}">${title || href}</div>
@@ -76,18 +76,35 @@ export const addCustomStyle = (content) => {
   return content + customStyle;
 };
 
-export const preProcessContent = (content) => {
-  let c1 = content;
+export const getIframe = ({ href }: any, id, width, height) => {
+  return `
+  <p><iframe id="${id}" src="${href}" width="${width}" height="${height}" frameborder="0" allowfullscreen="allowfullscreen"></iframe></p>`;
+};
 
-  [...c1.matchAll(/<a.+preview-card.+<\/a>/gm)].forEach(([v], index) => {
-    const href = /<a[\s\S]*?href=["']([^"]+)["'][\s\S]*?>/g.exec(v)?.[1];
-    const previewTag = getLinkCard({ href }, `epc-${index}`);
-    c1 = c1.replace(v, previewTag);
+export const preProcessContent = (content) => {
+  let processedContent = content;
+
+  const replacements = [
+    { regex: /<a.+preview-card.+<\/a>/gm, cardType: "epc" },
+    { regex: /<a.+banner-card.+<\/a>/gm, cardType: "banner" },
+    { regex: /<a.+video.+<\/a>/gm, cardType: "video" }
+  ];
+
+  replacements.forEach(({ regex, cardType }, index) => {
+    processedContent = processedContent.replace(regex, (match) => {
+      const href = /<a[\s\S]*?href=["']([^"']+)["']/?.exec(match)?.[1];
+
+      if (cardType === "video") {
+        return getIframe({ href }, `video-${index}`, "100%", "315");
+      } else {
+        return getLinkCard({ href }, `${cardType}-${index}`, cardType);
+      }
+    });
   });
 
-  c1 = addCustomStyle(c1);
+  processedContent = addCustomStyle(processedContent);
 
-  return c1
+  return processedContent
     .replace(/\<table/g, '<div class="table-responsive"><table')
     .replace(/\<\/table\>/g, "</table></div>");
 };
@@ -104,7 +121,7 @@ export const removeCardWrapperParagraphs = (html) => {
 
     const _dom = parser.parseFromString(html, "text/html");
 
-    _dom.querySelectorAll("p > .preview-card").forEach((e: any) => {
+    _dom.querySelectorAll("p > .preview-card, p > .banner-card").forEach((e: any) => {
       if (e.parentElement.tagName === "P") {
         e.parentElement.replaceWith(...e.parentElement.childNodes);
       }
@@ -142,9 +159,9 @@ export const convertToMenuFormat = (
     return menuNode;
   };
 
-  const filteredData = data.filter((node) => {
+  const filteredData = data?.filter((node) => {
     return node.showInMenu || !showInMenu;
   });
 
-  return filteredData.map((node) => convertNode(node));
+  return filteredData?.map((node) => convertNode(node));
 };

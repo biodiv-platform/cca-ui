@@ -6,13 +6,15 @@ import notification from "./notification";
 export const RESOURCE_CTX = {
   MY_UPLOADS: "MY_UPLOADS",
   PAGES: "PAGES",
-  USERGROUPS: "USERGROUPS"
+  USERGROUPS: "USERGROUPS",
+  DOCUMENT_SOCIAL_PREVIEW: "DOCUMENT_SOCIAL_PREVIEW"
 };
 
 const RESOURCE_CTX_MAP = {
   MY_UPLOADS: "myUploads",
   PAGES: "pages",
-  USERGROUPS: "userGroups"
+  USERGROUPS: "userGroups",
+  DOCUMENT_SOCIAL_PREVIEW: "documentSocialPreview"
 };
 
 export function resizeImage(file: File, max = 1000): Promise<any> {
@@ -93,5 +95,25 @@ export const getGroupImageThumb = (resourceUrl, height = 32) => {
     : `/next-assets/species/Unknown.svg`;
 };
 
+export const getGroupImageThumbForDatatable = (resourceUrl, height = 32) => {
+  return resourceUrl ? `${resourceUrl}?h=${height}` : `/next-assets/species/Unknown.svg`;
+};
+
 export const getLocalIcon = (icon, type = "species") =>
   `/next-assets/${type}/${icon || "Unknown"}.svg`;
+
+/**
+ * Uses Google Docs viewer to avoid CORS issue
+ *
+ * @param {string} resourceUrl
+ * @return {*}  {string}
+ */
+export const getDocumentPath = (resourceUrl): string => {
+  return `/pdf-viewer/?file=${getDocumentFilePath(resourceUrl)}`;
+};
+
+export const getDocumentFilePath = (resourceUrl): string => {
+  return resourceUrl.startsWith("http")
+    ? resourceUrl
+    : `${ENDPOINT.RAW}/content/documents${resourceUrl}`;
+};
