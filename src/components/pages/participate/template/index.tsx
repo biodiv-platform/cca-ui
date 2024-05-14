@@ -1,12 +1,4 @@
-import {
-  Accordion,
-  AccordionButton,
-  AccordionIcon,
-  AccordionItem,
-  AccordionPanel,
-  Box,
-  Text
-} from "@chakra-ui/react";
+import { Accordion, Box, Text } from "@chakra-ui/react";
 import { Container } from "@components/@core/container";
 import { useLocalRouter } from "@components/@core/local-link";
 import PageHeading from "@components/@core/page-heading";
@@ -73,7 +65,7 @@ export default function TemplateParticipateComponent({ template }) {
 
     if (success) {
       notification(t("form:saved.success"), NotificationType.Success);
-      router.push(`/data/show/${data.id}#naksha-gmaps-view`, true);
+      router.push(`/data/edit/${data.id}#naksha-gmaps-view`, true);
     } else {
       notification(t("form:saved.error"));
     }
@@ -90,36 +82,33 @@ export default function TemplateParticipateComponent({ template }) {
       <PageHeading mb={4} title={template.name} icon="📝" />
       <Text mb={10}>{template.description}</Text>
 
-      <Sidebar fields={templateFields}>
+      <Sidebar fields={templateFields} isEdit={false}>
         <FormProvider {...hForm}>
           <form onSubmit={hForm.handleSubmit(handleOnSubmit, handleOnSubmitInvalid)}>
             <Accordion defaultIndex={groupFieldsEnabled} allowMultiple={true}>
-              {templateGroups.map(({ heading, fields }) => (
-                <AccordionItem key={heading?.fieldId}>
-                  <AccordionButton>
-                    {heading ? <ParticipateTemplateFieldRenderer field={heading} /> : "No Heading"}
-                    <AccordionIcon />
-                  </AccordionButton>
-
-                  <AccordionPanel pb={4} px={0}>
-                    {fields.map((field) => (
-                      <Box
-                        border="1px solid"
-                        borderColor="gray.300"
-                        borderRadius="md"
-                        p={4}
-                        key={field.fieldId}
-                        mb={6}
-                        bg="white"
-                      >
-                        <ParticipateTemplateFieldRenderer field={field} />
-                      </Box>
-                    ))}
-                  </AccordionPanel>
-                </AccordionItem>
-              ))}
-              <UserGroups name="userGroupId" label={t("group:post")} />
+              {templateGroups.map(({ fields }) =>
+                fields
+                  .filter((field) => field.isRequired)
+                  .map((field) => (
+                    <Box
+                      border="1px solid"
+                      borderColor="gray.300"
+                      borderRadius="md"
+                      p={4}
+                      key={field.fieldId}
+                      mb={6}
+                      bg="white"
+                      id={field.fieldId}
+                      display="flex"
+                      style={{ scrollMarginTop: "var(--content-top)" }}
+                    >
+                      <Box href={`#${field.fieldId}`} color="gray.400" as="a" mr={2}></Box>
+                      <ParticipateTemplateFieldRenderer field={field} />
+                    </Box>
+                  ))
+              )}
             </Accordion>
+            <UserGroups name="userGroupId" label={t("group:post")} />
             <CheckboxField mt={6} name="terms" label={t("form:terms")} />
             <SubmitButton>{t("form:submit")}</SubmitButton>
           </form>

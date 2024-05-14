@@ -33,7 +33,7 @@ export default function Statistics(featured) {
           >
             <Image src="/next-assets/document.svg" h="60px" loading="lazy" />
             <Box p={7} h="154px">
-              <chakra.p fontSize="lg">Total number of CCAs documented :</chakra.p>
+              <chakra.p fontSize="lg">{t("home:statistics.total_documented")}</chakra.p>
 
               <chakra.p fontSize="2xl" color={"black"}>
                 {featured.featured.aggregationData.total}

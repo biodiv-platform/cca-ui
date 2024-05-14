@@ -17,9 +17,10 @@
     "title": "Our Mission"
   },
   "statistics": {
-    "description": "The data shown here only consists of the community conserved areas (CCAs) that are documented on the web portal which are only a fraction of the total number of CCAs inIndia. The data is not verified through any peer-review processes or governmentauthorities",
+    "description": "The data shown here only consists of the community conserved areas (CCAs) that are documented on the web portal which are only a fraction of the total number of CCAs in India. The data is not verified through any peer-review processes or government authorities",
     "title": "Statistics",
-    "total_area": "Total area (hectares) covered by documented CCAs:"
+    "total_area": "Total area (hectares) covered by documented CCAs:",
+    "total_documented": "Total number of CCAs documented :"
   },
   "why_portal": {
     "description": "A need to create an open source platform which would serve as a repository of knowledge/data covering the multidimensional nature of Community Conserved Areas to enhance the understanding of the role they play in conservation. This knowledge/data is created by, for and with the people from communities across South Asia who are conserving their territories.",
