@@ -98,6 +98,8 @@
   "upload": {
     "my_uploads": "Draft Media",
     "selected": "Selected Document",
+    "pdf_link_only": "Supports PDF link only",
+    "label": "Drop PDF/Video file(s) here",
     "url": "External URL"
   }
 }
