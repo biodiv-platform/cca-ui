@@ -65,6 +65,7 @@
   "type": "प्रकार",
   "updated_on": "को अपडेट किया",
   "uploader": {
+    "browse": "ब्राउज़",
     "label": "फ़ाइल यहां छोड़ें"
   },
   "validations": {
