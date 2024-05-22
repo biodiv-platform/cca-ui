@@ -11,6 +11,7 @@ import { DEFAULT_BIB_FIELDS, DEFAULT_BIB_FIELDS_SCHEMA } from "@static/document"
 import { dateToUTC, formatDate } from "@utils/date";
 import notification, { NotificationType } from "@utils/notification";
 import { cleanTags } from "@utils/tags";
+import { getInjectableHTML } from "@utils/text";
 import useTranslation from "next-translate/useTranslation";
 import React, { useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
@@ -96,6 +97,7 @@ export default function DocumentCreatePageComponent({ documentTypes, licensesLis
       size: resource?.size,
       bibFieldData: {
         ...bibFieldData,
+        abstract: getInjectableHTML(values.bibFieldData.abstract),
         "item type": documentTypes.find((o) => o.value === itemTypeId)?.label
       }
     };
