@@ -8,6 +8,7 @@ import { axUpdateDocument } from "@services/document.service";
 import { dateToUTC, formatDate } from "@utils/date";
 import { getBibFieldsMeta } from "@utils/document";
 import notification, { NotificationType } from "@utils/notification";
+import { getInjectableHTML } from "@utils/text";
 import useTranslation from "next-translate/useTranslation";
 import React, { useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
@@ -87,7 +88,8 @@ export default function DocumentEditPageComponent({
 
       bibFieldData: {
         ...initialDocument.bibFieldData,
-        ...values.bibFieldData
+        ...values.bibFieldData,
+        abstract: getInjectableHTML(values.bibFieldData.abstract)
       },
 
       ufileData: values.ufileData
