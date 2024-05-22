@@ -51,13 +51,10 @@ export default function DocumentShowComponent({ document }: DocumentShowProps) {
   }, [isLoggedIn]);
 
   const getDocumentType = (mimeType) => {
-    if (mimeType.includes("wmv")) {
-      return "wmv";
-    }
-    if (mimeType.includes("video")) {
+    if (mimeType?.includes("video")) {
       return "video";
     }
-    if (mimeType.includes("pdf")) {
+    if (mimeType?.includes("pdf")) {
       return "pdf";
     }
     return undefined;
@@ -65,8 +62,6 @@ export default function DocumentShowComponent({ document }: DocumentShowProps) {
 
   const renderDocument = (fileExtension: string | undefined) => {
     switch (fileExtension) {
-      case "pdf":
-        return <DocumentIframe className="fadeInUp delay-2" src={getDocumentPath(documentPath)} />;
       case "video":
         return (
           <Box>
@@ -75,6 +70,8 @@ export default function DocumentShowComponent({ document }: DocumentShowProps) {
             </video>
           </Box>
         );
+      default:
+        return <DocumentIframe className="fadeInUp delay-2" src={getDocumentPath(documentPath)} />;
     }
   };
 
