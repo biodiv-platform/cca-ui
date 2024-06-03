@@ -85,6 +85,7 @@
     "react-sortable-tree": "^2.8.0",
     "react-table": "^7.8.0",
     "react-web-share": "^2.0.0",
+    "shapefile": "^0.6.6",
     "sitemap": "^7.1.1",
     "styled-components": "^5.3.6",
     "timeago.js": "^4.0.2",
