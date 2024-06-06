@@ -12,6 +12,7 @@ module.exports = {
     "/group/[groupName]": ["home"],
     "/group/[groupName]/show": ["home"],
     "/group/[groupName]/chart": ["chart"],
+    "rgx:/map": ["page", "map"],
     "/chart": ["chart"],
     "rgx:/admin": ["admin"],
     "rgx:/page/": ["page", "activity"],
