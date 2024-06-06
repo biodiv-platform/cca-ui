@@ -113,7 +113,7 @@ export const getDocumentPath = (resourceUrl): string => {
 };
 
 export const getDocumentFilePath = (resourceUrl): string => {
-  return resourceUrl.startsWith("http")
+  return resourceUrl?.startsWith("http")
     ? resourceUrl
     : `${ENDPOINT.RAW}/content/documents${resourceUrl}`;
 };

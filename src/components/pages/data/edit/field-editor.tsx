@@ -32,6 +32,22 @@ export default function FieldEditor({ field, onClose }) {
       ccaFieldValues: toFlatSaveData([field], values)
     };
 
+    if (field.isRequired && paylod.ccaFieldValues?.[field.fieldId]) {
+      const fieldValue = paylod.ccaFieldValues[field.fieldId].value;
+
+      if (Array.isArray(fieldValue)) {
+        if (fieldValue.length == 0) {
+          notification(t("form:saved.info"), NotificationType.Info);
+          return;
+        }
+      } else if (typeof fieldValue === "object" && fieldValue !== null) {
+        if (fieldValue.value == "") {
+          notification(t("form:saved.info"), NotificationType.Info);
+          return;
+        }
+      }
+    }
+
     const { success, data } = await axUpdateParticipation(paylod);
     if (success) {
       notification(t("form:saved.success"), NotificationType.Success);

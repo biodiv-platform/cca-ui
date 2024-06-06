@@ -2,6 +2,7 @@ import SITE_CONFIG from "@configs/site-config";
 import {
   FORM_TYPE,
   MINMAX_DATE_FORM_TYPES,
+  OPTION_FORM_ARRAY_TYPES,
   OPTION_FORM_TYPES,
   OPTION_SEPRATOR
 } from "@static/constants";
@@ -22,6 +23,9 @@ const postProcessValue = (field, value, othersValue?) => {
 
   if (OPTION_FORM_TYPES.includes(field.type)) {
     if (!value || value?.length === 0) {
+      if (OPTION_FORM_ARRAY_TYPES.includes(field.type)) {
+        return [];
+      }
       return none;
     }
 
