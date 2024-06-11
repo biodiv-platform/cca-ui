@@ -1,9 +1,10 @@
+import "mapbox-gl/dist/mapbox-gl.css";
+
 import { Box, useToast } from "@chakra-ui/react";
 import ExternalBlueLink from "@components/@core/blue-link/external";
 import SITE_CONFIG from "@configs/site-config";
 import useGlobalState from "@hooks/use-global-state";
 import { Role } from "@interfaces/custom";
-//import { axGetObservationMapData } from "@services/observation.service";
 import { ENDPOINT, isBrowser } from "@static/constants";
 import { hasAccess } from "@utils/auth";
 import { getMapCenter } from "@utils/location";
@@ -29,10 +30,6 @@ export default function MapPageComponent({ defaultLayers }) {
   const isAdmin = hasAccess([Role.Admin]);
   const [selectedLayers, setSelectedLayers] = useState(defaultLayers);
 
-  //   const onObservationGridHover = ({ feature }) => (
-  //     <div>{feature?.properties?.count} Observations</div>
-  //   );
-
   const handleOnDownload = async (layerId) => {
     console.debug(`Layer download requested ${layerId}`);
     toast({
@@ -51,17 +48,6 @@ export default function MapPageComponent({ defaultLayers }) {
       isClosable: true
     });
   };
-
-//   const fetchGridData = async (geoProps) => {
-//     const params = {
-//       ...geoProps,
-//       view: "map",
-//       geoField: "location"
-//     };
-
-//     const { data } = await axGetObservationMapData(params);
-//     return data;
-//   };
 
   useEffect(() => {
     if (isBrowser) {
@@ -89,29 +75,6 @@ export default function MapPageComponent({ defaultLayers }) {
           workspace: SITE_CONFIG.GEOSERVER.WORKSPACE
         }}
         managePublishing={isAdmin}
-        // layers={
-        //   SITE_CONFIG.MAP.DEFAULT_LAYERS
-        //     ? [
-        //         {
-        //           id: "global-observations",
-        //           title: "Observations",
-        //           description: "All observations from this portal",
-        //           attribution: "Portal and Contributors",
-        //           tags: ["Global", "Observations"],
-        //           isAdded: false,
-        //           source: { type: "grid", fetcher: fetchGridData },
-        //           onHover: onObservationGridHover,
-        //           data: {
-        //             index: "extended_observation",
-        //             type: "extended_records",
-        //             geoField: "location",
-        //             summaryColumn: ["count"],
-        //             propertyMap: { count: "Count" }
-        //           }
-        //         }
-        //       ]
-        //     : []
-        // }
       />
     </Box>
   );
