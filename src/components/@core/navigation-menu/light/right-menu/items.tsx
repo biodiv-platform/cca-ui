@@ -13,6 +13,11 @@ export default [
   },
   {
     active: true,
+    name: "Maps",
+    to: "/map"
+  },
+  {
+    active: true,
     name: "header:users",
     to: "/user/list"
   },
