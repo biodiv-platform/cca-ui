@@ -51,6 +51,7 @@
   "responses": "Responses",
   "saved": {
     "error": "Unable to Save",
+    "info": "Cannot save, this field is required",
     "success": "Saved Successfully"
   },
   "short_name": "Short Name",
