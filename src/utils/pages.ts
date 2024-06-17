@@ -117,6 +117,10 @@ export const preProcessContent = (content) => {
  */
 export const removeCardWrapperParagraphs = (html) => {
   try {
+    // Check if the HTML contains a <style> tag
+    if (/<style[\s\S]*?>[\s\S]*?<\/style>/i.test(html)) {
+      return html;
+    }
     const parser = new DOMParser();
 
     const _dom = parser.parseFromString(html, "text/html");
