@@ -2,7 +2,7 @@ import { Button, HStack } from "@chakra-ui/react";
 import { SubmitButton } from "@components/form/submit-button";
 import ParticipateTemplateFieldRenderer from "@components/pages/participate/template/participate-template-field-renderer";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { axUpdateParticipation } from "@services/cca.service";
+import { axUpdateLocation, axUpdateParticipation, getLoactionInfo } from "@services/cca.service";
 import { reverseFlatSaveData, toFlatSaveData } from "@utils/field";
 import notification, { NotificationType } from "@utils/notification";
 import { generateValidationStatement } from "@utils/validation";
@@ -35,27 +35,36 @@ export default function FieldEditor({ field, onClose }) {
     if (field.isRequired && paylod.ccaFieldValues?.[field.fieldId]) {
       const fieldValue = paylod.ccaFieldValues[field.fieldId].value;
 
-      if (Array.isArray(fieldValue)) {
-        if (fieldValue.length == 0) {
-          notification(t("form:saved.info"), NotificationType.Info);
-          return;
-        }
-      } else if (typeof fieldValue === "object" && fieldValue !== null) {
-        if (fieldValue.value == "") {
-          notification(t("form:saved.info"), NotificationType.Info);
-          return;
-        }
+      const isArrayFieldValueEmpty = Array.isArray(fieldValue) && fieldValue.length === 0;
+      const isObjectFieldValueEmpty =
+        typeof fieldValue === "object" && fieldValue !== null && fieldValue.value === "";
+
+      if (isArrayFieldValueEmpty || isObjectFieldValueEmpty) {
+        notification(t("form:saved.info"), NotificationType.Info);
+        return;
       }
     }
 
-    const { success, data } = await axUpdateParticipation(paylod);
-    if (success) {
-      notification(t("form:saved.success"), NotificationType.Success);
-      setResponse(data);
-      onClose();
-    } else {
+    const participationResponse = await axUpdateParticipation(paylod);
+    if (!participationResponse.success) {
       notification(t("form:saved.error"));
+      return;
     }
+
+    const { data } = participationResponse;
+    if (data?.centroid) {
+      const locationResponse = await getLoactionInfo(data.centroid);
+      if (locationResponse.success) {
+        await axUpdateLocation({
+          id: data.id,
+          location: locationResponse.data
+        });
+      }
+    }
+
+    notification(t("form:saved.success"), NotificationType.Success);
+    setResponse(data);
+    onClose();
   };
 
   return (

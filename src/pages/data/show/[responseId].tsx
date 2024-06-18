@@ -5,7 +5,6 @@ import { axGroupList } from "@services/app.service";
 import {
   axGetTemplateResponseById,
   axGetTemplateResponseList,
-  getLoactionInfo,
   getTemplateByShortOrParentName
 } from "@services/cca.service";
 import { getUserIBPsByIds } from "@services/user.service";
@@ -43,17 +42,14 @@ export const getServerSideProps = async (ctx) => {
     data: [header]
   } = await axGetTemplateResponseList({ id: ctx.query.responseId, language: ctx.locale });
 
-  if (header?.centroid?.length) {
+  if (response?.location) {
     try {
-      const { data: li, success } = await getLoactionInfo(header.centroid);
-      if (success) {
-        header.values.push({
-          type: FORM_TYPE.TEXT,
-          fieldId: "loc",
-          name: "Location",
-          value: capitalize(`${li.district}, ${li.state}`)
-        });
-      }
+      header.values.push({
+        type: FORM_TYPE.TEXT,
+        fieldId: "loc",
+        name: "Location",
+        value: capitalize(`${response?.location?.district}, ${response?.location?.state}`)
+      });
     } catch (e) {
       console.error(e);
     }
