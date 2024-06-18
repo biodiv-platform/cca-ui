@@ -16,7 +16,7 @@ export const ENDPOINT = {
   FILES: `${API_ENDPOINT}files-api/api`,
   INTEGRATOR: `${API_ENDPOINT}cca-integrator-api/api`,
   NAKSHA: `${API_ENDPOINT}naksha-integrator-api/api`,
-  GEOSERVER: `${SITE_CONFIG.SITE.API_ENDPOINT_SSR}naksha-integrator-api/api/geoserver`,
+  GEOSERVER: `${SITE_CONFIG.GEOSERVER_BASE_PATH}/geoserver`,
   RESOURCES: `${API_ENDPOINT}resources-api/api`,
   PAGES: `${API_ENDPOINT}pages-api/api`,
   USER: `${API_ENDPOINT}user-api/api`,
