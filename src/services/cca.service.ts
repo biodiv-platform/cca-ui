@@ -1,3 +1,4 @@
+import SITE_CONFIG from "@configs/site-config";
 import { ENDPOINT } from "@static/constants";
 import { waitForAuth } from "@utils/auth";
 import { cleanAggregationData } from "@utils/field";
@@ -172,7 +173,7 @@ export const axGetTemplateResponseTableByShortName = async (shortName) => {
 
 export const getLoactionInfo = async ([lon, lat]) => {
   try {
-    const { data } = await plainHttp.get(`${ENDPOINT.NAKSHA}/layer/locationInfo`, {
+    const { data } = await plainHttp.get(`${SITE_CONFIG.NAKSHA}/layer/locationInfo`, {
       params: { lat, lon }
     });
 
