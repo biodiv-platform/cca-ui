@@ -1,3 +1,5 @@
+import SITE_CONFIG from "@configs/site-config";
+
 import PagesMenuItem from "./pages-menu-item";
 
 export default [
@@ -12,7 +14,7 @@ export default [
     isDarkButton: true
   },
   {
-    active: true,
+    active: SITE_CONFIG.NAKSHA_PAGE,
     name: "Maps",
     to: "/map"
   },
