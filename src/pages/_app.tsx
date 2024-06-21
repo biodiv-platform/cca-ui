@@ -4,6 +4,7 @@ import "react-datepicker/dist/react-datepicker.css";
 
 import { Box, ChakraProvider } from "@chakra-ui/react";
 import AuthWall from "@components/@core/container/authwall";
+import Metadata from "@components/@core/container/metadata";
 import Footer from "@components/@core/footer";
 import NavBar from "@components/@core/navbar";
 import NavigationMenuLight from "@components/@core/navigation-menu/light";
@@ -27,6 +28,7 @@ function MainApp({ Component, pageProps, user, groups, currentGroup, languageId 
 
   return (
     <GlobalStateProvider initialState={{ user, groups, currentGroup, languageId }}>
+      <Metadata />
       <ChakraProvider theme={customTheme}>
         <div className="content">
           {config.header && (
