@@ -32,11 +32,14 @@ export const getServerSideProps = async (ctx) => {
     language: ctx.locale
   });
 
+  const defaultLayers = ctx.query?.layers?.split(",").filter((o) => o) || [];
+
   return {
     props: {
       initialFilters: payload,
       initialAggregation: aggregationData.data,
-      filtersList: filtersList.data
+      filtersList: filtersList.data,
+      defaultLayers
     }
   };
 };

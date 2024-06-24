@@ -7,8 +7,68 @@ import React, { useEffect, useMemo, useRef, useState } from "react";
 
 import useResponseList from "../use-response-list";
 import InfoCard from "./info-card";
+import dynamic from "next/dynamic";
+import useTranslation from "next-translate/useTranslation";
+import { ENDPOINT, isBrowser } from "@static/constants";
+import useGlobalState from "@hooks/use-global-state";
+import { stringify } from "querystring";
+import { hasAccess } from "@utils/auth";
+import { useToast } from "@chakra-ui/react";
+import { Role } from "@interfaces/custom";
+import ExternalBlueLink from "@components/@core/blue-link/external";
+import { updateURLWithExistingQueries } from "@utils/query-string";
+
+const NakshaMapboxList: any = dynamic(
+  () => import("naksha-components-react").then((mod: any) => mod.NakshaMapboxList),
+  {
+    ssr: false,
+    loading: () => <p>Loading...</p>
+  }
+);
+
+const defaultViewState = getMapCenter(3.1);
 
 export default function Map() {
+  const { t, lang } = useTranslation();
+  const { user } = useGlobalState();
+  const toast = useToast();
+  const isAdmin = hasAccess([Role.Admin]);
+
+  const { defaultLayers } = useResponseList();
+
+  const [selectedLayers, setSelectedLayers] = useState(defaultLayers);
+
+  console.log({ defaultLayers });
+
+  const handleOnDownload = async (layerId) => {
+    console.debug(`Layer download requested ${layerId}`);
+    toast({
+      title: t("common:success"),
+      description: (
+        <div>
+          {t("page:mail.sent")}{" "}
+          <ExternalBlueLink href="/user/download-logs">
+            {t("page:mail.download_logs")}
+          </ExternalBlueLink>
+        </div>
+      ),
+      variant: "left-accent",
+      status: "success",
+      duration: 9000,
+      isClosable: true
+    });
+  };
+
+  useEffect(() => {
+    if (isBrowser) {
+      window.history.pushState(
+        "",
+        "",
+        updateURLWithExistingQueries({ layers: selectedLayers.toString() })
+      );
+    }
+  }, [selectedLayers]);
+
   const mapRef = useRef<any>(null);
   const [iCard, setICard] = useState<any>();
   const { currentCard, map } = useResponseList();
@@ -17,24 +77,26 @@ export default function Map() {
     []
   );
 
-  useEffect(() => {
-    if (mapRef.current && map.length > 0) {
-      const bounds = new window.google.maps.LatLngBounds();
-      map.forEach((marker) => bounds.extend(marker));
-      mapRef.current.fitBounds(bounds);
-    }
-  }, [map]);
+  console.log({ map });
 
-  const onMarkerClick = (responseId) => window.open(`/data/show/${responseId}`, "_blank");
+  // useEffect(() => {
+  //   if (mapRef.current && map.length > 0) {
+  //     const bounds = new window.google.maps.LatLngBounds();
+  //     map.forEach((marker) => bounds.extend(marker));
+  //     mapRef.current.fitBounds(bounds);
+  //   }
+  // }, [map]);
 
-  const hoveredCard = useMemo(
-    () => (currentCard?.id ? map.find((m) => m.id === currentCard.id) : null),
-    [currentCard]
-  );
+  // const onMarkerClick = (responseId) => window.open(`/data/show/${responseId}`, "_blank");
+
+  // const hoveredCard = useMemo(
+  //   () => (currentCard?.id ? map.find((m) => m.id === currentCard.id) : null),
+  //   [currentCard]
+  // );
 
   return (
     <Box boxSize="full">
-      <LoadScriptNext
+      {/* <LoadScriptNext
         googleMapsApiKey={SITE_CONFIG.TOKENS.GMAP}
         region={SITE_CONFIG.MAP.COUNTRY}
         libraries={GMAPS_LIBRARIES.DEFAULT}
@@ -61,7 +123,10 @@ export default function Map() {
                       : undefined
                   }
                   position={r}
-                  onMouseOver={() => setICard(r)}
+                  onMouseOver={() => {
+                    console.log({ r });
+                    setICard(r);
+                  }}
                   onMouseOut={() => setICard(null)}
                   clusterer={clusterer}
                   onClick={() => onMarkerClick(r.id)}
@@ -72,7 +137,35 @@ export default function Map() {
           </MarkerClusterer>
           {iCard && <InfoCard data={iCard} />}
         </GoogleMap>
-      </LoadScriptNext>
+      </LoadScriptNext> */}
+      <NakshaMapboxList
+        lang={lang}
+        clusterMarkers={
+          map &&
+          map.map((loc) => ({
+            id: loc.id,
+            latitude: loc.lat,
+            longitude: loc.lng
+          }))
+        }
+        markerHeight={30}
+        defaultViewState={defaultViewState}
+        loadToC={true}
+        showToC={true}
+        selectedLayers={defaultLayers}
+        onSelectedLayersChange={setSelectedLayers}
+        nakshaEndpointToken={`Bearer ${user.accessToken}`}
+        mapboxAccessToken={SITE_CONFIG.TOKENS.MAPBOX}
+        nakshaApiEndpoint={ENDPOINT.NAKSHA}
+        onLayerDownload={handleOnDownload}
+        canLayerShare={true}
+        geoserver={{
+          endpoint: ENDPOINT.GEOSERVER,
+          store: SITE_CONFIG.GEOSERVER.STORE,
+          workspace: SITE_CONFIG.GEOSERVER.WORKSPACE
+        }}
+        managePublishing={isAdmin}
+      />
     </Box>
   );
 }
