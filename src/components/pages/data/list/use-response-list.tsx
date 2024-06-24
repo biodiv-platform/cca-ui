@@ -1,6 +1,6 @@
 import { axGetMapAndAggregation, axSearchCCAData, axSearchMapCCAData } from "@services/cca.service";
 import { isBrowser, LIST_PAGINATION_LIMIT } from "@static/constants";
-import { stringify } from "@utils/query-string";
+import { stringify, updateURLWithExistingQueries } from "@utils/query-string";
 import useTranslation from "next-translate/useTranslation";
 import NProgress from "nprogress";
 import React, { createContext, useContext, useEffect, useState } from "react";
@@ -30,6 +30,8 @@ interface ResponseListContextProps {
   setIsSearching;
   query;
   setQuery;
+
+  defaultLayers;
 }
 
 interface ResponseListProviderProps {
@@ -37,6 +39,7 @@ interface ResponseListProviderProps {
   initialFilters;
   initialAggregation;
   initialResponses;
+  defaultLayers;
   children;
 }
 
@@ -46,6 +49,7 @@ export const ResponseListProvider = ({
   filtersList,
   initialFilters,
   initialAggregation,
+  defaultLayers,
   children
 }: ResponseListProviderProps) => {
   const [responsesI, setResponsesI] = useImmer({ l: [] as any, hasMore: true, totalCount: 0 });
@@ -159,7 +163,9 @@ export const ResponseListProvider = ({
         isSearching,
         setIsSearching,
         query,
-        setQuery
+        setQuery,
+
+        defaultLayers
       }}
     >
       {children}
