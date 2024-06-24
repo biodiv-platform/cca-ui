@@ -8,7 +8,7 @@ import Sidebar from "@components/pages/common/layout/sidebar";
 import UserGroups from "@components/pages/data/user-groups";
 import { yupResolver } from "@hookform/resolvers/yup";
 import useGlobalState from "@hooks/use-global-state";
-import { axSaveParticipation } from "@services/cca.service";
+import { axSaveParticipation, axUpdateLocation, getLoactionInfo } from "@services/cca.service";
 import { FORM_TYPE } from "@static/constants";
 import { arrayOfSize, splitIntoGroups, toFlatSaveData } from "@utils/field";
 import notification, { NotificationType } from "@utils/notification";
@@ -55,20 +55,26 @@ export default function TemplateParticipateComponent({ template }) {
 
   const handleOnSubmit = async (values) => {
     const { userGroupId, ...fieldValues } = values;
-    const paylod = {
+    const payload = {
       shortName: template.shortName,
-      usergroups: values.userGroupId,
+      usergroups: userGroupId,
       ccaFieldValues: toFlatSaveData(templateFields, fieldValues)
     };
-
-    const { success, data } = await axSaveParticipation(paylod);
-
-    if (success) {
-      notification(t("form:saved.success"), NotificationType.Success);
-      router.push(`/data/edit/${data.id}#naksha-gmaps-view`, true);
-    } else {
+    const { success, data } = await axSaveParticipation(payload);
+    if (!success) {
       notification(t("form:saved.error"));
     }
+    if (data?.centroid) {
+      const { success, data: locationData } = await getLoactionInfo(data.centroid);
+      if (success) {
+        await axUpdateLocation({
+          id: data.id,
+          location: locationData
+        });
+      }
+    }
+    notification(t("form:saved.success"), NotificationType.Success);
+    router.push(`/data/edit/${data.id}#naksha-gmaps-view`, true);
   };
 
   const handleOnSubmitInvalid = (fields) => {
