@@ -39,7 +39,6 @@ interface ResponseListProviderProps {
   initialFilters;
   initialAggregation;
   initialResponses;
-  defaultLayers;
   children;
 }
 
@@ -49,7 +48,6 @@ export const ResponseListProvider = ({
   filtersList,
   initialFilters,
   initialAggregation,
-  defaultLayers,
   children
 }: ResponseListProviderProps) => {
   const [responsesI, setResponsesI] = useImmer({ l: [] as any, hasMore: true, totalCount: 0 });
@@ -163,9 +161,7 @@ export const ResponseListProvider = ({
         isSearching,
         setIsSearching,
         query,
-        setQuery,
-
-        defaultLayers
+        setQuery
       }}
     >
       {children}
