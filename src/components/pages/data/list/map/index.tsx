@@ -17,6 +17,8 @@ import { useToast } from "@chakra-ui/react";
 import { Role } from "@interfaces/custom";
 import ExternalBlueLink from "@components/@core/blue-link/external";
 import { updateURLWithExistingQueries } from "@utils/query-string";
+import { axSearchMapCCAData } from "@services/cca.service";
+import MapPageComponent from "@components/pages/map";
 
 const NakshaMapboxList: any = dynamic(
   () => import("naksha-components-react").then((mod: any) => mod.NakshaMapboxList),
@@ -34,11 +36,11 @@ export default function Map() {
   const toast = useToast();
   const isAdmin = hasAccess([Role.Admin]);
 
-  const { defaultLayers } = useResponseList();
+  const [locationArr, setLocationArr] = useState<any>(null);
 
-  const [selectedLayers, setSelectedLayers] = useState(defaultLayers);
+  const { addFilter, removeFilter, filter } = useResponseList();
 
-  console.log({ defaultLayers });
+  const [selectedLayers, setSelectedLayers] = useState(filter.f.layers);
 
   const handleOnDownload = async (layerId) => {
     console.debug(`Layer download requested ${layerId}`);
@@ -59,25 +61,122 @@ export default function Map() {
     });
   };
 
-  useEffect(() => {
-    if (isBrowser) {
-      window.history.pushState(
-        "",
-        "",
-        updateURLWithExistingQueries({ layers: selectedLayers.toString() })
-      );
-    }
-  }, [selectedLayers]);
+  // useEffect(() => {
+  //   (async () => {
+  //     const { data } = await axSearchMapCCAData({
+  //       language: "en",
+  //       limit: 10,
+  //       offset: 0,
+  //       query: ""
+  //     });
+  //     setLocationArr(data);
+  //   })();
+  // }, []);
+
+  // useEffect(() => {
+
+  //   addFilter("layers", selectedLayers?.toString());
+  // }, [selectedLayers]);
 
   const mapRef = useRef<any>(null);
   const [iCard, setICard] = useState<any>();
   const { currentCard, map } = useResponseList();
+  // const map = [
+  //   {
+  //     id: 952,
+  //     lat: 26.0435,
+  //     lng: 93.9405
+  //   },
+  //   {
+  //     id: 953,
+  //     lat: 26.0623,
+  //     lng: 94.1342
+  //   },
+  //   {
+  //     id: 954,
+  //     lat: 26.0796,
+  //     lng: 94.4858
+  //   },
+  //   {
+  //     id: 955,
+  //     lat: 25.8674,
+  //     lng: 93.6682
+  //   },
+  //   {
+  //     id: 957,
+  //     lat: 25.8396,
+  //     lng: 93.6455
+  //   },
+  //   {
+  //     id: 958,
+  //     lat: 24.673,
+  //     lng: 76.7461
+  //   },
+  //   {
+  //     id: 959,
+  //     lat: 34.176,
+  //     lng: 67.9723
+  //   },
+  //   {
+  //     id: 960,
+  //     lat: 21.6103,
+  //     lng: 74.1246
+  //   },
+  //   {
+  //     id: 961,
+  //     lat: 22.2492,
+  //     lng: 79.3446
+  //   },
+  //   {
+  //     id: 962,
+  //     lat: 24.2713,
+  //     lng: 76.6543
+  //   },
+  //   {
+  //     id: 964,
+  //     lat: 28.2185,
+  //     lng: 74.5755
+  //   },
+  //   {
+  //     id: 965,
+  //     lat: 11.8849,
+  //     lng: 77.9689
+  //   },
+  //   {
+  //     id: 967,
+  //     lat: 28.7041,
+  //     lng: 77.1025
+  //   },
+  //   {
+  //     id: 968,
+  //     lat: 25.6677,
+  //     lng: 94.1034
+  //   },
+  //   {
+  //     id: 970,
+  //     lat: 28.7041,
+  //     lng: 77.1025
+  //   },
+  //   {
+  //     id: 971,
+  //     lat: 11.6643,
+  //     lng: 78.146
+  //   },
+  //   {
+  //     id: 972,
+  //     lat: 28.5626,
+  //     lng: 77.1189
+  //   },
+  //   {
+  //     id: 973,
+  //     lat: 11.6643,
+  //     lng: 78.146
+  //   }
+  // ];
   const viewPort = useMemo(
     () => mapboxToGmapsViewState(getMapCenter(3.8, { maxZoom: 8 }) as any),
     []
   );
-
-  console.log({ map });
 
   // useEffect(() => {
   //   if (mapRef.current && map.length > 0) {
@@ -138,34 +237,36 @@ export default function Map() {
           {iCard && <InfoCard data={iCard} />}
         </GoogleMap>
       </LoadScriptNext> */}
-      <NakshaMapboxList
-        lang={lang}
-        clusterMarkers={
-          map &&
-          map.map((loc) => ({
-            id: loc.id,
-            latitude: loc.lat,
-            longitude: loc.lng
-          }))
-        }
-        markerHeight={30}
-        defaultViewState={defaultViewState}
-        loadToC={true}
-        showToC={true}
-        selectedLayers={defaultLayers}
-        onSelectedLayersChange={setSelectedLayers}
-        nakshaEndpointToken={`Bearer ${user.accessToken}`}
-        mapboxAccessToken={SITE_CONFIG.TOKENS.MAPBOX}
-        nakshaApiEndpoint={ENDPOINT.NAKSHA}
-        onLayerDownload={handleOnDownload}
-        canLayerShare={true}
-        geoserver={{
-          endpoint: ENDPOINT.GEOSERVER,
-          store: SITE_CONFIG.GEOSERVER.STORE,
-          workspace: SITE_CONFIG.GEOSERVER.WORKSPACE
-        }}
-        managePublishing={isAdmin}
-      />
+      {map.length > 0 && (
+        // <NakshaMapboxList
+        //   lang={lang}
+        //   clusterMarkers={
+        //     locationArr &&
+        //     locationArr.map((loc) => ({
+        //       id: loc.id,
+        //       latitude: loc.lat,
+        //       longitude: loc.lng
+        //     }))
+        //   }
+        //   defaultViewState={defaultViewState}
+        //   loadToC={true}
+        //   showToC={true}
+        //   selectedLayers={selectedLayers}
+        //   onSelectedLayersChange={setSelectedLayers}
+        //   nakshaEndpointToken={`Bearer ${user.accessToken}`}
+        //   mapboxAccessToken={SITE_CONFIG.TOKENS.MAPBOX}
+        //   nakshaApiEndpoint={ENDPOINT.NAKSHA}
+        //   onLayerDownload={handleOnDownload}
+        //   canLayerShare={true}
+        //   geoserver={{
+        //     endpoint: ENDPOINT.GEOSERVER,
+        //     store: SITE_CONFIG.GEOSERVER.STORE,
+        //     workspace: SITE_CONFIG.GEOSERVER.WORKSPACE
+        //   }}
+        //   managePublishing={isAdmin}
+        // />
+        <MapPageComponent defaultLayers={selectedLayers} locationArr={map} />
+      )}
     </Box>
   );
 }
