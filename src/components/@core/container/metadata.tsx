@@ -3,39 +3,15 @@ import useGlobalState from "@hooks/use-global-state";
 import { RESOURCE_SIZE } from "@static/constants";
 import { getManifestURL } from "@utils/userGroup";
 import Head from "next/head";
-import { useRouter } from "next/router";
 import Script from "next/script";
-import { DefaultSeo } from "next-seo";
-import useTranslation from "next-translate/useTranslation";
 import React, { useMemo } from "react";
 
 export default function Metadata() {
-  const router = useRouter();
   const { currentGroup } = useGlobalState();
-  const canonical = SITE_CONFIG.SITE.URL + router.asPath;
-  const { lang } = useTranslation();
   const manifestURL = useMemo(() => getManifestURL(currentGroup), [currentGroup]);
 
   return (
     <>
-      <DefaultSeo
-        title={currentGroup?.name}
-        canonical={canonical}
-        description={SITE_CONFIG.SITE.DESCRIPTION}
-        openGraph={{
-          type: "website",
-          locale: lang,
-          url: canonical,
-          title: currentGroup?.name,
-          site_name: currentGroup?.name,
-          description: SITE_CONFIG.SITE.DESCRIPTION
-        }}
-        twitter={{
-          handle: SITE_CONFIG.FOOTER.SOCIAL.TWITTER.HANDLE,
-          site: SITE_CONFIG.FOOTER.SOCIAL.TWITTER.HANDLE,
-          cardType: "summary_large_image"
-        }}
-      />
       <Head>
         <link rel="apple-touch-icon" href={currentGroup?.icon + RESOURCE_SIZE.APPLE_TOUCH} />
         <link rel="manifest" href={manifestURL} />
@@ -50,12 +26,11 @@ export default function Metadata() {
             strategy="afterInteractive"
             dangerouslySetInnerHTML={{
               __html: `
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-
-            gtag('config', ${SITE_CONFIG.TRACKING.GA_ID});
-        `
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+                gtag('config', '${SITE_CONFIG.TRACKING.GA_ID}');
+              `
             }}
           />
         </>
