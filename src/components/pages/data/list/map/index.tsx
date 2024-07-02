@@ -12,6 +12,7 @@ import dynamic from "next/dynamic";
 import useTranslation from "next-translate/useTranslation";
 import React, { useEffect, useState } from "react";
 import useResponseList from "../use-response-list";
+import { axGetDataSummaryById } from "@services/cca.service";
 
 const NakshaMapboxList: any = dynamic(
   () => import("naksha-components-react").then((mod: any) => mod.NakshaMapboxList),
@@ -58,6 +59,11 @@ export default function Map() {
     }
   }, [selectedLayers]);
 
+  async function fetchMarkerInfo(markerId) {
+    const res = await axGetDataSummaryById(markerId);
+    return res.data;
+  }
+
   const NakshaMapboxListWrapper = (props) => {
     return <NakshaMapboxList {...props} />;
   };
@@ -68,6 +74,7 @@ export default function Map() {
         <NakshaMapboxListWrapper
           lang={lang}
           clusterMarkers={[...map]}
+          hoverFunction={fetchMarkerInfo}
           defaultViewState={defaultViewState}
           loadToC={true}
           showToC={true}
