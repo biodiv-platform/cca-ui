@@ -1,10 +1,35 @@
 import SITE_CONFIG from "@configs/site-config";
+import useGlobalState from "@hooks/use-global-state";
+import { useRouter } from "next/router";
 import Script from "next/script";
+import { DefaultSeo } from "next-seo";
 import React from "react";
 
 export default function Metadata() {
+  const router = useRouter();
+  const { currentGroup } = useGlobalState();
+  const canonical = SITE_CONFIG.SITE.URL + router.asPath;
+
   return (
     <>
+      <DefaultSeo
+        title={currentGroup?.name}
+        canonical={canonical}
+        description={SITE_CONFIG.SITE.DESCRIPTION}
+        openGraph={{
+          type: "website",
+          url: canonical,
+          title: currentGroup?.name,
+          site_name: currentGroup?.name,
+          description: SITE_CONFIG.SITE.DESCRIPTION,
+          images: [
+            {
+              url: "/next-assets/home-human-chain.webp",
+              alt: "Home"
+            }
+          ]
+        }}
+      />
       {SITE_CONFIG.TRACKING.ENABLED && (
         <>
           {/* GTM Head Tag */}

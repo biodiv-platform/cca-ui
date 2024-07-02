@@ -1,6 +1,6 @@
 import useGlobalState from "@hooks/use-global-state";
+import { stripTags } from "@utils/text";
 import { NextSeo } from "next-seo";
-import useTranslation from "next-translate/useTranslation";
 import React from "react";
 
 import Carousel from "./carousel";
@@ -13,12 +13,10 @@ import Statistics from "./statistics";
 import WhyThisPortal from "./why-this-portal";
 
 export default function HomePageComponent({ featured }) {
-  const { t } = useTranslation();
   const { currentGroup } = useGlobalState();
 
   return (
     <>
-      <NextSeo title={t("common:home")} />
       {!currentGroup?.id ? (
         <>
           <Carousel />
@@ -29,6 +27,19 @@ export default function HomePageComponent({ featured }) {
         </>
       ) : (
         <>
+          <NextSeo
+            title={currentGroup?.name}
+            openGraph={{
+              title: currentGroup?.name,
+              images: [
+                {
+                  url: currentGroup?.icon + "?w=240",
+                  alt: currentGroup?.name
+                }
+              ],
+              description: stripTags(featured?.groupdata?.description)
+            }}
+          />
           {featured.groupdata.gallerySlider.length > 0 && featured.groupdata.showGallery && (
             <GroupCarousel featured={featured.groupdata.gallerySlider} />
           )}

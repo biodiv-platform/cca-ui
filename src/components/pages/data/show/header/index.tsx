@@ -71,10 +71,46 @@ export default function ShowHeader() {
     role: Role.ExtDataContributor
   };
 
+  const multimediaPath = header?.files[0]?.path;
+
+  const ogImage = multimediaPath ? multimediaPath : "/next-assets/document.svg";
+
+  const summaryData = header.values.filter(
+    (i) =>
+      (Array.isArray(i.value) ? i.value?.length : i.value) &&
+      !SITE_CONFIG.CCA.TITLE_FIELD_IDS.includes(i.fieldId)
+  );
+
+  const formatSummary = (summary) => {
+    const summaryObj = summary.reduce((acc, item) => {
+      acc[item.name] = item.value;
+      return acc;
+    }, {});
+
+    const ecosystemType = summaryObj["Ecosystem Type"][0].label;
+    const area = summaryObj["Area (ha)"];
+    const location = summaryObj["Location"];
+
+    return `Ecosystem Type: ${ecosystemType}, Area (ha): ${area}, Location: ${location}`;
+  };
+
   return (
     <Box mx="auto" bg="gray.100" py={10}>
       <Container textAlign="center">
-        <NextSeo title={title} />
+        <NextSeo
+          title={title}
+          openGraph={{
+            title: title,
+            images: [
+              {
+                url: ogImage,
+                alt: title,
+                height: 20
+              }
+            ],
+            description: formatSummary(summaryData)
+          }}
+        />
         <Heading mb={4} fontWeight="semibold">
           {title}
           {canEdit && (
@@ -112,19 +148,13 @@ export default function ShowHeader() {
           justifyContent="center"
           css={{ gap: "1.6rem" }}
         >
-          {header.values
-            .filter(
-              (i) =>
-                (Array.isArray(i.value) ? i.value?.length : i.value) &&
-                !SITE_CONFIG.CCA.TITLE_FIELD_IDS.includes(i.fieldId)
-            )
-            .map((i) => (
-              <Box
-                key={i.fieldId}
-                title={i.name}
-                dangerouslySetInnerHTML={{ __html: renderSimpleValue(i.value, i.type, true) }}
-              />
-            ))}
+          {summaryData.map((i) => (
+            <Box
+              key={i.fieldId}
+              title={i.name}
+              dangerouslySetInnerHTML={{ __html: renderSimpleValue(i.value, i.type, true) }}
+            />
+          ))}
         </Flex>
         <Flex alignItems="center" justifyContent="center" mt={6} gap={2} fontWeight="bold">
           <Box mr={2}>{t("common:contributors")}:</Box> <UserAvatar u={permissions.owner} />
