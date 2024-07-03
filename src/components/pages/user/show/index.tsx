@@ -12,7 +12,9 @@ export interface UserProfileProps {
 }
 
 export default function UserShowPageComponent({ user }: UserProfileProps) {
-  const ogImage = user?.profilePic ? user?.profilePic : "/next-assets/profile.svg";
+  const ogImage = user?.profilePic
+    ? getUserImage(user.profilePic, user.name, 630)
+    : "/next-assets/profile.svg";
   return (
     <Container>
       <NextSeo
