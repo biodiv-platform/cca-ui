@@ -1,6 +1,7 @@
 import { SimpleGrid } from "@chakra-ui/react";
 import { Container } from "@components/@core/container";
 import { UserProfileData } from "@interfaces/integrator";
+import { getUserImage } from "@utils/media";
 import { NextSeo } from "next-seo";
 import React from "react";
 
