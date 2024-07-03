@@ -12,9 +12,21 @@ export interface UserProfileProps {
 }
 
 export default function UserShowPageComponent({ user }: UserProfileProps) {
+  const ogImage = user?.profilePic ? user?.profilePic : "/next-assets/profile.svg";
   return (
     <Container>
-      <NextSeo title={user.name} />
+      <NextSeo
+        title={user.name}
+        openGraph={{
+          description: user.aboutMe,
+          images: [
+            {
+              url: ogImage,
+              alt: "Home"
+            }
+          ]
+        }}
+      />
       <SimpleGrid mt={16} columns={{ base: 1, md: 4 }} spacing={{ base: 0, md: 4 }}>
         <UserInfoSidebar user={user} />
         <UserInfoTabs user={user} />
