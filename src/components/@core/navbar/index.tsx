@@ -19,7 +19,7 @@ export default function NavBar() {
         bg="whiteAlpha.800"
         id="menu"
         width="100%"
-        zIndex={4}
+        zIndex={99}
         shadow="md"
         position={"fixed"}
       >
