@@ -1,6 +1,6 @@
 import { axGetMapAndAggregation, axSearchCCAData, axSearchMapCCAData } from "@services/cca.service";
 import { isBrowser, LIST_PAGINATION_LIMIT } from "@static/constants";
-import { stringify, updateURLWithExistingQueries } from "@utils/query-string";
+import { stringify } from "@utils/query-string";
 import useTranslation from "next-translate/useTranslation";
 import NProgress from "nprogress";
 import React, { createContext, useContext, useEffect, useState } from "react";
@@ -30,8 +30,6 @@ interface ResponseListContextProps {
   setIsSearching;
   query;
   setQuery;
-
-  defaultLayers;
 }
 
 interface ResponseListProviderProps {

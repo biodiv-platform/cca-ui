@@ -251,10 +251,10 @@
     boundingbox "^1.4.0"
     react-gbus "^1.1.2"
 
-"@biodiv-platform/naksha-mapbox-list@4.5.1-beta.0":
-  version "4.5.1-beta.0"
-  resolved "https://registry.yarnpkg.com/@biodiv-platform/naksha-mapbox-list/-/naksha-mapbox-list-4.5.1-beta.0.tgz#dd94d9a68e71446d26ff775b8daa5dd1d9ee5814"
-  integrity sha512-CmqhyxrerIcUeyfoIVehuJlc2+ShHcWnhFqMuGj6OEcsi6QAgh7tJqiJDvDBMdySb9i2ElU+1vWRfNMrcs7YKQ==
+"@biodiv-platform/naksha-mapbox-list@4.5.2":
+  version "4.5.2"
+  resolved "https://registry.yarnpkg.com/@biodiv-platform/naksha-mapbox-list/-/naksha-mapbox-list-4.5.2.tgz#ca95b3ddc158c3eecf1840dbc88bfded09cbacee"
+  integrity sha512-t707jUHZXlY8o2US+KkFt5uPVtYhNoZfmMG4LQUX7adjEHl261o1bDXHIZwQqi39dgXewtzyH0jPIiCs6MyJbA==
   dependencies:
     "@biodiv-platform/naksha-commons" "*"
     "@bumaga/tabs" "^0.2.0"
@@ -5428,16 +5428,16 @@ murmurhash-js@^1.0.0:
   resolved "https://registry.yarnpkg.com/murmurhash-js/-/murmurhash-js-1.0.0.tgz#b06278e21fc6c37fa5313732b0412bcb6ae15f51"
   integrity sha512-TvmkNhkv8yct0SVBSy+o8wYzXjE4Zz3PCesbfs8HiCXXdcTuocApFv11UWlNFWKYsP2okqrhb7JNlSm9InBhIw==
 
-naksha-components-react@4.5.9-beta.0:
-  version "4.5.9-beta.0"
-  resolved "https://registry.yarnpkg.com/naksha-components-react/-/naksha-components-react-4.5.9-beta.0.tgz#ed455c7d0d6779f92851c443f3ac2b05f4544147"
-  integrity sha512-C4c0BF00iRqZYzcdYaRPZMkw2a0BEwGQaCdVmAYuuYIjdYqnvSSPNAHDiVLh9pOcrBQVlbTx2WLzjrJs3tFj8g==
+naksha-components-react@4.6.0:
+  version "4.6.0"
+  resolved "https://registry.yarnpkg.com/naksha-components-react/-/naksha-components-react-4.6.0.tgz#0017a8aa3df0434f0de2d7618e79b0b7124407c5"
+  integrity sha512-qeUBMuj4uCIQgwLw60sr0G1dBSfuWKaCqUQrRHHZ8UnAKWPFwyqdGP54QEGiBkvNtNGxYjr+WnSnCR0F36UHjw==
   dependencies:
     "@biodiv-platform/eslint-preset" "4.4.9"
     "@biodiv-platform/naksha-gmaps-draw" "4.5.3"
     "@biodiv-platform/naksha-gmaps-view" "4.4.9"
     "@biodiv-platform/naksha-mapbox-draw" "4.4.9"
-    "@biodiv-platform/naksha-mapbox-list" "4.5.1-beta.0"
+    "@biodiv-platform/naksha-mapbox-list" "4.5.2"
     "@biodiv-platform/naksha-mapbox-view" "4.4.9"
     "@biodiv-platform/tsconfig" "4.4.9"
 
