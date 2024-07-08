@@ -9,13 +9,21 @@ import { axGetDataSummaryById } from "@services/cca.service";
 import { ENDPOINT, isBrowser } from "@static/constants";
 import { hasAccess } from "@utils/auth";
 import { getMapCenter } from "@utils/location";
-import { NakshaMapboxList } from "naksha-components-react";
+import dynamic from "next/dynamic";
 import useTranslation from "next-translate/useTranslation";
 import React, { useEffect, useState } from "react";
 
 import useResponseList from "../use-response-list";
 
 const defaultViewState = getMapCenter(4);
+
+const NakshaMapboxList: any = dynamic(
+  () => import("naksha-components-react").then((mod: any) => mod.NakshaMapboxList),
+  {
+    ssr: false,
+    loading: () => <p>Loading...</p>
+  }
+);
 
 export default function Map() {
   const { t, lang } = useTranslation();
