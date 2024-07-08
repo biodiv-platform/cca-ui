@@ -2,10 +2,17 @@ import { Box } from "@chakra-ui/react";
 import { useLocalRouter } from "@components/@core/local-link";
 import useGlobalState from "@hooks/use-global-state";
 import { ENDPOINT } from "@static/constants";
+import dynamic from "next/dynamic";
 import useTranslation from "next-translate/useTranslation";
 import React from "react";
 
-import { NakshaLayerUpload } from "./naksha-upload";
+const NakshaLayerUpload: any = dynamic(
+  () => import("./naksha-upload").then((mod: any) => mod.NakshaLayerUpload),
+  {
+    ssr: false,
+    loading: () => <p>Loading...</p>
+  }
+);
 
 export default function MapCreatePageComponent() {
   const { user } = useGlobalState();
