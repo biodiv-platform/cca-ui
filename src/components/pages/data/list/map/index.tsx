@@ -15,7 +15,7 @@ import React, { useEffect, useState } from "react";
 
 import useResponseList from "../use-response-list";
 
-const defaultViewState = getMapCenter(4);
+const defaultViewState = getMapCenter(3);
 
 const NakshaMapboxList: any = dynamic(
   () => import("naksha-components-react").then((mod: any) => mod.NakshaMapboxList),
