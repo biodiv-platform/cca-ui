@@ -81,7 +81,8 @@ export default function Map() {
           hoverFunction={fetchMarkerInfo}
           defaultViewState={defaultViewState}
           loadToC={true}
-          showToC={true}
+          showToC={false}
+          showLayerHoverPopup={false}
           selectedLayers={selectedLayers}
           onSelectedLayersChange={setSelectedLayers}
           nakshaEndpointToken={`Bearer ${user.accessToken}`}
