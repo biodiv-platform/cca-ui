@@ -18,7 +18,7 @@ export default function ResponseListContainer() {
       <CollapsablePane top="4.4rem" header={<FiltersHeader />} title={"Filters"}>
         <Filters />
       </CollapsablePane>
-      <CollapsablePane top="7.4rem" header={<CardHeader />} title={"CCA's"}>
+      <CollapsablePane top="7.5rem" header={<CardHeader />} title={"List"}>
         <Cards />
       </CollapsablePane>
       <NonCollapsablePane>

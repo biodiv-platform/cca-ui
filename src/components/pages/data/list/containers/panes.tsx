@@ -1,20 +1,17 @@
 import {
-  ChevronDownIcon,
-  ChevronLeftIcon,
-  ChevronRightIcon,
-  ChevronUpIcon
-} from "@chakra-ui/icons";
-import {
   Box,
   Button,
   Flex,
+  Icon,
   useBreakpointValue,
   useDisclosure,
   useMediaQuery
 } from "@chakra-ui/react";
+import FilterIcon from "@icons/filter";
+import ListIcon from "@icons/list";
 import React, { useEffect } from "react";
 
-const ToggleButton = ({ isOpen, onToggle, top, title, isMobile }) => {
+const ToggleButton = ({ onToggle, top, title, isMobile }) => {
   const styles = useBreakpointValue({
     base: {
       top: "100%",
@@ -23,15 +20,16 @@ const ToggleButton = ({ isOpen, onToggle, top, title, isMobile }) => {
       borderTopRadius: 0,
       minW: "2.5rem",
       h: "auto",
-      icon: isOpen ? <ChevronUpIcon /> : <ChevronDownIcon />
+      icon: title === "Filters" ? <Icon as={FilterIcon} /> : <Icon as={ListIcon} />
     },
     sm: {
       top,
       left: "100%",
       borderLeft: 0,
       borderStartRadius: 0,
-      minH: "2.5rem",
-      icon: isOpen ? <ChevronLeftIcon /> : <ChevronRightIcon />
+      height: "2.4rem",
+      width: "6.2rem",
+      icon: title === "Filters" ? <Icon as={FilterIcon} /> : <Icon as={ListIcon} />
     }
   });
 
@@ -39,19 +37,26 @@ const ToggleButton = ({ isOpen, onToggle, top, title, isMobile }) => {
     <Button
       variant="outline"
       position="absolute"
+      top="4"
       borderRadius="md"
       onClick={onToggle}
-      zIndex={1}
+      zIndex="10"
       aria-label="toggle"
-      p={1}
-      minW={0}
-      minH={0}
-      border="2px solid"
-      borderColor="gray.300"
+      h="10"
+      w="24"
       bg="white"
+      _hover={{ bg: "gray.100" }}
+      color="black.100"
+      fontSize="md"
+      display="flex"
+      alignItems="center"
+      justifyContent="left"
+      pl="2"
       {...styles}
     >
-      {!isMobile && title} {styles?.icon}
+      {styles?.icon}
+      <Box mx="1" />
+      {!isMobile && title}
     </Button>
   );
 };
@@ -77,13 +82,7 @@ export function CollapsablePane({ children, header, top, title }) {
       bg="white"
       position="relative"
     >
-      <ToggleButton
-        isOpen={isOpen}
-        onToggle={onToggle}
-        top={top}
-        title={title}
-        isMobile={isMobile}
-      />
+      <ToggleButton onToggle={onToggle} top={top} title={title} isMobile={isMobile} />
       <Flex w="full" h="full" direction="column">
         {isOpen && (
           <>
