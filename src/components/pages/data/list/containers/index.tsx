@@ -15,10 +15,10 @@ export default function ResponseListContainer() {
       height="calc(100vh - var(--heading-height))"
       direction={{ base: "column", md: "row" }}
     >
-      <CollapsablePane top="2.4rem" header={<FiltersHeader />}>
+      <CollapsablePane top="4.4rem" header={<FiltersHeader />} title={"Filters"}>
         <Filters />
       </CollapsablePane>
-      <CollapsablePane top="5.4rem" header={<CardHeader />}>
+      <CollapsablePane top="7.4rem" header={<CardHeader />} title={"CCA's"}>
         <Cards />
       </CollapsablePane>
       <NonCollapsablePane>

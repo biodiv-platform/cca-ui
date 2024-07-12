@@ -73,7 +73,7 @@ export default function Map() {
   }
 
   return (
-    <Box boxSize="full">
+    <Box boxSize="full" width="full" height="calc(100vh - var(--heading-height))">
       {mapData.length > 0 ? (
         <NakshaMapboxList
           lang={lang}

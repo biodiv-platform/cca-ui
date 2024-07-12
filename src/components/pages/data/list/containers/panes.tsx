@@ -6,15 +6,15 @@ import {
 } from "@chakra-ui/icons";
 import {
   Box,
+  Button,
   Flex,
-  IconButton,
   useBreakpointValue,
   useDisclosure,
   useMediaQuery
 } from "@chakra-ui/react";
 import React, { useEffect } from "react";
 
-const ToggleButton = ({ isOpen, onToggle, top }) => {
+const ToggleButton = ({ isOpen, onToggle, top, title, isMobile }) => {
   const styles = useBreakpointValue({
     base: {
       top: "100%",
@@ -36,7 +36,7 @@ const ToggleButton = ({ isOpen, onToggle, top }) => {
   });
 
   return (
-    <IconButton
+    <Button
       variant="outline"
       position="absolute"
       borderRadius="md"
@@ -50,12 +50,14 @@ const ToggleButton = ({ isOpen, onToggle, top }) => {
       borderColor="gray.300"
       bg="white"
       {...styles}
-    />
+    >
+      {!isMobile && title} {styles?.icon}
+    </Button>
   );
 };
 
-export function CollapsablePane({ children, header, top }) {
-  const { isOpen, onToggle, onClose } = useDisclosure({ defaultIsOpen: true });
+export function CollapsablePane({ children, header, top, title }) {
+  const { isOpen, onToggle, onClose } = useDisclosure({ defaultIsOpen: false });
   const [isMobile] = useMediaQuery("(max-width: 480px)");
 
   useEffect(() => {
@@ -75,7 +77,13 @@ export function CollapsablePane({ children, header, top }) {
       bg="white"
       position="relative"
     >
-      <ToggleButton isOpen={isOpen} onToggle={onToggle} top={top} />
+      <ToggleButton
+        isOpen={isOpen}
+        onToggle={onToggle}
+        top={top}
+        title={title}
+        isMobile={isMobile}
+      />
       <Flex w="full" h="full" direction="column">
         {isOpen && (
           <>

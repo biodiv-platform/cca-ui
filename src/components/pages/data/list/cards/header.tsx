@@ -13,7 +13,7 @@ export default function CardHeader() {
       alignItems="center"
       justifyContent="space-between"
       w="full"
-      p={4}
+      p={8}
       borderBottom="2px solid var(--chakra-colors-gray-300)"
     >
       <Heading as="h2" fontSize="xl" fontWeight="semibold">
