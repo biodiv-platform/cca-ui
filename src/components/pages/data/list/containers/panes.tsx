@@ -1,4 +1,10 @@
 import {
+  ChevronDownIcon,
+  ChevronLeftIcon,
+  ChevronRightIcon,
+  ChevronUpIcon
+} from "@chakra-ui/icons";
+import {
   Box,
   Button,
   Flex,
@@ -11,15 +17,14 @@ import FilterIcon from "@icons/filter";
 import ListIcon from "@icons/list";
 import React, { useEffect } from "react";
 
-const ToggleButton = ({ onToggle, top, title, isMobile }) => {
+const ToggleButton = ({ onToggle, top, title, isMobile, mobileTop, isOpen }) => {
   const styles = useBreakpointValue({
     base: {
-      top: "100%",
-      left: top,
-      borderTop: 0,
-      borderTopRadius: 0,
-      minW: "2.5rem",
-      h: "auto",
+      top: isOpen ? "100%" : 4,
+      left: mobileTop,
+      pr: 24,
+      height: "2.5rem",
+      width: "2.5rem",
       icon: title === "Filters" ? <Icon as={FilterIcon} /> : <Icon as={ListIcon} />
     },
     sm: {
@@ -33,17 +38,26 @@ const ToggleButton = ({ onToggle, top, title, isMobile }) => {
     }
   });
 
+  const chevronIcon = isOpen ? (
+    isMobile ? (
+      <ChevronUpIcon />
+    ) : (
+      <ChevronLeftIcon />
+    )
+  ) : isMobile ? (
+    <ChevronDownIcon />
+  ) : (
+    <ChevronRightIcon />
+  );
+
   return (
     <Button
       variant="outline"
       position="absolute"
-      top="4"
       borderRadius="md"
       onClick={onToggle}
-      zIndex="10"
+      zIndex="1"
       aria-label="toggle"
-      h="10"
-      w="24"
       bg="white"
       _hover={{ bg: "gray.100" }}
       color="black.100"
@@ -56,12 +70,13 @@ const ToggleButton = ({ onToggle, top, title, isMobile }) => {
     >
       {styles?.icon}
       <Box mx="1" />
-      {!isMobile && title}
+      {title}
+      {chevronIcon}
     </Button>
   );
 };
 
-export function CollapsablePane({ children, header, top, title }) {
+export const CollapsablePane = ({ children, header, top, title, mobileTop }) => {
   const { isOpen, onToggle, onClose } = useDisclosure({ defaultIsOpen: false });
   const [isMobile] = useMediaQuery("(max-width: 480px)");
 
@@ -82,7 +97,14 @@ export function CollapsablePane({ children, header, top, title }) {
       bg="white"
       position="relative"
     >
-      <ToggleButton onToggle={onToggle} top={top} title={title} isMobile={isMobile} />
+      <ToggleButton
+        onToggle={onToggle}
+        top={top}
+        title={title}
+        isMobile={isMobile}
+        mobileTop={mobileTop}
+        isOpen={isOpen}
+      />
       <Flex w="full" h="full" direction="column">
         {isOpen && (
           <>
@@ -95,7 +117,7 @@ export function CollapsablePane({ children, header, top, title }) {
       </Flex>
     </Box>
   );
-}
+};
 
 export function NonCollapsablePane({ children }) {
   return <Box flexGrow={1}>{children}</Box>;
