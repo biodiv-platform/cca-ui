@@ -58,9 +58,9 @@ const ToggleButton = ({ onToggle, top, title, isMobile, mobileTop, isOpen }) => 
       onClick={onToggle}
       zIndex="1"
       aria-label="toggle"
-      bg="white"
-      _hover={{ bg: "gray.100" }}
-      color="black.100"
+      bg="#319795"
+      _hover={{ bg: "blue.600" }}
+      color="white"
       fontSize="md"
       display="flex"
       alignItems="center"
