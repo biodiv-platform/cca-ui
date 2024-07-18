@@ -38,17 +38,13 @@ const ToggleButton = ({ onToggle, top, title, isMobile, mobileTop, isOpen }) => 
     }
   });
 
-  const chevronIcon = isOpen ? (
-    isMobile ? (
-      <ChevronUpIcon />
-    ) : (
-      <ChevronLeftIcon />
-    )
-  ) : isMobile ? (
-    <ChevronDownIcon />
-  ) : (
-    <ChevronRightIcon />
-  );
+  const chevronIcon = (() => {
+    if (isOpen) {
+      return isMobile ? <ChevronUpIcon /> : <ChevronLeftIcon />;
+    } else {
+      return isMobile ? <ChevronDownIcon /> : <ChevronRightIcon />;
+    }
+  })();
 
   return (
     <Button
