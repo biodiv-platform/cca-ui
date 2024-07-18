@@ -18,7 +18,8 @@ export const getServerSideProps = async (ctx) => {
     language: ctx.locale,
     ...ctx.query,
     offset: ctx.query.offset || 0,
-    limit: LIST_PAGINATION_LIMIT
+    limit: LIST_PAGINATION_LIMIT,
+    layers: ctx.query?.layers?.split(",").filter((o) => o) || []
   };
 
   if (currentGroup && currentGroup.id) {

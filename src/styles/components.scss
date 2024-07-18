@@ -132,3 +132,45 @@
   background: white;
   min-height: 128px !important;
 }
+
+.cluster-marker-wrapper{
+  z-index: 2 !important;
+  position: absolute;
+}
+.cluster-marker{
+  z-index: 2 !important;
+  position: absolute;
+}
+
+.location-marker-wrapper{
+  z-index: 49 !important;
+}
+.location-marker{
+  z-index: 50 !important;
+}
+
+.location-marker-hover{
+  z-index: 99 !important;
+}
+
+.location-marker-hover-card{
+  z-index: 999 !important;
+}
+
+
+// bounce animation for marker bounce
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-20px);
+  }
+  60% {
+    transform: translateY(-10px);
+  }
+}
+
+.bounce-animation {
+  animation: bounce 1s infinite;
+}

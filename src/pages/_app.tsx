@@ -15,7 +15,7 @@ import { axGroupList } from "@services/app.service";
 import { getParsedUser } from "@utils/auth";
 import { absoluteUrl } from "@utils/basic";
 import App from "next/app";
-import Router from "next/router";
+import Router, { useRouter } from "next/router";
 import NProgress from "nprogress";
 import React from "react";
 
@@ -25,6 +25,7 @@ Router.events.on("routeChangeError", () => NProgress.done());
 
 function MainApp({ Component, pageProps, user, groups, currentGroup, languageId }) {
   const config = { header: true, footer: true, ...Component?.config };
+  const router = useRouter();
 
   return (
     <GlobalStateProvider initialState={{ user, groups, currentGroup, languageId }}>
@@ -41,7 +42,7 @@ function MainApp({ Component, pageProps, user, groups, currentGroup, languageId 
         <Box minH="calc(100vh - var(--heading-height))">
           <Component {...pageProps} />
         </Box>
-        {config?.footer && <Footer />}
+        {config?.footer && router.pathname != "/data/list" && <Footer />}
         <AuthWall />
       </ChakraProvider>
     </GlobalStateProvider>

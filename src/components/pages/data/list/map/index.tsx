@@ -1,78 +1,105 @@
-import { GMAPS_LIBRARIES, mapboxToGmapsViewState } from "@biodiv-platform/naksha-commons";
-import { Box } from "@chakra-ui/layout";
+import "mapbox-gl/dist/mapbox-gl.css";
+
+import { Box, useToast } from "@chakra-ui/react";
+import ExternalBlueLink from "@components/@core/blue-link/external";
 import SITE_CONFIG from "@configs/site-config";
-import { GoogleMap, LoadScriptNext, Marker, MarkerClusterer } from "@react-google-maps/api";
+import useGlobalState from "@hooks/use-global-state";
+import { Role } from "@interfaces/custom";
+import { axGetDataSummaryById } from "@services/cca.service";
+import { ENDPOINT, isBrowser } from "@static/constants";
+import { hasAccess } from "@utils/auth";
 import { getMapCenter } from "@utils/location";
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import dynamic from "next/dynamic";
+import useTranslation from "next-translate/useTranslation";
+import React, { useEffect, useState } from "react";
 
 import useResponseList from "../use-response-list";
-import InfoCard from "./info-card";
+
+const defaultViewState = getMapCenter(3);
+
+const NakshaMapboxList: any = dynamic(
+  () => import("naksha-components-react").then((mod: any) => mod.NakshaMapboxList),
+  {
+    ssr: false,
+    loading: () => <p>Loading...</p>
+  }
+);
 
 export default function Map() {
-  const mapRef = useRef<any>(null);
-  const [iCard, setICard] = useState<any>();
-  const { currentCard, map } = useResponseList();
-  const viewPort = useMemo(
-    () => mapboxToGmapsViewState(getMapCenter(3.8, { maxZoom: 8 }) as any),
-    []
-  );
+  const { t, lang } = useTranslation();
+  const { user } = useGlobalState();
+  const toast = useToast();
+  const isAdmin = hasAccess([Role.Admin]);
+
+  const { addFilter, filter, map } = useResponseList();
+
+  const [selectedLayers, setSelectedLayers] = useState(filter.f.layers);
+  const [mapData, setMapData] = useState([]);
+
+  const handleOnDownload = async (layerId) => {
+    console.debug(`Layer download requested ${layerId}`);
+    toast({
+      title: t("common:success"),
+      description: (
+        <div>
+          {t("page:mail.sent")}{" "}
+          <ExternalBlueLink href="/user/download-logs">
+            {t("page:mail.download_logs")}
+          </ExternalBlueLink>
+        </div>
+      ),
+      variant: "left-accent",
+      status: "success",
+      duration: 9000,
+      isClosable: true
+    });
+  };
 
   useEffect(() => {
-    if (mapRef.current && map.length > 0) {
-      const bounds = new window.google.maps.LatLngBounds();
-      map.forEach((marker) => bounds.extend(marker));
-      mapRef.current.fitBounds(bounds);
+    if (isBrowser) {
+      addFilter("layers", selectedLayers?.toString());
+    }
+  }, [selectedLayers]);
+
+  useEffect(() => {
+    if (map.length > 0) {
+      setMapData(map);
     }
   }, [map]);
 
-  const onMarkerClick = (responseId) => window.open(`/data/show/${responseId}`, "_blank");
-
-  const hoveredCard = useMemo(
-    () => (currentCard?.id ? map.find((m) => m.id === currentCard.id) : null),
-    [currentCard]
-  );
+  async function fetchMarkerInfo(markerId) {
+    const res = await axGetDataSummaryById(markerId);
+    return res.data;
+  }
 
   return (
-    <Box boxSize="full">
-      <LoadScriptNext
-        googleMapsApiKey={SITE_CONFIG.TOKENS.GMAP}
-        region={SITE_CONFIG.MAP.COUNTRY}
-        libraries={GMAPS_LIBRARIES.DEFAULT}
-      >
-        <GoogleMap
-          id="naksha-gmaps-view"
-          mapContainerStyle={{ height: "100%", width: "100%" }}
-          zoom={viewPort.zoom}
-          center={viewPort.center}
-          onLoad={(map) => {
-            mapRef.current = map;
+    <Box boxSize="full" width="full" height="calc(100vh - var(--heading-height))">
+      {mapData.length > 0 ? (
+        <NakshaMapboxList
+          lang={lang}
+          clusterMarkers={mapData}
+          hoverFunction={fetchMarkerInfo}
+          defaultViewState={defaultViewState}
+          loadToC={true}
+          showToC={false}
+          showLayerHoverPopup={false}
+          selectedLayers={selectedLayers}
+          onSelectedLayersChange={setSelectedLayers}
+          nakshaEndpointToken={`Bearer ${user.accessToken}`}
+          mapboxAccessToken={SITE_CONFIG.TOKENS.MAPBOX}
+          nakshaApiEndpoint={ENDPOINT.NAKSHA}
+          onLayerDownload={handleOnDownload}
+          canLayerShare={true}
+          geoserver={{
+            endpoint: ENDPOINT.GEOSERVER,
+            store: SITE_CONFIG.GEOSERVER.STORE,
+            workspace: SITE_CONFIG.GEOSERVER.WORKSPACE
           }}
-          options={{ gestureHandling: "greedy" }}
-        >
-          {hoveredCard && <Marker animation={"1" as any} position={hoveredCard} />}
-          <MarkerClusterer key={map.length} gridSize={30}>
-            {(clusterer) =>
-              map.map((r, index) => (
-                <Marker
-                  key={r.id}
-                  icon={
-                    r.id === currentCard?.id // replaces marker icon with empty image to hide overlap if marker is visible
-                      ? "data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEAAAAALAAAAAABAAEAAAIA"
-                      : undefined
-                  }
-                  position={r}
-                  onMouseOver={() => setICard(r)}
-                  onMouseOut={() => setICard(null)}
-                  clusterer={clusterer}
-                  onClick={() => onMarkerClick(r.id)}
-                  noClustererRedraw={index !== map.length - 1} // for marker rendering performance https://github.com/tomchentw/react-google-maps/issues/836#issuecomment-894381349
-                />
-              ))
-            }
-          </MarkerClusterer>
-          {iCard && <InfoCard data={iCard} />}
-        </GoogleMap>
-      </LoadScriptNext>
+          managePublishing={isAdmin}
+        />
+      ) : (
+        <p>No data available</p>
+      )}
     </Box>
   );
 }

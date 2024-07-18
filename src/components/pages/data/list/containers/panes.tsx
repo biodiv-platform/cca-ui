@@ -6,56 +6,74 @@ import {
 } from "@chakra-ui/icons";
 import {
   Box,
+  Button,
   Flex,
-  IconButton,
+  Icon,
   useBreakpointValue,
   useDisclosure,
   useMediaQuery
 } from "@chakra-ui/react";
+import FilterIcon from "@icons/filter";
+import ListIcon from "@icons/list";
 import React, { useEffect } from "react";
 
-const ToggleButton = ({ isOpen, onToggle, top }) => {
+const ToggleButton = ({ onToggle, top, title, isMobile, mobileTop, isOpen }) => {
   const styles = useBreakpointValue({
     base: {
-      top: "100%",
-      left: top,
-      borderTop: 0,
-      borderTopRadius: 0,
-      minW: "2.5rem",
-      h: "auto",
-      icon: isOpen ? <ChevronUpIcon /> : <ChevronDownIcon />
+      top: isOpen ? "100%" : 4,
+      left: mobileTop,
+      pr: 24,
+      height: "2.5rem",
+      width: "2.5rem",
+      icon: title === "Filters" ? <Icon as={FilterIcon} /> : <Icon as={ListIcon} />
     },
     sm: {
       top,
       left: "100%",
       borderLeft: 0,
       borderStartRadius: 0,
-      minH: "2.5rem",
-      icon: isOpen ? <ChevronLeftIcon /> : <ChevronRightIcon />
+      height: "2.4rem",
+      width: "6.2rem",
+      icon: title === "Filters" ? <Icon as={FilterIcon} /> : <Icon as={ListIcon} />
     }
   });
 
+  const chevronIcon = (() => {
+    if (isOpen) {
+      return isMobile ? <ChevronUpIcon /> : <ChevronLeftIcon />;
+    } else {
+      return isMobile ? <ChevronDownIcon /> : <ChevronRightIcon />;
+    }
+  })();
+
   return (
-    <IconButton
+    <Button
       variant="outline"
       position="absolute"
       borderRadius="md"
       onClick={onToggle}
-      zIndex={1}
+      zIndex="1"
       aria-label="toggle"
-      p={1}
-      minW={0}
-      minH={0}
-      border="2px solid"
-      borderColor="gray.300"
-      bg="white"
+      bg="#319795"
+      _hover={{ bg: "blue.600" }}
+      color="white"
+      fontSize="md"
+      display="flex"
+      alignItems="center"
+      justifyContent="left"
+      pl="2"
       {...styles}
-    />
+    >
+      {styles?.icon}
+      <Box mx="1" />
+      {title}
+      {chevronIcon}
+    </Button>
   );
 };
 
-export function CollapsablePane({ children, header, top }) {
-  const { isOpen, onToggle, onClose } = useDisclosure({ defaultIsOpen: true });
+export const CollapsablePane = ({ children, header, top, title, mobileTop }) => {
+  const { isOpen, onToggle, onClose } = useDisclosure({ defaultIsOpen: false });
   const [isMobile] = useMediaQuery("(max-width: 480px)");
 
   useEffect(() => {
@@ -75,7 +93,14 @@ export function CollapsablePane({ children, header, top }) {
       bg="white"
       position="relative"
     >
-      <ToggleButton isOpen={isOpen} onToggle={onToggle} top={top} />
+      <ToggleButton
+        onToggle={onToggle}
+        top={top}
+        title={title}
+        isMobile={isMobile}
+        mobileTop={mobileTop}
+        isOpen={isOpen}
+      />
       <Flex w="full" h="full" direction="column">
         {isOpen && (
           <>
@@ -88,7 +113,7 @@ export function CollapsablePane({ children, header, top }) {
       </Flex>
     </Box>
   );
-}
+};
 
 export function NonCollapsablePane({ children }) {
   return <Box flexGrow={1}>{children}</Box>;

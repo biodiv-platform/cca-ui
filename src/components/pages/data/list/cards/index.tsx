@@ -8,9 +8,8 @@ import InfiniteScroll from "react-infinite-scroll-component";
 
 import useResponseList from "../use-response-list";
 
-export const Card = ({ response, onHover, isTruncated }) => {
+export const Card = ({ response, isTruncated }) => {
   const thumb = getResourceThumbnail(response?.files?.[0]?.path);
-  const handleOnCardHover = () => onHover(response);
 
   return (
     <LocalLink href={`/data/show/${response.id}`} prefixGroup={true}>
@@ -22,7 +21,6 @@ export const Card = ({ response, onHover, isTruncated }) => {
         borderBottom="1px solid"
         borderColor="gray.300"
         display="block"
-        onMouseEnter={handleOnCardHover}
         _hover={{ bg: "gray.100" }}
       >
         <Flex>
@@ -55,7 +53,7 @@ export const Card = ({ response, onHover, isTruncated }) => {
 };
 
 export default function Cards() {
-  const { responses, setCurrentCard, nextPage, isLoading } = useResponseList();
+  const { responses, nextPage, isLoading } = useResponseList();
   const [h, setH] = useState<any>();
 
   const ref = useRef<any>(null);
@@ -67,14 +65,7 @@ export default function Cards() {
   return (
     <Box h="full" ref={ref}>
       {h && (
-        <Box
-          onMouseLeave={() => setCurrentCard(null)}
-          w="full"
-          h={h}
-          overflow="auto"
-          position="relative"
-          id="ccaList"
-        >
+        <Box w="full" h={h} overflow="auto" position="relative" id="ccaList">
           <InfiniteScroll
             dataLength={responses.l.length}
             next={nextPage}
@@ -83,12 +74,7 @@ export default function Cards() {
             scrollableTarget="ccaList"
           >
             {responses?.l.map((response) => (
-              <Card
-                key={response.id}
-                onHover={setCurrentCard}
-                response={response}
-                isTruncated={false}
-              />
+              <Card key={response.id} response={response} isTruncated={false} />
             ))}
           </InfiniteScroll>
         </Box>
