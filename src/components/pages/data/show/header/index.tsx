@@ -82,16 +82,14 @@ export default function ShowHeader() {
   );
 
   const formatSummary = (summary) => {
-    const summaryObj = summary.reduce((acc, item) => {
-      acc[item.name] = item.value;
-      return acc;
-    }, {});
-
-    const ecosystemType = summaryObj["Ecosystem Type"][0].label;
-    const area = summaryObj["Area (ha)"];
-    const location = summaryObj["Location"];
-
-    return `Ecosystem Type: ${ecosystemType}, Area (ha): ${area}, Location: ${location}`;
+    return summary
+      .map(({ name, value }) => {
+        if (Array.isArray(value)) {
+          return `${name}: ${value.map((v) => v.value).join(", ")}`;
+        }
+        return `${name}: ${value}`;
+      })
+      .join(", ");
   };
 
   return (
