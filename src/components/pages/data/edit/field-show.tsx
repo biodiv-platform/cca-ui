@@ -4,12 +4,15 @@ import {
   AspectRatio,
   Box,
   Heading,
+  Icon,
   Image,
   ListItem,
   SimpleGrid,
   UnorderedList
 } from "@chakra-ui/react";
 import SITE_CONFIG from "@configs/site-config";
+import AudioIcon from "@icons/audio";
+import VideoIcon from "@icons/video";
 import { FORM_TYPE } from "@static/constants";
 import { formatDate, formatDateRange, formatYear } from "@utils/date";
 import { optionLabelShow } from "@utils/field";
@@ -48,6 +51,38 @@ const RenderDateRange = ({ value }) => (
 const RenderFile = ({ value }) => {
   const { t } = useTranslation();
 
+  console.warn("value", value);
+
+  const getMediaElement = (path) => {
+    if (path.endsWith(".mp4") || path.endsWith(".webm") || path.endsWith(".mov")) {
+      return (
+        <Box
+          display="flex"
+          alignItems="center"
+          justifyContent="center"
+          borderRadius="md"
+          bg="gray.200"
+        >
+          <Icon as={VideoIcon} boxSize={12} />
+        </Box>
+      );
+    } else if (path.endsWith(".mp3") || path.endsWith(".wav") || path.endsWith(".ogg")) {
+      return (
+        <Box
+          display="flex"
+          alignItems="center"
+          justifyContent="center"
+          borderRadius="md"
+          bg="gray.200"
+        >
+          <Icon as={AudioIcon} boxSize={12} />
+        </Box>
+      );
+    } else {
+      return <Image src={path} alt={path} objectFit="cover" borderRadius="md" />;
+    }
+  };
+
   return (
     <SimpleGrid columns={{ base: 1, sm: 2, md: 3, lg: 4 }} spacing={4} mt={2}>
       {value?.map((resource) => (
@@ -60,9 +95,7 @@ const RenderFile = ({ value }) => {
           key={resource?.path}
         >
           <a href={resource?.path} target="_blank" rel="noreferrer">
-            <AspectRatio ratio={1}>
-              <Image alt={resource?.attribution} src={resource?.path} />
-            </AspectRatio>
+            <AspectRatio ratio={1}>{getMediaElement(resource?.path)}</AspectRatio>
           </a>
           <Box fontSize="sm" fontWeight="normal" p={2}>
             {t("form:attribution")}: {resource?.attribution || "NA"}

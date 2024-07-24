@@ -6,6 +6,7 @@ import {
   FormControl,
   FormErrorMessage,
   FormHelperText,
+  Icon,
   IconButton,
   Image,
   Input,
@@ -14,6 +15,8 @@ import {
   Stack
 } from "@chakra-ui/react";
 import styled from "@emotion/styled";
+import AudioIcon from "@icons/audio";
+import VideoIcon from "@icons/video";
 import { axUploadResource } from "@services/files.service";
 import { ENDPOINT, LICENSES } from "@static/constants";
 import { timeOut } from "@utils/basic";
@@ -97,8 +100,14 @@ export const FileField = ({
     setIsProcessing(true);
 
     for (const file of files) {
-      const fileSm = await resizeImage(file);
-      const resource = await axUploadResource(new File([fileSm], file.name));
+      let resource;
+      if (file.type.startsWith("image/")) {
+        const fileSm = await resizeImage(file);
+        resource = await axUploadResource(new File([fileSm], file.name));
+      } else {
+        resource = await axUploadResource(file);
+      }
+
       await timeOut(5000);
       append({
         attribution: "",
@@ -109,13 +118,50 @@ export const FileField = ({
 
     setIsProcessing(false);
   };
+
   const { getRootProps, getInputProps, isDragActive, isDragAccept, isDragReject } = useDropzone({
     accept: {
-      "image/*": [".jpg", ".jpeg", ".png"]
+      "image/*": [".jpg", ".jpeg", ".png"],
+      "video/*": [".mp4", ".mov", ".webm"],
+      "audio/*": [".mp3", ".wav", ".ogg"]
     },
     multiple: true,
     onDrop
   });
+
+  {
+    console.warn("fields", fields);
+  }
+
+  const getMediaElement = (path) => {
+    if (path.endsWith(".mp4") || path.endsWith(".webm") || path.endsWith(".mov")) {
+      return (
+        <Box
+          display="flex"
+          alignItems="center"
+          justifyContent="center"
+          borderRadius="md"
+          bg="gray.200"
+        >
+          <Icon as={VideoIcon} boxSize={12} />
+        </Box>
+      );
+    } else if (path.endsWith(".mp3") || path.endsWith(".wav") || path.endsWith(".ogg")) {
+      return (
+        <Box
+          display="flex"
+          alignItems="center"
+          justifyContent="center"
+          borderRadius="md"
+          bg="gray.200"
+        >
+          <Icon as={AudioIcon} boxSize={12} />
+        </Box>
+      );
+    } else {
+      return <Image src={path} alt={path} objectFit="cover" borderRadius="md" />;
+    }
+  };
 
   return (
     <FormControl
@@ -167,9 +213,7 @@ export const FileField = ({
                 onClick={() => remove(index)}
               />
               <Stack>
-                <AspectRatio ratio={1}>
-                  <Image src={item?.path} alt={item?.path} objectFit="cover" borderRadius="md" />
-                </AspectRatio>
+                <AspectRatio ratio={1}>{getMediaElement(item?.path)}</AspectRatio>
                 <Input
                   {...register(`${name}.${index}.attribution`)}
                   placeholder={t("form:attribution")}
