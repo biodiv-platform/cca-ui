@@ -140,7 +140,6 @@ export const LIST_PAGINATION_LIMIT = 10;
 
 export const ACCEPTED_FILE_TYPES = {
   "image/*": [".jpg", ".jpeg", ".JPG", ".png", ".PNG"],
-  "video/*": [".mp4", ".MP4"],
-  "audio/*": [".wav", ".mp3"],
-  "application/zip": [".zip"]
+  "video/*": [".mp4", ".MP4", ".mov", ".MOV", ".webm", ".WEBM"],
+  "audio/*": [".wav", ".mp3"]
 };
