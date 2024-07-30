@@ -1,4 +1,5 @@
-import { ENDPOINT } from "@static/constants";
+import { ResourceType } from "@interfaces/custom";
+import { AUDIO_TYPES, ENDPOINT, IMAGE_TYPES, VIDEO_TYPES } from "@static/constants";
 import loadImage from "blueimp-load-image";
 
 import notification from "./notification";
@@ -116,4 +117,17 @@ export const getDocumentFilePath = (resourceUrl): string => {
   return resourceUrl?.startsWith("http")
     ? resourceUrl
     : `${ENDPOINT.RAW}/content/documents${resourceUrl}`;
+};
+
+export const getSupportedTypeByPath = (path) => {
+  if (IMAGE_TYPES.some((type) => path.endsWith(type))) {
+    return ResourceType.Image;
+  }
+  if (VIDEO_TYPES.some((type) => path.endsWith(type))) {
+    return ResourceType.Video;
+  }
+  if (AUDIO_TYPES.some((type) => path.endsWith(type))) {
+    return ResourceType.Audio;
+  }
+  return ResourceType.Unsupported;
 };

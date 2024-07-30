@@ -12,10 +12,7 @@ import { SelectMultipleInputField } from "@components/form/select-multiple";
 import { TextBoxField } from "@components/form/text";
 import { TextAreaField } from "@components/form/textarea";
 import { YearPickerField } from "@components/form/yearpicker";
-import {
-  axUploadEditorPageResource,
-  axUploadMediaEditorPageResource
-} from "@services/pages.service";
+import { axUploadEditorPageResource } from "@services/pages.service";
 import { FORM_TYPE } from "@static/constants";
 import dynamic from "next/dynamic";
 import React from "react";
@@ -43,13 +40,7 @@ export default function ParticipateTemplateFieldRenderer({ field }) {
       return <TextAreaField {...defaultProps} />;
 
     case FORM_TYPE.RICHTEXT:
-      return (
-        <WYSIWYGField
-          {...defaultProps}
-          uploadHandler={axUploadEditorPageResource}
-          fileUploadHandler={axUploadMediaEditorPageResource}
-        />
-      );
+      return <WYSIWYGField {...defaultProps} uploadHandler={axUploadEditorPageResource} />;
 
     case FORM_TYPE.HEADING:
       return (

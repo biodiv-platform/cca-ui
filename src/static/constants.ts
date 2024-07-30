@@ -138,8 +138,12 @@ export const MENU_PORTAL_TARGET = isBrowser ? document.body : undefined;
 
 export const LIST_PAGINATION_LIMIT = 10;
 
+export const IMAGE_TYPES = [".jpg", ".jpeg", ".JPG", ".png", ".PNG"];
+export const VIDEO_TYPES = [".mp4", ".MP4", ".mov", ".MOV", ".webm", ".WEBM"];
+export const AUDIO_TYPES = [".wav", ".mp3"];
+
 export const ACCEPTED_FILE_TYPES = {
-  "image/*": [".jpg", ".jpeg", ".JPG", ".png", ".PNG"],
-  "video/*": [".mp4", ".MP4", ".mov", ".MOV", ".webm", ".WEBM"],
-  "audio/*": [".wav", ".mp3"]
+  "image/*": IMAGE_TYPES,
+  "video/*": VIDEO_TYPES,
+  "audio/*": AUDIO_TYPES
 };
