@@ -7,7 +7,6 @@ import {
   FormErrorMessage,
   FormHelperText,
   IconButton,
-  Image,
   Input,
   Select,
   SimpleGrid,
@@ -15,7 +14,7 @@ import {
 } from "@chakra-ui/react";
 import styled from "@emotion/styled";
 import { axUploadResource } from "@services/files.service";
-import { ENDPOINT, LICENSES } from "@static/constants";
+import { ACCEPTED_FILE_TYPES, ENDPOINT, LICENSES } from "@static/constants";
 import { timeOut } from "@utils/basic";
 import { namedFormErrorMessage } from "@utils/field";
 import { resizeImage } from "@utils/media";
@@ -25,6 +24,7 @@ import { useDropzone } from "react-dropzone";
 import { useFieldArray, useFormContext } from "react-hook-form";
 
 import { FormLabel } from "./common";
+import { getMediaElementFromPath } from "./multimedia";
 
 const getColor = (props) => {
   if (props.isDragAccept) {
@@ -97,8 +97,14 @@ export const FileField = ({
     setIsProcessing(true);
 
     for (const file of files) {
-      const fileSm = await resizeImage(file);
-      const resource = await axUploadResource(new File([fileSm], file.name));
+      let resource;
+      if (file.type.startsWith("image/")) {
+        const fileSm = await resizeImage(file);
+        resource = await axUploadResource(new File([fileSm], file.name));
+      } else {
+        resource = await axUploadResource(file);
+      }
+
       await timeOut(5000);
       append({
         attribution: "",
@@ -109,10 +115,9 @@ export const FileField = ({
 
     setIsProcessing(false);
   };
+
   const { getRootProps, getInputProps, isDragActive, isDragAccept, isDragReject } = useDropzone({
-    accept: {
-      "image/*": [".jpg", ".jpeg", ".png"]
-    },
+    accept: ACCEPTED_FILE_TYPES,
     multiple: true,
     onDrop
   });
@@ -167,9 +172,7 @@ export const FileField = ({
                 onClick={() => remove(index)}
               />
               <Stack>
-                <AspectRatio ratio={1}>
-                  <Image src={item?.path} alt={item?.path} objectFit="cover" borderRadius="md" />
-                </AspectRatio>
+                <AspectRatio ratio={1}>{getMediaElementFromPath(item?.path)}</AspectRatio>
                 <Input
                   {...register(`${name}.${index}.attribution`)}
                   placeholder={t("form:attribution")}

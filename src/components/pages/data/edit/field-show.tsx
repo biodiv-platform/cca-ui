@@ -1,14 +1,7 @@
 import { defaultViewState } from "@biodiv-platform/naksha-commons";
 import { NakshaGmapsView } from "@biodiv-platform/naksha-gmaps-view";
-import {
-  AspectRatio,
-  Box,
-  Heading,
-  Image,
-  ListItem,
-  SimpleGrid,
-  UnorderedList
-} from "@chakra-ui/react";
+import { AspectRatio, Box, Heading, ListItem, SimpleGrid, UnorderedList } from "@chakra-ui/react";
+import { getMediaElementFromPath } from "@components/form/multimedia";
 import SITE_CONFIG from "@configs/site-config";
 import { FORM_TYPE } from "@static/constants";
 import { formatDate, formatDateRange, formatYear } from "@utils/date";
@@ -60,9 +53,7 @@ const RenderFile = ({ value }) => {
           key={resource?.path}
         >
           <a href={resource?.path} target="_blank" rel="noreferrer">
-            <AspectRatio ratio={1}>
-              <Image alt={resource?.attribution} src={resource?.path} />
-            </AspectRatio>
+            <AspectRatio ratio={1}>{getMediaElementFromPath(resource?.path)}</AspectRatio>
           </a>
           <Box fontSize="sm" fontWeight="normal" p={2}>
             {t("form:attribution")}: {resource?.attribution || "NA"}

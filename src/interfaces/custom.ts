@@ -1,5 +1,12 @@
 import { UserGroupCCA } from "./userGroup";
 
+export enum ResourceType {
+  Video = "VIDEO",
+  Image = "IMAGE",
+  Audio = "AUDIO",
+  Unsupported = "UNSUPPORTED"
+}
+
 export enum Role {
   Any = "ANY",
   User = "ROLE_USER",
