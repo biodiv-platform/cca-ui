@@ -244,10 +244,10 @@
     boundingbox "^1.4.0"
     react-gbus "^1.1.2"
 
-"@biodiv-platform/naksha-mapbox-list@4.5.3-beta.6":
-  version "4.5.3-beta.6"
-  resolved "https://registry.yarnpkg.com/@biodiv-platform/naksha-mapbox-list/-/naksha-mapbox-list-4.5.3-beta.6.tgz#fcba6d8f2aa290b21448ac24861b865781140936"
-  integrity sha512-8WAiATiFI4XP8jPZ0IzBi2i9q5QpmU83RtOSxWSjx3DxGc0mTRoRfEQswh+xNnNz815Hxc2cWKhF41uFoUe/4Q==
+"@biodiv-platform/naksha-mapbox-list@4.5.3-beta.7":
+  version "4.5.3-beta.7"
+  resolved "https://registry.yarnpkg.com/@biodiv-platform/naksha-mapbox-list/-/naksha-mapbox-list-4.5.3-beta.7.tgz#ac2dc64d78dfb18134935f450a4633147f5a0863"
+  integrity sha512-8VJXDXt2htub9jT82VGq+JzvNYi0E1gKvUnDzHHhDs2ikm6/N8UtzxAllouc7KOXyxG2iY83rUFRDR5QMvTTcw==
   dependencies:
     "@biodiv-platform/naksha-commons" "*"
     "@bumaga/tabs" "^0.2.0"
@@ -263,7 +263,6 @@
     react-virtualized-auto-sizer "^1.0.6"
     react-web-share "^1.1.6"
     redaxios "^0.5.0"
-    supercluster "^8.0.1"
     twind "^0.16.17"
 
 "@biodiv-platform/naksha-mapbox-view@4.4.9":
@@ -4390,11 +4389,6 @@ kdbush@^3.0.0:
   resolved "https://registry.yarnpkg.com/kdbush/-/kdbush-3.0.0.tgz#f8484794d47004cc2d85ed3a79353dbe0abc2bf0"
   integrity sha512-hRkd6/XW4HTsA9vjVpY9tuXJYLSlelnkTmVFu4M9/7MIYQtFcHpbugAU7UbOfjOiVSVYl2fqgBuJ32JUmRo5Ew==
 
-kdbush@^4.0.2:
-  version "4.0.2"
-  resolved "https://registry.yarnpkg.com/kdbush/-/kdbush-4.0.2.tgz#2f7b7246328b4657dd122b6c7f025fbc2c868e39"
-  integrity sha512-WbCVYJ27Sz8zi9Q7Q0xHC+05iwkm3Znipc2XTlrnJbsHMYktW4hPhXUE8Ys1engBrvffoSCqbil1JQAa7clRpA==
-
 keen-slider@^6.8.2:
   version "6.8.2"
   resolved "https://registry.yarnpkg.com/keen-slider/-/keen-slider-6.8.2.tgz#be03e2225cde2a829df53e71c15caed66fbbe82a"
@@ -4702,16 +4696,16 @@ murmurhash-js@^1.0.0:
   resolved "https://registry.yarnpkg.com/murmurhash-js/-/murmurhash-js-1.0.0.tgz#b06278e21fc6c37fa5313732b0412bcb6ae15f51"
   integrity sha512-TvmkNhkv8yct0SVBSy+o8wYzXjE4Zz3PCesbfs8HiCXXdcTuocApFv11UWlNFWKYsP2okqrhb7JNlSm9InBhIw==
 
-naksha-components-react@4.6.1-beta.6:
-  version "4.6.1-beta.6"
-  resolved "https://registry.yarnpkg.com/naksha-components-react/-/naksha-components-react-4.6.1-beta.6.tgz#87fe88f892eb6b1aa5cb3e4ba67284cb33c608c9"
-  integrity sha512-BfmxefCu+VYF2p/o/rUieJH6Ev42YTpxHvwS40owVDkbDtjey9AlnKnCANeDWw2FvY0vJSrZLYuZqin4H3qKuA==
+naksha-components-react@4.6.1-beta.8:
+  version "4.6.1-beta.8"
+  resolved "https://registry.yarnpkg.com/naksha-components-react/-/naksha-components-react-4.6.1-beta.8.tgz#6a6891b5b0f8700ae41e34b8f71c7b7fd672a385"
+  integrity sha512-Ip5mQsJwCj8j+ECr5EnMHmtBhEavSw6AK+9QDSQMBpUtkmndx4jiXV3CoxQr91zBBX8vrTrWOrBXC7+FFWv4ww==
   dependencies:
     "@biodiv-platform/eslint-preset" "4.4.9"
     "@biodiv-platform/naksha-gmaps-draw" "4.5.3"
     "@biodiv-platform/naksha-gmaps-view" "4.4.9"
     "@biodiv-platform/naksha-mapbox-draw" "4.4.9"
-    "@biodiv-platform/naksha-mapbox-list" "4.5.3-beta.6"
+    "@biodiv-platform/naksha-mapbox-list" "4.5.3-beta.7"
     "@biodiv-platform/naksha-mapbox-view" "4.4.9"
     "@biodiv-platform/tsconfig" "4.4.9"
 
@@ -6054,13 +6048,6 @@ supercluster@^7.1.4:
   integrity sha512-EulshI3pGUM66o6ZdH3ReiFcvHpM3vAigyK+vcxdjpJyEbIIrtbmBdY23mGgnI24uXiGFvrGq9Gkum/8U7vJWg==
   dependencies:
     kdbush "^3.0.0"
-
-supercluster@^8.0.1:
-  version "8.0.1"
-  resolved "https://registry.yarnpkg.com/supercluster/-/supercluster-8.0.1.tgz#9946ba123538e9e9ab15de472531f604e7372df5"
-  integrity sha512-IiOea5kJ9iqzD2t7QJq/cREyLHTtSmUT6gQsweojg9WH2sYJqZK9SswTu6jrscO6D1G5v5vYZ9ru/eq85lXeZQ==
-  dependencies:
-    kdbush "^4.0.2"
 
 supports-color@^5.3.0, supports-color@^5.5.0:
   version "5.5.0"
