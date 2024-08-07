@@ -93,3 +93,47 @@ export const CleanExif = (data, blockHash) => {
     blockHash
   };
 };
+
+export const getMapDataProps = (data) => {
+  const features = data.map((point) => ({
+    type: "Feature",
+    properties: { id: point.id },
+    geometry: {
+      type: "Point",
+      coordinates: [point.lng, point.lat]
+    }
+  }));
+
+  const lats = data.map((point) => point.lat);
+  const lngs = data.map((point) => point.lng);
+
+  const minLat = Math.min(...lats);
+  const maxLat = Math.max(...lats);
+  const minLng = Math.min(...lngs);
+  const maxLng = Math.max(...lngs);
+
+  const bounds = [
+    [minLng, minLat],
+    [maxLng, maxLat]
+  ];
+
+  const WORLD_DIM = { height: 512, width: 512 }; // default dimensions
+  const ZOOM_MAX = 20;
+
+  const latDiff = maxLat - minLat;
+  const lngDiff = maxLng - minLng;
+
+  const latZoom = Math.log2(WORLD_DIM.height / latDiff);
+  const lngZoom = Math.log2(WORLD_DIM.width / lngDiff);
+
+  const zoom = Math.min(latZoom, lngZoom, ZOOM_MAX) - 1; // Adjust zoom level as needed
+
+  return {
+    bounds,
+    zoom,
+    geoJSON: {
+      type: "FeatureCollection",
+      features
+    }
+  };
+};

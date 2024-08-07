@@ -8,14 +8,12 @@ import { Role } from "@interfaces/custom";
 import { axGetDataSummaryById } from "@services/cca.service";
 import { ENDPOINT, isBrowser } from "@static/constants";
 import { hasAccess } from "@utils/auth";
-import { getMapCenter } from "@utils/location";
+import { getMapDataProps } from "@utils/location";
 import dynamic from "next/dynamic";
 import useTranslation from "next-translate/useTranslation";
 import React, { useEffect, useState } from "react";
 
 import useResponseList from "../use-response-list";
-
-const defaultViewState = getMapCenter(3);
 
 const NakshaMapboxList: any = dynamic(
   () => import("naksha-components-react").then((mod: any) => mod.NakshaMapboxList),
@@ -72,12 +70,22 @@ export default function Map() {
     return res.data;
   }
 
+  const { bounds, zoom, geoJSON } = getMapDataProps(mapData);
+
+  const defaultViewState = {
+    longitude: (bounds[0][0] + bounds[1][0]) / 2,
+    latitude: (bounds[0][1] + bounds[1][1]) / 2,
+    zoom,
+    bearing: 0,
+    pitch: 0
+  };
+
   return (
     <Box boxSize="full" width="full" height="calc(100vh - var(--heading-height))">
       {mapData.length > 0 ? (
         <NakshaMapboxList
           lang={lang}
-          clusterMarkers={mapData}
+          clusterMarkers={geoJSON}
           hoverFunction={fetchMarkerInfo}
           defaultViewState={defaultViewState}
           loadToC={true}
