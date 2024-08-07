@@ -244,10 +244,10 @@
     boundingbox "^1.4.0"
     react-gbus "^1.1.2"
 
-"@biodiv-platform/naksha-mapbox-list@4.5.3-beta.7":
-  version "4.5.3-beta.7"
-  resolved "https://registry.yarnpkg.com/@biodiv-platform/naksha-mapbox-list/-/naksha-mapbox-list-4.5.3-beta.7.tgz#ac2dc64d78dfb18134935f450a4633147f5a0863"
-  integrity sha512-8VJXDXt2htub9jT82VGq+JzvNYi0E1gKvUnDzHHhDs2ikm6/N8UtzxAllouc7KOXyxG2iY83rUFRDR5QMvTTcw==
+"@biodiv-platform/naksha-mapbox-list@4.5.3-beta.8":
+  version "4.5.3-beta.8"
+  resolved "https://registry.yarnpkg.com/@biodiv-platform/naksha-mapbox-list/-/naksha-mapbox-list-4.5.3-beta.8.tgz#b0b3495d3743ed5cd567f463b666f5f118c265c8"
+  integrity sha512-TfnZH07MO/VLmoZ+9YG27ZJyy0SewPqF6MuN9/XdTNnlTH//cMHImX62D2ZTs/bZmsdQ8IbmdPLE2mrQ8gJ+kQ==
   dependencies:
     "@biodiv-platform/naksha-commons" "*"
     "@bumaga/tabs" "^0.2.0"
@@ -4696,16 +4696,16 @@ murmurhash-js@^1.0.0:
   resolved "https://registry.yarnpkg.com/murmurhash-js/-/murmurhash-js-1.0.0.tgz#b06278e21fc6c37fa5313732b0412bcb6ae15f51"
   integrity sha512-TvmkNhkv8yct0SVBSy+o8wYzXjE4Zz3PCesbfs8HiCXXdcTuocApFv11UWlNFWKYsP2okqrhb7JNlSm9InBhIw==
 
-naksha-components-react@4.6.1-beta.8:
-  version "4.6.1-beta.8"
-  resolved "https://registry.yarnpkg.com/naksha-components-react/-/naksha-components-react-4.6.1-beta.8.tgz#6a6891b5b0f8700ae41e34b8f71c7b7fd672a385"
-  integrity sha512-Ip5mQsJwCj8j+ECr5EnMHmtBhEavSw6AK+9QDSQMBpUtkmndx4jiXV3CoxQr91zBBX8vrTrWOrBXC7+FFWv4ww==
+naksha-components-react@4.6.1-beta.9:
+  version "4.6.1-beta.9"
+  resolved "https://registry.yarnpkg.com/naksha-components-react/-/naksha-components-react-4.6.1-beta.9.tgz#9aeede7bb3899e080533d5855d81778a29d93f50"
+  integrity sha512-MkL7dARqgxAa0AUNMxn6sIIHzLlfIGl3q+OiZHlYUtUx0KWJFRHQsdMJP3NvtodPo9WDm5ddhTbsk1jMrGWMiA==
   dependencies:
     "@biodiv-platform/eslint-preset" "4.4.9"
     "@biodiv-platform/naksha-gmaps-draw" "4.5.3"
     "@biodiv-platform/naksha-gmaps-view" "4.4.9"
     "@biodiv-platform/naksha-mapbox-draw" "4.4.9"
-    "@biodiv-platform/naksha-mapbox-list" "4.5.3-beta.7"
+    "@biodiv-platform/naksha-mapbox-list" "4.5.3-beta.8"
     "@biodiv-platform/naksha-mapbox-view" "4.4.9"
     "@biodiv-platform/tsconfig" "4.4.9"
 
