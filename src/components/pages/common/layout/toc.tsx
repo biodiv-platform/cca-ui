@@ -30,8 +30,6 @@ export default function ToC({ templateFields }) {
 
   const headings = useMemo(() => templateFields.filter((tf) => tf.type === FORM_TYPE.HEADING), []);
 
-  console.warn("heading", headings);
-
   return (
     <Box position="sticky" top="var(--content-top)">
       <Stack>
