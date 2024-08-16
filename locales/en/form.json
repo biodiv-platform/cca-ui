@@ -52,7 +52,8 @@
   "saved": {
     "error": "Unable to Save",
     "info": "Cannot save, this field is required",
-    "success": "Saved Successfully"
+    "success": "Saved Successfully",
+    "title": "Save - Publish - and - Continue"
   },
   "short_name": "Short Name",
   "submit": "Submit",
