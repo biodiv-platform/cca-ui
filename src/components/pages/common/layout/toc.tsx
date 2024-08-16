@@ -41,7 +41,7 @@ export default function ToC({ templateFields }) {
             <NavigationLink
               key={index}
               href={`#${heading.fieldId}`}
-              disabled={!heading?.isRequired}
+              disabled={!heading.isRequired && !heading.children.some((child) => child.isRequired)}
             >
               {heading.name}
             </NavigationLink>
