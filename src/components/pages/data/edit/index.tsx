@@ -36,7 +36,7 @@ export default function ResponseEditPageComponent() {
     <Container>
       <ShowHeader />
       {canEditEditors && isEdit && <PermissionEdit />}
-      <Sidebar fields={templateFields}>
+      <Sidebar fields={templateFields} isEdit={true}>
         <Accordion defaultIndex={selectedAccordians} allowMultiple>
           {templateGroups.map(({ heading, fields }) => (
             <AccordionItem

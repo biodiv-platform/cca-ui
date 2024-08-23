@@ -25,7 +25,7 @@ const NavigationLink = ({ href, children, disabled = false }) => (
   </NextLink>
 );
 
-export default function ToC({ templateFields }) {
+export default function ToC({ templateFields, isEdit }) {
   const { t } = useTranslation();
 
   const headings = useMemo(() => templateFields.filter((tf) => tf.type === FORM_TYPE.HEADING), []);
@@ -41,7 +41,11 @@ export default function ToC({ templateFields }) {
             <NavigationLink
               key={index}
               href={`#${heading.fieldId}`}
-              disabled={!heading.isRequired && !heading.children.some((child) => child.isRequired)}
+              disabled={
+                !heading.isRequired &&
+                !heading.children.some((child) => child.isRequired) &&
+                !isEdit
+              }
             >
               {heading.name}
             </NavigationLink>

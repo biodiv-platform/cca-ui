@@ -53,14 +53,14 @@
     "error": "Unable to Save",
     "info": "Cannot save, this field is required",
     "success": "Saved Successfully",
-    "title": "Save - Publish - and - Continue"
+    "title": "Submit and Continue"
   },
   "short_name": "Short Name",
   "submit": "Submit",
   "tags": "Tags",
   "tags_hint": "Start typing to search tags",
   "tags_update_success": "Tags Updated Successfully",
-  "terms": "By submitting this form, you agree that the photos or videos you are submitting are taken by you, or you have permission of the copyright holder to upload them on creative commons licenses.",
+  "terms": "By submitting this form, you consent to share the given data under the Creative Commons licenses.",
   "title": "Title",
   "type": "Type",
   "updated_on": "Updated On",

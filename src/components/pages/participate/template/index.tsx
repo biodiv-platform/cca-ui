@@ -56,7 +56,7 @@ export default function TemplateParticipateComponent({ template }) {
       })
     ),
     defaultValues: {
-      terms: true,
+      terms: false,
       userGroupId: currentGroup.id && currentGroup.id > 0 ? [currentGroup.id.toString()] : []
     }
   });
