@@ -111,7 +111,7 @@ export default function TemplateParticipateComponent({ template }) {
                       {heading ? (
                         <ParticipateTemplateFieldRenderer field={heading} />
                       ) : (
-                        "No Heading"
+                        t("form:no_heading")
                       )}
                       <AccordionIcon />
                     </AccordionButton>
