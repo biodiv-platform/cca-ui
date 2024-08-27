@@ -3,7 +3,7 @@ import React from "react";
 
 import ToC from "./toc";
 
-export default function Sidebar({ children, fields, isEdit = true }) {
+export default function Sidebar({ children, fields, isEdit = false }) {
   return (
     <Flex id="home" direction={{ base: "column", md: "row" }}>
       <Box as="nav" aria-label="Main Navigation" w="280px" pr={{ base: 0, md: 10 }} flexShrink={0}>
