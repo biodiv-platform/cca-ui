@@ -1,16 +1,3 @@
-// import { fetch } from "fetch-opengraph";
-
-// export default async function handler(req, res) {
-//   const data = await fetch(req.query.url);
-
-//   res.json({
-//     href: req.query.url,
-//     title: data.title,
-//     image: data.image,
-//     description: data.description,
-//   });
-// }
-
 import ogs from "open-graph-scraper";
 
 export default async function handler(req, res) {
@@ -20,13 +7,15 @@ export default async function handler(req, res) {
   if (error) {
     res.status(500).json({ error: "Failed to fetch Open Graph metadata" });
   } else {
-    const imageUrl = Array.isArray(result.ogImage) ? result.ogImage[0]?.url : result.ogImage?.url;
+    const imageUrl = Array.isArray((result as any).ogImage)
+      ? (result as any).ogImage[0]?.url
+      : (result as any).ogImage?.url;
 
     res.json({
       href: req.query.url,
-      title: result.ogTitle,
+      title: (result as any).ogTitle,
       image: imageUrl || null,
-      description: result.ogDescription || null
+      description: (result as any).ogDescription || null
     });
   }
 }
