@@ -15,9 +15,12 @@ export const axClearMemoryCache = async () => {
 
 export const axGetOpenGraphMeta = async (url) => {
   try {
-    const { data } = await plainHttp.get(`/api/meta`, { params: { url } });
+    const response =
+      url.includes("youtube.com/watch?v=") || url.includes("youtu.be/")
+        ? await plainHttp.get(`/api/youtube-meta`, { params: { url } })
+        : await plainHttp.get(`/api/meta`, { params: { url } });
 
-    return { success: true, data };
+    return { success: true, data: response.data };
   } catch (e) {
     console.error(e);
 
