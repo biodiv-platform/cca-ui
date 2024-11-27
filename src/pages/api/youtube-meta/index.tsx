@@ -34,7 +34,7 @@ export default async function handler(req, res) {
         key: SITE_CONFIG.TOKENS.GMAP
       },
       headers: {
-        Referer: SITE_CONFIG.SITE.API_ENDPOINT
+        Referer: SITE_CONFIG.SITE.API_ENDPOINT_SSR
       }
     });
 
