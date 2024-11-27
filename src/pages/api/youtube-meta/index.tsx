@@ -1,8 +1,6 @@
 import SITE_CONFIG from "@configs/site-config";
 import axios from "axios";
 
-const YOUTUBE_API_KEY = SITE_CONFIG.TOKENS.YOUTUBE_API_KEY;
-
 const truncateDescription = (description, maxLength) => {
   if (description.length > maxLength) {
     return description.substring(0, maxLength) + "...";
@@ -33,7 +31,10 @@ export default async function handler(req, res) {
       params: {
         part: "snippet",
         id: extractVideoId(url),
-        key: YOUTUBE_API_KEY
+        key: SITE_CONFIG.TOKENS.GMAP
+      },
+      headers: {
+        Referer: SITE_CONFIG.SITE.API_ENDPOINT
       }
     });
 

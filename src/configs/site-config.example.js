@@ -23,8 +23,7 @@ const SITE_CONFIG_EXAMPLE = {
   TOKENS: {
     GMAP: "X",
     RECAPTCHA: "X",
-    OAUTH_GOOGLE: "x.apps.googleusercontent.com",
-    YOUTUBE_API_KEY: "X"
+    OAUTH_GOOGLE: "x.apps.googleusercontent.com"
   },
   REGISTER: {
     MOBILE: true
