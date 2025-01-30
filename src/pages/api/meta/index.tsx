@@ -7,6 +7,6 @@ export default async function handler(req, res) {
     href: req.query.url,
     title: data.title,
     image: data.image,
-    description: data.description,
+    description: data.description
   });
 }
