@@ -1,4 +1,4 @@
-import { ArrowForwardIcon } from "@chakra-ui/icons";
+import { ArrowForwardIcon, ChevronDownIcon } from "@chakra-ui/icons";
 import {
   Box,
   Flex,
@@ -47,6 +47,7 @@ const GroupListItem = () => {
         {...extraProps}
       >
         {t("header:menu_primary.groups.title")}
+        <ChevronDownIcon />
       </MenuButton>
       <MenuList h="18rem" w="360px" overflowY="scroll">
         <Box px={2}>

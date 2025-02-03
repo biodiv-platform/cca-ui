@@ -10,7 +10,7 @@
   "menu_primary": {
     "groups": {
       "see_all": "सभी देखें",
-      "title": "समूह"
+      "title": "माइक्रोसाइट्स"
     }
   },
   "menu_secondary": {
@@ -20,8 +20,8 @@
     }
   },
   "participate": "भाग लेना",
-  "stats": "आंकड़े",
   "search": "खोज",
+  "stats": "आंकड़े",
   "templates": "टेम्पलेट्स",
   "toggle_menu": "मेनू टॉगल करें",
   "users": "उपयोगकर्ताओं"

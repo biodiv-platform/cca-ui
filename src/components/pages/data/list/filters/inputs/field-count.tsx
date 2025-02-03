@@ -1,4 +1,5 @@
 import { Box, Button, ButtonGroup } from "@chakra-ui/react";
+import useTranslation from "next-translate/useTranslation";
 import React from "react";
 
 import useResponseList from "../../use-response-list";
@@ -7,6 +8,7 @@ const filterKey = "richTextCount";
 
 export default function FieldCount() {
   const { addFilter, removeFilter, filter } = useResponseList();
+  const { t } = useTranslation();
 
   const handleOnAll = () => removeFilter(filterKey);
 
@@ -16,10 +18,10 @@ export default function FieldCount() {
     <Box p={4}>
       <ButtonGroup colorScheme="blue" isAttached size="sm">
         <Button variant={filter.f[filterKey] ? "outline" : "solid"} onClick={handleOnAll}>
-          All
+          {t("common:all_ccas")}
         </Button>
         <Button variant={filter.f[filterKey] ? "solid" : "outline"} onClick={handleOnCaseStudies}>
-          Case Studies
+          {t("common:case_studies")}
         </Button>
       </ButtonGroup>
     </Box>

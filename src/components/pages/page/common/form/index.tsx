@@ -185,10 +185,7 @@ export default function PageForm({
                 <Box gridColumn="1/4">
                   <TextAreaField name="description" label={t("page:form.description")} />
                 </Box>
-                <SocialPreviewField
-                  name="socialPreview"
-                  label={t("form:social_preview")}
-                />
+                <SocialPreviewField name="socialPreview" label={t("form:social_preview")} />
               </SimpleGrid>
               <SwitchField name="sticky" mb={2} label={t("page:form.is_sidebar")} />
               <SwitchField

@@ -131,6 +131,18 @@ export const axAddGroupAdminMembers = async (payload) => {
   }
 };
 
+export const axBulkRemoveGroupMembers = async (params, payload = {}) => {
+  try {
+    const { data } = await http.put(`${ENDPOINT.USERGROUP}/v1/group/remove/bulk/members`, payload, {
+      params
+    });
+    return { success: true, data };
+  } catch (e) {
+    console.error(e);
+    return { success: false, data: [] };
+  }
+};
+
 /**
  * when user accepts invitation to be moderator of any userGroup
  *

@@ -1,5 +1,6 @@
 {
   "actions": {
+    "apply": "Apply",
     "flag": {
       "category": "Category",
       "flags": {
@@ -10,11 +11,23 @@
       "notes": "Notes",
       "others_flagged": "Others who flagged",
       "title": "Flag"
-    }
+    },
+    "select_actions": "Select Actions",
+    "select_all": "Select All",
+    "title": "Actions",
+    "unselect_all": "Unselect All",
+    "users_selected": "Users Selected"
   },
   "activity": "Activity",
   "add": "Add",
+  "all_ccas": "All CCAs",
+  "bulk_action": {
+    "failure": "Unable to trigger bulk action",
+    "success": "Successfully triggered  bulk action, Changes will be reflected  shortly",
+    "title":"Remove Users from Group - "
+  },
   "cancel": "Cancel",
+  "case_studies": "Case Studies",
   "clear": "Clear",
   "close": "Close",
   "confirm_delete": "Are you sure want to delete?",

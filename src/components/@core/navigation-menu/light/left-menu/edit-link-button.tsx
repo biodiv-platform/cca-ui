@@ -2,7 +2,9 @@ import { Button } from "@chakra-ui/react";
 import LocalLink from "@components/@core/local-link";
 import useGlobalState from "@hooks/use-global-state";
 import EditIcon from "@icons/edit";
+import { Role } from "@interfaces/custom";
 import { axCheckUserGroupFounderOrAdmin } from "@services/usergroup.service";
+import { hasAccess } from "@utils/auth";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 
@@ -22,7 +24,7 @@ export default function EditLinkButton({ label }) {
     }
   }, [pathname]);
 
-  return canEdit ? (
+  return canEdit && hasAccess([Role.Admin, Role.UsergroupFounder]) ? (
     <LocalLink prefixGroup={true} href={`${webAddress}/edit`}>
       <Button className="join-usergroup" leftIcon={<EditIcon />} m={2} colorScheme="blue" size="sm">
         {label}
