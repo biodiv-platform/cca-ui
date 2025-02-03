@@ -131,9 +131,9 @@ export const axAddGroupAdminMembers = async (payload) => {
   }
 };
 
-export const axBulkRemoveGroupMembers = async (params) => {
+export const axBulkRemoveGroupMembers = async (params, payload = {}) => {
   try {
-    const { data } = await http.get(`${ENDPOINT.USERGROUP}/v1/group/remove/bulk/members`, {
+    const { data } = await http.put(`${ENDPOINT.USERGROUP}/v1/group/remove/bulk/members`, payload, {
       params
     });
     return { success: true, data };
