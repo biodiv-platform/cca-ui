@@ -18,8 +18,12 @@ export default function ShowAccordian({ data }) {
   const { t } = useTranslation();
   const defaultIndex = useMemo(
     () =>
-      data.map((f, idx) => (f.type === FORM_TYPE.GEOMETRY ? idx : null)).filter((i) => i !== null),
-    []
+      data
+        .map((f, idx) =>
+          f.type === FORM_TYPE.GEOMETRY || response?.ccaFieldValues?.[f.fieldId]?.value ? idx : null
+        )
+        .filter((i) => i !== null),
+    [data, response]
   );
 
   return (

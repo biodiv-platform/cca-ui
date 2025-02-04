@@ -31,9 +31,11 @@ export const getTemplateByShortOrParentName = async (shortName, locale?) => {
   return _tMain;
 };
 
-export const axGetTemplateResponseById = async (responseId, params = {}) => {
+export const axGetTemplateResponseById = async (responseId, language?) => {
   try {
-    const { data } = await plainHttp.get(`${ENDPOINT.CCA}/v1/data/${responseId}`, { params });
+    const { data } = await plainHttp.get(`${ENDPOINT.CCA}/v1/data/${responseId}`, {
+      params: { language }
+    });
 
     return { success: true, data };
   } catch (e) {
