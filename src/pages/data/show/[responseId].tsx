@@ -23,9 +23,7 @@ const ResponseShowPage = (props) =>
   );
 
 export const getServerSideProps = async (ctx) => {
-  const { data: response } = await axGetTemplateResponseById(ctx.query.responseId, {
-    language: ctx.locale
-  });
+  const { data: response } = await axGetTemplateResponseById(ctx.query.responseId, ctx.locale);
 
   // if response is empty then record does not exist
   if (!response) {

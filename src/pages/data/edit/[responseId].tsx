@@ -11,7 +11,10 @@ const ResponseEditPage = (props) => (
 );
 
 export const getServerSideProps = async (ctx) => {
-  const { data: initialResponse } = await axGetTemplateResponseById(ctx.query.responseId);
+  const { data: initialResponse } = await axGetTemplateResponseById(
+    ctx.query.responseId,
+    ctx.locale
+  );
   const template = await getTemplateByShortOrParentName(initialResponse.shortName, ctx.locale);
 
   const canEditEditors = adminOrAuthor(initialResponse.userId, ctx);
