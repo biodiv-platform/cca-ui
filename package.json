@@ -55,17 +55,17 @@
     "mq-styled-components": "^2.1.2",
     "naksha-components-react": "4.6.1-beta.10",
     "nanoid": "^4.0.0",
-    "next": "12.3.1",
+    "next": "14.2.20",
     "next-seo": "^5.5.0",
     "next-translate": "^1.6.0",
     "nookies": "^2.5.2",
     "nprogress": "^0.2.0",
     "query-string": "^7.1.1",
-    "react": "^18.2.0",
+    "react": "18.3.1",
     "react-beforeunload": "^2.5.3",
     "react-data-table-component": "^7.5.3",
     "react-datepicker": "^4.8.0",
-    "react-dom": "^18.2.0",
+    "react-dom": "18.3.1",
     "react-dropzone": "^14.2.2",
     "react-error-boundary": "^3.1.4",
     "react-flatpickr": "^3.10.13",
@@ -100,11 +100,11 @@
     "@dtsgenerator/replace-namespace": "^1.5.2",
     "@types/node": "^18.8.3",
     "@types/offscreencanvas": "^2019.7.0",
-    "@types/react": "18.0.21",
+    "@types/react": "18.3.18",
     "@typescript-eslint/eslint-plugin": "^5.39.0",
     "dtsgenerator": "^3.16.1",
     "eslint": "^8.25.0",
-    "eslint-config-next": "^12.3.1",
+    "eslint-config-next": "14.2.20",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-simple-import-sort": "^8.0.0",
     "husky": "^8.0.1",
@@ -116,5 +116,8 @@
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": "next lint --cache --fix",
     "*.{js,css,md}": "prettier -c -w src"
+  },
+  "resolutions": {
+    "@types/react": "18.3.18"
   }
 }

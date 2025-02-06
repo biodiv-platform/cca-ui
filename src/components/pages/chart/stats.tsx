@@ -67,7 +67,9 @@ export default function Stats({ statsData }) {
           className="white-box"
           style={{ scrollMarginTop: "150px" }}
           id={`chart-${index}`}
-          ref={(ref) => (chartRefs.current[index] = ref)}
+          ref={(ref) => {
+            chartRefs.current[index] = ref;
+          }}
         >
           <BoxHeading styles={{ bgColor: "gray.100" }}>📊 {chartData?.Title}</BoxHeading>
           <Box p={10}>{renderChart(chartData, index)}</Box>

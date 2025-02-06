@@ -113,17 +113,13 @@ export const GeometryField = ({
               geoJSONImport={undefined}
             />
           }
-          importButtonComponent={
-            <Button type="button" placeholder={t("common:add")} children="Add" />
-          }
+          importButtonComponent={<Button type="button">{t("common:add")}</Button>}
           importDeleteIcon={<DeleteIcon />}
           importLocationIcon={<LocationIcon />}
           importFileIcon={<FileIcon />}
           importSuccessIcon={<CheckCircleIcon />}
           importFailureIcon={<CloseIcon />}
-          importButtonComponentModal={
-            <Button type="button" placeholder={t("common:add")} children="Import" />
-          }
+          importButtonComponentModal={<Button type="button">{t("common:import")}</Button>}
         />
       </MapContainerBox>
       <FormErrorMessage children={namedFormErrorMessage(fieldState?.error?.message, name, title)} />
