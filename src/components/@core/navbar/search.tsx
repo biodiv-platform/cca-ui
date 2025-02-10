@@ -1,8 +1,10 @@
-import { Search2Icon } from "@chakra-ui/icons";
-import { Input, InputGroup, InputLeftElement } from "@chakra-ui/react";
+import { Input } from "@chakra-ui/react";
 import { googleSearch } from "@utils/search";
 import useTranslation from "next-translate/useTranslation";
 import React from "react";
+import { LuSearch } from "react-icons/lu";
+
+import { InputGroup } from "@/components/ui/input-group";
 
 export default function Search() {
   const { t } = useTranslation();
@@ -14,8 +16,7 @@ export default function Search() {
 
   return (
     <form onSubmit={handleOnSearch}>
-      <InputGroup size="sm">
-        <InputLeftElement pointerEvents="none" children={<Search2Icon color="gray.400" />} />
+      <InputGroup startElement={<LuSearch color="gray.400" />}>
         <Input
           maxW={{ md: "10rem" }}
           border={0}

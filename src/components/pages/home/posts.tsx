@@ -1,4 +1,4 @@
-import { Box, chakra, Heading, Image, Link, List, ListItem, SimpleGrid } from "@chakra-ui/react";
+import { Box, chakra, Heading, Image, Link, List, SimpleGrid } from "@chakra-ui/react";
 import { Container } from "@components/@core/container";
 import LocalLink from "@components/@core/local-link";
 import SITE_CONFIG from "@configs/site-config";
@@ -23,7 +23,7 @@ export default function Posts({ featured }) {
         >
           {t("home:featured.title")}
         </chakra.h2>
-        <SimpleGrid columns={{ base: 1, md: 4 }} spacing={10}>
+        <SimpleGrid columns={{ base: 1, md: 4 }} gap={10}>
           {featured.map((f) => {
             const imageSrc = getResourceThumbnail(f?.files?.[0]?.path, "?h=164");
 
@@ -58,11 +58,11 @@ export default function Posts({ featured }) {
                   </LocalLink>
                 </Box>
                 <Box p={4} h="154px">
-                  <List spacing={1}>
+                  <List.Root gap={1}>
                     {f.values
                       .filter((f) => !SITE_CONFIG.CCA.TITLE_FIELD_IDS.includes(f.fieldId))
                       .map((field, index) => (
-                        <ListItem key={index} lineHeight={1.2}>
+                        <List.Item key={index} lineHeight={1.2}>
                           <Box as="span" fontWeight="semibold" mr={1}>
                             {field.name}:
                           </Box>
@@ -71,9 +71,9 @@ export default function Posts({ featured }) {
                               __html: renderSimpleValue(field.value, field.type) || "NA"
                             }}
                           />
-                        </ListItem>
+                        </List.Item>
                       ))}
-                  </List>
+                  </List.Root>
                 </Box>
               </Box>
             );

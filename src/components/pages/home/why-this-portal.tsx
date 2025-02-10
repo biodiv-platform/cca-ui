@@ -15,8 +15,8 @@ export default function WhyThisPortal() {
         placeItems="center"
         columns={{ base: 1, md: 2 }}
         py={12}
-        spacingY={{ base: 10, md: 32 }}
-        spacingX={{ base: 10, md: 24 }}
+        gapY={{ base: 10, md: 32 }}
+        gapX={{ base: 10, md: 24 }}
       >
         <Image
           src="/next-assets/home-human-chain.webp"

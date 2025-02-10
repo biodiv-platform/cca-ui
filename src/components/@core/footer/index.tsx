@@ -30,13 +30,13 @@ const SocialButton = ({ children, label, href }) => (
     h={8}
     cursor="pointer"
     as="a"
-    href={href}
+    // href={href}
     display="inline-flex"
     alignItems="center"
     justifyContent="center"
     transition="background 0.3s ease"
     _hover={{ bg: "blackAlpha.200" }}
-    target="_blank"
+    // target="_blank"
     rel="noreferrer noopener"
   >
     <VisuallyHidden>{label}</VisuallyHidden>
@@ -51,8 +51,8 @@ export default function Footer() {
   return (
     <Box bg="gray.100" color="gray.700" className="no-print">
       <Container as={Stack} maxW={containerMaxW} py={20}>
-        <SimpleGrid templateColumns={{ md: "4fr 2fr" }} spacing={8}>
-          <Stack spacing={4}>
+        <SimpleGrid templateColumns={{ md: "4fr 2fr" }} gap={8}>
+          <Stack gap={4}>
             <Box>
               <Image alt={t("common:site.title")} src="/next-assets/logo.png" />
             </Box>
@@ -64,7 +64,7 @@ export default function Footer() {
                 {t("common:license")}
               </ExternalBlueLink>
             </Text>
-            <Stack direction="row" spacing={6}>
+            <Stack direction="row" gap={6}>
               <SocialButton label="Mail" href={SITE_CONFIG.FOOTER.MAIL} children={<MailIcon />} />
               <SocialButton
                 label="YouTube"
@@ -84,7 +84,7 @@ export default function Footer() {
             </Stack>
           </Stack>
           <div>
-            <SimpleGrid columns={{ base: 1, md: 2 }} spacing={4}>
+            <SimpleGrid columns={{ base: 1, md: 2 }} gap={4}>
               {pages
                 .flatMap((page) => [page, ...page.children])
                 .filter((page) => page.showInFooter !== false)

@@ -1,27 +1,18 @@
-import { InfoOutlineIcon } from "@chakra-ui/icons";
-import {
-  Box,
-  chakra,
-  Flex,
-  FormHelperText,
-  FormLabel as FL,
-  IconButton,
-  Input,
-  useDisclosure,
-  useFormControlContext
-} from "@chakra-ui/react";
+import { Box, chakra, Flex, IconButton, Input, useDisclosure } from "@chakra-ui/react";
+import { Field } from "@chakra-ui/react";
 import { isOthersField } from "@utils/field";
 import React, { useMemo } from "react";
 import { useController } from "react-hook-form";
+import { LuInfo } from "react-icons/lu";
 
-const RequiredIndicator = () => {
-  const { isRequired } = useFormControlContext();
+// const RequiredIndicator = () => {
+//   const { isRequired } = useFormControl();
 
-  return isRequired ? <chakra.span __css={{ color: "red.500" }} ml={1} children="*" /> : null;
-};
+//   return isRequired ? <chakra.span css={{ color: "red.500" }} ml={1} children="*" /> : null;
+// };
 
 export function FormLabel({ title, label, name, helpText, isLargeVariant }) {
-  const { isOpen, onToggle } = useDisclosure();
+  const { open, onToggle } = useDisclosure();
 
   return isLargeVariant ? (
     <>
@@ -31,16 +22,16 @@ export function FormLabel({ title, label, name, helpText, isLargeVariant }) {
             <div>
               <IconButton
                 disabled={!helpText}
-                variant="link"
                 type="button"
                 minWidth="auto"
                 aria-label="toggle"
-                icon={<InfoOutlineIcon />}
                 onClick={onToggle}
                 m={3}
                 ml={2}
                 mt={1}
-              />
+              >
+                <LuInfo />
+              </IconButton>
             </div>
             <div>
               <chakra.label
@@ -52,7 +43,7 @@ export function FormLabel({ title, label, name, helpText, isLargeVariant }) {
               >
                 <Box fontWeight="bold">
                   {title}
-                  <RequiredIndicator />
+                  {/* <RequiredIndicator /> */}
                 </Box>
                 {label || title}
               </chakra.label>
@@ -60,7 +51,7 @@ export function FormLabel({ title, label, name, helpText, isLargeVariant }) {
           </Flex>
         </>
       )}
-      {isOpen && (
+      {open && (
         <Box
           bg="gray.700"
           className="fade"
@@ -78,14 +69,14 @@ export function FormLabel({ title, label, name, helpText, isLargeVariant }) {
             boxSize="12px"
             transform="rotate(45deg)"
           />
-          <FormHelperText m={0} color="white" whiteSpace="pre-line" children={helpText} />
+          <Field.HelperText m={0} color="white" whiteSpace="pre-line" children={helpText} />
         </Box>
       )}
     </>
   ) : label ? (
-    <FL htmlFor={name} mb={0} whiteSpace="pre-line">
+    <Field.Label htmlFor={name} mb={0} whiteSpace="pre-line">
       {label}
-    </FL>
+    </Field.Label>
   ) : null;
 }
 

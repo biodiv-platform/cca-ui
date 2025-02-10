@@ -1,4 +1,3 @@
-import { ArrowForwardIcon } from "@chakra-ui/icons";
 import { Button, Center, Heading, Link, Text } from "@chakra-ui/react";
 import BlurBox from "@components/@core/blur-box";
 import LocalLink from "@components/@core/local-link";
@@ -6,20 +5,21 @@ import { RESOURCE_SIZE } from "@static/constants";
 import { getNextResourceThumbnail, RESOURCE_CTX } from "@utils/media";
 import useTranslation from "next-translate/useTranslation";
 import React, { useMemo } from "react";
+import { LuMoveRight } from "react-icons/lu";
 
 const ReadMore = ({ resource, readMoreButtonText, readMoreUIType }) => {
   return resource.moreLinks && readMoreUIType == "button" ? (
     <Button colorScheme="teal" variant="solid" size="lg" fontSize="xl">
       <LocalLink href={resource.moreLinks}>
         <Link>
-          {readMoreButtonText} <ArrowForwardIcon />
+          {readMoreButtonText} <LuMoveRight />
         </Link>
       </LocalLink>
     </Button>
   ) : (
     <LocalLink href={resource.moreLinks}>
       <Link>
-        {readMoreButtonText} <ArrowForwardIcon />
+        {readMoreButtonText} <LuMoveRight />
       </Link>
     </LocalLink>
   );

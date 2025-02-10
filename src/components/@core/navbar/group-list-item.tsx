@@ -1,21 +1,12 @@
-import { ArrowForwardIcon, ChevronDownIcon } from "@chakra-ui/icons";
-import {
-  Box,
-  Flex,
-  Image,
-  Input,
-  Link,
-  Menu,
-  MenuButton,
-  MenuItem,
-  MenuList,
-  Text
-} from "@chakra-ui/react";
+import { Box, Flex, Image, Input, Link, Text } from "@chakra-ui/react";
 import SITE_CONFIG from "@configs/site-config";
 import useGlobalState from "@hooks/use-global-state";
 import debounce from "debounce-promise";
 import useTranslation from "next-translate/useTranslation";
 import React, { useState } from "react";
+import { LuArrowRight, LuChevronDown } from "react-icons/lu";
+
+import { MenuContent, MenuItem, MenuRoot, MenuTrigger } from "@/components/ui/menu";
 
 import LocalLink from "../local-link";
 
@@ -34,12 +25,12 @@ const GroupListItem = () => {
   const extraProps = { _hover: { bg: "gray.200" } };
 
   return (
-    <Menu>
-      <MenuButton
+    <MenuRoot>
+      <MenuTrigger
         as={Link}
         role="button"
         rounded="md"
-        variant="link"
+        // variant="link"
         cursor="pointer"
         minW={0}
         px={6}
@@ -47,16 +38,16 @@ const GroupListItem = () => {
         {...extraProps}
       >
         {t("header:menu_primary.groups.title")}
-        <ChevronDownIcon />
-      </MenuButton>
-      <MenuList h="18rem" w="360px" overflowY="scroll">
+        <LuChevronDown />
+      </MenuTrigger>
+      <MenuContent h="18rem" w="360px" overflowY="scroll">
         <Box px={2}>
           <Input w="full" onChange={onQuery} placeholder={t("header:search")} />
         </Box>
-        <MenuItem minH="3rem">
+        <MenuItem minH="3rem" value="list">
           <LocalLink href="/group/list" prefixGroup={true}>
             <Link w="full">
-              {t("header:menu_primary.groups.see_all")} <ArrowForwardIcon />
+              {t("header:menu_primary.groups.see_all")} <LuArrowRight />
             </Link>
           </LocalLink>
         </MenuItem>
@@ -67,7 +58,7 @@ const GroupListItem = () => {
             : g?.webAddress;
 
           return (
-            <MenuItem key={g.id} minH="3rem">
+            <MenuItem key={g.id} minH="3rem" value="logo">
               <LocalLink href={groupURL}>
                 <Link w="full">
                   <Flex alignItems="center">
@@ -86,8 +77,8 @@ const GroupListItem = () => {
             </MenuItem>
           );
         })}
-      </MenuList>
-    </Menu>
+      </MenuContent>
+    </MenuRoot>
   );
 };
 

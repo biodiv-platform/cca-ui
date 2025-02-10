@@ -1,4 +1,4 @@
-import { Link, Menu, MenuButton, MenuItem, MenuList } from "@chakra-ui/react";
+import { Button, Link } from "@chakra-ui/react";
 import SITE_CONFIG from "@configs/site-config";
 import useGlobalState from "@hooks/use-global-state";
 import TranslateIcon from "@icons/translate";
@@ -8,6 +8,8 @@ import { parseCookies, setCookie } from "nookies";
 import React, { useEffect } from "react";
 
 const LOCALE_COOKIE = "NEXT_LOCALE";
+
+import { MenuContent, MenuItem, MenuRoot, MenuTrigger } from "@/components/ui/menu";
 
 export default function LanguageSwitcher() {
   const { lang } = useTranslation();
@@ -32,23 +34,27 @@ export default function LanguageSwitcher() {
   }, []);
 
   return (
-    <Menu>
-      <MenuButton
-        as={Link}
-        role="button"
-        ml={4}
-        hidden={isPreviewMode}
-        aria-label="Switch Language"
-      >
-        <TranslateIcon fontSize="xl" />
-      </MenuButton>
-      <MenuList>
+    <MenuRoot>
+      <MenuTrigger asChild>
+        <Button
+          size="sm"
+          variant="outline"
+          hidden={isPreviewMode}
+          as={Link}
+          role="button"
+          ml={4}
+          aria-label="Switch Language"
+        >
+          <TranslateIcon fontSize="xl" />
+        </Button>
+      </MenuTrigger>
+      <MenuContent>
         {Object.entries(SITE_CONFIG.LANG.LIST).map(([langCode, info]: any) => (
-          <MenuItem onClick={() => changeLanguage(langCode, true)} key={langCode}>
+          <MenuItem  value="langCode" asChild onClick={() => changeLanguage(langCode, true)} key={langCode}>
             {info.NAME}
           </MenuItem>
         ))}
-      </MenuList>
-    </Menu>
+      </MenuContent>
+    </MenuRoot>
   );
 }

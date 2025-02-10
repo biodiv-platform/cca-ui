@@ -1,9 +1,14 @@
-import { Tooltip as T, TooltipProps } from "@chakra-ui/react";
 import React from "react";
 
-export default function Tooltip({ title, children, ...rest }: Partial<TooltipProps>) {
+import { Tooltip as T, TooltipProps } from "@/components/ui/tooltip";
+
+interface ITooltipProps extends TooltipProps {
+  title: any;
+}
+
+export default function Tooltip({ title, children, ...rest }: Partial<ITooltipProps>) {
   return (
-    <T aria-label={title} label={title} {...rest}>
+    <T aria-label={title} content={title} {...rest}>
       {children}
     </T>
   );

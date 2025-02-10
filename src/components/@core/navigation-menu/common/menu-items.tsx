@@ -1,8 +1,10 @@
-import { ChevronDownIcon } from "@chakra-ui/icons";
-import { Box, Button, Link, Menu, MenuButton, useBreakpointValue } from "@chakra-ui/react";
+import { Box, Button, Link, useBreakpointValue } from "@chakra-ui/react";
 import LocalLink from "@components/@core/local-link";
 import useTranslation from "next-translate/useTranslation";
 import React from "react";
+import { LuChevronDown } from "react-icons/lu";
+
+import { MenuRoot, MenuTrigger } from "@/components/ui/menu";
 
 import SubMenu from "./sub-menu";
 
@@ -63,37 +65,24 @@ export default function MenuItems(props) {
       alignItems="left"
       mb={isDesktop ? 0 : 4}
     >
-      <MenuButton data-label={t(`${name}`)} role="button" tabIndex={0}>
-        <ChevronDownIcon aria-label="Open Menu" />
-      </MenuButton>
+      <MenuTrigger data-label={t(`${name}`)} role="button" tabIndex={0}>
+        <LuChevronDown aria-label="Open Menu" />
+      </MenuTrigger>
     </Box>
   );
 
   return isDropdown ? (
-    <Menu placement="bottom-end" isLazy={isLazy}>
-      {({ isOpen }) => (
-        <>
-          <Box sx={isDesktop ? desktopLinkStyle : mobileLinkStyle}>
-            <SimpleLink
-              to={to}
-              params={params}
-              prefixGroup={prefixGroup}
-              isDarkButton={isDarkButton}
-            >
-              {linkContent}
-            </SimpleLink>
-            {menuButton}
-          </Box>
-          {(isLazy ? isOpen : true) ? (
-            CCell ? (
-              <CCell />
-            ) : (
-              <SubMenu rows={rows} prefix={""} />
-            )
-          ) : null}
-        </>
-      )}
-    </Menu>
+    <MenuRoot positioning={{ placement: "bottom-end" }} lazyMount={isLazy}>
+      <>
+        <Box css={isDesktop ? desktopLinkStyle : mobileLinkStyle}>
+          <SimpleLink to={to} params={params} prefixGroup={prefixGroup} isDarkButton={isDarkButton}>
+            {linkContent}
+          </SimpleLink>
+          {menuButton}
+        </Box>
+        {isLazy ? CCell ? <CCell /> : <SubMenu rows={rows} prefix={""} /> : null}
+      </>
+    </MenuRoot>
   ) : (
     <SimpleLink to={to} params={params} isDarkButton={isDarkButton} prefixGroup={prefixGroup}>
       {NameIcon && <NameIcon mr={1} />}

@@ -17,7 +17,7 @@ export default function Statistics(featured) {
   return (
     <Box borderRadius="lg" overflow="hidden" bg="white">
       <Container>
-        <SimpleGrid columns={{ base: 1, md: 2 }} py={12} spacing={10}>
+        <SimpleGrid columns={{ base: 1, md: 2 }} py={12} gap={10}>
           <Box
             display="flex"
             justifyContent="center"
@@ -63,7 +63,7 @@ export default function Statistics(featured) {
           </Box>
         </SimpleGrid>
 
-        <SimpleGrid columns={{ base: 1, md: 5 }} spacing={3} mb={6}>
+        <SimpleGrid columns={{ base: 1, md: 5 }} gap={3} mb={6}>
           <GridItem colSpan={4}>
             <chakra.p mb={6} textAlign="left" color={"gray.500"} fontSize="lg">
               {t("home:statistics.description")}

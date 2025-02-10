@@ -1,4 +1,3 @@
-import { MinusIcon } from "@chakra-ui/icons";
 import { Button } from "@chakra-ui/react";
 import useGlobalState from "@hooks/use-global-state";
 import AddIcon from "@icons/add";
@@ -7,6 +6,7 @@ import { waitForAuth } from "@utils/auth";
 import notification, { NotificationType } from "@utils/notification";
 import useTranslation from "next-translate/useTranslation";
 import React, { useState } from "react";
+import { LuMinus } from "react-icons/lu";
 
 interface JoinUserGroupProps {
   currentGroup;
@@ -68,22 +68,22 @@ export default function JoinUserGroup({
       <Button
         className="join-usergroup"
         size="sm"
-        isLoading={isLoading}
+        loading={isLoading}
         colorScheme="green"
         onClick={addUserGroupMember}
-        leftIcon={<AddIcon />}
       >
+        <AddIcon />
         {t("group:join")}
       </Button>
     ) : (
       <Button
         hidden={!showLeave}
         size="sm"
-        isLoading={isLoading}
+        loading={isLoading}
         colorScheme="red"
         onClick={removeUserGroupMember}
-        leftIcon={<MinusIcon />}
       >
+        <LuMinus />
         {t("group:leave")}
       </Button>
     )

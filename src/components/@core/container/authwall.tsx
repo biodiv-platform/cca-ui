@@ -1,22 +1,22 @@
-import {
-  Modal,
-  ModalBody,
-  ModalCloseButton,
-  ModalContent,
-  ModalHeader,
-  ModalOverlay,
-  Spinner,
-  useDisclosure
-} from "@chakra-ui/react";
+import { Spinner, useDisclosure } from "@chakra-ui/react";
 import { AUTHWALL } from "@static/events";
 import useTranslation from "next-translate/useTranslation";
 import React, { Suspense, useState } from "react";
 import { emit, useListener } from "react-gbus";
 
+import {
+  DialogBackdrop,
+  DialogBody,
+  DialogCloseTrigger,
+  DialogContent,
+  DialogHeader,
+  DialogRoot
+} from "@/components/ui/dialog";
+
 const SignInForm = React.lazy(() => import("@components/pages/login/form"));
 
 export default function AuthWall() {
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  const { open, onOpen, onClose } = useDisclosure();
   const [callback, setCallback] = useState<any>(null);
   const { t } = useTranslation();
 
@@ -41,18 +41,18 @@ export default function AuthWall() {
   };
 
   return (
-    <Modal isOpen={isOpen} onClose={handleOnFailure}>
-      <ModalOverlay className="fade">
-        <ModalContent className="fadeInUp" borderRadius="md">
-          <ModalHeader>{t("auth:sign_in")}</ModalHeader>
-          <ModalCloseButton />
-          <ModalBody>
+    <DialogRoot open={open} onOpenChange={handleOnFailure}>
+      <DialogBackdrop className="fade">
+        <DialogContent className="fadeInUp" borderRadius="md">
+          <DialogHeader>{t("auth:sign_in")}</DialogHeader>
+          <DialogCloseTrigger />
+          <DialogBody>
             <Suspense fallback={<Spinner />}>
               <SignInForm onSuccess={handleOnSuccess} redirect={false} />
             </Suspense>
-          </ModalBody>
-        </ModalContent>
-      </ModalOverlay>
-    </Modal>
+          </DialogBody>
+        </DialogContent>
+      </DialogBackdrop>
+    </DialogRoot>
   );
 }

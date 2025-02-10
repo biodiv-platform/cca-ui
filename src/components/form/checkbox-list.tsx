@@ -1,12 +1,4 @@
-import {
-  Box,
-  Checkbox,
-  CheckboxGroup,
-  FormControl,
-  FormErrorMessage,
-  FormHelperText,
-  Stack
-} from "@chakra-ui/react";
+import { Box, Stack } from "@chakra-ui/react";
 import { namedFormErrorMessage, optionLabelShow } from "@utils/field";
 import React from "react";
 import { useController } from "react-hook-form";
