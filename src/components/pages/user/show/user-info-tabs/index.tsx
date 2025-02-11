@@ -1,4 +1,4 @@
-import { Box, Tab, TabList, TabPanel, TabPanels, Tabs } from "@chakra-ui/react";
+import { Box, Tabs } from "@chakra-ui/react";
 import useTranslation from "next-translate/useTranslation";
 import React from "react";
 
@@ -11,21 +11,19 @@ export default function UserInfoTabs({ user }) {
 
   return (
     <Box gridColumn={{ md: "2/5" }} mb={8}>
-      <Tabs variant="soft-rounded">
-        <TabList>
-          <Tab>👤 {t("user:about")}</Tab>
-          <Tab>🖊️ {t("user:participations")}</Tab>
-        </TabList>
-        <TabPanels>
-          <TabPanel px={0}>
-            <UserLocationMap lng={user.longitude} lat={user.latitude} />
-            <UserAbout user={user} />
-          </TabPanel>
-          <TabPanel pb={0}>
-            <UserParticipations user={user} />
-          </TabPanel>
-        </TabPanels>
-      </Tabs>
+      <Tabs.Root>
+        <Tabs.List>
+          <Tabs.Trigger value="about">👤 {t("user:about")}</Tabs.Trigger>
+          <Tabs.Trigger value="participation">🖊️ {t("user:participations")}</Tabs.Trigger>
+        </Tabs.List>
+        <Tabs.Content value="about" px={0}>
+          <UserLocationMap lng={user.longitude} lat={user.latitude} />
+          <UserAbout user={user} />
+        </Tabs.Content>
+        <Tabs.Content value="participation" pb={0}>
+          <UserParticipations user={user} />
+        </Tabs.Content>
+      </Tabs.Root>
     </Box>
   );
 }

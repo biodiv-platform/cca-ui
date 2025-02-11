@@ -1,5 +1,5 @@
 import { GMAPS_LIBRARIES } from "@biodiv-platform/naksha-commons";
-import { Box } from "@chakra-ui/layout";
+import { Box } from "@chakra-ui/react";
 import SITE_CONFIG from "@configs/site-config";
 import { GoogleMap, LoadScriptNext, Marker } from "@react-google-maps/api";
 import React, { useRef } from "react";

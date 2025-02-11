@@ -1,4 +1,4 @@
-import { Box, Collapse } from "@chakra-ui/react";
+import { Box, Collapsible } from "@chakra-ui/react";
 import { DrawingManager, GoogleMap } from "@react-google-maps/api";
 import React from "react";
 
@@ -16,7 +16,7 @@ const MapLocationPicker = ({ coordinates, setCoordinates, isOpen, onTextUpdate, 
   };
 
   return (
-    <Collapse in={isOpen}>
+    <Collapsible.Root open={isOpen}>
       <Box borderRadius="md" overflow="hidden" mb={4}>
         <GoogleMap
           id="observation-create-map"
@@ -42,7 +42,7 @@ const MapLocationPicker = ({ coordinates, setCoordinates, isOpen, onTextUpdate, 
           />
         </GoogleMap>
       </Box>
-    </Collapse>
+    </Collapsible.Root>
   );
 };
 

@@ -1,7 +1,8 @@
-import { Alert, AlertIcon } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import useTranslation from "next-translate/useTranslation";
 import React, { useEffect } from "react";
+
+import { Alert } from "@/components/ui/alert";
 
 interface ProcessingProps {
   loading: boolean;
@@ -21,12 +22,10 @@ export default function Processing({ success, loading }: ProcessingProps) {
 
   return loading ? (
     <Alert m={6} borderRadius="md">
-      <AlertIcon />
       {t("processing")}
     </Alert>
   ) : (
     <Alert m={6} borderRadius="md" status={success ? "success" : "error"}>
-      <AlertIcon />
       {success ? "Added Contributor Successfully" : "Failed to add Contributor"}
     </Alert>
   );
