@@ -1,4 +1,4 @@
-import { Button, Collapse, useBreakpointValue, useDisclosure } from "@chakra-ui/react";
+import { Button, Collapsible, useBreakpointValue, useDisclosure } from "@chakra-ui/react";
 import styled from "@emotion/styled";
 import LockIcon from "@icons/lock";
 import MenuIcon from "@icons/menu";
@@ -58,30 +58,31 @@ export default function PagesSidebar() {
   const p = usePagesSidebar();
   const { t } = useTranslation();
   const isDesktop = useBreakpointValue({ base: false, md: true });
-  const { isOpen, onToggle } = useDisclosure();
+  const { open, onToggle } = useDisclosure();
 
   return p.pages.length > 0 ? (
     <TreeContainer className="fade">
       {!isDesktop && (
-        <Button colorScheme="blue" w="full" mb={4} onClick={onToggle} leftIcon={<MenuIcon />}>
+        <Button colorScheme="blue" w="full" mb={4} onClick={onToggle}>
+          <MenuIcon />
           {t("page:sidebar.toggle")}
         </Button>
       )}
-      <Collapse in={isDesktop || isOpen} unmountOnExit={true}>
+      <Collapsible.Root open={isDesktop || open} unmountOnExit={true}>
         {p.canEdit && (
           <Button
             mb={3}
             w="full"
             variant="ghost"
             colorScheme={p.isEditing ? "red" : "blue"}
-            rightIcon={p.isEditing ? <UnlockIcon /> : <LockIcon />}
             onClick={p.toggleEditing}
           >
             {t("page:sidebar.reorder")}
+            {p.isEditing ? <UnlockIcon /> : <LockIcon />}
           </Button>
         )}
         {p.isEditing ? <SidebarEditing /> : <SidebarNormal />}
-      </Collapse>
+      </Collapsible.Root>
     </TreeContainer>
   ) : null;
 }

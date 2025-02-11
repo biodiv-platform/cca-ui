@@ -1,8 +1,10 @@
-import { Box, Stack } from "@chakra-ui/react";
+import { Box, CheckboxGroup, Stack } from "@chakra-ui/react";
 import { namedFormErrorMessage, optionLabelShow } from "@utils/field";
 import React from "react";
 import { useController } from "react-hook-form";
 
+import { Checkbox } from "../ui/checkbox";
+import { Field } from "../ui/field";
 import { FormLabel, OthersInput } from "./common";
 
 interface ICheckboxListProps {
@@ -41,7 +43,11 @@ export const CheckboxListField = ({
 
   return (
     <Box mb={mb}>
-      <FormControl isInvalid={!!fieldState.error} {...props}>
+      <Field
+        invalid={!!fieldState.error}
+        {...props}
+        errorText={namedFormErrorMessage(fieldState?.error?.message, name, title)}
+      >
         <FormLabel
           isLargeVariant={isLargeVariant}
           title={title}
@@ -49,7 +55,7 @@ export const CheckboxListField = ({
           name={name}
           helpText={helpText}
         />
-      </FormControl>
+      </Field>
       <CheckboxGroup defaultValue={value} onChange={onChange} isDisabled={disabled}>
         <Stack id={name}>
           {options.map((option) => (
@@ -62,8 +68,7 @@ export const CheckboxListField = ({
 
       {isOthers && <OthersInput name={name} value={value} />}
 
-      <FormErrorMessage children={namedFormErrorMessage(fieldState?.error?.message, name, title)} />
-      {hint && <FormHelperText color="gray.600">{hint}</FormHelperText>}
+      {hint && <Field color="gray.600" helperText={hint} />}
     </Box>
   );
 };

@@ -1,14 +1,9 @@
-import { ArrowBackIcon, ArrowForwardIcon } from "@chakra-ui/icons";
 import {
   AspectRatio,
   Box,
   CloseButton,
-  FormControl,
-  FormErrorMessage,
-  FormHelperText,
   IconButton,
   Input,
-  Select,
   SimpleGrid,
   Stack
 } from "@chakra-ui/react";
@@ -22,7 +17,11 @@ import useTranslation from "next-translate/useTranslation";
 import React, { useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { useFieldArray, useFormContext } from "react-hook-form";
+import { LuMoveLeft, LuMoveRight } from "react-icons/lu";
 
+import { NativeSelectField, NativeSelectRoot } from "@/components/ui/native-select";
+
+import { Field } from "../ui/field";
 import { FormLabel } from "./common";
 import { getMediaElementFromPath } from "./multimedia";
 
@@ -123,11 +122,12 @@ export const FileField = ({
   });
 
   return (
-    <FormControl
-      isInvalid={!!formState.errors[name]}
+    <Field
+      invalid={!!formState.errors[name]}
+      errorText={namedFormErrorMessage(formState?.errors?.[name]?.["error"]?.message, name, title)}
       mb={mb}
       hidden={hidden}
-      isRequired={isRequired}
+      required={isRequired}
       {...props}
     >
       <FormLabel
@@ -148,7 +148,7 @@ export const FileField = ({
         </Container>
       </div>
       {fields && (
-        <SimpleGrid columns={{ base: 4, md: 5 }} spacing={4} pt={4} maxW="full">
+        <SimpleGrid columns={{ base: 4, md: 5 }} gap={4} pt={4} maxW="full">
           {fields?.map((item: any, index) => (
             <Box
               border="1px solid"
@@ -177,36 +177,37 @@ export const FileField = ({
                   {...register(`${name}.${index}.attribution`)}
                   placeholder={t("form:attribution")}
                 />
-                <Select {...register(`${name}.${index}.license`)} defaultValue={LICENSES[0]}>
-                  {LICENSES.map((l) => (
-                    <option value={l} key={l}>
-                      {l}
-                    </option>
-                  ))}
-                </Select>
-                <SimpleGrid columns={2} spacing={2}>
+
+                <NativeSelectRoot size="sm" width="240px">
+                  <NativeSelectField
+                    {...register(`${name}.${index}.license`)}
+                    defaultValue={LICENSES[0]}
+                    placeholder="Select framework"
+                    items={LICENSES}
+                  />
+                </NativeSelectRoot>
+                <SimpleGrid columns={2} gap={2}>
                   <IconButton
                     onClick={() => move(index, index - 1)}
-                    isDisabled={index === 0}
-                    icon={<ArrowBackIcon />}
+                    disabled={index === 0}
                     aria-label={t("common:prev")}
-                  />
+                  >
+                    <LuMoveLeft />
+                  </IconButton>
                   <IconButton
                     onClick={() => move(index, index + 1)}
-                    isDisabled={index === fields.length - 1}
-                    icon={<ArrowForwardIcon />}
+                    disabled={index === fields.length - 1}
                     aria-label={t("common:next")}
-                  />
+                  >
+                    <LuMoveRight />
+                  </IconButton>
                 </SimpleGrid>
               </Stack>
             </Box>
           ))}
         </SimpleGrid>
       )}
-      <FormErrorMessage
-        children={namedFormErrorMessage(formState?.errors?.[name]?.["error"]?.message, name, title)}
-      />
-      {hint && <FormHelperText color="gray.600">{hint}</FormHelperText>}
-    </FormControl>
+      {hint && <Field color="gray.600" helperText={hint} />}
+    </Field>
   );
 };

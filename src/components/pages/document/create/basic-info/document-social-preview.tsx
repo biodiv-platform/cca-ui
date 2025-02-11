@@ -1,11 +1,4 @@
-import {
-  CloseButton,
-  FormControl,
-  FormErrorMessage,
-  FormHelperText,
-  FormLabel,
-  Image
-} from "@chakra-ui/react";
+import { CloseButton, Image } from "@chakra-ui/react";
 import {
   Container,
   ITPageGalleryFieldProps
@@ -18,6 +11,8 @@ import useTranslation from "next-translate/useTranslation";
 import React, { useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { useController, useFormContext } from "react-hook-form";
+
+import { Field } from "@/components/ui/field";
 
 export const DocumentSocialPreviewField = ({
   helpText,
@@ -73,14 +68,15 @@ export const DocumentSocialPreviewField = ({
   }
 
   return (
-    <FormControl
-      isInvalid={!!formState.errors[name]}
+    <Field
+      invalid={!!formState.errors[name]}
+      errorText={formState?.errors?.[name]?.message?.toString()}
       mb={mb}
       hidden={hidden}
-      isRequired={isRequired}
+      required={isRequired}
       {...props}
     >
-      {label && <FormLabel htmlFor={name}>{label}</FormLabel>}
+      {label && <Field htmlFor={name} label={label} />}
 
       {/* Dropzone */}
       <div id={name}>
@@ -117,8 +113,7 @@ export const DocumentSocialPreviewField = ({
         </Container>
       </div>
 
-      <FormErrorMessage children={formState?.errors?.[name]?.message?.toString()} />
-      {hint && <FormHelperText color="gray.600">{hint}</FormHelperText>}
-    </FormControl>
+      {hint && <Field color="gray.600" helperText={hint} />}
+    </Field>
   );
 };

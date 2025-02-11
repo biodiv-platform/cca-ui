@@ -1,15 +1,5 @@
 import { GMAP_FEATURE_TYPES, NakshaGmapsDraw } from "@biodiv-platform/naksha-gmaps-draw";
-import { CheckCircleIcon, CloseIcon, Search2Icon } from "@chakra-ui/icons";
-import {
-  Button,
-  FormControl,
-  FormErrorMessage,
-  FormHelperText,
-  Input,
-  InputGroup,
-  InputLeftElement,
-  useDisclosure
-} from "@chakra-ui/react";
+import { Button, Input, useDisclosure } from "@chakra-ui/react";
 import SITE_CONFIG from "@configs/site-config";
 import styled from "@emotion/styled";
 import DeleteIcon from "@icons/delete";
@@ -20,7 +10,10 @@ import { getMapCenter } from "@utils/location";
 import useTranslation from "next-translate/useTranslation";
 import React, { useRef } from "react";
 import { useController } from "react-hook-form";
+import { LuCircleCheck, LuSearch, LuX } from "react-icons/lu";
 
+import { Field } from "../ui/field";
+import { InputGroup } from "../ui/input-group";
 import { FormLabel } from "./common";
 import CustomModal from "./custom-modal";
 
@@ -65,10 +58,16 @@ export const GeometryField = ({
   const gmapsSearchRef = useRef<any>(null);
   const { t } = useTranslation();
   const { field, fieldState } = useController({ name, defaultValue: [] });
-  const { isOpen, onClose } = useDisclosure();
+  const { open, onClose } = useDisclosure();
 
   return (
-    <FormControl isInvalid={!!fieldState.error} mb={mb} isRequired={isRequired} {...props}>
+    <Field
+      invalid={!!fieldState.error}
+      mb={mb}
+      required={isRequired}
+      errorText={namedFormErrorMessage(fieldState?.error?.message, name, title)}
+      {...props}
+    >
       <FormLabel
         isLargeVariant={isLargeVariant}
         title={title}
@@ -91,8 +90,7 @@ export const GeometryField = ({
           mapStyle={{ height: "22rem", width: "100%", borderRadius: ".25rem" }}
           maxZoom={14}
           autocompleteComponent={
-            <InputGroup mb={4}>
-              <InputLeftElement pointerEvents="none" children={<Search2Icon color="gray.300" />} />
+            <InputGroup mb={4} startElement={<LuSearch color="gray.300" />}>
               <Input
                 name="search-gmaps"
                 ref={gmapsSearchRef}
@@ -107,7 +105,7 @@ export const GeometryField = ({
           }
           importModalComponent={
             <CustomModal
-              isOpen={isOpen}
+              isOpen={open}
               onClose={onClose}
               nakshaImport={undefined}
               geoJSONImport={undefined}
@@ -117,13 +115,12 @@ export const GeometryField = ({
           importDeleteIcon={<DeleteIcon />}
           importLocationIcon={<LocationIcon />}
           importFileIcon={<FileIcon />}
-          importSuccessIcon={<CheckCircleIcon />}
-          importFailureIcon={<CloseIcon />}
+          importSuccessIcon={<LuCircleCheck />}
+          importFailureIcon={<LuX />}
           importButtonComponentModal={<Button type="button">{t("common:import")}</Button>}
         />
       </MapContainerBox>
-      <FormErrorMessage children={namedFormErrorMessage(fieldState?.error?.message, name, title)} />
-      {hint && <FormHelperText color="gray.600">{hint}</FormHelperText>}
-    </FormControl>
+      {hint && <Field color="gray.600" helperText={hint} />}
+    </Field>
   );
 };

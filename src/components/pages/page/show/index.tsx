@@ -19,7 +19,7 @@ export default function PageShowPageComponent({ page }: PageShowPageComponentPro
     <UsePagesSidebarProvider currentPage={page} linkType="show">
       <NextPageHeader page={page} />
       <Container my={8}>
-        <SimpleGrid columns={{ md: 7 }} spacing={{ base: 0, md: 8 }}>
+        <SimpleGrid columns={{ md: 7 }} gap={{ base: 0, md: 8 }}>
           <GridItem colSpan={{ md: 5 }}>
             <Content html={page.content} />
             {page.allowComments && (

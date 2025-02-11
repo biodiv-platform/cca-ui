@@ -1,4 +1,4 @@
-import { FormControl, FormErrorMessage, FormHelperText, Input } from "@chakra-ui/react";
+import { Input } from "@chakra-ui/react";
 import SITE_CONFIG from "@configs/site-config";
 import styled from "@emotion/styled";
 import { namedFormErrorMessage } from "@utils/field";
@@ -6,6 +6,7 @@ import React from "react";
 import { useController } from "react-hook-form";
 import MobileInput from "react-phone-number-input";
 
+import { Field } from "../ui/field";
 import { FormLabel } from "./common";
 
 const PhoneFormControl = styled.div`
@@ -61,7 +62,14 @@ export const PhoneNumberInputField = ({
   const { field, fieldState } = useController({ name });
 
   return (
-    <FormControl as={PhoneFormControl} isInvalid={!!fieldState.error} mb={mb} id={name} {...props}>
+    <Field
+      as={PhoneFormControl}
+      invalid={!!fieldState.error}
+      mb={mb}
+      id={name}
+      errorText={namedFormErrorMessage(fieldState?.error?.message, name, title)}
+      {...props}
+    >
       <FormLabel
         isLargeVariant={isLargeVariant}
         title={title}
@@ -77,8 +85,7 @@ export const PhoneNumberInputField = ({
         disabled={disabled}
         {...field}
       />
-      <FormErrorMessage children={namedFormErrorMessage(fieldState?.error?.message, name, title)} />
-      {hint && <FormHelperText color="gray.600">{hint}</FormHelperText>}
-    </FormControl>
+      {hint && <Field color="gray.600" helperText={hint} />}
+    </Field>
   );
 };

@@ -1,4 +1,4 @@
-import { Avatar, Badge, Box, Flex, Heading, HStack, Link, Stack, Text } from "@chakra-ui/react";
+import { Badge, Box, Flex, Heading, HStack, Link, Stack, Text } from "@chakra-ui/react";
 import FlagActionButton from "@components/@core/action-buttons/flag";
 import LocalLink from "@components/@core/local-link";
 import DocumentIcon from "@components/pages/document/common/document-icon";
@@ -12,6 +12,8 @@ import { getUserImage } from "@utils/media";
 import { getInjectableHTML, stripTags } from "@utils/text";
 import useTranslation from "next-translate/useTranslation";
 import React from "react";
+
+import { Avatar } from "@/components/ui/avatar";
 
 interface InfoTabInterface {
   document;
@@ -30,7 +32,7 @@ interface MetaBlockProps {
 
 const MetaBlock = ({ icon, children, isHtml, tooltip }: MetaBlockProps) =>
   children ? (
-    <HStack alignItems="center" spacing={2} title={tooltip}>
+    <HStack alignItems="center" gap={2} title={tooltip}>
       {icon}
       {isHtml ? (
         <div
@@ -54,7 +56,7 @@ export default function InfoTab({ document, flags, user }: InfoTabInterface) {
         <Flex justifyContent="space-between" mb={3}>
           <LocalLink href={`/document/show/${document.id}`}>
             <a>
-              <HStack alignItems="center" spacing={4}>
+              <HStack alignItems="center" gap={4}>
                 <DocumentIcon />
                 <Heading
                   fontSize="lg"

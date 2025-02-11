@@ -15,7 +15,7 @@ export default function PageEditPageComponent({ page }: PageEditPageComponentPro
   return (
     <Container pt={8}>
       <UsePagesSidebarProvider currentPage={page} linkType="edit">
-        <SimpleGrid columns={{ base: 1, md: 4 }} spacing={{ base: 0, md: 4 }}>
+        <SimpleGrid columns={{ base: 1, md: 4 }} gap={{ base: 0, md: 4 }}>
           <PagesSidebar />
           <Box gridColumn={{ md: "2/5" }}>
             <PageEditForm page={page} key={page.id} />

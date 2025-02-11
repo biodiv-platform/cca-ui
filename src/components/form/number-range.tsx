@@ -1,9 +1,10 @@
-import { Flex, FormControl, FormErrorMessage, FormHelperText } from "@chakra-ui/react";
+import { Flex } from "@chakra-ui/react";
 import { RangeInput } from "@components/@core/range-input";
 import { namedFormErrorMessage } from "@utils/field";
 import React from "react";
 import { useController } from "react-hook-form";
 
+import { Field } from "../ui/field";
 import { FormLabel } from "./common";
 
 interface INumberRangeProps {
@@ -47,11 +48,12 @@ export const NumberRangeField = ({
   });
 
   return (
-    <FormControl
-      isInvalid={!!fieldState.error}
+    <Field
+      invalid={!!fieldState.error}
+      errorText={namedFormErrorMessage(fieldState?.error?.message, name, title)}
       mb={mb}
       hidden={hidden}
-      isRequired={isRequired}
+      required={isRequired}
       {...props}
     >
       <FormLabel
@@ -70,8 +72,7 @@ export const NumberRangeField = ({
           inputProps={{ w: "100px" }}
         />
       </Flex>
-      <FormErrorMessage children={namedFormErrorMessage(fieldState?.error?.message, name, title)} />
-      {hint && <FormHelperText color="gray.600">{hint}</FormHelperText>}
-    </FormControl>
+      {hint && <Field color="gray.600" helperText={hint} />}
+    </Field>
   );
 };

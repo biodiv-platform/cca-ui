@@ -1,18 +1,12 @@
-import "flatpickr/dist/themes/material_blue.css";
+import "react-datepicker/dist/react-datepicker.css";
 
-import {
-  AccordionButton,
-  AccordionIcon,
-  AccordionItem,
-  AccordionPanel,
-  Box,
-  Input
-} from "@chakra-ui/react";
+import { Box, Input } from "@chakra-ui/react";
 import useDocumentFilter from "@components/pages/document/common/use-document-filter";
+import useDidUpdateEffect from "@hooks/use-did-update-effect";
 import dayjs from "@utils/date";
 import useTranslation from "next-translate/useTranslation";
-import React, { useMemo } from "react";
-import Flatpickr from "react-flatpickr";
+import React, { useMemo, useState } from "react";
+import DatePicker from "react-datepicker";
 
 interface MinMaxKey {
   min: any;
@@ -24,56 +18,62 @@ interface DateRangeFilterProp {
   translateKey: string;
 }
 
+import {
+  AccordionItem,
+  AccordionItemContent,
+  AccordionItemTrigger,
+} from "@/components/ui/accordion";
+
 export default function DateRangeFilter({ filterKey, translateKey }: DateRangeFilterProp) {
   const { t } = useTranslation();
   const { filter, setFilter } = useDocumentFilter();
-  const defaultDate = useMemo(() => {
-    if (filter[filterKey.min]) {
-      return [
-        dayjs(filter[filterKey.min]).toDate(),
-        filter[filterKey.max] ? dayjs(filter[filterKey.max]).toDate() : "today"
-      ];
-    }
-  }, []);
+  const defaultDate = useMemo(
+    () =>
+      filter[filterKey.min]
+        ? [
+            dayjs(filter[filterKey.min]).toDate(),
+            filter[filterKey.max] ? dayjs(filter[filterKey.max]).toDate() : null,
+          ]
+        : [null, null],
+    []
+  );
 
-  const options = {
-    defaultDate: defaultDate,
-    allowInput: true,
-    maxDate: "today",
-    dateFormat: "d-m-Y",
-    mode: "range"
-  };
+  const [dateRange, setDateRange] = useState(defaultDate);
 
-  const handleOnDateChange = (dates = []) => {
+  useDidUpdateEffect(() => {
     setFilter((_draft) => {
-      if (dates.length > 0) {
-        _draft.f[filterKey.min] = dayjs(dates[0]).utc().format();
-        _draft.f[filterKey.max] = dayjs(dates[1]).utc().format();
+      if (dateRange[0]) {
+        _draft.f[filterKey.min] = dayjs(dateRange[0]).utc().format();
+        _draft.f[filterKey.max] = dateRange[1]
+          ? dayjs(dateRange[1]).endOf("day").utc().format()
+          : undefined;
       } else {
         _draft.f[filterKey.min] = undefined;
         _draft.f[filterKey.max] = undefined;
       }
     });
-    console.debug(dates);
-  };
+  }, [dateRange]);
 
   return (
-    <AccordionItem>
-      <AccordionButton>
+    <AccordionItem value="time">
+      <AccordionItemTrigger>
         <Box flex={1} textAlign="left">
           {t(translateKey)}
         </Box>
-        <AccordionIcon />
-      </AccordionButton>
-      <AccordionPanel>
-        <Flatpickr
-          options={options}
-          onChange={handleOnDateChange}
-          render={({ defaultValue, value, ...props }, ref) => (
-            <Input {...props} placeholder={t(translateKey)} defaultValue={defaultValue} ref={ref} />
-          )}
+      </AccordionItemTrigger>
+      <AccordionItemContent>
+        <DatePicker
+          selectsRange={true}
+          startDate={dateRange[0]}
+          endDate={dateRange[1]}
+          maxDate={new Date()}
+          dateFormat="dd-MM-yyyy"
+          customInput={<Input />}
+          onChange={(update) => {
+            setDateRange(update);
+          }}
         />
-      </AccordionPanel>
+      </AccordionItemContent>
     </AccordionItem>
   );
 }
