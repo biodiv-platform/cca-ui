@@ -1,6 +1,4 @@
-import { DeleteIcon, ViewIcon } from "@chakra-ui/icons";
-import { Link } from "@chakra-ui/layout";
-import { Button } from "@chakra-ui/react";
+import { Button, Link } from "@chakra-ui/react";
 import LocalLink from "@components/@core/local-link";
 import TimeAgo from "@components/pages/common/timeago";
 import EditIcon from "@icons/edit";
@@ -10,6 +8,9 @@ import notification, { NotificationType } from "@utils/notification";
 import useTranslation from "next-translate/useTranslation";
 import React from "react";
 import { emit } from "react-gbus";
+import { LuEye } from "react-icons/lu";
+
+import DeleteIcon from "@/icons/delete";
 
 export const ListColumns = [
   {
@@ -50,7 +51,7 @@ export const ListColumns = [
       return (
         <LocalLink href={`/data/table/${value}`} prefixGroup={true}>
           <Link>
-            <ViewIcon /> {t("common:view")}
+            <LuEye /> {t("common:view")}
           </Link>
         </LocalLink>
       );
@@ -76,7 +77,8 @@ export const ListColumns = [
       };
 
       return (
-        <Button variant="link" colorScheme="red" onClick={deleteTemplate} leftIcon={<DeleteIcon />}>
+        <Button colorScheme="red" onClick={deleteTemplate}>
+          <DeleteIcon />
           {t("common:delete")}
         </Button>
       );

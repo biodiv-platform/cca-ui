@@ -16,7 +16,7 @@ export default function FieldCount() {
 
   return (
     <Box p={4}>
-      <ButtonGroup colorScheme="blue" isAttached size="sm">
+      <ButtonGroup colorScheme="blue" attached size="sm">
         <Button variant={filter.f[filterKey] ? "outline" : "solid"} onClick={handleOnAll}>
           {t("common:all_ccas")}
         </Button>

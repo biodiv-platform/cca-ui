@@ -1,18 +1,17 @@
-import { InfoOutlineIcon } from "@chakra-ui/icons";
-import {
-  Box,
-  Grid,
-  IconButton,
-  Popover,
-  PopoverArrow,
-  PopoverBody,
-  PopoverCloseButton,
-  PopoverContent,
-  PopoverHeader,
-  PopoverTrigger
-} from "@chakra-ui/react";
+import { Box, Grid, IconButton } from "@chakra-ui/react";
 import useTranslation from "next-translate/useTranslation";
 import React from "react";
+import { LuInfo } from "react-icons/lu";
+
+import {
+  PopoverArrow,
+  PopoverBody,
+  PopoverCloseTrigger,
+  PopoverContent,
+  PopoverHeader,
+  PopoverRoot,
+  PopoverTrigger
+} from "@/components/ui/popover";
 
 interface CarouselResourceInfoProps {
   currentResource;
@@ -28,25 +27,29 @@ function CarouselResourceInfo({ currentResource }: CarouselResourceInfoProps) {
 
   return (
     <Box position="absolute" top={4} right={0} left={4} display="flex">
-      <Popover placement="bottom-start" closeOnBlur={false} isLazy={true}>
+      <PopoverRoot
+        positioning={{ placement: "bottom-start" }}
+        closeOnInteractOutside={false}
+        lazyMount={true}
+      >
         <PopoverTrigger>
           <IconButton
             aria-label={t("form:resource_info")}
-            icon={<InfoOutlineIcon />}
             zIndex={4}
             opacity={0.4}
-            isRound={true}
             _hover={{ opacity: 1 }}
-          />
+          >
+            <LuInfo />
+          </IconButton>
         </PopoverTrigger>
         <PopoverContent zIndex={4}>
           <PopoverArrow />
-          <PopoverCloseButton />
+          <PopoverCloseTrigger />
           <PopoverHeader>{t("form:resource_info")}</PopoverHeader>
           <PopoverBody>
             <Grid templateColumns="1fr 2fr" gap={3}>
               <Box>{t("form:attribution")}:</Box>
-              <Box title={currentResource?.attribution} noOfLines={1}>
+              <Box title={currentResource?.attribution} maxLines={1}>
                 {currentResource?.attribution || "NA"}
               </Box>
 
@@ -55,7 +58,7 @@ function CarouselResourceInfo({ currentResource }: CarouselResourceInfoProps) {
             </Grid>
           </PopoverBody>
         </PopoverContent>
-      </Popover>
+      </PopoverRoot>
     </Box>
   );
 }

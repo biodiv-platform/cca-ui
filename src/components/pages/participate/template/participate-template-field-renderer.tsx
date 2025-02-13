@@ -53,7 +53,7 @@ export default function ParticipateTemplateFieldRenderer({ field }) {
           fontWeight="600"
           style={{ scrollMarginTop: "var(--content-top)" }}
         >
-          <Box href={`#${field.fieldId}`} color="gray.400" as="a" mr={2}>
+          <Box ref={`#${field.fieldId}`} color="gray.400" as="a" mr={2}>
             #
           </Box>
           {defaultProps.title}

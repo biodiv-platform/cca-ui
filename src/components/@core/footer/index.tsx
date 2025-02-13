@@ -30,15 +30,14 @@ const SocialButton = ({ children, label, href }) => (
     h={8}
     cursor="pointer"
     as="a"
-    // href={href}
-    display="inline-flex"
+      display="inline-flex"
     alignItems="center"
     justifyContent="center"
     transition="background 0.3s ease"
     _hover={{ bg: "blackAlpha.200" }}
-    // target="_blank"
     rel="noreferrer noopener"
   >
+    <a href={href} />
     <VisuallyHidden>{label}</VisuallyHidden>
     {children}
   </chakra.button>

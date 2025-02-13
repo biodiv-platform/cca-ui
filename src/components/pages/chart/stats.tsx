@@ -1,4 +1,3 @@
-import { ArrowForwardIcon } from "@chakra-ui/icons";
 import { Box, Button, Center, Container, SimpleGrid, Text } from "@chakra-ui/react";
 import BoxHeading from "@components/@core/activity/box-heading";
 import LocalLink from "@components/@core/local-link";
@@ -7,6 +6,7 @@ import StackedBarChart from "@components/charts/stacked-bar-chart";
 import { ChartMeta, TooltipRenderer } from "@utils/chart";
 import useTranslation from "next-translate/useTranslation";
 import React, { useMemo, useRef } from "react";
+import { LuMoveRight } from "react-icons/lu";
 
 const colours = [
   "#543005",
@@ -80,7 +80,7 @@ export default function Stats({ statsData }) {
 
   return statsData.length ? (
     <Box className="container">
-      <SimpleGrid columns={[1, 1, 1, 2]} spacing={4}>
+      <SimpleGrid columns={[1, 1, 1, 2]} gap={4}>
         {charts}
       </SimpleGrid>
     </Box>
@@ -92,8 +92,9 @@ export default function Stats({ statsData }) {
             {t("chart:no_charts_available")}
           </Text>
           <LocalLink prefixGroup={true} href="/participate/list">
-            <Button as="a" colorScheme="blue" rightIcon={<ArrowForwardIcon />}>
+            <Button as="a" colorScheme="blue">
               {t("chart:participate")}
+              <LuMoveRight />
             </Button>
           </LocalLink>
         </div>

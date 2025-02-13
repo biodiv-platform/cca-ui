@@ -1,10 +1,12 @@
-import { Box, FormControl, FormErrorMessage, FormHelperText, FormLabel } from "@chakra-ui/react";
+import { Box } from "@chakra-ui/react";
 import SITE_CONFIG from "@configs/site-config";
 import bbox from "@turf/bbox";
 import { getMapCenter, stringToFeature } from "@utils/location";
 import dynamic from "next/dynamic";
 import React, { useEffect, useMemo, useState } from "react";
 import { useController } from "react-hook-form";
+
+import { Field } from "@/components/ui/field";
 
 const NakshaMapboxDraw: any = dynamic(
   () => import("naksha-components-react").then((mod: any) => mod.NakshaMapboxDraw),
@@ -61,8 +63,15 @@ export default function AreaDrawField({
   }, []);
 
   return (
-    <FormControl isRequired={isRequired} isInvalid={!!fieldState.error} mb={mb} {...props}>
-      <FormLabel htmlFor={name}>{label}</FormLabel>
+    <Field
+      required={isRequired}
+      invalid={!!fieldState.error}
+      errorText={JSON.stringify(fieldState?.error?.message)}
+      mb={mb}
+      htmlFor={name}
+      label={label}
+      {...props}
+    >
       <Box position="relative" h="22rem" borderRadius="md" overflow="hidden">
         <NakshaMapboxDraw
           defaultViewState={defaultViewState}
@@ -71,8 +80,7 @@ export default function AreaDrawField({
           mapboxAccessToken={SITE_CONFIG.TOKENS.MAPBOX}
         />
       </Box>
-      <FormErrorMessage children={JSON.stringify(fieldState?.error?.message)} />
-      {hint && <FormHelperText color="gray.600">{hint}</FormHelperText>}
-    </FormControl>
+      {hint && <Field color="gray.600" helperText={hint} />}
+    </Field>
   );
 }

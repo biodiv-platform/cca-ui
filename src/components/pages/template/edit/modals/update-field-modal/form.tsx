@@ -1,12 +1,4 @@
-import {
-  Button,
-  ModalBody,
-  ModalCloseButton,
-  ModalContent,
-  ModalFooter,
-  ModalHeader,
-  SimpleGrid
-} from "@chakra-ui/react";
+import { Button, SimpleGrid } from "@chakra-ui/react";
 import { CheckboxField } from "@components/form/checkbox";
 import { DateRangePickerField } from "@components/form/daterangepicker";
 import { NumberRangeField } from "@components/form/number-range";
@@ -30,6 +22,14 @@ import useTranslation from "next-translate/useTranslation";
 import React, { useMemo } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import * as Yup from "yup";
+
+import {
+  DialogBody,
+  DialogCloseTrigger,
+  DialogContent,
+  DialogFooter,
+  DialogHeader
+} from "@/components/ui/dialog";
 
 import useTemplate from "../../use-template";
 
@@ -81,13 +81,13 @@ export default function UpdateFieldForm({ defaultValues, onClose }) {
   return (
     <FormProvider {...hForm}>
       <form onSubmit={hForm.handleSubmit(handleOnSubmit)}>
-        <ModalContent>
-          <ModalHeader>
+        <DialogContent>
+          <DialogHeader>
             {t("template:manage_field")} ({SITE_CONFIG.LANG.LIST[template.language].NAME})
-          </ModalHeader>
-          <ModalCloseButton />
-          <ModalBody>
-            <SimpleGrid columns={[1, 1, 2, 2]} spacing={4}>
+          </DialogHeader>
+          <DialogCloseTrigger />
+          <DialogBody>
+            <SimpleGrid columns={[1, 1, 2, 2]} gap={4}>
               <TextBoxField name="fieldId" disabled={true} label={t("form:field_id")} />
               <TextBoxField name="name" isRequired={true} label={t("form:name")} />
             </SimpleGrid>
@@ -124,7 +124,7 @@ export default function UpdateFieldForm({ defaultValues, onClose }) {
               label={t("form:is_required")}
             />
             {MINMAX_FORM_TYPES.includes(formType) && (
-              <SimpleGrid columns={2} spacing={4}>
+              <SimpleGrid columns={2} gap={4}>
                 <NumberRangeField
                   disabled={areFieldsReadOnly}
                   name="minMax"
@@ -133,7 +133,7 @@ export default function UpdateFieldForm({ defaultValues, onClose }) {
               </SimpleGrid>
             )}
             {MINMAX_DATE_FORM_TYPES.includes(formType) && (
-              <SimpleGrid columns={2} spacing={4}>
+              <SimpleGrid columns={2} gap={4}>
                 {formType === FORM_TYPE.YEAR ? (
                   <YearRangePickerField
                     disabled={areFieldsReadOnly}
@@ -160,15 +160,15 @@ export default function UpdateFieldForm({ defaultValues, onClose }) {
               disableValues={areFieldsReadOnly}
               label={t("form:options.title")}
             />
-          </ModalBody>
+          </DialogBody>
 
-          <ModalFooter>
+          <DialogFooter>
             <Button colorScheme="gray" mr={3} onClick={onClose}>
               {t("common:close")}
             </Button>
             <SubmitButton>{t("common:save")}</SubmitButton>
-          </ModalFooter>
-        </ModalContent>
+          </DialogFooter>
+        </DialogContent>
       </form>
     </FormProvider>
   );

@@ -1,4 +1,12 @@
-import { Box, Button, Collapse, Heading, Input, SimpleGrid, useDisclosure } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Collapsible,
+  Heading,
+  Input,
+  SimpleGrid,
+  useDisclosure
+} from "@chakra-ui/react";
 import EditIcon from "@icons/edit";
 import { UserGroupCCA } from "@interfaces/userGroup";
 import { DEFAULT_GROUP } from "@static/constants";
@@ -35,7 +43,7 @@ export default function GroupPost({
     selectedDefault?.map((g) => g?.id?.toString())
   );
   const { t } = useTranslation();
-  const { isOpen, onToggle, onClose } = useDisclosure();
+  const { open, onToggle, onClose } = useDisclosure();
   const editButtonRef: any = useRef(null);
 
   const [filterGroups, setFilterGroups] = useState(groups);
@@ -87,18 +95,18 @@ export default function GroupPost({
           👥 {t("common:usergroups")}
           <Button
             mb={6}
-            variant="link"
-            rightIcon={<EditIcon />}
             colorScheme="blue"
             size="lg"
             className="no-print"
             ref={editButtonRef}
             onClick={onEditClick}
-          />
+          >
+            <EditIcon />
+          </Button>
         </Heading>
       </SimpleGrid>
 
-      <SimpleGrid columns={columns || defaultGridColumns} spacing={4} hidden={isOpen}>
+      <SimpleGrid columns={columns || defaultGridColumns} gap={4} hidden={open}>
         <GroupBox
           link={DEFAULT_GROUP.webAddress}
           icon={`${DEFAULT_GROUP.icon}?h=40`}
@@ -111,7 +119,7 @@ export default function GroupPost({
           ))}
       </SimpleGrid>
 
-      <Collapse in={isOpen} unmountOnExit={true}>
+      <Collapsible.Root open={open} unmountOnExit={true}>
         <Input mb={6} onChange={onQuery} placeholder={t("header:search")} />
         {groups?.length > 0 ? (
           <CheckBoxItems
@@ -138,7 +146,7 @@ export default function GroupPost({
             {t("common:close")}
           </Button>
         </Box>
-      </Collapse>
+      </Collapsible.Root>
     </Box>
   );
 }

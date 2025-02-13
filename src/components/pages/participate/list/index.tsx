@@ -40,7 +40,7 @@ export default function TemplateParticipateListPageComponent() {
       />
 
       {templates ? (
-        <SimpleGrid columns={{ base: 1, sm: 1, md: 3, lg: 4 }} spacing="40px" mb={16}>
+        <SimpleGrid columns={{ base: 1, sm: 1, md: 3, lg: 4 }} gap="40px" mb={16}>
           {templates.map((t) => (
             <ParticipateCard template={t} key={t.id} />
           ))}

@@ -1,10 +1,4 @@
 import {
-  ChevronDownIcon,
-  ChevronLeftIcon,
-  ChevronRightIcon,
-  ChevronUpIcon
-} from "@chakra-ui/icons";
-import {
   Box,
   Button,
   Flex,
@@ -16,6 +10,7 @@ import {
 import FilterIcon from "@icons/filter";
 import ListIcon from "@icons/list";
 import React, { useEffect } from "react";
+import { LuChevronDown, LuChevronUp, LuMoveLeft, LuMoveRight } from "react-icons/lu";
 
 const ToggleButton = ({ onToggle, top, title, isMobile, mobileTop, isOpen }) => {
   const styles = useBreakpointValue({
@@ -40,9 +35,9 @@ const ToggleButton = ({ onToggle, top, title, isMobile, mobileTop, isOpen }) => 
 
   const chevronIcon = (() => {
     if (isOpen) {
-      return isMobile ? <ChevronUpIcon /> : <ChevronLeftIcon />;
+      return isMobile ? <LuChevronUp /> : <LuMoveLeft />;
     } else {
-      return isMobile ? <ChevronDownIcon /> : <ChevronRightIcon />;
+      return isMobile ? <LuChevronDown /> : <LuMoveRight />;
     }
   })();
 
@@ -73,9 +68,8 @@ const ToggleButton = ({ onToggle, top, title, isMobile, mobileTop, isOpen }) => 
 };
 
 export const CollapsablePane = ({ children, header, top, title, mobileTop }) => {
-  const { isOpen, onToggle, onClose } = useDisclosure({ defaultIsOpen: false });
-  const [isMobile] = useMediaQuery("(max-width: 480px)");
-
+  const { open, onToggle, onClose } = useDisclosure({ defaultOpen: false });
+  const [isMobile] = useMediaQuery(["(max-width: 480px)"], { fallback: [false] });
   useEffect(() => {
     if (isMobile) {
       onClose();
@@ -85,7 +79,7 @@ export const CollapsablePane = ({ children, header, top, title, mobileTop }) => 
   return (
     <Box
       flexShrink={0}
-      w={isOpen ? { base: "100%", sm: "340px" } : 0}
+      w={open ? { base: "100%", sm: "340px" } : 0}
       maxH={{ base: "40vh", sm: "unset" }}
       borderRight="2px solid"
       borderColor="gray.300"
@@ -99,10 +93,10 @@ export const CollapsablePane = ({ children, header, top, title, mobileTop }) => 
         title={title}
         isMobile={isMobile}
         mobileTop={mobileTop}
-        isOpen={isOpen}
+        isOpen={open}
       />
       <Flex w="full" h="full" direction="column">
-        {isOpen && (
+        {open && (
           <>
             <Box flexShrink={0}>{header}</Box>
             <Box flexGrow={1} overflowY="auto" overscrollBehavior="contain" className="cscr">

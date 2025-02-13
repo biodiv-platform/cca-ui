@@ -189,7 +189,7 @@ export default function FlagActionButton({
                     <Button onClick={onClose} mr={4}>
                       Close
                     </Button>
-                    <SubmitButton colorScheme="red">Flag</SubmitButton>
+                    <SubmitButton colorPalette="red">Flag</SubmitButton>
                   </DialogFooter>
                 )}
               </form>

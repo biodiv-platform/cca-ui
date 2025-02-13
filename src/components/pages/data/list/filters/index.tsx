@@ -1,5 +1,6 @@
-import { Accordion } from "@chakra-ui/react";
 import React from "react";
+
+import { AccordionRoot } from "@/components/ui/accordion";
 
 import useResponseList from "../use-response-list";
 import FilterContainer from "./container";
@@ -12,12 +13,12 @@ export default function FilterList() {
   return (
     <>
       <FieldCount />
-      <Accordion allowMultiple={true}>
+      <AccordionRoot multiple={true} lazyMount>
         {filtersList.map((field: any) => (
           <FilterContainer key={field.fieldId} field={field} />
         ))}
         <UserGroupFilter />
-      </Accordion>
+      </AccordionRoot>
     </>
   );
 }

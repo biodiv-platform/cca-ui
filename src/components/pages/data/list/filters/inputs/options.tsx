@@ -1,7 +1,9 @@
-import { Checkbox, CheckboxGroup, Stack } from "@chakra-ui/react";
+import { CheckboxGroup, Stack } from "@chakra-ui/react";
 import { addOrRemoveArray } from "@utils/basic";
 import { filterLabelShow, transformGroupedOption } from "@utils/field";
 import React, { useEffect, useMemo, useState } from "react";
+
+import { Checkbox } from "@/components/ui/checkbox";
 
 import useResponseList from "../../use-response-list";
 import FilterStat from "../stat";
@@ -24,13 +26,12 @@ const GroupedCheckboxes = ({ option, value, setValue, onChange, fieldId }) => {
       <Checkbox
         key={option.value}
         _hover={{ bg: "gray.100" }}
-        isChecked={allChecked}
-        isIndeterminate={isIndeterminate}
+        checked={isIndeterminate ? "indeterminate" : allChecked}
         onChange={handleParentToggle}
       >
         {option.label} <FilterStat fieldId={fieldId} value={allValuesIncl} />
       </Checkbox>
-      <Stack pl={6} mt={1} spacing={2}>
+      <Stack pl={6} mt={1} gap={2}>
         {option.children.map((o) => (
           <Checkbox key={o.value} value={o.value} _hover={{ bg: "gray.100" }} onChange={onChange}>
             {filterLabelShow(o)}
@@ -79,7 +80,7 @@ export function OptionsFilter({ filterField }) {
             ) : (
               <Checkbox
                 key={o.value}
-                isChecked={value.includes(o.value)}
+                checked={value.includes(o.value)}
                 value={o.value}
                 _hover={{ bg: "gray.100" }}
                 onChange={handleOnChange}

@@ -10,7 +10,7 @@ export default function ShowSection({ heading, table, accordian }) {
       <Heading fontSize="3xl" textAlign="center" mb={8}>
         {heading.name}
       </Heading>
-      <SimpleGrid columns={{ base: 1, md: 3 }} spacing={{ md: 8 }} spacingY={{ base: 4, md: 0 }}>
+      <SimpleGrid columns={{ base: 1, md: 3 }} gap={{ md: 8 }} gapY={{ base: 4, md: 0 }}>
         <GridItem>
           <ShowTable title={heading.name} data={table} />
         </GridItem>

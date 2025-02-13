@@ -1,4 +1,3 @@
-import { ArrowBackIcon } from "@chakra-ui/icons";
 import { Box, Button } from "@chakra-ui/react";
 import { SubmitButton } from "@components/form/submit-button";
 import { TextBoxField } from "@components/form/text";
@@ -11,6 +10,7 @@ import notification from "@utils/notification";
 import useTranslation from "next-translate/useTranslation";
 import React from "react";
 import { FormProvider, useForm } from "react-hook-form";
+import { LuMoveLeft } from "react-icons/lu";
 
 import { galleryFieldValidationSchema } from "./common";
 
@@ -50,7 +50,8 @@ export default function GalleryEditForm({ setIsEdit, setGalleryList, editGallery
     <FormProvider {...hForm}>
       <form onSubmit={hForm.handleSubmit(handleFormSubmit)}>
         <Box display="flex" justifyContent="space-between" alignItems="center">
-          <Button m={3} type="button" onClick={() => setIsEdit(false)} leftIcon={<ArrowBackIcon />}>
+          <Button m={3} type="button" onClick={() => setIsEdit(false)}>
+            <LuMoveLeft />
             {t("group:homepage_customization.back")}
           </Button>
         </Box>

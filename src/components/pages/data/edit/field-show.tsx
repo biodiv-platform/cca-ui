@@ -1,6 +1,6 @@
 import { defaultViewState } from "@biodiv-platform/naksha-commons";
 import { NakshaGmapsView } from "@biodiv-platform/naksha-gmaps-view";
-import { AspectRatio, Box, Heading, ListItem, SimpleGrid, UnorderedList } from "@chakra-ui/react";
+import { AspectRatio, Box, Heading, List, SimpleGrid } from "@chakra-ui/react";
 import { getMediaElementFromPath } from "@components/form/multimedia";
 import SITE_CONFIG from "@configs/site-config";
 import { FORM_TYPE } from "@static/constants";
@@ -22,10 +22,10 @@ const RenderText = ({ value }) => (
 const RenderOption = ({ value }) => <div>{optionLabelShow(value?.label)}</div>;
 
 const RenderOptionMulti = ({ value }) => (
-  <UnorderedList pl={1}>
+  <List.Root pl={1}>
     {Array.isArray(value) &&
-      value?.map((o, index) => <ListItem key={index}>{optionLabelShow(o?.label)}</ListItem>)}
-  </UnorderedList>
+      value?.map((o, index) => <List.Item key={index}>{optionLabelShow(o?.label)}</List.Item>)}
+  </List.Root>
 );
 
 const RenderNumber = ({ value }) => <div>{value?.join(" - ")}</div>;
@@ -42,7 +42,7 @@ const RenderFile = ({ value }) => {
   const { t } = useTranslation();
 
   return (
-    <SimpleGrid columns={{ base: 1, sm: 2, md: 3, lg: 4 }} spacing={4} mt={2}>
+    <SimpleGrid columns={{ base: 1, sm: 2, md: 3, lg: 4 }} gap={4} mt={2}>
       {value?.map((resource) => (
         <Box
           bg="white"

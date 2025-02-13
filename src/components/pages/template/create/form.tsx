@@ -59,7 +59,7 @@ export function CreateTemplateForm() {
     <div>
       <FormProvider {...hForm}>
         <form onSubmit={hForm.handleSubmit(handleOnSubmit)}>
-          <SimpleGrid columns={{ base: 1, md: 2 }} spacing={4}>
+          <SimpleGrid columns={{ base: 1, md: 2 }} gap={4}>
             <TextBoxField name="shortName" isRequired={true} label={t("form:short_name")} />
             <TextBoxField name="name" isRequired={true} label={t("form:name")} />
             <SelectMultipleInputField
@@ -75,7 +75,7 @@ export function CreateTemplateForm() {
             />
           </SimpleGrid>
           <TextAreaField name="description" isRequired={true} label={t("form:description")} />
-          <SubmitButton colorScheme="green">{t("common:save")}</SubmitButton>
+          <SubmitButton colorPalette="green">{t("common:save")}</SubmitButton>
         </form>
       </FormProvider>
     </div>

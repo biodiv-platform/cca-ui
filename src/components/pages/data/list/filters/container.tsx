@@ -1,12 +1,12 @@
-import {
-  AccordionButton,
-  AccordionIcon,
-  AccordionItem,
-  AccordionPanel,
-  Box
-} from "@chakra-ui/react";
+import { Box } from "@chakra-ui/react";
 import { MINMAX_FORM_TYPES, OPTION_FORM_TYPES } from "@static/constants";
 import React from "react";
+
+import {
+  AccordionItem,
+  AccordionItemContent,
+  AccordionItemTrigger,
+} from "@/components/ui/accordion"
 
 import { NumberFilter } from "./inputs/number";
 import { OptionsFilter } from "./inputs/options";
@@ -25,18 +25,17 @@ const FilterInput = ({ filterField }) => {
 
 export default function FilterContainer({ field }) {
   return (
-    <AccordionItem borderColor="gray.300">
+    <AccordionItem borderColor="gray.300" value={field}>
       <h2>
-        <AccordionButton py={3} bg="transparent" _hover={{ bg: "gray.50" }}>
+        <AccordionItemTrigger py={3} bg="transparent" _hover={{ bg: "gray.50" }}>
           <Box flex="1" textAlign="left" lineHeight={1.2} pr={6} fontWeight="semibold">
             {field.name}
           </Box>
-          <AccordionIcon />
-        </AccordionButton>
+        </AccordionItemTrigger>
       </h2>
-      <AccordionPanel pb={4} pt={2}>
+      <AccordionItemContent pb={4} pt={2}>
         <FilterInput filterField={field} />
-      </AccordionPanel>
+      </AccordionItemContent>
     </AccordionItem>
   );
 }

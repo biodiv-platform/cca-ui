@@ -1,4 +1,3 @@
-import { DownloadIcon } from "@chakra-ui/icons";
 import { Box, Button, ButtonGroup, SimpleGrid } from "@chakra-ui/react";
 import PageHeading from "@components/@core/page-heading";
 import SITE_CONFIG from "@configs/site-config";
@@ -6,6 +5,8 @@ import AddIcon from "@icons/add";
 import CheckIcon from "@icons/check";
 import useTranslation from "next-translate/useTranslation";
 import React from "react";
+
+import DownloadIcon from "@/icons/download";
 
 import FieldTree from "./field-tree";
 import MasterFieldTree from "./master-field-tree";
@@ -22,13 +23,9 @@ export default function EditFieldsForm() {
         size="lg"
         title={`${t("template:edit_fields")} ${template.isSaved ? "" : "(Unsaved)"}`}
       >
-        <ButtonGroup spacing={4}>
-          <Button
-            colorScheme="green"
-            disabled={areFieldsReadOnly}
-            onClick={createNewField}
-            leftIcon={<AddIcon />}
-          >
+        <ButtonGroup gap={4}>
+          <Button colorScheme="green" disabled={areFieldsReadOnly} onClick={createNewField}>
+            <AddIcon />
             {t("template:add_field")}
           </Button>
           <Button
@@ -36,17 +33,18 @@ export default function EditFieldsForm() {
             disabled={!areFieldsReadOnly || !template.isSaved}
             hidden={template.name === SITE_CONFIG.TEMPLATE.MAIN}
             onClick={pullTranslations}
-            leftIcon={<DownloadIcon />}
           >
+            <DownloadIcon />
             {t("template:pull.title")}
           </Button>
-          <Button colorScheme="blue" onClick={saveTemplate} leftIcon={<CheckIcon />}>
+          <Button colorScheme="blue" onClick={saveTemplate}>
+            <CheckIcon />
             {t("common:save")}
           </Button>
         </ButtonGroup>
       </PageHeading>
 
-      <SimpleGrid columns={2} spacing={4}>
+      <SimpleGrid columns={2} gap={4}>
         <Box>
           <MasterFieldTree />
         </Box>

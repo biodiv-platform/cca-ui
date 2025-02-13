@@ -1,15 +1,4 @@
-import { DownloadIcon } from "@chakra-ui/icons";
-import {
-  Button,
-  Modal,
-  ModalBody,
-  ModalCloseButton,
-  ModalContent,
-  ModalHeader,
-  ModalOverlay,
-  Tooltip,
-  useDisclosure
-} from "@chakra-ui/react";
+import { Button, useDisclosure } from "@chakra-ui/react";
 import { ResponsiveContainer } from "@components/@core/basic-table";
 import PageHeading from "@components/@core/page-heading";
 import { simplifyDTPayload } from "@utils/field";
@@ -17,6 +6,17 @@ import { useRouter } from "next/router";
 import useTranslation from "next-translate/useTranslation";
 import React, { useMemo } from "react";
 import DataTable from "react-data-table-component";
+import { LuDownload } from "react-icons/lu";
+
+import Tooltip from "@/components/@core/tooltip";
+import {
+  DialogBackdrop,
+  DialogBody,
+  DialogCloseTrigger,
+  DialogContent,
+  DialogHeader,
+  DialogRoot
+} from "@/components/ui/dialog";
 
 import DownloadForm from "./download-form";
 import ExpandedComponent from "./expanded";
@@ -27,7 +27,7 @@ export default function ResponseList() {
   const router = useRouter();
   const { shortName, responses, fields } = useTemplateResponse();
   const { columns, data } = useMemo(() => simplifyDTPayload(fields, responses.l), [responses]);
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  const { open, onOpen, onClose } = useDisclosure();
 
   const handleOnRowClicked = ({ id }) => router.push(`/data/show/${id}`);
 
@@ -35,23 +35,24 @@ export default function ResponseList() {
     <>
       <PageHeading title={`${t("template:responses")} ${shortName}`} icon="🗃">
         <>
-          <Tooltip hasArrow label="Downlaod CCA Data">
-            <Button leftIcon={<DownloadIcon />} colorScheme="blue" variant="ghost" onClick={onOpen}>
+          <Tooltip showArrow content="Downlaod CCA Data">
+            <Button colorScheme="blue" variant="ghost" onClick={onOpen}>
+              <LuDownload />
               {t("common:download")}
             </Button>
           </Tooltip>
-          <Modal isOpen={isOpen} onClose={onClose}>
-            <ModalOverlay />
-            <ModalContent>
-              <ModalHeader pb={"auto"}>
+          <DialogRoot open={open} onOpenChange={onClose}>
+            <DialogBackdrop />
+            <DialogContent>
+              <DialogHeader pb={"auto"}>
                 {t("template:request_cca_contibutor.add_request")}
-              </ModalHeader>
-              <ModalCloseButton />
-              <ModalBody>
+              </DialogHeader>
+              <DialogCloseTrigger />
+              <DialogBody>
                 <DownloadForm onClose={onClose} shortName={shortName} />
-              </ModalBody>
-            </ModalContent>
-          </Modal>
+              </DialogBody>
+            </DialogContent>
+          </DialogRoot>
         </>
       </PageHeading>
       <ResponsiveContainer>

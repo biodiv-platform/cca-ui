@@ -1,12 +1,4 @@
-import {
-  Accordion,
-  AccordionButton,
-  AccordionIcon,
-  AccordionItem,
-  AccordionPanel,
-  Box,
-  Text
-} from "@chakra-ui/react";
+import { Box, Text } from "@chakra-ui/react";
 import { Container } from "@components/@core/container";
 import { useLocalRouter } from "@components/@core/local-link";
 import PageHeading from "@components/@core/page-heading";
@@ -26,6 +18,13 @@ import React, { useMemo } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import * as Yup from "yup";
 
+import {
+  AccordionItem,
+  AccordionItemContent,
+  AccordionItemTrigger,
+  AccordionRoot
+} from "@/components/ui/accordion";
+
 import ParticipateTemplateFieldRenderer from "./participate-template-field-renderer";
 
 export default function TemplateParticipateComponent({ template }) {
@@ -33,7 +32,9 @@ export default function TemplateParticipateComponent({ template }) {
   const router = useLocalRouter();
   const { currentGroup } = useGlobalState();
 
-  const [formSchema, templateFields, templateGroups, groupFieldsEnabled] = useMemo(() => {
+  // groupFieldsEnabled
+
+  const [formSchema, templateFields, templateGroups] = useMemo(() => {
     const newFields = buildValidationRules(template.fields);
     const hForm = Object.fromEntries(
       newFields
@@ -99,23 +100,23 @@ export default function TemplateParticipateComponent({ template }) {
       <Sidebar fields={templateFields}>
         <FormProvider {...hForm}>
           <form onSubmit={hForm.handleSubmit(handleOnSubmit, handleOnSubmitInvalid)}>
-            <Accordion defaultIndex={groupFieldsEnabled} allowMultiple={true}>
+            {/* defaultIndex={groupFieldsEnabled} */}
+            <AccordionRoot multiple={true}>
               {templateGroups
                 .filter(
                   ({ heading, fields }) =>
                     heading.isRequired || fields.some((field) => field.isRequired)
                 )
                 .map(({ heading, fields }) => (
-                  <AccordionItem key={heading?.fieldId}>
-                    <AccordionButton>
+                  <AccordionItem key={heading?.fieldId} value={heading?.fieldId}>
+                    <AccordionItemTrigger>
                       {heading ? (
                         <ParticipateTemplateFieldRenderer field={heading} />
                       ) : (
                         t("form:no_heading")
                       )}
-                      <AccordionIcon />
-                    </AccordionButton>
-                    <AccordionPanel pb={4} px={0}>
+                    </AccordionItemTrigger>
+                    <AccordionItemContent pb={4} px={0}>
                       {fields
                         .filter((field) => heading.isRequired || field.isRequired)
                         .map((field) => (
@@ -131,11 +132,11 @@ export default function TemplateParticipateComponent({ template }) {
                             <ParticipateTemplateFieldRenderer field={field} />
                           </Box>
                         ))}
-                    </AccordionPanel>
+                    </AccordionItemContent>
                   </AccordionItem>
                 ))}
               <UserGroups name="userGroupId" label={t("group:post")} />
-            </Accordion>
+            </AccordionRoot>
             <CheckboxField mt={6} name="terms" label={t("form:terms")} />
             <SubmitButton>{t("form:saved.title")}</SubmitButton>
           </form>

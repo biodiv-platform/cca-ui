@@ -59,11 +59,11 @@ export function EditTemplateMetaForm() {
       <FormProvider {...hForm}>
         <form onSubmit={hForm.handleSubmit(handleOnSubmit)}>
           <PageHeading size="lg" title={t("template:update.title")}>
-            <SubmitButton colorScheme="blue" leftIcon={<CheckIcon />}>
+            <SubmitButton colorPalette="blue" leftIcon={<CheckIcon />}>
               {t("common:save")}
             </SubmitButton>
           </PageHeading>
-          <SimpleGrid columns={{ base: 1, md: 3 }} spacing={4}>
+          <SimpleGrid columns={{ base: 1, md: 3 }} gap={4}>
             <TextBoxField
               name="shortName"
               disabled={areFieldsReadOnly}

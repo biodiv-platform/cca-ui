@@ -1,17 +1,10 @@
 import {
-  Avatar,
   Box,
   Button,
   Flex,
   Heading,
   IconButton,
   LinkOverlay,
-  Modal,
-  ModalBody,
-  ModalCloseButton,
-  ModalContent,
-  ModalHeader,
-  ModalOverlay,
   useDisclosure
 } from "@chakra-ui/react";
 import { Container } from "@components/@core/container";
@@ -32,11 +25,20 @@ import { NextSeo } from "next-seo";
 import useTranslation from "next-translate/useTranslation";
 import React, { useState } from "react";
 
+import { Avatar } from "@/components/ui/avatar";
+import {
+  DialogBackdrop,
+  DialogBody,
+  DialogCloseTrigger,
+  DialogContent,
+  DialogHeader,
+  DialogRoot} from "@/components/ui/dialog";
+
 import useTemplateResponseShow from "../use-template-response-show";
 import NewRequestForm from "./requestorForm";
 
 const UserAvatar = ({ u, ...rest }) => (
-  <Tooltip hasArrow={true} title={u.name}>
+  <Tooltip showArrow={true} title={u.name}>
     <Avatar src={getUserImage(u.profilePic, u.name, 400)} size="sm" name={u.name} {...rest} />
   </Tooltip>
 );
@@ -49,7 +51,7 @@ export default function ShowHeader() {
   const [isFollowing, setIsFollowing] = useState(
     response.followers?.includes(user?.id?.toString())
   );
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  const { open, onOpen, onClose } = useDisclosure();
 
   const toggleFollow = async () => {
     const { success } = await axToggleDocumentFollow(!isFollowing, response.id);
@@ -116,27 +118,29 @@ export default function ShowHeader() {
               <IconButton
                 size="lg"
                 className="no-print"
-                isRound={true}
+                // isRound={true}
                 variant="ghost"
                 colorScheme="blue"
                 aria-label={t("common:edit")}
                 as={LinkOverlay}
-                icon={<EditIcon />}
                 ml={3}
-              />
+              >
+                <EditIcon />
+              </IconButton>
             </LocalLink>
           )}
           {isLoggedIn && (
             <IconButton
               className="no-print"
-              icon={isFollowing ? <NotificationsActiveIcon /> : <NotificationsNoneIcon />}
               size="lg"
-              isRound={true}
+              // isRound={true}
               variant="ghost"
               colorScheme="purple"
               aria-label={isFollowing ? t("template:unfollow.title") : t("template:follow.title")}
               onClick={toggleFollow}
-            />
+            >
+              {isFollowing ? <NotificationsActiveIcon /> : <NotificationsNoneIcon />}{" "}
+            </IconButton>
           )}
         </Heading>
         <Flex
@@ -165,24 +169,21 @@ export default function ShowHeader() {
           )}
           {isLoggedIn && !canEdit && (
             <>
-              <Tooltip hasArrow label="Request Permission to Contibute">
-                <Button
-                  leftIcon={<MailIcon boxSize={"7"} />}
-                  colorScheme="blue"
-                  variant="ghost"
-                  onClick={onOpen}
-                ></Button>
+              <Tooltip showArrow content="Request Permission to Contibute">
+                <Button colorScheme="blue" variant="ghost" onClick={onOpen}>
+                  <MailIcon boxSize={"7"} />
+                </Button>
               </Tooltip>
-              <Modal isOpen={isOpen} onClose={onClose}>
-                <ModalOverlay />
-                <ModalContent>
-                  <ModalHeader>{t("template:request_cca_contibutor.add_request")}</ModalHeader>
-                  <ModalCloseButton />
-                  <ModalBody>
+              <DialogRoot open={open} onOpenChange={onClose}>
+                <DialogBackdrop />
+                <DialogContent>
+                  <DialogHeader>{t("template:request_cca_contibutor.add_request")}</DialogHeader>
+                  <DialogCloseTrigger />
+                  <DialogBody>
                     <NewRequestForm onClose={onClose} defaultValues={defaultValues} />
-                  </ModalBody>
-                </ModalContent>
-              </Modal>
+                  </DialogBody>
+                </DialogContent>
+              </DialogRoot>
             </>
           )}
         </Flex>
