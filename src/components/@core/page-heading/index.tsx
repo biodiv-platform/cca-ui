@@ -10,7 +10,7 @@ interface PageHeadingProps {
   size?;
 }
 
-export default function PageHeading({ title, icon, children, mb, id, size }: PageHeadingProps) {
+export default function PageHeading({ title, icon, children, mb, id, size="4xl" }: PageHeadingProps) {
   return (
     <Flex justifyContent="space-between" my={10} mb={mb}>
       <Heading id={id} size={size}>

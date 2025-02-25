@@ -42,7 +42,7 @@ export default function ShowTable({ data, title }) {
       >
         {title}
       </Box>
-      <Table.Root >
+      <Table.Root variant="line" striped >
         <Table.Body>
           {tableData.map(({ label, value }) => (
             <Table.Row key={label}>

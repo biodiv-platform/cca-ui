@@ -163,7 +163,7 @@ export default function UpdateFieldForm({ defaultValues, onClose }) {
           </DialogBody>
 
           <DialogFooter>
-            <Button colorScheme="gray" mr={3} onClick={onClose}>
+            <Button colorPalette="gray" mr={3} onClick={onClose}>
               {t("common:close")}
             </Button>
             <SubmitButton>{t("common:save")}</SubmitButton>

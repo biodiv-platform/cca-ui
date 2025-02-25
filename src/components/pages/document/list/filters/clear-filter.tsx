@@ -25,7 +25,7 @@ export default function ClearFilters() {
         variant="plain"
         className="fade"
         size="lg"
-        colorScheme="red"
+        colorPalette="red"
         aria-label={message}
       >
         <DeleteIcon />

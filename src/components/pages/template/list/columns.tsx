@@ -1,14 +1,13 @@
 import { Button, Link } from "@chakra-ui/react";
 import LocalLink from "@components/@core/local-link";
 import TimeAgo from "@components/pages/common/timeago";
-import EditIcon from "@icons/edit";
 import { axDeleteTemplate } from "@services/cca.service";
 import { TEMPLATE } from "@static/events";
 import notification, { NotificationType } from "@utils/notification";
 import useTranslation from "next-translate/useTranslation";
 import React from "react";
 import { emit } from "react-gbus";
-import { LuEye } from "react-icons/lu";
+import { LuEye, LuPencil } from "react-icons/lu";
 
 import DeleteIcon from "@/icons/delete";
 
@@ -36,7 +35,7 @@ export const ListColumns = [
       return (
         <LocalLink href={`/template/edit/${value}`} prefixGroup={true}>
           <Link>
-            <EditIcon /> {t("common:edit")}
+            <LuPencil /> {t("common:edit")}
           </Link>
         </LocalLink>
       );
@@ -77,7 +76,7 @@ export const ListColumns = [
       };
 
       return (
-        <Button colorScheme="red" onClick={deleteTemplate}>
+        <Button colorPalette="red" onClick={deleteTemplate} variant={"plain"}>
           <DeleteIcon />
           {t("common:delete")}
         </Button>

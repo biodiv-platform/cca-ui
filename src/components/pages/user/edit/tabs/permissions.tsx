@@ -1,4 +1,4 @@
-import { SimpleGrid, Spinner } from "@chakra-ui/react";
+import { Box, SimpleGrid, Spinner } from "@chakra-ui/react";
 import { SelectMultipleInputField } from "@components/form/select-multiple";
 import { SubmitButton } from "@components/form/submit-button";
 import { SwitchField } from "@components/form/switch";
@@ -76,7 +76,13 @@ export default function PermissionsTab({ user }: UserEditPageComponentProps) {
             <SwitchField name="passwordExpired" label={t("user:password_expired")} />
           </div>
         </SimpleGrid>
-        <SelectMultipleInputField name="roles" label={t("user:roles")} options={rolesOptionList} />
+        <Box pl={4} mb={4}>
+          <SelectMultipleInputField
+            name="roles"
+            label={t("user:roles")}
+            options={rolesOptionList}
+          />
+        </Box>
         <SubmitButton leftIcon={<CheckIcon />}>{t("common:save")}</SubmitButton>
       </form>
     </FormProvider>

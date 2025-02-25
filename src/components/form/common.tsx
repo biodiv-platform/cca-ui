@@ -5,13 +5,15 @@ import React, { useMemo } from "react";
 import { useController } from "react-hook-form";
 import { LuInfo } from "react-icons/lu";
 
-// const RequiredIndicator = () => {
-//   const { isRequired } = useFormControl();
+const RequiredIndicator = ({ required }) => {
+  return required ? (
+    <chakra.span color="red.500" ml={1}>
+      *
+    </chakra.span>
+  ) : null;
+};
 
-//   return isRequired ? <chakra.span css={{ color: "red.500" }} ml={1} children="*" /> : null;
-// };
-
-export function FormLabel({ title, label, name, helpText, isLargeVariant }) {
+export function FormLabel({ title, label, name, helpText, isLargeVariant, required }) {
   const { open, onToggle } = useDisclosure();
 
   return isLargeVariant ? (
@@ -29,6 +31,7 @@ export function FormLabel({ title, label, name, helpText, isLargeVariant }) {
                 m={3}
                 ml={2}
                 mt={1}
+                variant={"plain"}
               >
                 <LuInfo />
               </IconButton>
@@ -43,7 +46,7 @@ export function FormLabel({ title, label, name, helpText, isLargeVariant }) {
               >
                 <Box fontWeight="bold">
                   {title}
-                  {/* <RequiredIndicator /> */}
+                  <RequiredIndicator required={required} />
                 </Box>
                 {label || title}
               </chakra.label>
@@ -84,9 +87,9 @@ export const OthersInput = ({ name, value }) => {
   const { field } = useController({ name: `others.${name}` });
 
   const showOthers = useMemo(() => {
-    if (!value) return false;
-
-    return Array.isArray(value) ? value?.find((v) => isOthersField(v)) : isOthersField(value);
+    if (!value) return false; // Handle null/undefined
+    if (Array.isArray(value)) return value.some((v) => typeof v === "string" && isOthersField(v));
+    return isOthersField(value);
   }, [value]);
 
   return showOthers ? <Input mt={4} {...field} /> : null;

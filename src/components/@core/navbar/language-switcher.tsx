@@ -1,4 +1,4 @@
-import { Button, Link } from "@chakra-ui/react";
+import { Button } from "@chakra-ui/react";
 import SITE_CONFIG from "@configs/site-config";
 import useGlobalState from "@hooks/use-global-state";
 import TranslateIcon from "@icons/translate";
@@ -37,21 +37,20 @@ export default function LanguageSwitcher() {
     <MenuRoot>
       <MenuTrigger asChild>
         <Button
-          size="sm"
-          variant="outline"
+          size="xl"
+          variant="plain"
           hidden={isPreviewMode}
-          as={Link}
           role="button"
-          ml={4}
+          // ml={4}
           aria-label="Switch Language"
         >
-          <TranslateIcon fontSize="xl" />
+          <TranslateIcon />
         </Button>
       </MenuTrigger>
       <MenuContent>
         {Object.entries(SITE_CONFIG.LANG.LIST).map(([langCode, info]: any) => (
-          <MenuItem  value="langCode" asChild onClick={() => changeLanguage(langCode, true)} key={langCode}>
-            {info.NAME}
+          <MenuItem value={langCode} key={langCode} onClick={() => changeLanguage(langCode, true)}>
+            <span>{info.NAME}</span>
           </MenuItem>
         ))}
       </MenuContent>

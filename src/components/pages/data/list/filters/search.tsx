@@ -37,7 +37,7 @@ function Search() {
   };
 
   return (
-    <Box position="relative" display="flex" alignItems="center">
+    <Box position="relative" display="flex" alignItems="center" width={"full"}>
       <InputGroup>
         <Input
           type="text"
@@ -45,9 +45,18 @@ function Search() {
           onChange={handleInputChange}
           onKeyDown={handleKeyDown}
           placeholder="Search CCA"
+          variant="outline"
         />
       </InputGroup>
-      <Button size="xs" onClick={handleSearch} ml={10} height="100%">
+      <Button
+        size="xs"
+        onClick={handleSearch}
+        ml={10}
+        height="100%"
+        rounded={"full"}
+        variant={"subtle"}
+        fontWeight={"bold"}
+      >
         Search
       </Button>
     </Box>

@@ -16,7 +16,7 @@ export default function Statistics(featured) {
 
   return (
     <Box borderRadius="lg" overflow="hidden" bg="white">
-      <Container>
+      <Container bg="white">
         <SimpleGrid columns={{ base: 1, md: 2 }} py={12} gap={10}>
           <Box
             display="flex"
@@ -28,7 +28,7 @@ export default function Statistics(featured) {
             p={6}
             mb={6}
             textAlign="left"
-            color={"gray.500"}
+            colorPalette={"gray.500"}
             borderColor={"teal.600"}
           >
             <Image src="/next-assets/document.svg" h="60px" loading="lazy" />
@@ -50,7 +50,7 @@ export default function Statistics(featured) {
             p={6}
             mb={6}
             textAlign="left"
-            color={"gray.500"}
+            colorPalette={"gray.500"}
             borderColor={"teal.600"}
           >
             <Image src="/next-assets/people.svg" h="60px" loading="lazy" />
@@ -71,7 +71,7 @@ export default function Statistics(featured) {
           </GridItem>
           <GridItem display="flex" alignItems="center" justifyContent={{ md: "flex-end" }}>
             <LocalLink href="/chart" prefixGroup={true}>
-              <Button size="lg" colorScheme="blue" as="a">
+              <Button size="lg" colorPalette="blue" as="a">
                 {t("home:statistics.title")}
               </Button>
             </LocalLink>

@@ -27,7 +27,7 @@ export default function EmptyPageComponent() {
           </Text>
           {canCreate && (
             <LocalLink prefixGroup={true} href="/page/create">
-              <Button as="a" colorScheme="blue">
+              <Button as="a" colorPalette="blue">
                 {t("page:create.title")}
                 <LuMoveRight />
               </Button>

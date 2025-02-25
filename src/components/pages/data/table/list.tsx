@@ -36,7 +36,7 @@ export default function ResponseList() {
       <PageHeading title={`${t("template:responses")} ${shortName}`} icon="🗃">
         <>
           <Tooltip showArrow content="Downlaod CCA Data">
-            <Button colorScheme="blue" variant="ghost" onClick={onOpen}>
+            <Button colorPalette="blue" variant="ghost" onClick={onOpen}>
               <LuDownload />
               {t("common:download")}
             </Button>

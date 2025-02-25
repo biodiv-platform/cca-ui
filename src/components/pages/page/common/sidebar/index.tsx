@@ -63,25 +63,27 @@ export default function PagesSidebar() {
   return p.pages.length > 0 ? (
     <TreeContainer className="fade">
       {!isDesktop && (
-        <Button colorScheme="blue" w="full" mb={4} onClick={onToggle}>
+        <Button colorPalette="blue" w="full" mb={4} onClick={onToggle}>
           <MenuIcon />
           {t("page:sidebar.toggle")}
         </Button>
       )}
       <Collapsible.Root open={isDesktop || open} unmountOnExit={true}>
-        {p.canEdit && (
-          <Button
-            mb={3}
-            w="full"
-            variant="ghost"
-            colorScheme={p.isEditing ? "red" : "blue"}
-            onClick={p.toggleEditing}
-          >
-            {t("page:sidebar.reorder")}
-            {p.isEditing ? <UnlockIcon /> : <LockIcon />}
-          </Button>
-        )}
-        {p.isEditing ? <SidebarEditing /> : <SidebarNormal />}
+        <Collapsible.Content>
+          {p.canEdit && (
+            <Button
+              mb={3}
+              w="full"
+              variant="ghost"
+              colorPalette={p.isEditing ? "red" : "blue"}
+              onClick={p.toggleEditing}
+            >
+              {t("page:sidebar.reorder")}
+              {p.isEditing ? <UnlockIcon /> : <LockIcon />}
+            </Button>
+          )}
+          {p.isEditing ? <SidebarEditing /> : <SidebarNormal />}
+        </Collapsible.Content>
       </Collapsible.Root>
     </TreeContainer>
   ) : null;

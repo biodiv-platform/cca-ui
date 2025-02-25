@@ -1,4 +1,4 @@
-import { SimpleGrid } from "@chakra-ui/react";
+import { Box, SimpleGrid } from "@chakra-ui/react";
 import { useLocalRouter } from "@components/@core/local-link";
 import { PhoneNumberInputField } from "@components/form/phone-number";
 import { SelectInputField } from "@components/form/select";
@@ -77,23 +77,29 @@ export default function UserAboutTab({ user, isAdmin }: UserEditPageComponentPro
   return (
     <FormProvider {...hForm}>
       <form onSubmit={hForm.handleSubmit(handleOnUpdate)}>
-        <SimpleGrid columns={{ base: 1, md: 2 }} gapX={4}>
-          <TextBoxField name="userName" label={t("user:username")} />
-          <TextBoxField name="name" label={t("user:name")} />
-          <TextBoxField name="email" type="email" disabled={!isAdmin} label={t("user:email")} />
-          <PhoneNumberInputField name="mobileNumber" disabled={!isAdmin} label={t("user:mobile")} />
-          <SelectInputField
-            name="occupation"
-            label={t("user:occupation")}
-            options={OCCUPATION_OPTIONS}
-          />
-          <TextBoxField name="institution" label={t("user:institution")} />
-          <SelectInputField name="sexType" label={t("user:gender")} options={GENDER_OPTIONS} />
-          <TextBoxField name="website" label={t("user:website")} />
-        </SimpleGrid>
-        <TextAreaField name="aboutMe" label="About" />
-        <LocationPicker />
-        <SubmitButton leftIcon={<CheckIcon />}>{t("common:save")}</SubmitButton>
+        <Box p={4}>
+          <SimpleGrid columns={{ base: 1, md: 2 }} gapX={4}>
+            <TextBoxField name="userName" label={t("user:username")} />
+            <TextBoxField name="name" label={t("user:name")} />
+            <TextBoxField name="email" type="email" disabled={!isAdmin} label={t("user:email")} />
+            <PhoneNumberInputField
+              name="mobileNumber"
+              disabled={!isAdmin}
+              label={t("user:mobile")}
+            />
+            <SelectInputField
+              name="occupation"
+              label={t("user:occupation")}
+              options={OCCUPATION_OPTIONS}
+            />
+            <TextBoxField name="institution" label={t("user:institution")} />
+            <SelectInputField name="sexType" label={t("user:gender")} options={GENDER_OPTIONS} />
+            <TextBoxField name="website" label={t("user:website")} />
+          </SimpleGrid>
+          <TextAreaField name="aboutMe" label="About" />
+          <LocationPicker />
+          <SubmitButton leftIcon={<CheckIcon />}>{t("common:save")}</SubmitButton>
+        </Box>
       </form>
     </FormProvider>
   );

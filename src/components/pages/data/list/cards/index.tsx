@@ -15,7 +15,6 @@ export const Card = ({ response, isTruncated }) => {
     <LocalLink href={`/data/show/${response.id}`} prefixGroup={true}>
       <Box
         as="a"
-        // target="_blank"
         p={4}
         key={response.id}
         borderBottom="1px solid"
@@ -28,7 +27,7 @@ export const Card = ({ response, isTruncated }) => {
             <Box fontSize="lg" fontWeight="bold" mb={2}>
               {response.titlesValues.map((field) => field.value).toString()}
             </Box>
-            <List.Root gap={1}>
+            <List.Root gap={1} variant="plain">
               {response.values.map((field, index) => (
                 <List.Item key={index} lineHeight={1.2}>
                   <Box maxLines={isTruncated ? 1 : undefined}>

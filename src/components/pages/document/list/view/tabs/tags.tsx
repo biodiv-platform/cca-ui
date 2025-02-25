@@ -29,7 +29,7 @@ export default function TagsTab({ documentId, tags }: ITagsTabsProps) {
           <IconButton
             ml={3}
             variant="ghost"
-            colorScheme="blue"
+            colorPalette="blue"
             onClick={onToggle}
             aria-label="Edit"
           >

@@ -107,7 +107,7 @@ function SignInForm({ onSuccess, redirect = true, forward }: ISignInFormProps) {
   return (
     <>
       <NextSeo title={t("auth:sign_in")} />
-      {redirect && <PageHeading title={t("auth:sign_in")} />}
+      {redirect && <PageHeading title={t("auth:sign_in")} size="4xl" />}
 
       <FormProvider {...hForm}>
         <form onSubmit={hForm.handleSubmit(handleOnSubmit)}>

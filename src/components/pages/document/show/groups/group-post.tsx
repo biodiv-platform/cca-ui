@@ -78,12 +78,12 @@ export default function GroupPost({
 
   return (
     <>
-      <Button mb={2} variant="ghost" colorScheme="blue" ref={editButtonRef} onClick={onEditClick}>
+      <Button variant="plain" colorPalette="blue" ref={editButtonRef} onClick={onEditClick} fontWeight={"bold"}>
         {t("common:edit")}
         <EditIcon />
       </Button>
 
-      <SimpleGrid columns={columns || defaultGridColumns} gap={4} hidden={open}>
+      <SimpleGrid columns={columns || defaultGridColumns} gap={4} hidden={open} p={4}>
         <GroupBox
           link={DEFAULT_GROUP.webAddress}
           icon={`${DEFAULT_GROUP.icon}?h=40`}
@@ -105,38 +105,45 @@ export default function GroupPost({
           ))}
       </SimpleGrid>
 
-      <Collapsible.Root unmountOnExit={true}>
-        <Collapsible.Trigger paddingY="3">
-          <Input mb={12} onChange={onQuery} placeholder={t("header:search")} />
-        </Collapsible.Trigger>
 
-        {groups?.length > 0 ? (
-          <CheckBoxItems
-            gridColumns={columns || defaultGridColumns}
-            options={filterGroups}
-            defaultValue={selectedGroups}
-            onChange={setSelectedGroups}
-          />
-        ) : (
-          <LocalLink href="/group/list">
-            <ExternalBlueLink>{t("common:no_groups_joined")}</ExternalBlueLink>
-          </LocalLink>
-        )}
+      <Collapsible.Root open={open} unmountOnExit={true} p={4}>
+        <Collapsible.Content>
+            <Input onChange={onQuery} placeholder={t("header:search")} />
 
-        <Box mt={2}>
-          <Button
-            size="sm"
-            colorScheme="blue"
-            aria-label="Save"
-            type="submit"
-            onClick={handleOnSave}
-          >
-            {t("common:save")}
-          </Button>
-          <Button size="sm" ml={2} colorScheme="gray" aria-label="Cancel" onClick={handleOnCancel}>
-            {t("common:close")}
-          </Button>
-        </Box>
+          {groups?.length > 0 ? (
+            <CheckBoxItems
+              gridColumns={columns || defaultGridColumns}
+              options={filterGroups}
+              defaultValue={selectedGroups}
+              onChange={setSelectedGroups}
+            />
+          ) : (
+            <LocalLink href="/group/list">
+              <ExternalBlueLink>{t("common:no_groups_joined")}</ExternalBlueLink>
+            </LocalLink>
+          )}
+
+          <Box mt={2}>
+            <Button
+              size="sm"
+              colorPalette="blue"
+              aria-label="Save"
+              type="submit"
+              onClick={handleOnSave}
+            >
+              {t("common:save")}
+            </Button>
+            <Button
+              size="sm"
+              ml={2}
+              variant={"subtle"}
+              aria-label="Cancel"
+              onClick={handleOnCancel}
+            >
+              {t("common:close")}
+            </Button>
+          </Box>
+        </Collapsible.Content>
       </Collapsible.Root>
     </>
   );

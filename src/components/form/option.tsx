@@ -64,6 +64,7 @@ export const OptionsField = ({
         label={label}
         name={name}
         helpText={helpText}
+        required={isRequired}
       />
       <div>
         {fields.map((field, index) => (
@@ -86,7 +87,7 @@ export const OptionsField = ({
               <Field errorText={!!formState.errors[`${name}.${index}.value`]} />
             </GridItem>
             <Button
-              colorScheme="red"
+              colorPalette="red"
               type="button"
               onClick={() => remove(index)}
               disabled={disableValues}
@@ -96,7 +97,7 @@ export const OptionsField = ({
             </Button>
           </SimpleGrid>
         ))}
-        <Button colorScheme="green" type="button" onClick={add} disabled={disableValues}>
+        <Button colorPalette="green" type="button" onClick={add} disabled={disableValues}>
           <AddIcon />
           {t("common:add")}
         </Button>

@@ -97,14 +97,14 @@ export default function ExpandedComponent(props) {
     <div>
       <SimpleGrid columns={1} gap={0} borderBottomWidth="1px">
         <Container>
-          <Table.Root>
+          <Table.Root variant="line" striped>
             <Table.Body>
               {infoRows.map(([k, v]: any) => (
                 <Table.Row key={k}>
-                  <Table.ColumnHeader>{k}</Table.ColumnHeader>
-                  <Table.ColumnHeader whiteSpace="initial" wordBreak="break-word">
+                  <Table.Cell>{k}</Table.Cell>
+                  <Table.Cell whiteSpace="initial" wordBreak="break-word">
                     <Prose>{renderSwitch(k, v)}</Prose>
-                  </Table.ColumnHeader>
+                  </Table.Cell>
                 </Table.Row>
               ))}
               {ccaFiledValue.map(([k, v]: any) => (

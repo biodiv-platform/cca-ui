@@ -69,7 +69,7 @@ export default function JoinUserGroup({
         className="join-usergroup"
         size="sm"
         loading={isLoading}
-        colorScheme="green"
+        colorPalette="green"
         onClick={addUserGroupMember}
       >
         <AddIcon />
@@ -80,7 +80,7 @@ export default function JoinUserGroup({
         hidden={!showLeave}
         size="sm"
         loading={isLoading}
-        colorScheme="red"
+        colorPalette="red"
         onClick={removeUserGroupMember}
       >
         <LuMinus />
@@ -88,7 +88,7 @@ export default function JoinUserGroup({
       </Button>
     )
   ) : (
-    <Button size="sm" colorScheme="blue" onClick={waitForAuth} hidden={!showSignInRequired}>
+    <Button size="sm" colorPalette="blue" onClick={waitForAuth} hidden={!showSignInRequired}>
       {t("common:session_required")}
     </Button>
   );

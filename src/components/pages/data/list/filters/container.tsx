@@ -5,8 +5,8 @@ import React from "react";
 import {
   AccordionItem,
   AccordionItemContent,
-  AccordionItemTrigger,
-} from "@/components/ui/accordion"
+  AccordionItemTrigger
+} from "@/components/ui/accordion";
 
 import { NumberFilter } from "./inputs/number";
 import { OptionsFilter } from "./inputs/options";
@@ -25,7 +25,7 @@ const FilterInput = ({ filterField }) => {
 
 export default function FilterContainer({ field }) {
   return (
-    <AccordionItem borderColor="gray.300" value={field}>
+    <AccordionItem key={field.fieldId} borderColor="gray.300" value={field.fieldId}>
       <h2>
         <AccordionItemTrigger py={3} bg="transparent" _hover={{ bg: "gray.50" }}>
           <Box flex="1" textAlign="left" lineHeight={1.2} pr={6} fontWeight="semibold">

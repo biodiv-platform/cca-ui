@@ -42,6 +42,7 @@ export const DateRangePickerField = ({
   hasMaxDate = true,
   isLargeVariant,
   isClearable,
+  isRequired,
   min,
   max,
   ...props
@@ -62,6 +63,7 @@ export const DateRangePickerField = ({
         label={label}
         name={name}
         helpText={helpText}
+        required={isRequired}
       />
       <InputGroup
         endElement={

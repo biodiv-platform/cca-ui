@@ -150,7 +150,7 @@ export default function FlagActionButton({
                                   {user.name} <UserBadge isAdmin={user.isAdmin} />
                                 </BlueLink>
                               </LocalLink>
-                              <Badge colorScheme="red" verticalAlign="baseline">
+                              <Badge colorPalette="red" verticalAlign="baseline">
                                 {t(`common:actions.flag.flags.${flag.flag?.toLowerCase()}`)}
                               </Badge>
                               <Text>{flag.notes}</Text>
@@ -160,7 +160,7 @@ export default function FlagActionButton({
                                 <Button
                                   size="sm"
                                   variant="outline"
-                                  colorScheme="red"
+                                  colorPalette="red"
                                   onClick={() => handleOnUnFlag(flag.id)}
                                 >
                                   Remove

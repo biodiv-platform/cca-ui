@@ -10,6 +10,7 @@ interface ITextBoxProps {
   label: string;
   mt?: number;
   mb?: number;
+  pl?: number;
   disabled?: boolean;
   color?: string;
   hint?: string;
@@ -19,6 +20,7 @@ export const SwitchField = ({
   name,
   label,
   mb = 4,
+  pl = 4,
   color = "blue",
   hint,
   disabled,
@@ -38,6 +40,7 @@ export const SwitchField = ({
           disabled={disabled}
           colorPalette={color}
           name={name}
+          pl={pl}
         />
       </Flex>
       {hint && <Field color="gray.600" helperText={hint} />}

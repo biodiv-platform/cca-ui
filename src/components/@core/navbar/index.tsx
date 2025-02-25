@@ -26,6 +26,7 @@ export default function NavBar() {
         <Flex h={16} alignItems="center" justifyContent="space-between" w="full" px={4}>
           <Flex alignItems="center" justifyContent="center" gap={4}>
             <IconButton
+              variant={"subtle"}
               size="md"
               aria-label="Open Menu"
               display={{ md: "none" }}

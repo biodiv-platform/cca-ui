@@ -41,6 +41,7 @@ export const YearPickerField = ({
   isClearable,
   min,
   max,
+  isRequired,
   ...props
 }: IYearPickerBoxProps) => {
   const { field, fieldState } = useController({ name });
@@ -59,6 +60,7 @@ export const YearPickerField = ({
         label={label}
         name={name}
         helpText={helpText}
+        required={isRequired}
       />
       <InputGroup
         endElement={

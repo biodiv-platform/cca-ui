@@ -32,7 +32,8 @@ import {
   DialogCloseTrigger,
   DialogContent,
   DialogHeader,
-  DialogRoot} from "@/components/ui/dialog";
+  DialogRoot
+} from "@/components/ui/dialog";
 
 import useTemplateResponseShow from "../use-template-response-show";
 import NewRequestForm from "./requestorForm";
@@ -111,19 +112,20 @@ export default function ShowHeader() {
             description: formatSummary(summaryData)
           }}
         />
-        <Heading mb={4} fontWeight="semibold">
+        <Heading mb={4} fontWeight="semibold" size={"4xl"}>
           {title}
           {canEdit && (
             <LocalLink href={`/data/edit/${header.id}`} prefixGroup={true}>
               <IconButton
                 size="lg"
                 className="no-print"
-                // isRound={true}
+                rounded={"full"}
                 variant="ghost"
-                colorScheme="blue"
+                colorPalette="blue"
                 aria-label={t("common:edit")}
                 as={LinkOverlay}
                 ml={3}
+                position="relative"
               >
                 <EditIcon />
               </IconButton>
@@ -133,9 +135,9 @@ export default function ShowHeader() {
             <IconButton
               className="no-print"
               size="lg"
-              // isRound={true}
+              rounded={"full"}
               variant="ghost"
-              colorScheme="purple"
+              colorPalette="purple"
               aria-label={isFollowing ? t("template:unfollow.title") : t("template:follow.title")}
               onClick={toggleFollow}
             >
@@ -170,7 +172,7 @@ export default function ShowHeader() {
           {isLoggedIn && !canEdit && (
             <>
               <Tooltip showArrow content="Request Permission to Contibute">
-                <Button colorScheme="blue" variant="ghost" onClick={onOpen}>
+                <Button colorPalette="blue" variant="ghost" onClick={onOpen}>
                   <MailIcon boxSize={"7"} />
                 </Button>
               </Tooltip>

@@ -37,16 +37,18 @@ export default function UserGroups({ name, label }: IUserGroupsProps) {
 
   return (
     <Box data-hidden={!SITE_CONFIG.USERGROUP.ACTIVE}>
-      <Button color="gray.900" fontSize="2xl" mb={4} onClick={onToggle}>
+      <Button color="gray.900" fontSize="2xl" mb={4} onClick={onToggle} variant={"plain"}>
         👥 {label} {open ? <LuChevronUp /> : <LuChevronDown />}
       </Button>
       <Collapsible.Root open={open} unmountOnExit={true}>
-        <Input mb={12} onChange={onQuery} placeholder={t("header:search")} />
-        <CheckBoxItems
-          options={filterGroups}
-          defaultValue={field.value}
-          onChange={field.onChange}
-        />
+        <Collapsible.Content>
+          <Input  onChange={onQuery} placeholder={t("header:search")} />
+          <CheckBoxItems
+            options={filterGroups}
+            defaultValue={field.value}
+            onChange={field.onChange}
+          />
+        </Collapsible.Content>
       </Collapsible.Root>
     </Box>
   );

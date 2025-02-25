@@ -80,7 +80,7 @@ export default function UserPermissionEditor({ initialUsers, author }) {
               />
             </DialogBody>
             <DialogFooter>
-              <Button mr={3} onClick={handleOnClose}>
+              <Button mr={3} onClick={handleOnClose} variant={"subtle"}>
                 {t("common:close")}
               </Button>
               <SubmitButton>{t("common:save")}</SubmitButton>

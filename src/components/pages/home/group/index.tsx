@@ -18,7 +18,6 @@ export default function GroupHome({ info }) {
           <GridItem colSpan={4}>
             <chakra.h2
               fontSize={{ base: "3xl", sm: "4xl" }}
-              lineHeight="8"
               fontWeight="bold"
               letterSpacing="tight"
               color="gray.900"
@@ -37,7 +36,7 @@ export default function GroupHome({ info }) {
           </GridItem>
           <GridItem display="flex" alignItems="center" justifyContent={{ md: "flex-end" }}>
             <LocalLink href="/data/list" prefixGroup={true}>
-              <Button w={{ base: "full", sm: "auto" }} size="lg" colorScheme="blue" as="a">
+              <Button w={{ base: "full", sm: "auto" }} size="lg" colorPalette="blue" as="a">
                 {t("header:browse")}
                 {<LuMoveRight />}
               </Button>

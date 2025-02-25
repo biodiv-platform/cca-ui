@@ -1,3 +1,4 @@
+import { Box } from "@chakra-ui/react";
 import { namedFormErrorMessage } from "@utils/field";
 import React from "react";
 import { useController } from "react-hook-form";
@@ -71,30 +72,33 @@ export const SelectInputField = ({
         label={label}
         name={name}
         helpText={helpText}
+        required={isRequired}
       />
-      <Select
-        id={name}
-        instanceId={name}
-        inputId={name}
-        onChange={(o) => {
-          field.onChange(o?.value);
-          onChangeCallback && onChangeCallback(o?.value);
-        }}
-        onBlur={field.onBlur}
-        options={options}
-        components={{
-          Option: optionComponent
-        }}
-        menuPortalTarget={process.browser && shouldPortal && document.body}
-        isSearchable={true}
-        isClearable={isClearable}
-        isDisabled={disabled}
-        styles={selectStyles}
-        {...{
-          [isControlled ? "value" : "defaultValue"]: options.find((o) => o.value === field.value)
-        }}
-        ref={selectRef}
-      />
+      <Box width={"full"}>
+        <Select
+          id={name}
+          instanceId={name}
+          inputId={name}
+          onChange={(o) => {
+            field.onChange(o?.value);
+            onChangeCallback && onChangeCallback(o?.value);
+          }}
+          onBlur={field.onBlur}
+          options={options}
+          components={{
+            Option: optionComponent
+          }}
+          menuPortalTarget={process.browser && shouldPortal && document.body}
+          isSearchable={true}
+          isClearable={isClearable}
+          isDisabled={disabled}
+          styles={selectStyles}
+          {...{
+            [isControlled ? "value" : "defaultValue"]: options.find((o) => o.value === field.value)
+          }}
+          ref={selectRef}
+        />
+      </Box>
 
       {isOthers && <OthersInput name={name} value={field.value} />}
 

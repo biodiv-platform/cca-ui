@@ -20,15 +20,14 @@ import useTemplateResponseEdit from "./use-template-response-edit";
 export default function ResponseEditPageComponent() {
   const { template, canEditEditors, isEdit } = useTemplateResponseEdit();
 
-  // selectedAccordians
-  const [templateFields, templateGroups] = useMemo(() => {
+  const [templateFields, templateGroups, selectedAccordians] = useMemo(() => {
     const _flattenFields = flattenFields(template.fields);
 
     const _templateFields = _flattenFields.filter((tf) => tf.type === FORM_TYPE.HEADING);
 
     const _templateGroups = splitIntoGroups(_flattenFields);
 
-    const _selectedAccordians = new Array(_templateGroups.length).fill(0).map((_, i) => i);
+    const _selectedAccordians = _templateGroups.map((group) => group.heading?.fieldId || "unknown");
 
     return [_templateFields, _templateGroups, _selectedAccordians];
   }, [template]);
@@ -38,8 +37,7 @@ export default function ResponseEditPageComponent() {
       <ShowHeader />
       {canEditEditors && isEdit && <PermissionEdit />}
       <Sidebar fields={templateFields} isEdit={true}>
-        {/* defaultIndex={selectedAccordians} */}
-        <AccordionRoot multiple>
+        <AccordionRoot multiple defaultValue={selectedAccordians}>
           {templateGroups.map(({ heading, fields }) => (
             <AccordionItem
               key={heading.fieldId}
@@ -50,7 +48,10 @@ export default function ResponseEditPageComponent() {
               shadow="sm"
               value={heading.fieldId}
             >
-              <AccordionItemTrigger _expanded={{ borderBottom: "1px", borderColor: "gray.300" }}>
+              <AccordionItemTrigger
+                _expanded={{ borderBottom: "1px", borderColor: "gray.300" }}
+                p={4}
+              >
                 <chakra.h2
                   flex="1"
                   textAlign="left"
@@ -62,7 +63,7 @@ export default function ResponseEditPageComponent() {
                   {heading.name}
                 </chakra.h2>
               </AccordionItemTrigger>
-              <AccordionItemContent pb={4}>
+              <AccordionItemContent p={4}>
                 {fields.map((field) => (
                   <FieldEditContainer field={field} key={field.fieldId} />
                 ))}

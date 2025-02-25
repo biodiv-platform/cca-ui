@@ -18,6 +18,7 @@ interface IWYSIWYGFieldProps {
   uploadHandler?;
   fileUploadHandler?;
   isLargeVariant?;
+  isRequired?;
 }
 
 const WYSIWYGField = ({
@@ -31,6 +32,7 @@ const WYSIWYGField = ({
   uploadHandler,
   fileUploadHandler,
   isLargeVariant,
+  isRequired,
   ...props
 }: IWYSIWYGFieldProps) => {
   const { field, fieldState } = useController({ name });
@@ -48,6 +50,7 @@ const WYSIWYGField = ({
         label={label}
         name={name}
         helpText={helpText}
+        required={isRequired}
       />
       <WYSIWYGEditor
         name={name}

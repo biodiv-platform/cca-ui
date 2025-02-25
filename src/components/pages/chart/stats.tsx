@@ -92,7 +92,7 @@ export default function Stats({ statsData }) {
             {t("chart:no_charts_available")}
           </Text>
           <LocalLink prefixGroup={true} href="/participate/list">
-            <Button as="a" colorScheme="blue">
+            <Button as="a" colorPalette="blue">
               {t("chart:participate")}
               <LuMoveRight />
             </Button>

@@ -13,6 +13,7 @@ interface NavigationButtonProps {
 
 const NavigationButton = ({ left, right, onClick, children }: NavigationButtonProps) => (
   <IconButton
+    variant={"subtle"}
     aria-label="arrow"
     borderRadius="full"
     position="absolute"

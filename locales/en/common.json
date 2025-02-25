@@ -24,7 +24,7 @@
   "bulk_action": {
     "failure": "Unable to trigger bulk action",
     "success": "Successfully triggered  bulk action, Changes will be reflected  shortly",
-    "title":"Remove Users from Group - "
+    "title": "Remove Users from Group - "
   },
   "cancel": "Cancel",
   "case_studies": "Case Studies",
@@ -37,6 +37,7 @@
   "edit": "Edit",
   "home": "Home",
   "information": "Information",
+  "import": "Import",
   "learn_more": "Learn More",
   "license": "All content on this portal is under CC-BY License unless otherwise specified.",
   "list": {

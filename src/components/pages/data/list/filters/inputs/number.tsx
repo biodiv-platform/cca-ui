@@ -47,7 +47,7 @@ export function NumberFilter({ filterField }) {
   }, [debouncedRState]);
 
   return (
-    <Box py={3}>
+    <Box p={3}>
       <Box pr={3}>
         <Slider
           value={rState}

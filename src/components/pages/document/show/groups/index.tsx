@@ -27,7 +27,7 @@ const Groups = ({
 
   return (
     <Box mb={4} className="white-box" data-hidden={!SITE_CONFIG.USERGROUP.ACTIVE}>
-      <Tabs.Root lazyMount>
+      <Tabs.Root lazyMount defaultValue={"userGroups"}>
         <Tabs.List>
           <Tabs.Trigger value="userGroups">👥 {t("common:usergroups")}</Tabs.Trigger>
         </Tabs.List>

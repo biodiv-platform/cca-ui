@@ -1,4 +1,4 @@
-import { Box, Image, Link } from "@chakra-ui/react";
+import { Box, Image } from "@chakra-ui/react";
 import LocalLink from "@components/@core/local-link";
 import ShadowedUser from "@components/pages/common/shadowed-user";
 import { getUserImage } from "@utils/media";
@@ -20,15 +20,13 @@ export default function GridViewCard({ user: { user }, getCheckboxProps, canEdit
           />
         )}
         <LocalLink href={`/user/show/${user?.id}`} prefixGroup={true}>
-          <Link>
-            <Image
-              objectFit="cover"
-              bg="gray.100"
-              w="full"
-              h="full"
-              src={getUserImage(user?.profilePic, user?.name, 400)}
-            />
-          </Link>
+          <Image
+            fit="cover"
+            bg="gray.100"
+            width="full"
+            height="full"
+            src={getUserImage(user?.profilePic, user?.name, 400)}
+          />
         </LocalLink>
         <ShadowedUser user={user} avatar={false} />
       </Box>

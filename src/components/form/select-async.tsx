@@ -1,3 +1,4 @@
+import { Box } from "@chakra-ui/react";
 import { MENU_PORTAL_TARGET } from "@static/constants";
 import debounce from "debounce-promise";
 import React, { useEffect, useMemo, useState } from "react";
@@ -102,29 +103,31 @@ export const SelectAsyncInputField = ({
       {...props}
     >
       {label && <Field htmlFor={name} label={label} />}
-      <Select
-        name={name}
-        inputId={name}
-        formatCreateLabel={(v) => `Add "${v}"`}
-        isMulti={multiple}
-        defaultOptions={options}
-        loadOptions={onQueryDebounce}
-        menuPortalTarget={MENU_PORTAL_TARGET}
-        components={{
-          Option: optionComponent,
-          DropdownIndicator: () => null,
-          IndicatorSeparator: () => null
-        }}
-        value={selected}
-        isSearchable={true}
-        isDisabled={disabled}
-        isClearable={isClearable}
-        onChange={handleOnChange}
-        placeholder={placeholder || label}
-        noOptionsMessage={() => null}
-        styles={selectStyles}
-        ref={selectRef}
-      />
+      <Box width={"full"}>
+        <Select
+          name={name}
+          inputId={name}
+          formatCreateLabel={(v) => `Add "${v}"`}
+          isMulti={multiple}
+          defaultOptions={options}
+          loadOptions={onQueryDebounce}
+          menuPortalTarget={MENU_PORTAL_TARGET}
+          components={{
+            Option: optionComponent,
+            DropdownIndicator: () => null,
+            IndicatorSeparator: () => null
+          }}
+          value={selected}
+          isSearchable={true}
+          isDisabled={disabled}
+          isClearable={isClearable}
+          onChange={handleOnChange}
+          placeholder={placeholder || label}
+          noOptionsMessage={() => null}
+          styles={selectStyles}
+          ref={selectRef}
+        />
+      </Box>
       {hint && <Field color="gray.600" helperText={hint} />}
     </Field>
   );

@@ -13,7 +13,7 @@ export default function FilterList() {
   return (
     <>
       <FieldCount />
-      <AccordionRoot multiple={true} lazyMount>
+      <AccordionRoot multiple={true} p={4} collapsible>
         {filtersList.map((field: any) => (
           <FilterContainer key={field.fieldId} field={field} />
         ))}

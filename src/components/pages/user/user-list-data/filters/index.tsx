@@ -51,7 +51,13 @@ export default function Filters() {
     </Box>
   ) : (
     <FilterWrapper>
-      <Button w="full" className="toggle-button" onClick={onToggle}>
+      <Button
+        w="full"
+        className="toggle-button"
+        onClick={onToggle}
+        variant={"subtle"}
+        fontWeight={600}
+      >
         {t("filters:toggle")}
       </Button>
       <DrawerRoot open={open} placement="end" onOpenChange={onClose}>

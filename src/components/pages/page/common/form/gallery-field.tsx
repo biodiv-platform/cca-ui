@@ -136,7 +136,7 @@ export const PageGalleryField = ({
       {label && <Field htmlFor={name} label={label} />}
 
       {/* Dropzone */}
-      <div id={name}>
+      <Box id={name} width={"full"} p={2}>
         <Container {...getRootProps({ isDragActive, isDragAccept, isDragReject })}>
           <input {...getInputProps()} />
           {isProcessing ? (
@@ -145,7 +145,7 @@ export const PageGalleryField = ({
             <p>Drag n drop some images here, or click to select files</p>
           )}
         </Container>
-      </div>
+      </Box>
 
       {/* Preview */}
       {fields && (
@@ -206,6 +206,7 @@ export const PageGalleryField = ({
                     onClick={() => move(index, index - 1)}
                     disabled={index === 0}
                     aria-label={t("common:prev")}
+                    variant={"subtle"}
                   >
                     <LuArrowLeft />
                   </IconButton>
@@ -213,6 +214,7 @@ export const PageGalleryField = ({
                     onClick={() => move(index, index + 1)}
                     disabled={index === fields.length - 1}
                     aria-label={t("common:next")}
+                    variant={"subtle"}
                   >
                     <LuArrowRight />
                   </IconButton>

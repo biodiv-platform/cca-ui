@@ -136,6 +136,7 @@ export const FileField = ({
         label={label}
         name={name}
         helpText={helpText}
+        required={isRequired}
       />
       <div className="container" id={name}>
         <Container {...getRootProps({ isDragActive, isDragAccept, isDragReject })}>

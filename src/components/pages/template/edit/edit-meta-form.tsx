@@ -58,7 +58,7 @@ export function EditTemplateMetaForm() {
     <div>
       <FormProvider {...hForm}>
         <form onSubmit={hForm.handleSubmit(handleOnSubmit)}>
-          <PageHeading size="lg" title={t("template:update.title")}>
+          <PageHeading size="3xl" title={t("template:update.title")}>
             <SubmitButton colorPalette="blue" leftIcon={<CheckIcon />}>
               {t("common:save")}
             </SubmitButton>

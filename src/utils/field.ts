@@ -212,7 +212,13 @@ export const splitIntoGroups = (fieldList) => {
 
 export const arrayOfSize = (size) => new Array(size).fill(0).map((_, index) => index);
 
-export const isOthersField = (value) => value.replace(/\s/g, "").includes("?");
+// export const isOthersField = (value) => value.replace(/\s/g, "").includes("?");
+
+export const isOthersField = (value) => {
+  if (typeof value !== "string") return false; // Ensure it's a string
+  return value.replace(/\s/g, "").includes("?");
+};
+
 
 export const optionLabelShow = (label, value?) =>
   value?.startsWith("http")

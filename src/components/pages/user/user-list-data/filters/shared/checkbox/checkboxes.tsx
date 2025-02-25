@@ -30,7 +30,7 @@ export default function FilterCheckboxes({
   options,
   showStat = true,
   skipOptionsTranslation,
-  showSearch,
+  showSearch
 }: FilterCheckboxesProps) {
   const { filter, addFilter, removeFilter } = useUserListFilter();
   const defaultValue = filter?.[filterKey] ? filter?.[filterKey]?.split(",") : [];
@@ -57,7 +57,11 @@ export default function FilterCheckboxes({
           <Input type="text" placeholder={t("common:search")} onChange={handleOnSearch} />
         </InputGroup>
       )}
-      <CheckboxGroup defaultValue={defaultValue} onValueChange={handleOnChange}>
+      <CheckboxGroup
+        defaultValue={defaultValue}
+        onValueChange={handleOnChange}
+        colorPalette={"blue"}
+      >
         <Stack>
           {filteredOptions.map(({ label, value, valueIcon }) => (
             <Checkbox mr={4} key={label} value={value} alignItems="baseline">

@@ -31,9 +31,9 @@ export function ShowHeader() {
     <PageHeading title={`${template.name} (${template.shortName})`} icon="📄">
       {canEditEditors && (
         <IconButton
-          // isRound={true}
+          rounded={"full"}
           variant="ghost"
-          colorScheme="red"
+          colorPalette="red"
           aria-label={t("common:delete")}
           title={t("common:delete")}
           onClick={handleOnDelete}
@@ -43,9 +43,9 @@ export function ShowHeader() {
       )}
       {canEditEditors && (
         <IconButton
-          // isRound={true}
+          rounded={"full"}
           variant="ghost"
-          colorScheme="blue"
+          colorPalette="blue"
           aria-label={t("user:permissions")}
           title={t("user:permissions")}
           onClick={() => setIsEdit(true)}

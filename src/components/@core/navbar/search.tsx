@@ -16,15 +16,22 @@ export default function Search() {
 
   return (
     <form onSubmit={handleOnSearch}>
-      <InputGroup startElement={<LuSearch color="gray.400" />}>
+      <InputGroup
+        startElement={<LuSearch />}
+        bg="gray.200"
+        borderRadius="md"
+        maxW={{ md: "10rem" }}
+        colorPalette={"blue"}
+      >
         <Input
-          maxW={{ md: "10rem" }}
           border={0}
+          height={8}
           bg="var(--chakra-colors-blackAlpha-100)none!important"
-          borderRadius="md"
+          px={2}
           name="search"
           type="search"
           placeholder={t("header:search")}
+          _focus={{ boxShadow: "none" }}
         />
       </InputGroup>
     </form>

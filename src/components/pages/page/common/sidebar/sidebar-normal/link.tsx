@@ -63,7 +63,7 @@ export const LinkParent = ({ page, currentPageId, linkType }) => {
           </chakra.a>
         </LocalLink>
         {page.children.length > 0 && (
-          <IconButton flexShrink={0} aria-label="Toggle Sub Pages" onClick={onToggle}>
+          <IconButton flexShrink={0} aria-label="Toggle Sub Pages" onClick={onToggle} variant={"plain"}>
             {open ? <LuChevronUp /> : <LuChevronDown />}
           </IconButton>
         )}

@@ -40,7 +40,7 @@ export default function TemplateListComponent() {
       <NextSeo title={t("template:templates")} />
       <PageHeading title={t("template:templates")} icon="🗃">
         <LocalLink href="/template/create" prefixGroup={true}>
-          <Button as="a" colorScheme="green">
+          <Button as="a" colorPalette="green">
             <AddIcon />
             {t("common:add")}
           </Button>

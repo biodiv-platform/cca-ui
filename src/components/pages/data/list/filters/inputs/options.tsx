@@ -27,13 +27,20 @@ const GroupedCheckboxes = ({ option, value, setValue, onChange, fieldId }) => {
         key={option.value}
         _hover={{ bg: "gray.100" }}
         checked={isIndeterminate ? "indeterminate" : allChecked}
+        colorPalette={"blue"}
         onChange={handleParentToggle}
       >
         {option.label} <FilterStat fieldId={fieldId} value={allValuesIncl} />
       </Checkbox>
       <Stack pl={6} mt={1} gap={2}>
         {option.children.map((o) => (
-          <Checkbox key={o.value} value={o.value} _hover={{ bg: "gray.100" }} onChange={onChange}>
+          <Checkbox
+            key={o.value}
+            value={o.value}
+            _hover={{ bg: "gray.100" }}
+            onChange={onChange}
+            colorPalette={"blue"}
+          >
             {filterLabelShow(o)}
             <FilterStat fieldId={fieldId} value={o.value} />
           </Checkbox>
@@ -84,6 +91,7 @@ export function OptionsFilter({ filterField }) {
                 value={o.value}
                 _hover={{ bg: "gray.100" }}
                 onChange={handleOnChange}
+                colorPalette={"blue"}
               >
                 {filterLabelShow(o)}
                 <FilterStat fieldId={filterField.fieldId} value={o.value} />

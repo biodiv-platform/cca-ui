@@ -140,7 +140,7 @@ export default function PageForm({
               borderRadius="md"
               value={"gallery"}
             >
-              <AccordionItemTrigger _expanded={{ bg: "gray.100" }}>
+              <AccordionItemTrigger _expanded={{ bg: "gray.100" }} pl={4} pr={4}>
                 <Box flex={1} textAlign="left">
                   🖼️ {t("page:form.gallery")}
                 </Box>
@@ -165,12 +165,12 @@ export default function PageForm({
             borderRadius="md"
             value={"metaData"}
           >
-            <AccordionItemTrigger _expanded={{ bg: "gray.100" }}>
-              <Box flex={1} textAlign="left" pl={4}>
+            <AccordionItemTrigger _expanded={{ bg: "gray.100" }} pl={4} pr={4}>
+              <Box flex={1} textAlign="left">
                 📝 {t("page:form.meta_data")}
               </Box>
             </AccordionItemTrigger>
-            <AccordionItemContent>
+            <AccordionItemContent p={4}>
               {!hideParentId && (
                 <SelectInputField
                   name="parentId"

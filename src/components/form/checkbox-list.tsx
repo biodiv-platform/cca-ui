@@ -20,6 +20,7 @@ interface ICheckboxListProps {
   hint?: string;
   isLargeVariant?;
   isOthers?: boolean;
+  isRequired?: boolean;
 }
 
 export const CheckboxListField = ({
@@ -34,6 +35,7 @@ export const CheckboxListField = ({
   disabled,
   isLargeVariant,
   isOthers,
+  isRequired,
   ...props
 }: ICheckboxListProps) => {
   const {
@@ -54,9 +56,15 @@ export const CheckboxListField = ({
           label={label}
           name={name}
           helpText={helpText}
+          required={isRequired}
         />
       </Field>
-      <CheckboxGroup defaultValue={value} onChange={onChange} isDisabled={disabled}>
+      <CheckboxGroup
+        defaultValue={value}
+        onChange={onChange}
+        isDisabled={disabled}
+        colorPalette={"blue"}
+      >
         <Stack id={name}>
           {options.map((option) => (
             <Checkbox key={option.value} disabled={option?.isDisabled} value={option.value}>

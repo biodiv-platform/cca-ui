@@ -29,7 +29,7 @@ export default function ListHeader() {
   };
 
   const buttonProps = {
-    colorScheme: "blue",
+    colorPalette: "blue",
     _hover: { bg: "blue.600" },
     style: { height: "32px", width: "10rem" }
   };

@@ -30,7 +30,7 @@ export default function TagsShow({
   const { open, onToggle, onClose } = useDisclosure();
 
   return (
-    <Box gridColumn="2/5" mb={2}>
+    <Box gridColumn="2/5">
       {open ? (
         <TagsEditor
           objectId={objectId}
@@ -45,7 +45,7 @@ export default function TagsShow({
           {tags?.map((tag) => (
             <LinkTag href={href} label={tag.label} key={tag?.label} />
           ))}
-          <IconButton variant="ghost" colorScheme="blue" onClick={onToggle} aria-label="Edit">
+          <IconButton variant="plain" colorPalette="blue" onClick={onToggle} aria-label="Edit" size={"xs"}>
             <EditIcon />
           </IconButton>
         </Box>

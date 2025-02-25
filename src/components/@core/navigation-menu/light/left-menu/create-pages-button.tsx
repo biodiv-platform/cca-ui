@@ -24,7 +24,7 @@ export default function CreatePagesButton({ label }) {
 
   return canEdit ? (
     <LocalLink prefixGroup={true} href={`${webAddress}/page/create`}>
-      <Button className="join-usergroup" m={2} colorScheme="green" size="sm">
+      <Button className="join-usergroup" m={2} colorPalette="green" size="sm">
         <LuPlus />
         {label}
       </Button>

@@ -1,7 +1,7 @@
 import {
   Box,
   chakra,
-  Container,
+  Flex,
   Image,
   Link,
   SimpleGrid,
@@ -20,27 +20,29 @@ import useTranslation from "next-translate/useTranslation";
 import React from "react";
 
 import ExternalBlueLink from "../blue-link/external";
+import { Container } from "../container";
 import LocalLink from "../local-link";
 
 const SocialButton = ({ children, label, href }) => (
-  <chakra.button
-    bg="blackAlpha.100"
-    rounded="full"
-    w={8}
-    h={8}
-    cursor="pointer"
-    as="a"
+  <Link href={href}>
+    <chakra.button
+      bg="blackAlpha.100"
+      rounded="full"
+      w={8}
+      h={8}
+      cursor="pointer"
+      as="a"
       display="inline-flex"
-    alignItems="center"
-    justifyContent="center"
-    transition="background 0.3s ease"
-    _hover={{ bg: "blackAlpha.200" }}
-    rel="noreferrer noopener"
-  >
-    <a href={href} />
-    <VisuallyHidden>{label}</VisuallyHidden>
-    {children}
-  </chakra.button>
+      alignItems="center"
+      justifyContent="center"
+      transition="background 0.3s ease"
+      _hover={{ bg: "blackAlpha.200" }}
+      rel="noreferrer noopener"
+    >
+      <VisuallyHidden hidden>{label}</VisuallyHidden>
+      {children}
+    </chakra.button>
+  </Link>
 );
 
 export default function Footer() {
@@ -48,13 +50,13 @@ export default function Footer() {
   const { pages } = useGlobalState();
 
   return (
-    <Box bg="gray.100" color="gray.700" className="no-print">
+    <Box bg="gray.100" colorPalette="gray.700" className="no-print">
       <Container as={Stack} maxW={containerMaxW} py={20}>
         <SimpleGrid templateColumns={{ md: "4fr 2fr" }} gap={8}>
           <Stack gap={4}>
-            <Box>
+            <Flex gap={6}>
               <Image alt={t("common:site.title")} src="/next-assets/logo.png" />
-            </Box>
+            </Flex>
             <Text fontSize="sm">
               <ExternalBlueLink
                 color="gray.600"
@@ -64,25 +66,29 @@ export default function Footer() {
               </ExternalBlueLink>
             </Text>
             <Stack direction="row" gap={6}>
-              <SocialButton label="Mail" href={SITE_CONFIG.FOOTER.MAIL} children={<MailIcon />} />
+              <SocialButton
+                label="Mail"
+                href={SITE_CONFIG.FOOTER.MAIL}
+                children={<MailIcon size={"sm"} />}
+              />
               <SocialButton
                 label="YouTube"
                 href={SITE_CONFIG.FOOTER.YOUTUBE}
-                children={<YouTubeIcon />}
+                children={<YouTubeIcon size={"sm"} />}
               />
               <SocialButton
                 label="Instagram"
                 href={SITE_CONFIG.FOOTER.INSTAGRAM}
-                children={<InstagramIcon />}
+                children={<InstagramIcon size={"sm"} />}
               />
               <SocialButton
                 label="GitHub"
                 href={SITE_CONFIG.FOOTER.GITHUB}
-                children={<GithubIcon />}
+                children={<GithubIcon size={"sm"} />}
               />
             </Stack>
           </Stack>
-          <div>
+          <Stack gap={4}>
             <SimpleGrid columns={{ base: 1, md: 2 }} gap={4}>
               {pages
                 .flatMap((page) => [page, ...page.children])
@@ -93,7 +99,7 @@ export default function Footer() {
                   </LocalLink>
                 ))}
             </SimpleGrid>
-          </div>
+          </Stack>
         </SimpleGrid>
       </Container>
     </Box>

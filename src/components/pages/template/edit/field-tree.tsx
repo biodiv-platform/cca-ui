@@ -60,7 +60,7 @@ export default function FieldTree() {
         row.node.type == FORM_TYPE.TEXT_AREA ||
         row.node.type == FORM_TYPE.RICHTEXT) && (
         <Tooltip content={t("template:indicator_icons.text")}>
-          <IconButton colorScheme="black" minW="auto" aria-label="Text Field" variant="ghost">
+          <IconButton colorPalette="black" minW="auto" aria-label="Text Field" variant="plain">
             <TextIcon />
           </IconButton>
         </Tooltip>
@@ -68,7 +68,7 @@ export default function FieldTree() {
 
       row.node.type == FORM_TYPE.HEADING && (
         <Tooltip content={t("template:indicator_icons.heading")}>
-          <IconButton colorScheme="black" minW="auto" aria-label="Heading Field" variant="ghost">
+          <IconButton colorPalette="black" minW="auto" aria-label="Heading Field" variant="plain">
             <HeadingIcon />
           </IconButton>
         </Tooltip>
@@ -78,10 +78,10 @@ export default function FieldTree() {
         row.node.type == FORM_TYPE.SINGLE_SELECT_DROPDOWN) && (
         <Tooltip content={t("template:indicator_icons.single_select")}>
           <IconButton
-            colorScheme="black"
+            colorPalette="black"
             minW="auto"
             aria-label="Single Select Field"
-            variant="ghost"
+            variant="plain"
           >
             <RadiobuttonIcon />
           </IconButton>
@@ -91,10 +91,10 @@ export default function FieldTree() {
       row.node.type == FORM_TYPE.MULTI_SELECT_CHECKBOX && (
         <Tooltip content={t("template:indicator_icons.multi_select")}>
           <IconButton
-            colorScheme="black"
+            colorPalette="black"
             minW="auto"
             aria-label="Multiple Select Field"
-            variant="ghost"
+            variant="plain"
           >
             <MultiselectIcon />
           </IconButton>
@@ -103,7 +103,7 @@ export default function FieldTree() {
 
       row.node.type == FORM_TYPE.NUMBER && (
         <Tooltip content={t("template:indicator_icons.number")}>
-          <IconButton colorScheme="black" minW="auto" aria-label="Number Field" variant="ghost">
+          <IconButton colorPalette="black" minW="auto" aria-label="Number Field" variant="plain">
             <NumberIcon />
           </IconButton>
         </Tooltip>
@@ -111,7 +111,7 @@ export default function FieldTree() {
 
       (row.node.type == FORM_TYPE.DATE || row.node.type == FORM_TYPE.YEAR) && (
         <Tooltip content={t("template:indicator_icons.date")}>
-          <IconButton colorScheme="black" minW="auto" aria-label="Date Field" variant="ghost">
+          <IconButton colorPalette="black" minW="auto" aria-label="Date Field" variant="plain">
             <CalendarIcon />
           </IconButton>
         </Tooltip>
@@ -119,7 +119,7 @@ export default function FieldTree() {
 
       row.node.type == FORM_TYPE.FILE && (
         <Tooltip content={t("template:indicator_icons.file")}>
-          <IconButton colorScheme="black" minW="auto" aria-label="File Field" variant="ghost">
+          <IconButton colorPalette="black" minW="auto" aria-label="File Field" variant="plain">
             <FileIcon />
           </IconButton>
         </Tooltip>
@@ -127,7 +127,7 @@ export default function FieldTree() {
 
       row.node.type == FORM_TYPE.GEOMETRY && (
         <Tooltip content={t("template:indicator_icons.geometry")}>
-          <IconButton colorScheme="black" minW="auto" aria-label="Geometry Field" variant="ghost">
+          <IconButton colorPalette="black" minW="auto" aria-label="Geometry Field" variant="plain">
             <LocatinIcon />
           </IconButton>
         </Tooltip>
@@ -135,7 +135,7 @@ export default function FieldTree() {
 
       row.node.isSummaryField && (
         <Tooltip content={t("template:indicator_icons.summary")}>
-          <IconButton colorScheme="black" minW="auto" aria-label="Summary Field" variant="ghost">
+          <IconButton colorPalette="black" minW="auto" aria-label="Summary Field" variant="plain">
             <SummaryIcon />
           </IconButton>
         </Tooltip>
@@ -143,7 +143,7 @@ export default function FieldTree() {
 
       row.node.isTitleColumn && (
         <Tooltip content={t("template:indicator_icons.title")}>
-          <IconButton colorScheme="black" minW="auto" aria-label="Title Field" variant="ghost">
+          <IconButton colorPalette="black" minW="auto" aria-label="Title Field" variant="plain">
             <TitleIcon />
           </IconButton>
         </Tooltip>
@@ -151,7 +151,12 @@ export default function FieldTree() {
 
       row.node.isFilterable && (
         <Tooltip content={t("template:indicator_icons.filterable")}>
-          <IconButton colorScheme="black" minW="auto" aria-label="Filterable Field" variant="ghost">
+          <IconButton
+            colorPalette="black"
+            minW="auto"
+            aria-label="Filterable Field"
+            variant="plain"
+          >
             <FilterIcon />
           </IconButton>
         </Tooltip>
@@ -159,7 +164,7 @@ export default function FieldTree() {
 
       row.node.isRequired && (
         <Tooltip content={t("template:indicator_icons.required")}>
-          <IconButton colorScheme="black" minW="auto" aria-label="Required Field" variant="ghost">
+          <IconButton colorPalette="black" minW="auto" aria-label="Required Field" variant="plain">
             <RequiredIcon />
           </IconButton>
         </Tooltip>
@@ -168,11 +173,12 @@ export default function FieldTree() {
       <Tooltip content={t("template:action_icons.edit")}>
         <IconButton
           marginLeft={95}
-          colorScheme="green"
+          colorPalette="green"
           minW="auto"
           aria-label="Edit Field"
-          variant="ghost"
+          variant="plain"
           onClick={() => setCurrentField(row.node)}
+          size={"sm"}
         >
           <EditIcon />
         </IconButton>
@@ -180,11 +186,12 @@ export default function FieldTree() {
 
       <Tooltip content={t("template:action_icons.delete")}>
         <IconButton
-          colorScheme="red"
+          colorPalette="red"
           minW="auto"
           aria-label="Delete Field"
-          variant="ghost"
+          variant="plain"
           onClick={() => removeFieldById(row.node.fieldId)}
+          size={"sm"}
         >
           <DeleteIcon />
         </IconButton>

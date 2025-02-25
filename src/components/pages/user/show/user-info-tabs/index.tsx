@@ -11,7 +11,7 @@ export default function UserInfoTabs({ user }) {
 
   return (
     <Box gridColumn={{ md: "2/5" }} mb={8}>
-      <Tabs.Root>
+      <Tabs.Root defaultValue="about" lazyMount>
         <Tabs.List>
           <Tabs.Trigger value="about">👤 {t("user:about")}</Tabs.Trigger>
           <Tabs.Trigger value="participation">🖊️ {t("user:participations")}</Tabs.Trigger>

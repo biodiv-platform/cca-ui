@@ -39,6 +39,7 @@ export const DatePickerField = ({
   disabled,
   isLargeVariant,
   isClearable,
+  isRequired,
   ...props
 }: IDatePickerBoxProps) => {
   const { field, fieldState } = useController({ name });
@@ -56,6 +57,7 @@ export const DatePickerField = ({
         label={label}
         name={name}
         helpText={helpText}
+        required={isRequired}
       />
       <InputGroup
         endElement={

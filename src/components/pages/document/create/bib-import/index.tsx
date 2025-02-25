@@ -24,7 +24,7 @@ export default function BibImportButton() {
   };
 
   return (
-    <Button cursor="pointer" as="label" size="sm" colorScheme="blue" borderRadius="3rem">
+    <Button cursor="pointer" as="label" size="sm" colorPalette="blue" borderRadius="3rem">
       <LuArrowUp />
 
       <VisuallyHidden asChild>

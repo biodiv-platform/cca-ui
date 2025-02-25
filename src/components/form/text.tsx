@@ -61,6 +61,7 @@ export const TextBoxField = ({
         label={label}
         name={name}
         helpText={helpText}
+        required={isRequired}
       />
       <Input
         id={name}

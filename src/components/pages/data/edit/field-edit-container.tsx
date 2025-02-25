@@ -25,11 +25,11 @@ export const FieldEditContainer = ({ field }) => {
             {canEdit && (
               <IconButton
                 alignItems="center"
-                colorScheme="blue"
+                colorPalette="blue"
                 aria-label={t("form:edit")}
                 title={t("form:edit")}
                 onClick={onOpen}
-                // variant="link"
+                variant="plain"
               >
                 <EditIcon />
               </IconButton>

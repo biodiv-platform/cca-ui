@@ -44,7 +44,7 @@ export default function UserInfoSidebar({ user }: UserEditPageComponentProps) {
           <Avatar position="absolute" boxSize="full" src={userImage} name={user.name} />
         </AspectRatio>
         <Box pl={{ base: 4, md: 0 }}>
-          <Button type="button" as="label" cursor="pointer" w="full" colorScheme="blue">
+          <Button type="button" as="label" cursor="pointer" w="full" colorPalette="blue">
           <VisuallyHidden asChild>
               <input
                 type="file"

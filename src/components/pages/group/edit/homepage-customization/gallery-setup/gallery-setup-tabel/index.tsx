@@ -89,12 +89,12 @@ const GallerySetupTable = ({
         />
       </table>
       <ButtonGroup gap={4} mt={4}>
-        <Button colorScheme="blue" onClick={() => setIsCreate(true)}>
+        <Button colorPalette="blue" onClick={() => setIsCreate(true)}>
           <AddIcon />
           {t("group:homepage_customization.gallery_setup.create")}
         </Button>
         <Button
-          colorScheme="blue"
+          colorPalette="blue"
           float="right"
           hidden={!showReorder}
           onClick={

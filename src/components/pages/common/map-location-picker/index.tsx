@@ -17,31 +17,33 @@ const MapLocationPicker = ({ coordinates, setCoordinates, isOpen, onTextUpdate, 
 
   return (
     <Collapsible.Root open={isOpen}>
-      <Box borderRadius="md" overflow="hidden" mb={4}>
-        <GoogleMap
-          id="observation-create-map"
-          mapContainerStyle={mapContainerStyle}
-          zoom={zoom}
-          center={center}
-        >
-          <DrawingManager
-            options={
-              {
-                drawingControl: true,
-                drawingControlOptions: {
-                  drawingModes: ["marker"]
-                }
-              } as any
-            }
-            onMarkerComplete={onMarkerComplete}
-          />
-          <Marker
-            position={coordinates}
-            setCoordinates={setCoordinates}
-            onTextUpdate={onTextUpdate}
-          />
-        </GoogleMap>
-      </Box>
+      <Collapsible.Content>
+        <Box borderRadius="md" overflow="hidden" mb={4}>
+          <GoogleMap
+            id="observation-create-map"
+            mapContainerStyle={mapContainerStyle}
+            zoom={zoom}
+            center={center}
+          >
+            <DrawingManager
+              options={
+                {
+                  drawingControl: true,
+                  drawingControlOptions: {
+                    drawingModes: ["marker"]
+                  }
+                } as any
+              }
+              onMarkerComplete={onMarkerComplete}
+            />
+            <Marker
+              position={coordinates}
+              setCoordinates={setCoordinates}
+              onTextUpdate={onTextUpdate}
+            />
+          </GoogleMap>
+        </Box>
+      </Collapsible.Content>
     </Collapsible.Root>
   );
 };

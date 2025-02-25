@@ -31,7 +31,7 @@ export default function TemplateParticipateListPageComponent() {
   return (
     <Container>
       <NextSeo title={t("template:participate")} />
-      <PageHeading title={t("template:participate")} icon="📝" />
+      <PageHeading title={t("template:participate")} icon="📝" size="4xl" />
 
       <Box
         as={HTMLContainer}

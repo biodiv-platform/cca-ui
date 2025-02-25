@@ -10,7 +10,14 @@ export const externalLinkProps = {
 };
 
 const ExternalBlueLink = forwardRef((props: LinkProps, ref) => (
-  <BlueLink {...props} {...externalLinkProps} wordBreak="break-word" ref={ref}>
+  <BlueLink
+    {...props}
+    {...externalLinkProps}
+    ref={ref}
+    display="inline-flex"
+    alignItems="center"
+    whiteSpace="nowrap"
+  >
     {props?.children || (props.href && decodeURIComponent(props.href))} <LuExternalLink />
   </BlueLink>
 ));

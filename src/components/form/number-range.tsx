@@ -62,6 +62,7 @@ export const NumberRangeField = ({
         label={label}
         name={name}
         helpText={helpText}
+        required={isRequired}
       />
       <Flex alignItems="center" css={{ gap: "10px" }} id={name}>
         <RangeInput

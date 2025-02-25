@@ -9,11 +9,13 @@ import { LuMoveRight } from "react-icons/lu";
 
 const ReadMore = ({ resource, readMoreButtonText, readMoreUIType }) => {
   return resource.moreLinks && readMoreUIType == "button" ? (
-    <Button colorScheme="teal" variant="solid" size="lg" fontSize="xl">
+    <Button colorPalette="blue" variant="solid" size="lg" fontSize="xl">
       <LocalLink href={resource.moreLinks}>
-        <Link>
+        <a
+          style={{ display: "inline-flex", alignItems: "center", gap: "4px", whiteSpace: "nowrap" }}
+        >
           {readMoreButtonText} <LuMoveRight />
-        </Link>
+        </a>
       </LocalLink>
     </Button>
   ) : (

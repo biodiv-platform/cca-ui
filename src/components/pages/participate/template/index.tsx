@@ -10,7 +10,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import useGlobalState from "@hooks/use-global-state";
 import { axSaveParticipation, axUpdateLocation, getLoactionInfo } from "@services/cca.service";
 import { FORM_TYPE } from "@static/constants";
-import { arrayOfSize, splitIntoGroups, toFlatSaveData } from "@utils/field";
+import { splitIntoGroups, toFlatSaveData } from "@utils/field";
 import notification, { NotificationType } from "@utils/notification";
 import { buildValidationRules } from "@utils/validation";
 import useTranslation from "next-translate/useTranslation";
@@ -32,9 +32,7 @@ export default function TemplateParticipateComponent({ template }) {
   const router = useLocalRouter();
   const { currentGroup } = useGlobalState();
 
-  // groupFieldsEnabled
-
-  const [formSchema, templateFields, templateGroups] = useMemo(() => {
+  const [formSchema, templateFields, templateGroups, groupFieldsEnabled] = useMemo(() => {
     const newFields = buildValidationRules(template.fields);
     const hForm = Object.fromEntries(
       newFields
@@ -42,7 +40,7 @@ export default function TemplateParticipateComponent({ template }) {
         .map((field) => [field.fieldId, field.rule])
     );
     const groupFields = splitIntoGroups(newFields);
-    const groupFieldsEnabled = arrayOfSize(groupFields.length);
+    const groupFieldsEnabled = groupFields.map((group) => group.heading?.fieldId || "unknown");
     return [hForm, newFields, groupFields, groupFieldsEnabled];
   }, [lang]);
 
@@ -100,8 +98,7 @@ export default function TemplateParticipateComponent({ template }) {
       <Sidebar fields={templateFields}>
         <FormProvider {...hForm}>
           <form onSubmit={hForm.handleSubmit(handleOnSubmit, handleOnSubmitInvalid)}>
-            {/* defaultIndex={groupFieldsEnabled} */}
-            <AccordionRoot multiple={true}>
+            <AccordionRoot multiple defaultValue={groupFieldsEnabled}>
               {templateGroups
                 .filter(
                   ({ heading, fields }) =>

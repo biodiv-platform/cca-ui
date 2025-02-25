@@ -32,6 +32,7 @@ export const TextAreaField = ({
   maxLength,
   hint,
   isLargeVariant,
+  isRequired,
   ...props
 }: ITextAreaProps) => {
   const { field, fieldState } = useController({ name });
@@ -49,6 +50,7 @@ export const TextAreaField = ({
         label={label}
         name={name}
         helpText={helpText}
+        required={isRequired}
       />
       <Textarea
         id={name}

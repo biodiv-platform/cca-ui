@@ -20,16 +20,16 @@ export default function EditFieldsForm() {
   return (
     <>
       <PageHeading
-        size="lg"
+        size="3xl"
         title={`${t("template:edit_fields")} ${template.isSaved ? "" : "(Unsaved)"}`}
       >
         <ButtonGroup gap={4}>
-          <Button colorScheme="green" disabled={areFieldsReadOnly} onClick={createNewField}>
+          <Button colorPalette="green" disabled={areFieldsReadOnly} onClick={createNewField}>
             <AddIcon />
             {t("template:add_field")}
           </Button>
           <Button
-            colorScheme="blue"
+            colorPalette="blue"
             disabled={!areFieldsReadOnly || !template.isSaved}
             hidden={template.name === SITE_CONFIG.TEMPLATE.MAIN}
             onClick={pullTranslations}
@@ -37,7 +37,7 @@ export default function EditFieldsForm() {
             <DownloadIcon />
             {t("template:pull.title")}
           </Button>
-          <Button colorScheme="blue" onClick={saveTemplate}>
+          <Button colorPalette="blue" onClick={saveTemplate}>
             <CheckIcon />
             {t("common:save")}
           </Button>

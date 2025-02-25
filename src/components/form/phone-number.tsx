@@ -1,4 +1,4 @@
-import { Input } from "@chakra-ui/react";
+import { Box, Input } from "@chakra-ui/react";
 import SITE_CONFIG from "@configs/site-config";
 import styled from "@emotion/styled";
 import { namedFormErrorMessage } from "@utils/field";
@@ -44,6 +44,7 @@ interface ISelectProps {
   defaultCountry?: string;
   onBlur?;
   isLargeVariant?;
+  isRequired?;
 }
 
 export const PhoneNumberInputField = ({
@@ -57,6 +58,7 @@ export const PhoneNumberInputField = ({
   defaultCountry = SITE_CONFIG.MAP.COUNTRY,
   disabled = false,
   isLargeVariant,
+  isRequired,
   ...props
 }: ISelectProps) => {
   const { field, fieldState } = useController({ name });
@@ -76,15 +78,18 @@ export const PhoneNumberInputField = ({
         label={label}
         name={name}
         helpText={helpText}
+        required={isRequired}
       />
-      <MobileInput
-        id={name}
-        inputComponent={Input}
-        countrySelectProps={{ unicodeFlags: true }}
-        defaultCountry={defaultCountry as any}
-        disabled={disabled}
-        {...field}
-      />
+      <Box width={"full"}>
+        <MobileInput
+          id={name}
+          inputComponent={Input}
+          countrySelectProps={{ unicodeFlags: true }}
+          defaultCountry={defaultCountry as any}
+          disabled={disabled}
+          {...field}
+        />
+      </Box>
       {hint && <Field color="gray.600" helperText={hint} />}
     </Field>
   );

@@ -73,7 +73,7 @@ export default function DocumentHeader({ document }: DocumentHeaderProps) {
         <Box gridColumn="1 / 4">
           <Heading
             as="h1"
-            size="lg"
+            size="4xl"
             mb={2}
             dangerouslySetInnerHTML={{ __html: getInjectableHTML(document?.document?.title) }}
           />

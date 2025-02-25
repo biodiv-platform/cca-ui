@@ -1,5 +1,5 @@
 import { GMAP_FEATURE_TYPES, NakshaGmapsDraw } from "@biodiv-platform/naksha-gmaps-draw";
-import { Button, Input, useDisclosure } from "@chakra-ui/react";
+import { Box, Button, Input, useDisclosure } from "@chakra-ui/react";
 import SITE_CONFIG from "@configs/site-config";
 import styled from "@emotion/styled";
 import DeleteIcon from "@icons/delete";
@@ -74,52 +74,64 @@ export const GeometryField = ({
         label={label}
         name={name}
         helpText={helpText}
+        required={isRequired}
       />
-      <MapContainerBox id={name}>
-        <NakshaGmapsDraw
-          defaultViewState={defaultViewPort}
-          defaultDrawingMode={GMAP_FEATURE_TYPES.POINT}
-          data={field.value}
-          isAutocomplete={true}
-          isMultiple={true}
-          isImport={true}
-          onDataChange={field.onChange}
-          gmapRegion={SITE_CONFIG.MAP.COUNTRY}
-          autoCompleteRegion=""
-          gmapAccessToken={SITE_CONFIG.TOKENS.GMAP}
-          mapStyle={{ height: "22rem", width: "100%", borderRadius: ".25rem" }}
-          maxZoom={14}
-          autocompleteComponent={
-            <InputGroup mb={4} startElement={<LuSearch color="gray.300" />}>
+      <Box width={"full"}>
+        <MapContainerBox id={name}>
+          <NakshaGmapsDraw
+            defaultViewState={defaultViewPort}
+            defaultDrawingMode={GMAP_FEATURE_TYPES.POINT}
+            data={field.value}
+            isAutocomplete={true}
+            isMultiple={true}
+            isImport={true}
+            onDataChange={field.onChange}
+            gmapRegion={SITE_CONFIG.MAP.COUNTRY}
+            autoCompleteRegion=""
+            gmapAccessToken={SITE_CONFIG.TOKENS.GMAP}
+            mapStyle={{ height: "22rem", width: "100%", borderRadius: ".25rem" }}
+            maxZoom={14}
+            autocompleteComponent={
+              <InputGroup mb={4} startElement={<LuSearch color="gray.300" />}>
+                <Input
+                  name="search-gmaps"
+                  ref={gmapsSearchRef}
+                  placeholder={t("form:find_gmaps")}
+                  w="full"
+                  required={false}
+                />
+              </InputGroup>
+            }
+            importInputComponent={
               <Input
-                name="search-gmaps"
-                ref={gmapsSearchRef}
-                placeholder={t("form:find_gmaps")}
-                w="full"
+                name="raw-input"
+                placeholder={t("form:geometry_hint")}
                 required={false}
+                mx={4}
               />
-            </InputGroup>
-          }
-          importInputComponent={
-            <Input name="raw-input" placeholder={t("form:geometry_hint")} required={false} mx={4} />
-          }
-          importModalComponent={
-            <CustomModal
-              isOpen={open}
-              onClose={onClose}
-              nakshaImport={undefined}
-              geoJSONImport={undefined}
-            />
-          }
-          importButtonComponent={<Button type="button">{t("common:add")}</Button>}
-          importDeleteIcon={<DeleteIcon />}
-          importLocationIcon={<LocationIcon />}
-          importFileIcon={<FileIcon />}
-          importSuccessIcon={<LuCircleCheck />}
-          importFailureIcon={<LuX />}
-          importButtonComponentModal={<Button type="button">{t("common:import")}</Button>}
-        />
-      </MapContainerBox>
+            }
+            importModalComponent={
+              <CustomModal
+                isOpen={open}
+                onClose={onClose}
+                nakshaImport={undefined}
+                geoJSONImport={undefined}
+              />
+            }
+            importButtonComponent={<Button type="button">{t("common:add")}</Button>}
+            importDeleteIcon={<DeleteIcon />}
+            importLocationIcon={<LocationIcon />}
+            importFileIcon={<FileIcon />}
+            importSuccessIcon={<LuCircleCheck />}
+            importFailureIcon={<LuX />}
+            importButtonComponentModal={
+              <Button type="button" variant={"subtle"}>
+                {t("common:import")}
+              </Button>
+            }
+          />
+        </MapContainerBox>
+      </Box>
       {hint && <Field color="gray.600" helperText={hint} />}
     </Field>
   );

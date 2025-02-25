@@ -1,4 +1,4 @@
-import { CloseButton, Image } from "@chakra-ui/react";
+import { Box, CloseButton, Image } from "@chakra-ui/react";
 import { axUploadUserGroupResource } from "@services/files.service";
 import { resizeImage } from "@utils/image";
 import { getNextResourceThumbnail, RESOURCE_CTX } from "@utils/media";
@@ -77,7 +77,7 @@ export const SocialPreviewField = ({
         >
           <input {...getInputProps()} />
           {field.value ? (
-            <div>
+            <Box maxW={"180px"}>
               <Image
                 src={getNextResourceThumbnail(RESOURCE_CTX.PAGES, field.value, "?h=200")}
                 alt={field.value}
@@ -86,7 +86,7 @@ export const SocialPreviewField = ({
                 borderRadius="md"
               />
               <CloseButton top={0} right={0} position="absolute" onClick={handleOnRemove} />
-            </div>
+            </Box>
           ) : isProcessing ? (
             <p>{t("common:loading")}</p>
           ) : (

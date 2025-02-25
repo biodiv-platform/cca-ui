@@ -38,6 +38,8 @@ function CarouselResourceInfo({ currentResource }: CarouselResourceInfoProps) {
             zIndex={4}
             opacity={0.4}
             _hover={{ opacity: 1 }}
+            variant={"subtle"}
+            rounded={"full"}
           >
             <LuInfo />
           </IconButton>

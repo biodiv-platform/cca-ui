@@ -1,4 +1,4 @@
-import { Box, Link } from "@chakra-ui/react";
+import { Box, Button, Link } from "@chakra-ui/react";
 import useGlobalState from "@hooks/use-global-state";
 import LoginIcon from "@icons/login";
 import { FORWARD_BLACKLIST } from "@static/constants";
@@ -28,10 +28,10 @@ export default function NavbarAuthOption() {
   }, [router.asPath]);
 
   return (
-    <Box ml={4} hidden={isPreviewMode}>
+    <Box hidden={isPreviewMode}>
       {isLoggedIn ? (
         <MenuRoot>
-          <MenuTrigger as={Link} rounded="full"  cursor="pointer" minW={0}>
+          <MenuTrigger as={Link} rounded="full" cursor="pointer" minW={0}>
             <Avatar size="sm" name={user?.name} />
           </MenuTrigger>
           <MenuContent>
@@ -51,7 +51,9 @@ export default function NavbarAuthOption() {
         <LocalLink href="/login" params={params} prefixGroup={true}>
           <Link lineHeight={1}>
             <Tooltip title={t("header:login_register")}>
-              <LoginIcon fontSize="2xl" aria-label="Login or Register" />
+              <Button size="xl" variant={"plain"} role="button" aria-label="Login or Register">
+                <LoginIcon />
+              </Button>
             </Tooltip>
           </Link>
         </LocalLink>

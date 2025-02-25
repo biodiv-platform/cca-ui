@@ -2,7 +2,7 @@ import "../styles/globals.scss";
 import "keen-slider/keen-slider.min.css";
 import "react-datepicker/dist/react-datepicker.css";
 
-import { Box, ChakraProvider } from "@chakra-ui/react";
+import { Box } from "@chakra-ui/react";
 import AuthWall from "@components/@core/container/authwall";
 import Metadata from "@components/@core/container/metadata";
 import Footer from "@components/@core/footer";
@@ -18,7 +18,7 @@ import Router, { useRouter } from "next/router";
 import NProgress from "nprogress";
 import React from "react";
 
-import { customTheme } from "@/configs/theme";
+import { Provider } from "@/components/ui/provider";
 
 Router.events.on("routeChangeStart", () => NProgress.start());
 Router.events.on("routeChangeComplete", () => NProgress.done());
@@ -29,7 +29,7 @@ function MainApp({ Component, pageProps, user, groups, currentGroup, languageId 
   const router = useRouter();
 
   return (
-    <ChakraProvider value={customTheme}>
+    <Provider>
       <GlobalStateProvider initialState={{ user, groups, currentGroup, languageId }}>
         <Metadata />
         <div className="content">
@@ -46,7 +46,7 @@ function MainApp({ Component, pageProps, user, groups, currentGroup, languageId 
         {config?.footer && router.pathname != "/data/list" && <Footer />}
         <AuthWall />
       </GlobalStateProvider>
-    </ChakraProvider>
+    </Provider>
   );
 }
 

@@ -16,13 +16,14 @@ import useTemplateResponseShow from "../use-template-response-show";
 export default function ShowAccordian({ data }) {
   const { response } = useTemplateResponseShow();
   const { t } = useTranslation();
+
   const defaultValues = useMemo(
     () =>
       data
-        .map((f) =>
-          f.type === FORM_TYPE.GEOMETRY || response?.ccaFieldValues?.[f.fieldId]?.value ? f : null
+        .filter(
+          (f) => f.type === FORM_TYPE.GEOMETRY || response?.ccaFieldValues?.[f.fieldId]?.value
         )
-        .filter((i) => i !== null),
+        .map((f) => f.fieldId), // Extract only fieldId
     [data, response]
   );
 
@@ -40,7 +41,7 @@ export default function ShowAccordian({ data }) {
               borderRadius="md"
               border="1px solid var(--chakra-colors-gray-300)"
               shadow="sm"
-              value="1"
+              value={field.fieldId}
             >
               <h3>
                 <AccordionItemTrigger
@@ -54,7 +55,7 @@ export default function ShowAccordian({ data }) {
                   </Box>
                 </AccordionItemTrigger>
               </h3>
-              <AccordionItemContent bg="white" pb={4}>
+              <AccordionItemContent bg="white" p={4}>
                 {isEmpty ? t("common:no_data") : <FieldShow field={field} response={response} />}
               </AccordionItemContent>
             </AccordionItem>

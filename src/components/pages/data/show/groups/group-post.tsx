@@ -2,6 +2,7 @@ import {
   Box,
   Button,
   Collapsible,
+  Flex,
   Heading,
   Input,
   SimpleGrid,
@@ -91,19 +92,22 @@ export default function GroupPost({
   return (
     <Box>
       <SimpleGrid columns={3}>
-        <Heading>
-          👥 {t("common:usergroups")}
+        <Flex alignItems="center">
+          <Heading size="4xl">👥 {t("common:usergroups")}</Heading>
           <Button
-            mb={6}
-            colorScheme="blue"
-            size="lg"
+            colorPalette="blue"
+            size="sm"
             className="no-print"
             ref={editButtonRef}
             onClick={onEditClick}
+            variant="plain"
+            ml={2} // Add some spacing
+            display="inline-flex"
+            alignItems="center"
           >
             <EditIcon />
           </Button>
-        </Heading>
+        </Flex>
       </SimpleGrid>
 
       <SimpleGrid columns={columns || defaultGridColumns} gap={4} hidden={open}>
@@ -118,34 +122,42 @@ export default function GroupPost({
             <GroupBox key={og.id} link={og.webAddress} icon={og.icon + "?h=40"} name={og.name} />
           ))}
       </SimpleGrid>
-
       <Collapsible.Root open={open} unmountOnExit={true}>
-        <Input mb={6} onChange={onQuery} placeholder={t("header:search")} />
-        {groups?.length > 0 ? (
-          <CheckBoxItems
-            gridColumns={columns || defaultGridColumns}
-            options={filterGroups}
-            defaultValue={selectedGroups}
-            onChange={setSelectedGroups}
-          />
-        ) : (
-          <div>{t("common:no_groups_joined")}</div>
-        )}
+        <Collapsible.Content>
+          <Input mb={6} onChange={onQuery} placeholder={t("header:search")} />
+          {groups?.length > 0 ? (
+            <CheckBoxItems
+              gridColumns={columns || defaultGridColumns}
+              options={filterGroups}
+              defaultValue={selectedGroups}
+              onChange={setSelectedGroups}
+            />
+          ) : (
+            <div>{t("common:no_groups_joined")}</div>
+          )}
 
-        <Box mt={2}>
-          <Button
-            size="sm"
-            colorScheme="blue"
-            aria-label="Save"
-            type="submit"
-            onClick={handleOnSave}
-          >
-            {t("common:save")}
-          </Button>
-          <Button size="sm" ml={2} colorScheme="gray" aria-label="Cancel" onClick={handleOnCancel}>
-            {t("common:close")}
-          </Button>
-        </Box>
+          <Box mt={2}>
+            <Button
+              size="sm"
+              colorPalette="blue"
+              aria-label="Save"
+              type="submit"
+              onClick={handleOnSave}
+              variant={"plain"}
+            >
+              {t("common:save")}
+            </Button>
+            <Button
+              size="sm"
+              ml={2}
+              colorPalette="gray"
+              aria-label="Cancel"
+              onClick={handleOnCancel}
+            >
+              {t("common:close")}
+            </Button>
+          </Box>
+        </Collapsible.Content>
       </Collapsible.Root>
     </Box>
   );

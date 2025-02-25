@@ -10,7 +10,7 @@ import {
 import FilterIcon from "@icons/filter";
 import ListIcon from "@icons/list";
 import React, { useEffect } from "react";
-import { LuChevronDown, LuChevronUp, LuMoveLeft, LuMoveRight } from "react-icons/lu";
+import { LuChevronDown, LuChevronLeft, LuChevronRight, LuChevronUp } from "react-icons/lu";
 
 const ToggleButton = ({ onToggle, top, title, isMobile, mobileTop, isOpen }) => {
   const styles = useBreakpointValue({
@@ -35,9 +35,9 @@ const ToggleButton = ({ onToggle, top, title, isMobile, mobileTop, isOpen }) => 
 
   const chevronIcon = (() => {
     if (isOpen) {
-      return isMobile ? <LuChevronUp /> : <LuMoveLeft />;
+      return isMobile ? <LuChevronUp /> : <LuChevronLeft />;
     } else {
-      return isMobile ? <LuChevronDown /> : <LuMoveRight />;
+      return isMobile ? <LuChevronDown /> : <LuChevronRight />;
     }
   })();
 
@@ -58,9 +58,9 @@ const ToggleButton = ({ onToggle, top, title, isMobile, mobileTop, isOpen }) => 
       justifyContent="left"
       pl="2"
       {...styles}
+      size="xs"
     >
       {styles?.icon}
-      <Box mx="1" />
       {title}
       {chevronIcon}
     </Button>

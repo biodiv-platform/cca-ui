@@ -21,6 +21,7 @@ interface IRadioProps {
   isLargeVariant?;
   isOthers?;
   isClearable?;
+  isRequired?;
 }
 
 export const RadioInputField = ({
@@ -36,6 +37,7 @@ export const RadioInputField = ({
   isLargeVariant,
   isOthers,
   isClearable,
+  isRequired,
   ...props
 }: IRadioProps) => {
   const { field, fieldState } = useController({ name });
@@ -56,8 +58,9 @@ export const RadioInputField = ({
         label={label}
         name={name}
         helpText={helpText}
+        required={isRequired}
       />
-      <RadioGroup id={name} {...field}>
+      <RadioGroup id={name} {...field} colorPalette="blue">
         <Stack direction={isInline ? "row" : "column"} py={2}>
           {options.map((o) => (
             <Radio key={o.value} value={o.value}>

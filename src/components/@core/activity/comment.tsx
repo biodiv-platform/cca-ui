@@ -49,27 +49,29 @@ export default function Comment({ resourceId, resourceType, focusRef, commentFun
         <Field htmlFor="comment" mb={2}>
           {t("form:comments.add_comment")}
         </Field>
-        <MentionsInput
-          id="comment"
-          className="textarea"
-          name="comment"
-          height="100px"
-          value={text}
-          allowSpaceInQuery={true}
-          onChange={onTextChange}
-        >
-          <Mention
-            trigger="@"
-            data={onMentionQuery}
-            renderSuggestion={({ name, id }, focused) => (
-              <div className={`user ${focused ? "focused" : ""}`}>
-                <div>{`${name} (${id})`}</div>
-              </div>
-            )}
-          />
-        </MentionsInput>
+        <Box width={"full"}>
+          <MentionsInput
+            id="comment"
+            className="textarea"
+            name="comment"
+            height="100px"
+            value={text}
+            allowSpaceInQuery={true}
+            onChange={onTextChange}
+          >
+            <Mention
+              trigger="@"
+              data={onMentionQuery}
+              renderSuggestion={({ name, id }, focused) => (
+                <div className={`user ${focused ? "focused" : ""}`}>
+                  <div>{`${name} (${id})`}</div>
+                </div>
+              )}
+            />
+          </MentionsInput>
+        </Box>
       </Field>
-      <Button colorScheme="blue" onClick={handleOnComment}>
+      <Button colorPalette="blue" onClick={handleOnComment}>
         {t("form:comments.post")}
       </Button>
     </Box>
