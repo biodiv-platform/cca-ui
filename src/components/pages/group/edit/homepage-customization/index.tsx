@@ -14,7 +14,7 @@ import HomePageCustomizationForm from "./form";
 export default function GroupHomePageCustomization({ userGroupId, homePageDetails }) {
   const { t } = useTranslation();
   return (
-    <AccordionRoot>
+    <AccordionRoot multiple>
       <AccordionItem
         mb={8}
         bg="white"
@@ -22,12 +22,12 @@ export default function GroupHomePageCustomization({ userGroupId, homePageDetail
         borderRadius="md"
         value="homepage"
       >
-        <AccordionItemTrigger _expanded={{ bg: "gray.100" }}>
+        <AccordionItemTrigger _expanded={{ bg: "gray.100" }} pl={4} pr={4}>
           <Box flex={1} textAlign="left" fontSize="lg">
             🧰 {t("group:homepage_customization.title")}
           </Box>
         </AccordionItemTrigger>
-        <AccordionItemContent>
+        <AccordionItemContent p={4}>
           <HomePageCustomizationForm userGroupId={userGroupId} homePageDetails={homePageDetails} />
         </AccordionItemContent>
       </AccordionItem>

@@ -73,7 +73,7 @@ export default function BasicInfo({
       </SimpleGrid>
 
       <SimpleGrid columns={{ base: 1, md: 4 }} gap={{ base: 0, md: 4 }}>
-        <Box gridColumn="1/4">
+        <Box gridColumn="1/4" width={"full"}>
           <RichTextareaField name="bibFieldData.abstract" label={t("document:description")} />
         </Box>
 

@@ -1,3 +1,4 @@
+import { Box } from "@chakra-ui/react";
 import { RESOURCE_SIZE } from "@static/constants";
 import useTranslation from "next-translate/useTranslation";
 import React from "react";
@@ -43,22 +44,26 @@ export default function ImageUploaderField({
       label={label}
     >
       {field.value ? (
-        <ResourceCard
-          simpleUpload={simpleUpload}
-          imageSize={simpleUpload ? "?h=60" : RESOURCE_SIZE.LIST_THUMBNAIL}
-          setValue={field.onChange}
-          resource={field.value}
-          disabled={disabled}
-        />
+        <Box width={"full"}>
+          <ResourceCard
+            simpleUpload={simpleUpload}
+            imageSize={simpleUpload ? "?h=60" : RESOURCE_SIZE.LIST_THUMBNAIL}
+            setValue={field.onChange}
+            resource={field.value}
+            disabled={disabled}
+          />
+        </Box>
       ) : disabled ? (
         <p>{t("group:custom_field.image_unavailable")} </p>
       ) : (
-        <DropTarget
-          simpleUpload={simpleUpload}
-          nestedPath={nestedPath}
-          resourcePath={resourcePath}
-          setValue={field.onChange}
-        />
+        <Box width={"full"}>
+          <DropTarget
+            simpleUpload={simpleUpload}
+            nestedPath={nestedPath}
+            resourcePath={resourcePath}
+            setValue={field.onChange}
+          />
+        </Box>
       )}
       {hint && <Field color="gray.600" helperText={hint} />}
     </Field>

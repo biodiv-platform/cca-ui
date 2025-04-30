@@ -150,9 +150,9 @@ export default function GroupPost({
             <Button
               size="sm"
               ml={2}
-              colorPalette="gray"
               aria-label="Cancel"
               onClick={handleOnCancel}
+              variant={"subtle"}
             >
               {t("common:close")}
             </Button>

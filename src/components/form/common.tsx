@@ -79,6 +79,7 @@ export function FormLabel({ title, label, name, helpText, isLargeVariant, requir
   ) : label ? (
     <Field.Label htmlFor={name} mb={0} whiteSpace="pre-line">
       {label}
+      {required && <Field.RequiredIndicator />}
     </Field.Label>
   ) : null;
 }

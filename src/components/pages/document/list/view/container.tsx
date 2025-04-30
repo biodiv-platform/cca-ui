@@ -1,11 +1,12 @@
 import { Box, Flex, Tabs } from "@chakra-ui/react";
 import Tooltip from "@components/@core/tooltip";
-import SITE_CONFIG from "@configs/site-config";
 import styled from "@emotion/styled";
 import { actionTabs } from "@static/documnet-list";
 import { Mq } from "mq-styled-components";
 import useTranslation from "next-translate/useTranslation";
 import React, { useState } from "react";
+
+import SITE_CONFIG from "@/configs/site-config";
 
 import CommentsTab from "./tabs/comments";
 import GroupTab from "./tabs/group";
@@ -21,8 +22,11 @@ const VerticalTabs = styled.div`
 
     > .tab-content {
       flex-grow: 1;
+      height: 100%;
+      overflow: hidden;
 
-      > [role="tabpanel"] {
+      > [role="tabpanel"],
+      > div[data-state="active"] {
         padding: 0;
         height: 100%;
         max-height: 18rem;
@@ -55,7 +59,8 @@ const VerticalTabs = styled.div`
         border-bottom: 0;
       }
 
-      > [role="tab"][aria-selected="true"] {
+      > [role="tab"][aria-selected="true"],
+      > [role="tab"][data-state="active"] {
         white-space: nowrap;
 
         color: inherit;
@@ -104,41 +109,54 @@ export default function Container({ o }) {
         <Tabs.Root variant="plain" className="tabs" lazyMount defaultValue="common:information">
           <Tabs.Content
             value="common:information"
-            height={["fit-content"]}
+            height="100%"
             className="tab-content"
             position="relative"
+            style={{ overflow: "hidden" }}
           >
-            <InfoTab
-              document={o.document}
-              user={o.userIbp}
-              flags={o.flag[0] ? o.flag.map((item) => ({ flag: item, user: o.userIbp })) : null}
-            />
+            <Box height="100%" overflowY="auto">
+              <InfoTab
+                document={o.document}
+                user={o.userIbp}
+                flags={o.flag[0] ? o.flag.map((item) => ({ flag: item, user: o.userIbp })) : null}
+              />
+            </Box>
           </Tabs.Content>
+
           {SITE_CONFIG.USERGROUP.ACTIVE && (
             <Tabs.Content
-              value="usergroup"
-              height={["fit-content"]}
+              value="common:usergroups"
+              height="100%"
               className="tab-content"
               position="relative"
+              style={{ overflow: "hidden" }}
             >
-              <GroupTab o={o} />
+              <Box height="100%" overflowY="auto">
+                <GroupTab o={o} />
+              </Box>
             </Tabs.Content>
           )}
           <Tabs.Content
             value="document:tags.title"
-            height={["fit-content"]}
+            height="100%"
             className="tab-content"
             position="relative"
+            style={{ overflow: "hidden" }}
           >
-            <TagsTab documentId={o.document.id} tags={o.tags} />
+            <Box height="100%" overflowY="auto">
+              <TagsTab documentId={o.document.id} tags={o.tags} />
+            </Box>
           </Tabs.Content>
           <Tabs.Content
             value="form:comments.title"
-            height={["fit-content"]}
+            height="100%"
             className="tab-content"
             position="relative"
+            style={{ overflow: "hidden" }}
           >
-            <CommentsTab documentId={o.document.id} />
+            <Box height="100%" overflowY="auto">
+              <CommentsTab documentId={o.document.id} />
+            </Box>
           </Tabs.Content>
           <Tabs.List>
             {filterTabs.map(({ name, icon }) => (

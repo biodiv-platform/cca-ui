@@ -1,8 +1,6 @@
-import { Box, Flex, Image, SimpleGrid, useCheckbox } from "@chakra-ui/react";
+import { Box, Flex, Image, SimpleGrid, useCheckbox, useCheckboxGroup } from "@chakra-ui/react";
 import { getGroupImageThumb } from "@utils/media";
 import React from "react";
-
-import { useCheckboxGroup } from "@/hooks/use-checkbox-group";
 
 interface ITraitInputProps {
   type?: string;
@@ -14,9 +12,7 @@ interface ITraitInputProps {
 }
 
 const CustomCheckBox = (props: any) => {
-
   const { getControlProps, getLabelProps } = useCheckbox(props);
-
 
   return (
     <label>
@@ -49,23 +45,20 @@ const CheckBoxItems = ({
   defaultValue,
   gridColumns = [1, 1, 3, 5]
 }: ITraitInputProps) => {
-  const { getCheckboxProps } = useCheckboxGroup({
+  const { getItemProps } = useCheckboxGroup({
     defaultValue: defaultValue && defaultValue.map((o) => o.toString()),
-    onChange: (v) => onChange(v.map((i) => Number(i)))
+    onValueChange: (v) => onChange(v.map((i) => Number(i)))
   });
-
-  console.warn("options", options);
 
   return (
     <SimpleGrid columns={gridColumns} gridGap={4}>
       {options.map((o) => {
         console.warn("0", o);
         return (
-          <CustomCheckBox key={o.id} {...getCheckboxProps({ value: String(o.id) })}>
+          <CustomCheckBox key={o.id} {...getItemProps({ value: String(o.id) })}>
             <Flex alignItems="center" h="2rem" overflow="hidden" title={o.name}>
               <Image
                 loading="lazy"
-                // ignoreFallback={true}
                 boxSize="2rem"
                 mr={2}
                 objectFit="contain"

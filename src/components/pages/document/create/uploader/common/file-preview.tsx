@@ -102,8 +102,11 @@ export default function FilePreview({ fileName, date, onSelect, onDelete }: File
         aria-label={t("common:delete")}
         title={t("common:delete")}
         onClick={handleOnDelete}
+        variant={"plain"}
+        size={"xl"}
+        loading={isLoading}
       >
-        {isLoading && <DeleteIcon />}
+        {<DeleteIcon />}
       </IconButton>
     </DocumentList>
   );

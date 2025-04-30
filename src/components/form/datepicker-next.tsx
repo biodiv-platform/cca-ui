@@ -51,6 +51,7 @@ export const DatePickerNextField = ({
           >
             {label && <Field htmlFor={name}>{label}</Field>}
             <InputGroup
+              width={"full"}
               endElement={
                 <label htmlFor={name} style={{ cursor: "pointer" }}>
                   <CalendarIcon color="gray.300" />

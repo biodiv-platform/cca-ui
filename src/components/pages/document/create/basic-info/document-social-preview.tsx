@@ -1,4 +1,4 @@
-import { CloseButton, Image } from "@chakra-ui/react";
+import { Box, CloseButton, Image } from "@chakra-ui/react";
 import {
   Container,
   ITPageGalleryFieldProps
@@ -79,7 +79,7 @@ export const DocumentSocialPreviewField = ({
       {label && <Field htmlFor={name} label={label} />}
 
       {/* Dropzone */}
-      <div id={name}>
+      <Box id={name} width={"full"}>
         <Container
           style={{ height: "124px", padding: "1rem", position: "relative" }}
           {...getRootProps({ isDragActive, isDragAccept, isDragReject })}
@@ -111,7 +111,7 @@ export const DocumentSocialPreviewField = ({
             </p>
           )}
         </Container>
-      </div>
+      </Box>
 
       {hint && <Field color="gray.600" helperText={hint} />}
     </Field>

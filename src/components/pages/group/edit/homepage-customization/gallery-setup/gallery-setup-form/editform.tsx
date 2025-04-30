@@ -50,7 +50,7 @@ export default function GalleryEditForm({ setIsEdit, setGalleryList, editGallery
     <FormProvider {...hForm}>
       <form onSubmit={hForm.handleSubmit(handleFormSubmit)}>
         <Box display="flex" justifyContent="space-between" alignItems="center">
-          <Button m={3} type="button" onClick={() => setIsEdit(false)}>
+          <Button m={3} type="button" onClick={() => setIsEdit(false)} variant={"subtle"}>
             <LuMoveLeft />
             {t("group:homepage_customization.back")}
           </Button>

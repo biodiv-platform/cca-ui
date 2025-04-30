@@ -48,7 +48,7 @@ export default function MenuItems(props) {
 
   return isDropdown ? (
     <MenuRoot>
-      <MenuTrigger asChild>
+      <MenuTrigger asChild pl={4}>
         <Box display="flex" alignItems="center">
           <SimpleLink to={to} params={params} prefixGroup={prefixGroup} isDarkButton={isDarkButton}>
             {linkContent}
@@ -58,15 +58,20 @@ export default function MenuItems(props) {
           </Box>
         </Box>
       </MenuTrigger>
-      <MenuContent>
-        {rows.map((row, index) => (
-          <MenuItem key={index} value={index}>
-            <LocalLink href={row.to} params={row.params} prefixGroup={prefixGroup}>
-              <Link w="full">{t(`${row.name}`)}</Link>
-            </LocalLink>
-          </MenuItem>
-        ))}
-      </MenuContent>
+
+      {CCell ? (
+        <CCell />
+      ) : (
+        <MenuContent>
+          {rows.map((row, index) => (
+            <MenuItem key={index} value={index}>
+              <LocalLink href={row.to} params={row.params} prefixGroup={prefixGroup}>
+                <Link w="full">{t(`${row.name}`)}</Link>
+              </LocalLink>
+            </MenuItem>
+          ))}
+        </MenuContent>
+      )}
     </MenuRoot>
   ) : (
     <SimpleLink to={to} params={params} isDarkButton={isDarkButton} prefixGroup={prefixGroup}>

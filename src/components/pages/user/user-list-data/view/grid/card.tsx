@@ -6,17 +6,17 @@ import React from "react";
 
 import { Checkbox } from "@/components/ui/checkbox";
 
-export default function GridViewCard({ user: { user }, getCheckboxProps, canEdit }) {
+export default function GridViewCard({ user: { user }, getItemProps, canEdit }) {
   return (
     <Box className="hover-box fade">
       <Box w="full" position="relative" h="16rem">
-        {canEdit && getCheckboxProps && (
+        {canEdit && getItemProps && (
           <Checkbox
             position="absolute"
             bg="white"
             m={2}
             size={"lg"}
-            {...getCheckboxProps({ value: String(user?.id) })}
+            {...getItemProps({ value: String(user?.id) })}
           />
         )}
         <LocalLink href={`/user/show/${user?.id}`} prefixGroup={true}>

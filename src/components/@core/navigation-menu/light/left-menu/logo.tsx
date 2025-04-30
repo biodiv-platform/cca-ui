@@ -1,4 +1,4 @@
-import { Box, Link } from "@chakra-ui/react";
+import { Box, IconButton, Link } from "@chakra-ui/react";
 import LocalLink from "@components/@core/local-link";
 import styled from "@emotion/styled";
 import useGlobalState from "@hooks/use-global-state";
@@ -90,9 +90,14 @@ export default function PrimaryLogo({ isOpen, onToggle }) {
           </Box>
         </Link>
       </LocalLink>
-      <button className="menu-toggle" onClick={onToggle} aria-label={t("header:toggle_menu")}>
+      <IconButton
+        className="menu-toggle"
+        onClick={onToggle}
+        aria-label={t("header:toggle_menu")}
+        variant={"subtle"}
+      >
         {isOpen ? <CrossIcon /> : <MenuIcon />}
-      </button>
+      </IconButton>
       {currentGroup.id && (
         <>
           <JoinUserGroup

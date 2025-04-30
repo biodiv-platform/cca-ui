@@ -1,4 +1,4 @@
-import { useDisclosure } from "@chakra-ui/react";
+import { useCheckboxGroup, useDisclosure } from "@chakra-ui/react";
 import useDidUpdateEffect from "@hooks/use-did-update-effect";
 import { axGetUserList } from "@services/user.service";
 import { isBrowser } from "@static/constants";
@@ -7,8 +7,6 @@ import NProgress from "nprogress";
 import { stringify } from "querystring";
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { useImmer } from "use-immer";
-
-import { useCheckboxGroup } from "@/hooks/use-checkbox-group";
 
 export interface UserListData {
   l: any[];
@@ -27,7 +25,7 @@ interface UserListContextProps {
   nextPage?;
   setFilter?;
   resetFilter?;
-  getCheckboxProps?;
+  getItemProps?;
   selectAll?: boolean;
   setSelectAll?;
   bulkUserIds?: any[];
@@ -57,7 +55,7 @@ export function UserListContextProvider(props) {
 
   const [selectAll, setSelectAll] = useState(false);
   const { open, onOpen, onClose } = useDisclosure();
-  const { getCheckboxProps, value: bulkUserIds, setValue } = useCheckboxGroup();
+  const { getItemProps, value: bulkUserIds, setValue } = useCheckboxGroup();
   const allUserIds = userListData?.l?.map((item) => String(item.id)) || [];
   const unselectedUserIds = allUserIds.filter((id) => !bulkUserIds.includes(id)).join(",");
 
@@ -151,7 +149,7 @@ export function UserListContextProvider(props) {
         removeFilter,
         nextPage,
         resetFilter,
-        getCheckboxProps,
+        getItemProps,
         selectAll,
         setSelectAll,
         bulkUserIds,
