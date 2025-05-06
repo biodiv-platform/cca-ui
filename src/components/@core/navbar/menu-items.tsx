@@ -45,8 +45,6 @@ export default function PagesItems() {
   const filteredPages = pages?.filter((page) => SITE_CONFIG.PAGES.NAVBAR_ID.includes(page.id));
   const pagesMenu = convertToMenuFormat(filteredPages, "/page/", false, false);
 
-  console.warn("pagesMenu", pagesMenu);
-
   return (
     <>
       <Search />
