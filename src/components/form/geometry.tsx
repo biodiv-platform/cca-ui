@@ -92,7 +92,7 @@ export const GeometryField = ({
             mapStyle={{ height: "22rem", width: "100%", borderRadius: ".25rem" }}
             maxZoom={14}
             autocompleteComponent={
-              <InputGroup mb={4} startElement={<LuSearch color="gray.300" />}>
+              <InputGroup mb={4} startElement={<LuSearch color="gray.300" />} width={"full"}>
                 <Input
                   name="search-gmaps"
                   ref={gmapsSearchRef}

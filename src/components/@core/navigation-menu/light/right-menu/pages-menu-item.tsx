@@ -1,24 +1,26 @@
-import { Separator } from "@chakra-ui/react";
+import { Link, Separator } from "@chakra-ui/react";
 import LocalLink from "@components/@core/local-link";
 import useGlobalState from "@hooks/use-global-state";
 import { getPagesMenu } from "@utils/pages";
 import useTranslation from "next-translate/useTranslation";
 import React, { useMemo } from "react";
 
-import { MenuContent, MenuItem   } from "@/components/ui/menu";
+import { MenuContent, MenuItem } from "@/components/ui/menu";
 
 const SubMenuLink = ({ item, onClose }) => (
   <>
     <LocalLink href={item.to} params={item.params} prefixGroup={true}>
-      <MenuItem
-        value={item.to}
-        as="a"
-        w="full"
-        onClick={onClose}
-        fontWeight={item?.rows ? "bold" : "normal"}
-      >
-        {item.name}
-      </MenuItem>
+      <Link unstyled>
+        <MenuItem
+          value={item.to}
+          as="a"
+          w="full"
+          onClick={onClose}
+          fontWeight={item?.rows ? "bold" : "normal"}
+        >
+          {item.name}
+        </MenuItem>
+      </Link>
     </LocalLink>
     {item?.rows && item.rows.map((i) => <SubMenuLink item={i} onClose={onClose} key={i.name} />)}
     {item?.rows && <Separator />}
