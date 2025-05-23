@@ -1,27 +1,20 @@
-import { InfoOutlineIcon } from "@chakra-ui/icons";
-import {
-  Box,
-  chakra,
-  Flex,
-  FormHelperText,
-  FormLabel as FL,
-  IconButton,
-  Input,
-  useDisclosure,
-  useFormControlContext
-} from "@chakra-ui/react";
+import { Box, chakra, Flex, IconButton, Input, useDisclosure } from "@chakra-ui/react";
+import { Field } from "@chakra-ui/react";
 import { isOthersField } from "@utils/field";
 import React, { useMemo } from "react";
 import { useController } from "react-hook-form";
+import { LuInfo } from "react-icons/lu";
 
-const RequiredIndicator = () => {
-  const { isRequired } = useFormControlContext();
-
-  return isRequired ? <chakra.span __css={{ color: "red.500" }} ml={1} children="*" /> : null;
+const RequiredIndicator = ({ required }) => {
+  return required ? (
+    <chakra.span color="red.500" ml={1}>
+      *
+    </chakra.span>
+  ) : null;
 };
 
-export function FormLabel({ title, label, name, helpText, isLargeVariant }) {
-  const { isOpen, onToggle } = useDisclosure();
+export function FormLabel({ title, label, name, helpText, isLargeVariant, required }) {
+  const { open, onToggle } = useDisclosure();
 
   return isLargeVariant ? (
     <>
@@ -31,16 +24,17 @@ export function FormLabel({ title, label, name, helpText, isLargeVariant }) {
             <div>
               <IconButton
                 disabled={!helpText}
-                variant="link"
                 type="button"
                 minWidth="auto"
                 aria-label="toggle"
-                icon={<InfoOutlineIcon />}
                 onClick={onToggle}
                 m={3}
                 ml={2}
                 mt={1}
-              />
+                variant={"plain"}
+              >
+                <LuInfo />
+              </IconButton>
             </div>
             <div>
               <chakra.label
@@ -52,7 +46,7 @@ export function FormLabel({ title, label, name, helpText, isLargeVariant }) {
               >
                 <Box fontWeight="bold">
                   {title}
-                  <RequiredIndicator />
+                  <RequiredIndicator required={required} />
                 </Box>
                 {label || title}
               </chakra.label>
@@ -60,7 +54,7 @@ export function FormLabel({ title, label, name, helpText, isLargeVariant }) {
           </Flex>
         </>
       )}
-      {isOpen && (
+      {open && (
         <Box
           bg="gray.700"
           className="fade"
@@ -78,14 +72,15 @@ export function FormLabel({ title, label, name, helpText, isLargeVariant }) {
             boxSize="12px"
             transform="rotate(45deg)"
           />
-          <FormHelperText m={0} color="white" whiteSpace="pre-line" children={helpText} />
+          <Field.HelperText m={0} color="white" whiteSpace="pre-line" children={helpText} />
         </Box>
       )}
     </>
   ) : label ? (
-    <FL htmlFor={name} mb={0} whiteSpace="pre-line">
+    <Field.Label htmlFor={name} mb={0} whiteSpace="pre-line">
       {label}
-    </FL>
+      {required && <Field.RequiredIndicator />}
+    </Field.Label>
   ) : null;
 }
 
@@ -93,9 +88,9 @@ export const OthersInput = ({ name, value }) => {
   const { field } = useController({ name: `others.${name}` });
 
   const showOthers = useMemo(() => {
-    if (!value) return false;
-
-    return Array.isArray(value) ? value?.find((v) => isOthersField(v)) : isOthersField(value);
+    if (!value) return false; // Handle null/undefined
+    if (Array.isArray(value)) return value.some((v) => typeof v === "string" && isOthersField(v));
+    return isOthersField(value);
   }, [value]);
 
   return showOthers ? <Input mt={4} {...field} /> : null;

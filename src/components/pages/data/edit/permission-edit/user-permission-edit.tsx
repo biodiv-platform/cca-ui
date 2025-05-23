@@ -1,16 +1,4 @@
-import {
-  Button,
-  FormControl,
-  FormLabel,
-  Input,
-  Modal,
-  ModalBody,
-  ModalCloseButton,
-  ModalContent,
-  ModalFooter,
-  ModalHeader,
-  ModalOverlay
-} from "@chakra-ui/react";
+import { Button, Input } from "@chakra-ui/react";
 import { SelectAsyncInputField } from "@components/form/select-async";
 import { SubmitButton } from "@components/form/submit-button";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -21,6 +9,17 @@ import useTranslation from "next-translate/useTranslation";
 import React from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import * as Yup from "yup";
+
+import {
+  DialogBackdrop,
+  DialogBody,
+  DialogCloseTrigger,
+  DialogContent,
+  DialogFooter,
+  DialogHeader,
+  DialogRoot
+} from "@/components/ui/dialog";
+import { Field } from "@/components/ui/field";
 
 import useTemplateResponseEdit from "../use-template-response-edit";
 
@@ -58,18 +57,18 @@ export default function UserPermissionEditor({ initialUsers, author }) {
   const handleOnClose = () => setIsEdit(false);
 
   return (
-    <Modal isOpen={isEdit} onClose={handleOnClose}>
-      <ModalOverlay />
-      <ModalContent>
+    <DialogRoot open={isEdit} onOpenChange={handleOnClose}>
+      <DialogBackdrop />
+      <DialogContent>
         <FormProvider {...hForm}>
           <form onSubmit={hForm.handleSubmit(handleFormSubmit)} className="fade">
-            <ModalHeader>{t("form:permission.title")}</ModalHeader>
-            <ModalCloseButton />
-            <ModalBody>
-              <FormControl mb={4}>
-                <FormLabel>{t("common:owner")}</FormLabel>
-                <Input type="text" isDisabled={true} value={author.name} />
-              </FormControl>
+            <DialogHeader>{t("form:permission.title")}</DialogHeader>
+            <DialogCloseTrigger />
+            <DialogBody>
+              <Field mb={4}>
+                <Field label={t("common:owner")} />
+                <Input type="text" disabled={true} value={author.name} />
+              </Field>
               <SelectAsyncInputField
                 name="allowedUsers"
                 label={t("form:contributors_for_document")}
@@ -79,16 +78,16 @@ export default function UserPermissionEditor({ initialUsers, author }) {
                 isCreatable={false}
                 isClearable={false}
               />
-            </ModalBody>
-            <ModalFooter>
-              <Button mr={3} onClick={handleOnClose}>
+            </DialogBody>
+            <DialogFooter>
+              <Button mr={3} onClick={handleOnClose} variant={"subtle"}>
                 {t("common:close")}
               </Button>
               <SubmitButton>{t("common:save")}</SubmitButton>
-            </ModalFooter>
+            </DialogFooter>
           </form>
         </FormProvider>
-      </ModalContent>
-    </Modal>
+      </DialogContent>
+    </DialogRoot>
   );
 }

@@ -2,7 +2,6 @@ import { Box } from "@chakra-ui/react";
 import BoxHeading from "@components/@core/layout/box-heading";
 import useDocumentFilter from "@components/pages/document/common/use-document-filter";
 import GroupPost from "@components/pages/document/show/groups/group-post";
-// import GroupPost from "@components/pages/observation/show/groups/group-post";
 import { axDocumentSaveUserGroups } from "@services/document.service";
 import useTranslation from "next-translate/useTranslation";
 import React from "react";

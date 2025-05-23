@@ -1,4 +1,4 @@
-import { Center, Divider } from "@chakra-ui/react";
+import { Center, Separator } from "@chakra-ui/react";
 import Activity from "@components/@core/activity";
 import { Container } from "@components/@core/container";
 import useGlobalState from "@hooks/use-global-state";
@@ -42,7 +42,7 @@ export default function ShowBody() {
 
   const renderDivider = () => (
     <Center className="no-print">
-      <Divider mb={10} borderColor="gray.400" variant="dashed" />
+      <Separator mb={10} borderColor="gray.400" variant="dashed" />
     </Center>
   );
 

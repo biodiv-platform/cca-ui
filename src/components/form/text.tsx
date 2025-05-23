@@ -1,8 +1,9 @@
-import { FormControl, FormErrorMessage, FormHelperText, Input } from "@chakra-ui/react";
+import { Input } from "@chakra-ui/react";
 import { namedFormErrorMessage } from "@utils/field";
 import React from "react";
 import { useController } from "react-hook-form";
 
+import { Field } from "../ui/field";
 import { FormLabel } from "./common";
 
 interface ITextBoxProps {
@@ -46,11 +47,12 @@ export const TextBoxField = ({
   });
 
   return (
-    <FormControl
-      isInvalid={!!fieldState.error}
+    <Field
+      invalid={!!fieldState.error}
       mb={mb}
       hidden={hidden}
-      isRequired={isRequired}
+      required={isRequired}
+      errorText={namedFormErrorMessage(fieldState?.error?.message, name, title)}
       {...props}
     >
       <FormLabel
@@ -59,22 +61,22 @@ export const TextBoxField = ({
         label={label}
         name={name}
         helpText={helpText}
+        required={isRequired}
       />
       <Input
         id={name}
         placeholder={placeholder}
         type={type}
         maxLength={maxLength}
-        isDisabled={disabled}
+        disabled={disabled}
         autoComplete={autoComplete}
         bg="white"
         {...field}
       />
-      <FormErrorMessage children={namedFormErrorMessage(fieldState?.error?.message, name, title)} />
       {maxLength && field.value && (
-        <FormHelperText color="gray.600" children={`${field.value.length}/${maxLength}`} />
+        <Field color="gray.600" children={`${field.value.length}/${maxLength}`} />
       )}
-      {hint && <FormHelperText color="gray.600">{hint}</FormHelperText>}
-    </FormControl>
+      {hint && <Field color="gray.600" helperText={hint} />}
+    </Field>
   );
 };

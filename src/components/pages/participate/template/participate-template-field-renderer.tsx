@@ -15,7 +15,7 @@ import { YearPickerField } from "@components/form/yearpicker";
 import { axUploadEditorPageResource } from "@services/pages.service";
 import { FORM_TYPE } from "@static/constants";
 import dynamic from "next/dynamic";
-import React from "react";
+import React, { useRef } from "react";
 
 const WYSIWYGField = dynamic(() => import("@components/form/wysiwyg"), { ssr: false });
 
@@ -31,6 +31,7 @@ export default function ParticipateTemplateFieldRenderer({ field }) {
     isRequired: field.isRequired,
     isLargeVariant: true
   };
+  const headingRef = useRef<HTMLAnchorElement>(null);
 
   switch (field.type) {
     case FORM_TYPE.TEXT:
@@ -53,7 +54,7 @@ export default function ParticipateTemplateFieldRenderer({ field }) {
           fontWeight="600"
           style={{ scrollMarginTop: "var(--content-top)" }}
         >
-          <Box href={`#${field.fieldId}`} color="gray.400" as="a" mr={2}>
+          <Box ref={headingRef} color="gray.400" as="a" mr={2}>
             #
           </Box>
           {defaultProps.title}

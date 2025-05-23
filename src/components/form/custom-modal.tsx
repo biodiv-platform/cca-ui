@@ -1,22 +1,24 @@
-import {
-  Box,
-  Modal,
-  ModalBody,
-  ModalCloseButton,
-  ModalContent,
-  ModalHeader,
-  ModalOverlay
-} from "@chakra-ui/react";
+import { Box } from "@chakra-ui/react";
 import React from "react";
+
+import {
+  DialogBackdrop,
+  DialogBody,
+  DialogCloseTrigger,
+  DialogContent,
+  DialogHeader,
+  DialogRoot
+} from "@/components/ui/dialog";
 
 const CustomModal = ({ isOpen, onClose, nakshaImport, geoJSONImport }) => {
   return (
-    <Modal isOpen={isOpen} onClose={onClose} blockScrollOnMount={false}>
-      <ModalOverlay />
-      <ModalContent paddingBottom={10} maxW="lg">
-        <ModalHeader>Import</ModalHeader>
-        <ModalCloseButton />
-        <ModalBody>
+    // blockScrollOnMount={false} ??
+    <DialogRoot open={isOpen} onOpenChange={onClose}>
+      <DialogBackdrop />
+      <DialogContent paddingBottom={10} maxW="lg">
+        <DialogHeader>Import</DialogHeader>
+        <DialogCloseTrigger />
+        <DialogBody>
           <Box border="1px" borderColor="gray.200" borderRadius="md" padding="4">
             <Box marginTop="2">{nakshaImport}</Box>
           </Box>
@@ -24,9 +26,9 @@ const CustomModal = ({ isOpen, onClose, nakshaImport, geoJSONImport }) => {
           <Box border="1px" borderColor="gray.200" borderRadius="md" padding="4" marginTop="4">
             <Box marginTop="2">{geoJSONImport}</Box>
           </Box>
-        </ModalBody>
-      </ModalContent>
-    </Modal>
+        </DialogBody>
+      </DialogContent>
+    </DialogRoot>
   );
 };
 

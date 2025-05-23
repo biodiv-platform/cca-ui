@@ -9,7 +9,7 @@ export default function FollowActionButton({
   resourceId,
   toggleFollowFunc,
   followTitle,
-  unFollowTitle
+  unFollowTitle,
 }) {
   const [isFollowing, setIsFollowing] = useState(following);
 
@@ -29,7 +29,7 @@ export default function FollowActionButton({
     <SimpleActionButton
       icon={isFollowing ? <NotificationsActiveIcon /> : <NotificationsNoneIcon />}
       title={isFollowing ? unFollowTitle : followTitle}
-      colorScheme="blue"
+      colorPalette="blue"
       onClick={toggleFollow}
     />
   );

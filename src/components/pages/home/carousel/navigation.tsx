@@ -1,6 +1,6 @@
-import { ChevronLeftIcon, ChevronRightIcon } from "@chakra-ui/icons";
 import { IconButton } from "@chakra-ui/react";
 import React from "react";
+import { LuChevronLeft, LuChevronRight } from "react-icons/lu";
 
 const carouselNavigationButtonSide = { base: "30%", md: "2rem" };
 
@@ -13,6 +13,7 @@ interface NavigationButtonProps {
 
 const NavigationButton = ({ left, right, onClick, children }: NavigationButtonProps) => (
   <IconButton
+    variant={"subtle"}
     aria-label="arrow"
     borderRadius="full"
     position="absolute"
@@ -32,12 +33,12 @@ export const NavigationButtons = ({ slider }) => (
     <NavigationButton
       left={carouselNavigationButtonSide}
       onClick={() => slider?.slickPrev()}
-      children={<ChevronLeftIcon />}
+      children={<LuChevronLeft />}
     />
     <NavigationButton
       right={carouselNavigationButtonSide}
       onClick={() => slider?.slickNext()}
-      children={<ChevronRightIcon />}
+      children={<LuChevronRight />}
     />
   </>
 );

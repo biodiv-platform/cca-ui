@@ -14,7 +14,7 @@ export interface UserEditPageComponentProps {
 export default function UserEditPageComponent({ user, isAdmin }: UserEditPageComponentProps) {
   return (
     <Container mt={16}>
-      <SimpleGrid columns={{ base: 1, md: 4 }} spacing={{ base: 0, md: 4 }}>
+      <SimpleGrid columns={{ base: 1, md: 4 }} gap={{ base: 0, md: 4 }}>
         <SideBar user={user} />
         <UserEditTabs isAdmin={isAdmin} user={user} />
       </SimpleGrid>

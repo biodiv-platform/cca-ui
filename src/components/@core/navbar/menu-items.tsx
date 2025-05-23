@@ -8,8 +8,8 @@ import { convertToMenuFormat } from "@utils/pages";
 import useTranslation from "next-translate/useTranslation";
 import React, { useEffect, useState } from "react";
 
-import MainItems from "../../@core/navigation-menu/common/menu-items";
 import LocalLink from "../local-link";
+import MenuItems from "../navigation-menu/common/menu-items";
 import Search from "./search";
 
 interface NavLinkProps {
@@ -30,7 +30,7 @@ const NavLink = ({ children, href, hidden }: NavLinkProps) => {
   );
 };
 
-export default function MenuItems() {
+export default function PagesItems() {
   const { t } = useTranslation();
   const { isPreviewMode } = useGlobalState();
 
@@ -49,7 +49,7 @@ export default function MenuItems() {
     <>
       <Search />
       {pagesMenu?.map((item) => (
-        <MainItems key={item.name} {...item} prefixGroup={false} />
+        <MenuItems key={item.name} {...item} prefixGroup={false} />
       ))}
       {header.map((i) => (
         <NavLink

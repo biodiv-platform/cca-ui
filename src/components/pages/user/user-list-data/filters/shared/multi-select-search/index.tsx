@@ -1,12 +1,12 @@
-import {
-  AccordionButton,
-  AccordionIcon,
-  AccordionItem,
-  AccordionPanel,
-  Box
-} from "@chakra-ui/react";
+import { Box } from "@chakra-ui/react";
 import useTranslation from "next-translate/useTranslation";
 import React from "react";
+
+import {
+  AccordionItem,
+  AccordionItemContent,
+  AccordionItemTrigger,
+} from "@/components/ui/accordion";
 
 import FilterMultiSelectInput, { FilterMultiSelectProps } from "./input";
 
@@ -15,34 +15,29 @@ export default function FilterMultiSelectPanel({
   translateKey = "",
   filterKeyList,
   useIndexFilter,
-  options = null
+  options = null,
 }: FilterMultiSelectProps) {
   const { t } = useTranslation();
   const label = t(translateKey);
 
   return (
-    <AccordionItem>
-      {({ isExpanded }) => (
-        <>
-          <AccordionButton>
-            <Box flex={1} textAlign="left">
-              {label}
-            </Box>
-            <AccordionIcon />
-          </AccordionButton>
-          <AccordionPanel>
-            {isExpanded && (
-              <FilterMultiSelectInput
-                filterKey={filterKey}
-                useIndexFilter={useIndexFilter}
-                filterKeyList={filterKeyList}
-                label={label}
-                options={options}
-              />
-            )}
-          </AccordionPanel>
-        </>
-      )}
+    <AccordionItem value={filterKey} pl={4}>
+      <>
+        <AccordionItemTrigger pr={4}>
+          <Box flex={1} textAlign="left">
+            {label}
+          </Box>
+        </AccordionItemTrigger>
+        <AccordionItemContent>
+          <FilterMultiSelectInput
+            filterKey={filterKey}
+            useIndexFilter={useIndexFilter}
+            filterKeyList={filterKeyList}
+            label={label}
+            options={options}
+          />
+        </AccordionItemContent>
+      </>
     </AccordionItem>
   );
 }

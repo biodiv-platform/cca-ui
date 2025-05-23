@@ -1,15 +1,4 @@
-import {
-  Box,
-  Checkbox,
-  CheckboxGroup,
-  Modal,
-  ModalBody,
-  ModalCloseButton,
-  ModalContent,
-  ModalHeader,
-  ModalOverlay,
-  Stack
-} from "@chakra-ui/react";
+import { Box, CheckboxGroup, Stack } from "@chakra-ui/react";
 import { useLocalRouter } from "@components/@core/local-link";
 import { SubmitButton } from "@components/form/submit-button";
 import useGlobalState from "@hooks/use-global-state";
@@ -20,6 +9,16 @@ import useTranslation from "next-translate/useTranslation";
 import React, { useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 
+import { Checkbox } from "@/components/ui/checkbox";
+import {
+  DialogBackdrop,
+  DialogBody,
+  DialogCloseTrigger,
+  DialogContent,
+  DialogHeader,
+  DialogRoot
+} from "@/components/ui/dialog";
+
 import useUserList from "../../common/use-user-filter";
 
 export default function BulkMapperModal() {
@@ -29,8 +28,6 @@ export default function BulkMapperModal() {
   const { currentGroup } = useGlobalState();
 
   const router = useLocalRouter();
-
-  const checkBoxValue = [];
 
   const projectForm = useForm<any>({});
 
@@ -66,19 +63,24 @@ export default function BulkMapperModal() {
   const actions = [{ id: "bulkRemove", name: `${t("common:bulk_action.title")}` }];
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose}>
-      <ModalOverlay />
-      <ModalContent>
-        <ModalHeader>{t("common:actions.select_actions")}</ModalHeader>
-        <ModalCloseButton />
-        <ModalBody>
+    <DialogRoot open={isOpen} onOpenChange={onClose}>
+      <DialogBackdrop />
+      <DialogContent>
+        <DialogHeader>{t("common:actions.select_actions")}</DialogHeader>
+        <DialogCloseTrigger />
+        <DialogBody>
           <FormProvider {...projectForm}>
             <form className="fade" onSubmit={projectForm.handleSubmit(handleFormSubmit)}>
               <Box mb={"4"}>
-                <CheckboxGroup defaultValue={checkBoxValue} onChange={handleOnChange}>
+                <CheckboxGroup name="userId" onValueChange={handleOnChange}>
                   <Stack>
                     {actions.map(({ id, name }) => (
-                      <Checkbox value={String(id)} alignItems="baseline">
+                      <Checkbox
+                        value={String(id)}
+                        name="userId"
+                        alignItems="baseline"
+                        colorPalette={"blue"}
+                      >
                         {name}
                         {currentGroup?.name}
                       </Checkbox>
@@ -89,8 +91,8 @@ export default function BulkMapperModal() {
               <SubmitButton leftIcon={<CheckIcon />}>{t("common:actions.apply")}</SubmitButton>
             </form>
           </FormProvider>
-        </ModalBody>
-      </ModalContent>
-    </Modal>
+        </DialogBody>
+      </DialogContent>
+    </DialogRoot>
   );
 }

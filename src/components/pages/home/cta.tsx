@@ -9,7 +9,7 @@ import React from "react";
 
 const Feature = (props) => (
   <Box>
-    <props.icon fontSize="4xl" color="blue.500" aria-hidden="true" mb={4} />
+    <props.icon size="2xl" color="teal" aria-hidden="true" mb={4} />
     <chakra.p mb={4} lineHeight="tall" fontSize="lg" color={"gray.500"}>
       {props.children}
     </chakra.p>
@@ -18,7 +18,8 @@ const Feature = (props) => (
         w={{ base: "full", sm: "auto" }}
         onClick={props.onClick}
         size="lg"
-        colorScheme="blue"
+        colorPalette="blue"
+        variant={"solid"}
         as="a"
       >
         {props.actionText}
@@ -32,7 +33,7 @@ export default function CTA() {
 
   return (
     <Container py={12}>
-      <SimpleGrid columns={{ base: 1, md: 2 }} spacingX={20} spacingY={10}>
+      <SimpleGrid columns={{ base: 1, md: 2 }} gapX={20} gapY={10}>
         <Feature
           href="/participate/list"
           actionText={t("home:cta.participate.action")}

@@ -1,6 +1,9 @@
 import SITE_CONFIG from "@configs/site-config";
 import { UserGroupCCAExtended } from "@interfaces/custom";
 
+import packageJson from "../../package.json";
+
+
 export const isBrowser = typeof window !== `undefined`;
 
 const API_ENDPOINT = process.browser
@@ -23,6 +26,8 @@ export const ENDPOINT = {
   USERGROUP: `${API_ENDPOINT}userGroup-api/api`,
   RAW: `${API_ENDPOINT}biodiv`
 };
+
+export const APP_VERSION = packageJson.version;
 
 export const DEFAULT_GROUP: UserGroupCCAExtended = {
   id: null as any,

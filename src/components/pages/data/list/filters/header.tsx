@@ -38,7 +38,7 @@ export function FiltersHeader() {
         <Heading as="h2" fontSize="xl" fontWeight="semibold">
           {t("template:filters")} ({filtersCount})
         </Heading>
-        <Button size="xm" onClick={handleOnClearFilter}>
+        <Button size="xs" onClick={handleOnClearFilter} variant={"subtle"} rounded={"full"} fontWeight={"bold"}>
           {t("common:clear")}
         </Button>
       </Flex>

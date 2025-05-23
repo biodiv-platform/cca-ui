@@ -1,26 +1,28 @@
-import { ArrowForwardIcon } from "@chakra-ui/icons";
-import { Button, Center, Heading, Link, Text } from "@chakra-ui/react";
+import { Button, Center, Heading, Text } from "@chakra-ui/react";
 import BlurBox from "@components/@core/blur-box";
 import LocalLink from "@components/@core/local-link";
 import { RESOURCE_SIZE } from "@static/constants";
 import { getNextResourceThumbnail, RESOURCE_CTX } from "@utils/media";
 import useTranslation from "next-translate/useTranslation";
 import React, { useMemo } from "react";
+import { LuMoveRight } from "react-icons/lu";
 
 const ReadMore = ({ resource, readMoreButtonText, readMoreUIType }) => {
   return resource.moreLinks && readMoreUIType == "button" ? (
-    <Button colorScheme="teal" variant="solid" size="lg" fontSize="xl">
+    <Button colorPalette="blue" variant="solid" size="lg" fontSize="xl">
       <LocalLink href={resource.moreLinks}>
-        <Link>
-          {readMoreButtonText} <ArrowForwardIcon />
-        </Link>
+        <a
+          style={{ display: "inline-flex", alignItems: "center", gap: "4px", whiteSpace: "nowrap" }}
+        >
+          {readMoreButtonText} <LuMoveRight />
+        </a>
       </LocalLink>
     </Button>
   ) : (
     <LocalLink href={resource.moreLinks}>
-      <Link>
-        {readMoreButtonText} <ArrowForwardIcon />
-      </Link>
+      <a style={{ display: "inline-flex", alignItems: "center", gap: "4px", whiteSpace: "nowrap" }}>
+        {readMoreButtonText} <LuMoveRight />
+      </a>
     </LocalLink>
   );
 };

@@ -1,11 +1,4 @@
-import {
-  FormControl,
-  FormErrorMessage,
-  FormHelperText,
-  Input,
-  InputGroup,
-  InputRightElement
-} from "@chakra-ui/react";
+import { Input } from "@chakra-ui/react";
 import CalendarIcon from "@icons/calendar";
 import { parseToDateObject } from "@utils/date";
 import { namedFormErrorMessage } from "@utils/field";
@@ -13,6 +6,8 @@ import React from "react";
 import DatePicker from "react-datepicker";
 import { useController } from "react-hook-form";
 
+import { Field } from "../ui/field";
+import { InputGroup } from "../ui/input-group";
 import { FormLabel } from "./common";
 
 interface IDatePickerBoxProps {
@@ -47,6 +42,7 @@ export const DateRangePickerField = ({
   hasMaxDate = true,
   isLargeVariant,
   isClearable,
+  isRequired,
   min,
   max,
   ...props
@@ -55,15 +51,27 @@ export const DateRangePickerField = ({
   const maxDate = hasMaxDate ? new Date().setHours(23, 59, 59, 999) : null; // End of Day
 
   return (
-    <FormControl isInvalid={!!fieldState.error} mb={mb} {...props}>
+    <Field
+      invalid={!!fieldState.error}
+      mb={mb}
+      errorText={namedFormErrorMessage(fieldState?.error?.message, name, title)}
+      {...props}
+    >
       <FormLabel
         isLargeVariant={isLargeVariant}
         title={title}
         label={label}
         name={name}
         helpText={helpText}
+        required={isRequired}
       />
-      <InputGroup>
+      <InputGroup
+        endElement={
+          <label htmlFor={name} style={{ cursor: "pointer" }}>
+            <CalendarIcon color="gray.300" />
+          </label>
+        }
+      >
         <DatePicker
           id={name}
           selectsRange={true}
@@ -78,14 +86,8 @@ export const DateRangePickerField = ({
           isClearable={isClearable}
           {...props}
         />
-        <InputRightElement hidden={isClearable}>
-          <label htmlFor={name} style={{ cursor: "pointer" }}>
-            <CalendarIcon color="gray.300" />
-          </label>
-        </InputRightElement>
       </InputGroup>
-      <FormErrorMessage children={namedFormErrorMessage(fieldState?.error?.message, name, title)} />
-      {hint && <FormHelperText color="gray.600">{hint}</FormHelperText>}
-    </FormControl>
+      {hint && <Field color="gray.600" helperText={hint} />}
+    </Field>
   );
 };

@@ -1,4 +1,3 @@
-import { ArrowForwardIcon } from "@chakra-ui/icons";
 import { ResponsiveContainer } from "@components/@core/basic-table";
 import BlueLink from "@components/@core/blue-link";
 import LocalLink from "@components/@core/local-link";
@@ -7,6 +6,7 @@ import { timeAgoUTC } from "@utils/date";
 import { findTitleFromHeader } from "@utils/field";
 import React, { useEffect, useState } from "react";
 import DataTable from "react-data-table-component";
+import { LuMoveRight } from "react-icons/lu";
 
 const userParticipationColumns = [
   {
@@ -31,7 +31,7 @@ const userParticipationColumns = [
     cell: ({ id }) => (
       <LocalLink href={`/data/show/${id}`} prefixGroup={true}>
         <BlueLink>
-          View <ArrowForwardIcon />
+          View <LuMoveRight />
         </BlueLink>
       </LocalLink>
     )

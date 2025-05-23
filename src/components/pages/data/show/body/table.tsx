@@ -1,4 +1,4 @@
-import { Box, Table, Tbody, Td, Tr } from "@chakra-ui/react";
+import { Box, Table } from "@chakra-ui/react";
 import { renderSimpleValue } from "@utils/field";
 import React, { useMemo } from "react";
 
@@ -42,16 +42,16 @@ export default function ShowTable({ data, title }) {
       >
         {title}
       </Box>
-      <Table variant="striped">
-        <Tbody>
+      <Table.Root variant="line" striped >
+        <Table.Body>
           {tableData.map(({ label, value }) => (
-            <Tr key={label}>
-              <Td>{label}</Td>
-              <Td dangerouslySetInnerHTML={{ __html: value }}></Td>
-            </Tr>
+            <Table.Row key={label}>
+              <Table.Cell>{label}</Table.Cell>
+              <Table.Cell dangerouslySetInnerHTML={{ __html: value }}></Table.Cell>
+            </Table.Row>
           ))}
-        </Tbody>
-      </Table>
+        </Table.Body>
+      </Table.Root>
     </Box>
   );
 }

@@ -1,9 +1,10 @@
-import { FormControl, FormErrorMessage, FormHelperText } from "@chakra-ui/react";
+import { Box } from "@chakra-ui/react";
 import { namedFormErrorMessage } from "@utils/field";
 import React from "react";
 import { useController } from "react-hook-form";
 import Select, { components } from "react-select";
 
+import { Field } from "../ui/field";
 import { FormLabel, OthersInput } from "./common";
 import { selectStyles } from "./configs";
 
@@ -51,12 +52,13 @@ export const SelectMultipleInputField = ({
   const initialValue = options.filter((v) => (field.value || []).includes(v.value));
 
   return (
-    <FormControl
-      isInvalid={!!fieldState.error}
+    <Field
+      invalid={!!fieldState.error}
+      errorText={namedFormErrorMessage(fieldState?.error?.message, name, title)}
       className="dropdown"
       aria-invalid={fieldState.invalid}
       mb={mb}
-      isRequired={isRequired}
+      required={isRequired}
       {...props}
     >
       <FormLabel
@@ -65,30 +67,32 @@ export const SelectMultipleInputField = ({
         label={label}
         name={name}
         helpText={helpText}
+        required={isRequired}
       />
-      <Select
-        id={name}
-        instanceId={name}
-        inputId={name}
-        onChange={(o) => field.onChange(o ? o.map(({ value }) => value) : [])}
-        onBlur={field.onBlur}
-        options={options}
-        components={{
-          Option: optionComponent
-        }}
-        defaultValue={initialValue}
-        isSearchable={true}
-        isMulti={true}
-        isClearable={isClearable}
-        isDisabled={disabled}
-        styles={selectStyles}
-        ref={selectRef}
-      />
+      <Box width={"full"}>
+        <Select
+          id={name}
+          instanceId={name}
+          inputId={name}
+          onChange={(o) => field.onChange(o ? o.map(({ value }) => value) : [])}
+          onBlur={field.onBlur}
+          options={options}
+          components={{
+            Option: optionComponent
+          }}
+          defaultValue={initialValue}
+          isSearchable={true}
+          isMulti={true}
+          isClearable={isClearable}
+          isDisabled={disabled}
+          styles={selectStyles}
+          ref={selectRef}
+        />
+      </Box>
 
       {isOthers && <OthersInput name={name} value={field.value} />}
 
-      <FormErrorMessage children={namedFormErrorMessage(fieldState?.error?.message, name, title)} />
-      {hint && <FormHelperText color="gray.600">{hint}</FormHelperText>}
-    </FormControl>
+      {hint && <Field color="gray.600" helperText={hint} />}
+    </Field>
   );
 };

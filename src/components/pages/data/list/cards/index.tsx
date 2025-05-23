@@ -1,4 +1,4 @@
-import { Box, Flex, Image, List, ListItem } from "@chakra-ui/react";
+import { Box, Flex, Image, List } from "@chakra-ui/react";
 import Loading from "@components/@core/loading";
 import LocalLink from "@components/@core/local-link";
 import { renderSimpleValue } from "@utils/field";
@@ -15,7 +15,6 @@ export const Card = ({ response, isTruncated }) => {
     <LocalLink href={`/data/show/${response.id}`} prefixGroup={true}>
       <Box
         as="a"
-        target="_blank"
         p={4}
         key={response.id}
         borderBottom="1px solid"
@@ -28,10 +27,10 @@ export const Card = ({ response, isTruncated }) => {
             <Box fontSize="lg" fontWeight="bold" mb={2}>
               {response.titlesValues.map((field) => field.value).toString()}
             </Box>
-            <List spacing={1}>
+            <List.Root gap={1} variant="plain">
               {response.values.map((field, index) => (
-                <ListItem key={index} lineHeight={1.2}>
-                  <Box noOfLines={isTruncated ? 1 : undefined}>
+                <List.Item key={index} lineHeight={1.2}>
+                  <Box maxLines={isTruncated ? 1 : undefined}>
                     <Box as="span" fontWeight="semibold" mr={1}>
                       {field.name}:
                     </Box>
@@ -41,9 +40,9 @@ export const Card = ({ response, isTruncated }) => {
                       }}
                     />
                   </Box>
-                </ListItem>
+                </List.Item>
               ))}
-            </List>
+            </List.Root>
           </Box>
           {thumb && <Image boxSize="64px" src={thumb} borderRadius="md" ml={4} flexShrink={0} />}
         </Flex>

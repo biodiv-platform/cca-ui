@@ -1,8 +1,8 @@
-import { ArrowForwardIcon } from "@chakra-ui/icons";
 import { Badge, Box, Button, Flex } from "@chakra-ui/react";
 import LocalLink from "@components/@core/local-link";
 import useTranslation from "next-translate/useTranslation";
 import React from "react";
+import { LuMoveRight } from "react-icons/lu";
 
 export default function ParticipateCard({ template }) {
   const { t } = useTranslation();
@@ -20,25 +20,25 @@ export default function ParticipateCard({ template }) {
         >
           {template.shortName}
         </Box>
-        <Badge borderRadius="full" px={2} colorScheme="blue" variant="outline">
+        <Badge borderRadius="full" px={2} colorPalette="blue" variant="outline">
           {template.platform.join("/")}
         </Badge>
       </Flex>
-      <Box fontWeight="bold" as="h4" lineHeight="tight" noOfLines={1}>
+      <Box fontWeight="bold" as="h4" lineHeight="tight" lineClamp={1}>
         {template.name}
       </Box>
-      <Box mb={4} title={template.description} noOfLines={1}>
+      <Box mb={4} title={template.description} lineClamp={1}>
         {template.description}
       </Box>
       <LocalLink href={`/participate/${template.templateId}`} prefixGroup={true}>
         <Button
           as="a"
-          colorScheme="blue"
+          colorPalette="blue"
           boxShadow={"0 5px 20px 0px var(--chakra-colors-blue-100)"}
           size="sm"
-          rightIcon={<ArrowForwardIcon />}
         >
           {t("template:participate")}
+          <LuMoveRight />
         </Button>
       </LocalLink>
     </Box>

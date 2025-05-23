@@ -1,16 +1,10 @@
-import {
-  Box,
-  Checkbox,
-  CheckboxGroup,
-  FormControl,
-  FormErrorMessage,
-  FormHelperText,
-  Stack
-} from "@chakra-ui/react";
+import { Box, CheckboxGroup, Stack } from "@chakra-ui/react";
 import { namedFormErrorMessage, optionLabelShow } from "@utils/field";
 import React from "react";
 import { useController } from "react-hook-form";
 
+import { Checkbox } from "../ui/checkbox";
+import { Field } from "../ui/field";
 import { FormLabel, OthersInput } from "./common";
 
 interface ICheckboxListProps {
@@ -26,6 +20,7 @@ interface ICheckboxListProps {
   hint?: string;
   isLargeVariant?;
   isOthers?: boolean;
+  isRequired?: boolean;
 }
 
 export const CheckboxListField = ({
@@ -40,6 +35,7 @@ export const CheckboxListField = ({
   disabled,
   isLargeVariant,
   isOthers,
+  isRequired,
   ...props
 }: ICheckboxListProps) => {
   const {
@@ -49,16 +45,26 @@ export const CheckboxListField = ({
 
   return (
     <Box mb={mb}>
-      <FormControl isInvalid={!!fieldState.error} {...props}>
+      <Field
+        invalid={!!fieldState.error}
+        {...props}
+        errorText={namedFormErrorMessage(fieldState?.error?.message, name, title)}
+      >
         <FormLabel
           isLargeVariant={isLargeVariant}
           title={title}
           label={label}
           name={name}
           helpText={helpText}
+          required={isRequired}
         />
-      </FormControl>
-      <CheckboxGroup defaultValue={value} onChange={onChange} isDisabled={disabled}>
+      </Field>
+      <CheckboxGroup
+        defaultValue={value}
+        onChange={onChange}
+        isDisabled={disabled}
+        colorPalette={"blue"}
+      >
         <Stack id={name}>
           {options.map((option) => (
             <Checkbox key={option.value} disabled={option?.isDisabled} value={option.value}>
@@ -70,8 +76,7 @@ export const CheckboxListField = ({
 
       {isOthers && <OthersInput name={name} value={value} />}
 
-      <FormErrorMessage children={namedFormErrorMessage(fieldState?.error?.message, name, title)} />
-      {hint && <FormHelperText color="gray.600">{hint}</FormHelperText>}
+      {hint && <Field color="gray.600" helperText={hint} />}
     </Box>
   );
 };

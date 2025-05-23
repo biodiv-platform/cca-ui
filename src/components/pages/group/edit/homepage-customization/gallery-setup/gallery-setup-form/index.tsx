@@ -1,4 +1,3 @@
-import { ArrowBackIcon } from "@chakra-ui/icons";
 import { Box, Button } from "@chakra-ui/react";
 import { CheckboxField } from "@components/form/checkbox";
 import { SubmitButton } from "@components/form/submit-button";
@@ -8,6 +7,7 @@ import useGlobalState from "@hooks/use-global-state";
 import useTranslation from "next-translate/useTranslation";
 import React, { useEffect, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
+import { LuMoveLeft } from "react-icons/lu";
 
 import { galleryFieldValidationSchema } from "./common";
 import NewResourceForm from "./new-resource-form";
@@ -56,12 +56,8 @@ export default function GallerySetupFrom({ setIsCreate, galleryList, setGalleryL
     <FormProvider {...hForm}>
       <form onSubmit={hForm.handleSubmit(handleFormSubmit)}>
         <Box display="flex" justifyContent="space-between" alignItems="center">
-          <Button
-            m={3}
-            type="button"
-            onClick={() => setIsCreate(false)}
-            leftIcon={<ArrowBackIcon />}
-          >
+          <Button m={3} type="button" onClick={() => setIsCreate(false)} variant={"subtle"}>
+            <LuMoveLeft />
             {t("group:homepage_customization.back")}
           </Button>
         </Box>

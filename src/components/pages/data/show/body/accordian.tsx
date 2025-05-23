@@ -1,14 +1,14 @@
-import {
-  Accordion,
-  AccordionButton,
-  AccordionIcon,
-  AccordionItem,
-  AccordionPanel,
-  Box
-} from "@chakra-ui/react";
+import { Box } from "@chakra-ui/react";
 import { FORM_TYPE } from "@static/constants";
 import useTranslation from "next-translate/useTranslation";
 import React, { useMemo } from "react";
+
+import {
+  AccordionItem,
+  AccordionItemContent,
+  AccordionItemTrigger,
+  AccordionRoot
+} from "@/components/ui/accordion";
 
 import FieldShow from "../../edit/field-show";
 import useTemplateResponseShow from "../use-template-response-show";
@@ -16,19 +16,20 @@ import useTemplateResponseShow from "../use-template-response-show";
 export default function ShowAccordian({ data }) {
   const { response } = useTemplateResponseShow();
   const { t } = useTranslation();
-  const defaultIndex = useMemo(
+
+  const defaultValues = useMemo(
     () =>
       data
-        .map((f, idx) =>
-          f.type === FORM_TYPE.GEOMETRY || response?.ccaFieldValues?.[f.fieldId]?.value ? idx : null
+        .filter(
+          (f) => f.type === FORM_TYPE.GEOMETRY || response?.ccaFieldValues?.[f.fieldId]?.value
         )
-        .filter((i) => i !== null),
+        .map((f) => f.fieldId), // Extract only fieldId
     [data, response]
   );
 
   return (
     <Box>
-      <Accordion allowMultiple={true} defaultIndex={defaultIndex} mt={"-1px"}>
+      <AccordionRoot multiple={true} defaultValue={defaultValues} mt={"-1px"}>
         {data.map((field) => {
           const isEmpty = !response?.ccaFieldValues?.[field.fieldId]?.value;
 
@@ -40,9 +41,10 @@ export default function ShowAccordian({ data }) {
               borderRadius="md"
               border="1px solid var(--chakra-colors-gray-300)"
               shadow="sm"
+              value={field.fieldId}
             >
               <h3>
-                <AccordionButton
+                <AccordionItemTrigger
                   px={4}
                   py={3}
                   _hover={{ bg: "gray.100" }}
@@ -51,16 +53,15 @@ export default function ShowAccordian({ data }) {
                   <Box flex="1" textAlign="left">
                     {field.name} <i>{isEmpty && `(${t("common:no_data")})`}</i>
                   </Box>
-                  <AccordionIcon className="no-print" />
-                </AccordionButton>
+                </AccordionItemTrigger>
               </h3>
-              <AccordionPanel bg="white" pb={4}>
+              <AccordionItemContent bg="white" p={4}>
                 {isEmpty ? t("common:no_data") : <FieldShow field={field} response={response} />}
-              </AccordionPanel>
+              </AccordionItemContent>
             </AccordionItem>
           );
         })}
-      </Accordion>
+      </AccordionRoot>
     </Box>
   );
 }

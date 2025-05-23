@@ -1,7 +1,7 @@
-import { ChevronDownIcon, ChevronUpIcon } from "@chakra-ui/icons";
 import { Box, chakra, IconButton, Stack, useDisclosure } from "@chakra-ui/react";
 import LocalLink from "@components/@core/local-link";
 import React from "react";
+import { LuChevronDown, LuChevronUp } from "react-icons/lu";
 
 function LinkLayout({ isActive, children }) {
   return (
@@ -46,10 +46,10 @@ const LinkChildren = ({ page, currentPageId, linkType }) => {
 
 export const LinkParent = ({ page, currentPageId, linkType }) => {
   const isActive = currentPageId === page.id;
-  const { isOpen, onToggle } = useDisclosure({ defaultIsOpen: true });
+  const { open, onToggle } = useDisclosure({ defaultOpen: true });
 
   return (
-    <Stack spacing={2}>
+    <Stack gap={2}>
       <LinkLayout isActive={isActive}>
         <LocalLink prefixGroup={true} href={`/page/${linkType}/${page.id}`}>
           <chakra.a
@@ -63,16 +63,12 @@ export const LinkParent = ({ page, currentPageId, linkType }) => {
           </chakra.a>
         </LocalLink>
         {page.children.length > 0 && (
-          <IconButton
-            variant="none"
-            flexShrink={0}
-            aria-label="Toggle Sub Pages"
-            onClick={onToggle}
-            icon={isOpen ? <ChevronUpIcon /> : <ChevronDownIcon />}
-          />
+          <IconButton flexShrink={0} aria-label="Toggle Sub Pages" onClick={onToggle} variant={"plain"}>
+            {open ? <LuChevronUp /> : <LuChevronDown />}
+          </IconButton>
         )}
       </LinkLayout>
-      {isOpen &&
+      {open &&
         page?.children?.map((page) => (
           <LinkChildren
             page={page}

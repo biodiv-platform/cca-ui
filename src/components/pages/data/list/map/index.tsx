@@ -1,6 +1,6 @@
 import "mapbox-gl/dist/mapbox-gl.css";
 
-import { Box, useToast } from "@chakra-ui/react";
+import { Box } from "@chakra-ui/react";
 import ExternalBlueLink from "@components/@core/blue-link/external";
 import SITE_CONFIG from "@configs/site-config";
 import useGlobalState from "@hooks/use-global-state";
@@ -23,10 +23,11 @@ const NakshaMapboxList: any = dynamic(
   }
 );
 
+import { toaster } from "@/components/ui/toaster";
+
 export default function Map() {
   const { t, lang } = useTranslation();
   const { user } = useGlobalState();
-  const toast = useToast();
   const isAdmin = hasAccess([Role.Admin]);
 
   const { addFilter, filter, map } = useResponseList();
@@ -36,7 +37,7 @@ export default function Map() {
 
   const handleOnDownload = async (layerId) => {
     console.debug(`Layer download requested ${layerId}`);
-    toast({
+    toaster.create({
       title: t("common:success"),
       description: (
         <div>
@@ -46,10 +47,10 @@ export default function Map() {
           </ExternalBlueLink>
         </div>
       ),
-      variant: "left-accent",
-      status: "success",
-      duration: 9000,
-      isClosable: true
+      // variant: "left-accent",
+      type: "success",
+      duration: 9000
+      // closable: true
     });
   };
 

@@ -1,11 +1,4 @@
-import {
-  CloseButton,
-  FormControl,
-  FormErrorMessage,
-  FormHelperText,
-  FormLabel,
-  Image
-} from "@chakra-ui/react";
+import { Box, CloseButton, Image } from "@chakra-ui/react";
 import { axUploadUserGroupResource } from "@services/files.service";
 import { resizeImage } from "@utils/image";
 import { getNextResourceThumbnail, RESOURCE_CTX } from "@utils/media";
@@ -14,6 +7,8 @@ import useTranslation from "next-translate/useTranslation";
 import React, { useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { useController, useFormContext } from "react-hook-form";
+
+import { Field } from "@/components/ui/field";
 
 import { Container, ITPageGalleryFieldProps } from "./gallery-field";
 
@@ -64,14 +59,15 @@ export const SocialPreviewField = ({
   };
 
   return (
-    <FormControl
-      isInvalid={!!formState.errors[name]}
+    <Field
+      invalid={!!formState.errors[name]}
+      errorText={formState?.errors?.[name]?.message?.toString()}
       mb={mb}
       hidden={hidden}
-      isRequired={isRequired}
+      required={isRequired}
       {...props}
     >
-      {label && <FormLabel htmlFor={name}>{label}</FormLabel>}
+      {label && <Field htmlFor={name} label={label} />}
 
       {/* Dropzone */}
       <div id={name}>
@@ -81,7 +77,7 @@ export const SocialPreviewField = ({
         >
           <input {...getInputProps()} />
           {field.value ? (
-            <div>
+            <Box maxW={"180px"}>
               <Image
                 src={getNextResourceThumbnail(RESOURCE_CTX.PAGES, field.value, "?h=200")}
                 alt={field.value}
@@ -90,7 +86,7 @@ export const SocialPreviewField = ({
                 borderRadius="md"
               />
               <CloseButton top={0} right={0} position="absolute" onClick={handleOnRemove} />
-            </div>
+            </Box>
           ) : isProcessing ? (
             <p>{t("common:loading")}</p>
           ) : (
@@ -106,8 +102,7 @@ export const SocialPreviewField = ({
         </Container>
       </div>
 
-      <FormErrorMessage children={formState?.errors?.[name]?.message?.toString()} />
-      {hint && <FormHelperText color="gray.600">{hint}</FormHelperText>}
-    </FormControl>
+      {hint && <Field color="gray.600" helperText={hint}></Field>}
+    </Field>
   );
 };

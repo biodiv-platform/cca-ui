@@ -9,7 +9,6 @@ import Footer from "@components/@core/footer";
 import NavBar from "@components/@core/navbar";
 import NavigationMenuLight from "@components/@core/navigation-menu/light";
 import SITE_CONFIG from "@configs/site-config";
-import { customTheme } from "@configs/theme";
 import { GlobalStateProvider } from "@hooks/use-global-state";
 import { axGroupList } from "@services/app.service";
 import { getParsedUser } from "@utils/auth";
@@ -18,6 +17,8 @@ import App from "next/app";
 import Router, { useRouter } from "next/router";
 import NProgress from "nprogress";
 import React from "react";
+
+import { customTheme } from "@/configs/theme";
 
 Router.events.on("routeChangeStart", () => NProgress.start());
 Router.events.on("routeChangeComplete", () => NProgress.done());
@@ -28,9 +29,9 @@ function MainApp({ Component, pageProps, user, groups, currentGroup, languageId 
   const router = useRouter();
 
   return (
-    <GlobalStateProvider initialState={{ user, groups, currentGroup, languageId }}>
-      <Metadata />
-      <ChakraProvider theme={customTheme}>
+    <ChakraProvider value={customTheme}>
+      <GlobalStateProvider initialState={{ user, groups, currentGroup, languageId }}>
+        <Metadata />
         <div className="content">
           {config.header && (
             <>
@@ -44,8 +45,8 @@ function MainApp({ Component, pageProps, user, groups, currentGroup, languageId 
         </Box>
         {config?.footer && router.pathname != "/data/list" && <Footer />}
         <AuthWall />
-      </ChakraProvider>
-    </GlobalStateProvider>
+      </GlobalStateProvider>
+    </ChakraProvider>
   );
 }
 

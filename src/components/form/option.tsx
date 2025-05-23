@@ -1,12 +1,4 @@
-import {
-  Button,
-  FormControl,
-  FormErrorMessage,
-  FormHelperText,
-  GridItem,
-  Input,
-  SimpleGrid
-} from "@chakra-ui/react";
+import { Button, GridItem, Input, SimpleGrid } from "@chakra-ui/react";
 import AddIcon from "@icons/add";
 import DeleteIcon from "@icons/delete";
 import { nanoid } from "nanoid";
@@ -14,6 +6,7 @@ import useTranslation from "next-translate/useTranslation";
 import React from "react";
 import { useFieldArray, useFormContext } from "react-hook-form";
 
+import { Field } from "../ui/field";
 import { FormLabel } from "./common";
 
 interface IOptionsProps {
@@ -57,11 +50,11 @@ export const OptionsField = ({
   };
 
   return (
-    <FormControl
-      isInvalid={!!formState?.errors?.[name]?.message}
+    <Field
+      invalid={!!formState?.errors?.[name]?.message}
       mb={mb}
       hidden={hidden}
-      isRequired={isRequired}
+      required={isRequired}
       id={name}
       {...props}
     >
@@ -71,17 +64,18 @@ export const OptionsField = ({
         label={label}
         name={name}
         helpText={helpText}
+        required={isRequired}
       />
       <div>
         {fields.map((field, index) => (
-          <SimpleGrid spacing={4} columns={7} key={field.id} mb={4}>
+          <SimpleGrid gap={4} columns={7} key={field.id} mb={4}>
             <GridItem colSpan={3}>
               <Input
                 {...register(`${name}.${index}.label`)}
                 placeholder={t("form:options.label")}
                 bg="white"
               />
-              <FormErrorMessage children={!!formState.errors[`${name}.${index}.label`]} />
+              <Field errorText={!!formState.errors[`${name}.${index}.label`]} />
             </GridItem>
             <GridItem colSpan={3}>
               <Input
@@ -90,31 +84,26 @@ export const OptionsField = ({
                 disabled={disableValues}
                 bg="white"
               />
-              <FormErrorMessage children={!!formState.errors[`${name}.${index}.value`]} />
+              <Field errorText={!!formState.errors[`${name}.${index}.value`]} />
             </GridItem>
             <Button
-              colorScheme="red"
+              colorPalette="red"
               type="button"
               onClick={() => remove(index)}
               disabled={disableValues}
-              leftIcon={<DeleteIcon />}
             >
+              <DeleteIcon />
               {t("common:delete")}
             </Button>
           </SimpleGrid>
         ))}
-        <Button
-          colorScheme="green"
-          leftIcon={<AddIcon />}
-          type="button"
-          onClick={add}
-          disabled={disableValues}
-        >
+        <Button colorPalette="green" type="button" onClick={add} disabled={disableValues}>
+          <AddIcon />
           {t("common:add")}
         </Button>
       </div>
-      <FormErrorMessage children={formState?.errors?.[name]?.message?.toString()} />
-      {hint && <FormHelperText color="gray.600">{hint}</FormHelperText>}
-    </FormControl>
+      <Field errorText={formState?.errors?.[name]?.message?.toString()} />
+      {hint && <Field color="gray.600" helperText={hint} />}
+    </Field>
   );
 };

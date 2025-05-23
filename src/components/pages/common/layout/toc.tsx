@@ -36,7 +36,7 @@ export default function ToC({ templateFields, isEdit }) {
         <Text textTransform={"uppercase"} fontWeight={700} fontSize={"sm"} letterSpacing={1}>
           {t("common:navigation")}
         </Text>
-        <Stack spacing={1}>
+        <Stack gap={1}>
           {headings.map((heading, index) => (
             <NavigationLink
               key={index}

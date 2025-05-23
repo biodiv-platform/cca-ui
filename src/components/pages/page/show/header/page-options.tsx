@@ -51,13 +51,13 @@ export function PageOptions({ title, pageId }) {
                   icon={<AddIcon />}
                   title={t("page:create.title")}
                   onClick={handleOnCreate}
-                  colorScheme="yellow"
+                  colorPalette="yellow"
                 />
                 <SimpleActionButton
                   icon={<EditIcon />}
                   title={t("common:edit")}
                   onClick={handleOnEdit}
-                  colorScheme="teal"
+                  colorPalette="teal"
                 />
                 <DeleteActionButton
                   observationId={pageId}

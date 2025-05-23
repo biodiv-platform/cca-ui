@@ -1,4 +1,4 @@
-import { IconButton } from "@chakra-ui/button";
+import { IconButton } from "@chakra-ui/react";
 import PageHeading from "@components/@core/page-heading";
 import DeleteIcon from "@icons/delete";
 import UsersIcon from "@icons/users";
@@ -31,25 +31,27 @@ export function ShowHeader() {
     <PageHeading title={`${template.name} (${template.shortName})`} icon="📄">
       {canEditEditors && (
         <IconButton
-          isRound={true}
+          rounded={"full"}
           variant="ghost"
-          colorScheme="red"
-          icon={<DeleteIcon />}
+          colorPalette="red"
           aria-label={t("common:delete")}
           title={t("common:delete")}
           onClick={handleOnDelete}
-        />
+        >
+          <DeleteIcon />
+        </IconButton>
       )}
       {canEditEditors && (
         <IconButton
-          isRound={true}
+          rounded={"full"}
           variant="ghost"
-          colorScheme="blue"
-          icon={<UsersIcon />}
+          colorPalette="blue"
           aria-label={t("user:permissions")}
           title={t("user:permissions")}
           onClick={() => setIsEdit(true)}
-        />
+        >
+          <UsersIcon />
+        </IconButton>
       )}
     </PageHeading>
   );

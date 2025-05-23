@@ -10,12 +10,12 @@ import useTemplateResponseEdit from "./use-template-response-edit";
 
 export const FieldEditContainer = ({ field }) => {
   const { t } = useTranslation();
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  const { open, onOpen, onClose } = useDisclosure();
   const { canEdit, response } = useTemplateResponseEdit();
 
   return (
-    <Box mb={4} _hover={isOpen ? {} : { background: "gray.100" }}>
-      {isOpen ? (
+    <Box mb={4} _hover={open ? {} : { background: "gray.100" }}>
+      {open ? (
         <FieldEditor field={field} onClose={onClose} />
       ) : (
         <>
@@ -25,13 +25,14 @@ export const FieldEditContainer = ({ field }) => {
             {canEdit && (
               <IconButton
                 alignItems="center"
-                colorScheme="blue"
+                colorPalette="blue"
                 aria-label={t("form:edit")}
                 title={t("form:edit")}
                 onClick={onOpen}
-                icon={<EditIcon />}
-                variant="link"
-              />
+                variant="plain"
+              >
+                <EditIcon />
+              </IconButton>
             )}
           </Box>
           <FieldShow field={field} response={response} />

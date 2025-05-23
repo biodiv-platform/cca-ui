@@ -1,16 +1,16 @@
-import {
-  Accordion,
-  AccordionButton,
-  AccordionIcon,
-  AccordionItem,
-  AccordionPanel,
-  chakra
-} from "@chakra-ui/react";
+import { chakra } from "@chakra-ui/react";
 import { Container } from "@components/@core/container";
 import Sidebar from "@components/pages/common/layout/sidebar";
 import { FORM_TYPE } from "@static/constants";
 import { flattenFields, splitIntoGroups } from "@utils/field";
 import React, { useMemo } from "react";
+
+import {
+  AccordionItem,
+  AccordionItemContent,
+  AccordionItemTrigger,
+  AccordionRoot
+} from "@/components/ui/accordion";
 
 import { FieldEditContainer } from "./field-edit-container";
 import PermissionEdit from "./permission-edit";
@@ -27,7 +27,7 @@ export default function ResponseEditPageComponent() {
 
     const _templateGroups = splitIntoGroups(_flattenFields);
 
-    const _selectedAccordians = new Array(_templateGroups.length).fill(0).map((_, i) => i);
+    const _selectedAccordians = _templateGroups.map((group) => group.heading?.fieldId || "unknown");
 
     return [_templateFields, _templateGroups, _selectedAccordians];
   }, [template]);
@@ -37,7 +37,7 @@ export default function ResponseEditPageComponent() {
       <ShowHeader />
       {canEditEditors && isEdit && <PermissionEdit />}
       <Sidebar fields={templateFields} isEdit={true}>
-        <Accordion defaultIndex={selectedAccordians} allowMultiple>
+        <AccordionRoot multiple defaultValue={selectedAccordians}>
           {templateGroups.map(({ heading, fields }) => (
             <AccordionItem
               key={heading.fieldId}
@@ -46,8 +46,12 @@ export default function ResponseEditPageComponent() {
               borderRadius="md"
               bg="white"
               shadow="sm"
+              value={heading.fieldId}
             >
-              <AccordionButton _expanded={{ borderBottom: "1px", borderColor: "gray.300" }}>
+              <AccordionItemTrigger
+                _expanded={{ borderBottom: "1px", borderColor: "gray.300" }}
+                p={4}
+              >
                 <chakra.h2
                   flex="1"
                   textAlign="left"
@@ -58,16 +62,15 @@ export default function ResponseEditPageComponent() {
                 >
                   {heading.name}
                 </chakra.h2>
-                <AccordionIcon />
-              </AccordionButton>
-              <AccordionPanel pb={4}>
+              </AccordionItemTrigger>
+              <AccordionItemContent p={4}>
                 {fields.map((field) => (
                   <FieldEditContainer field={field} key={field.fieldId} />
                 ))}
-              </AccordionPanel>
+              </AccordionItemContent>
             </AccordionItem>
           ))}
-        </Accordion>
+        </AccordionRoot>
       </Sidebar>
     </Container>
   );

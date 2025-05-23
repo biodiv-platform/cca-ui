@@ -1,9 +1,9 @@
-import { FormControl, FormErrorMessage, FormHelperText } from "@chakra-ui/react";
 import WYSIWYGEditor from "@components/@core/wysiwyg-editor";
 import { namedFormErrorMessage } from "@utils/field";
 import React from "react";
 import { useController } from "react-hook-form";
 
+import { Field } from "../ui/field";
 import { FormLabel } from "./common";
 
 interface IWYSIWYGFieldProps {
@@ -18,6 +18,7 @@ interface IWYSIWYGFieldProps {
   uploadHandler?;
   fileUploadHandler?;
   isLargeVariant?;
+  isRequired?;
 }
 
 const WYSIWYGField = ({
@@ -31,18 +32,25 @@ const WYSIWYGField = ({
   uploadHandler,
   fileUploadHandler,
   isLargeVariant,
+  isRequired,
   ...props
 }: IWYSIWYGFieldProps) => {
   const { field, fieldState } = useController({ name });
 
   return (
-    <FormControl isInvalid={!!fieldState.error} mb={mb} {...props}>
+    <Field
+      invalid={!!fieldState.error}
+      errorText={namedFormErrorMessage(fieldState?.error?.message, name, title)}
+      mb={mb}
+      {...props}
+    >
       <FormLabel
         isLargeVariant={isLargeVariant}
         title={title}
         label={label}
         name={name}
         helpText={helpText}
+        required={isRequired}
       />
       <WYSIWYGEditor
         name={name}
@@ -57,9 +65,8 @@ const WYSIWYGField = ({
         {label}
       </WYSIWYGEditor>
 
-      <FormErrorMessage children={namedFormErrorMessage(fieldState?.error?.message, name, title)} />
-      {hint && <FormHelperText color="gray.600">{hint}</FormHelperText>}
-    </FormControl>
+      {hint && <Field color="gray.600" helperText={hint} />}
+    </Field>
   );
 };
 

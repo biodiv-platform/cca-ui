@@ -1,6 +1,6 @@
 import "react-sortable-tree/style.css";
 
-import { IconButton, Tooltip } from "@chakra-ui/react";
+import { IconButton } from "@chakra-ui/react";
 import styled from "@emotion/styled";
 import CalendarIcon from "@icons/calendar";
 import DeleteIcon from "@icons/delete";
@@ -20,6 +20,8 @@ import { FORM_TYPE } from "@static/constants";
 import useTranslation from "next-translate/useTranslation";
 import React from "react";
 import SortableTree from "react-sortable-tree";
+
+import { Tooltip } from "@/components/ui/tooltip";
 
 import useTemplate from "./use-template";
 
@@ -57,178 +59,142 @@ export default function FieldTree() {
       (row.node.type == FORM_TYPE.TEXT ||
         row.node.type == FORM_TYPE.TEXT_AREA ||
         row.node.type == FORM_TYPE.RICHTEXT) && (
-        <Tooltip label={t("template:indicator_icons.text")}>
-          <IconButton
-            colorScheme="black"
-            minW="auto"
-            aria-label="Text Field"
-            variant="link"
-            icon={<TextIcon />}
-          />
+        <Tooltip content={t("template:indicator_icons.text")}>
+          <IconButton colorPalette="black" minW="auto" aria-label="Text Field" variant="plain">
+            <TextIcon />
+          </IconButton>
         </Tooltip>
       ),
 
       row.node.type == FORM_TYPE.HEADING && (
-        <Tooltip label={t("template:indicator_icons.heading")}>
-          <IconButton
-            colorScheme="black"
-            minW="auto"
-            aria-label="Heading Field"
-            variant="link"
-            icon={<HeadingIcon />}
-            size="lg"
-          />
+        <Tooltip content={t("template:indicator_icons.heading")}>
+          <IconButton colorPalette="black" minW="auto" aria-label="Heading Field" variant="plain">
+            <HeadingIcon />
+          </IconButton>
         </Tooltip>
       ),
 
       (row.node.type == FORM_TYPE.SINGLE_SELECT_RADIO ||
         row.node.type == FORM_TYPE.SINGLE_SELECT_DROPDOWN) && (
-        <Tooltip label={t("template:indicator_icons.single_select")}>
+        <Tooltip content={t("template:indicator_icons.single_select")}>
           <IconButton
+            colorPalette="black"
             minW="auto"
             aria-label="Single Select Field"
-            variant="link"
-            icon={<RadiobuttonIcon />}
-            size="lg"
-          />
+            variant="plain"
+          >
+            <RadiobuttonIcon />
+          </IconButton>
         </Tooltip>
       ),
 
       row.node.type == FORM_TYPE.MULTI_SELECT_CHECKBOX && (
-        <Tooltip label={t("template:indicator_icons.multi_select")}>
+        <Tooltip content={t("template:indicator_icons.multi_select")}>
           <IconButton
-            colorScheme="black"
-            size="xl"
+            colorPalette="black"
             minW="auto"
-            aria-label="Multiple select Field"
-            variant="link"
-            icon={<MultiselectIcon />}
-          />
+            aria-label="Multiple Select Field"
+            variant="plain"
+          >
+            <MultiselectIcon />
+          </IconButton>
         </Tooltip>
       ),
 
       row.node.type == FORM_TYPE.NUMBER && (
-        <Tooltip label={t("template:indicator_icons.number")}>
-          <IconButton
-            colorScheme="black"
-            size="xl"
-            minW="auto"
-            aria-label="Number Field"
-            variant="link"
-            icon={<NumberIcon />}
-          />
+        <Tooltip content={t("template:indicator_icons.number")}>
+          <IconButton colorPalette="black" minW="auto" aria-label="Number Field" variant="plain">
+            <NumberIcon />
+          </IconButton>
         </Tooltip>
       ),
 
       (row.node.type == FORM_TYPE.DATE || row.node.type == FORM_TYPE.YEAR) && (
-        <Tooltip label={t("template:indicator_icons.date")}>
-          <IconButton
-            colorScheme="black"
-            minW="auto"
-            aria-label="Date Field"
-            variant="link"
-            icon={<CalendarIcon />}
-          />
+        <Tooltip content={t("template:indicator_icons.date")}>
+          <IconButton colorPalette="black" minW="auto" aria-label="Date Field" variant="plain">
+            <CalendarIcon />
+          </IconButton>
         </Tooltip>
       ),
 
       row.node.type == FORM_TYPE.FILE && (
-        <Tooltip label={t("template:indicator_icons.file")}>
-          <IconButton
-            colorScheme="black"
-            minW="auto"
-            aria-label="File Field"
-            variant="link"
-            icon={<FileIcon />}
-          />
+        <Tooltip content={t("template:indicator_icons.file")}>
+          <IconButton colorPalette="black" minW="auto" aria-label="File Field" variant="plain">
+            <FileIcon />
+          </IconButton>
         </Tooltip>
       ),
 
       row.node.type == FORM_TYPE.GEOMETRY && (
-        <Tooltip label={t("template:indicator_icons.geometry")}>
-          <IconButton
-            colorScheme="black"
-            size="xl"
-            minW="auto"
-            aria-label="Geometry Field"
-            variant="link"
-            icon={<LocatinIcon />}
-          />
+        <Tooltip content={t("template:indicator_icons.geometry")}>
+          <IconButton colorPalette="black" minW="auto" aria-label="Geometry Field" variant="plain">
+            <LocatinIcon />
+          </IconButton>
         </Tooltip>
       ),
 
       row.node.isSummaryField && (
-        <Tooltip label={t("template:indicator_icons.summary")}>
-          <IconButton
-            colorScheme="black"
-            size="xl"
-            minW="auto"
-            aria-label="Summary Field"
-            variant="link"
-            icon={<SummaryIcon />}
-          />
+        <Tooltip content={t("template:indicator_icons.summary")}>
+          <IconButton colorPalette="black" minW="auto" aria-label="Summary Field" variant="plain">
+            <SummaryIcon />
+          </IconButton>
         </Tooltip>
       ),
 
       row.node.isTitleColumn && (
-        <Tooltip label={t("template:indicator_icons.title")}>
-          <IconButton
-            colorScheme="black"
-            minW="auto"
-            aria-label="Title Field"
-            variant="link"
-            icon={<TitleIcon />}
-          />
+        <Tooltip content={t("template:indicator_icons.title")}>
+          <IconButton colorPalette="black" minW="auto" aria-label="Title Field" variant="plain">
+            <TitleIcon />
+          </IconButton>
         </Tooltip>
       ),
 
       row.node.isFilterable && (
-        <Tooltip label={t("template:indicator_icons.filterable")}>
+        <Tooltip content={t("template:indicator_icons.filterable")}>
           <IconButton
-            colorScheme="black"
-            size="xl"
+            colorPalette="black"
             minW="auto"
             aria-label="Filterable Field"
-            variant="link"
-            icon={<FilterIcon />}
-          />
+            variant="plain"
+          >
+            <FilterIcon />
+          </IconButton>
         </Tooltip>
       ),
 
       row.node.isRequired && (
-        <Tooltip label={t("template:indicator_icons.required")}>
-          <IconButton
-            colorScheme="black"
-            size="lg"
-            minW="auto"
-            aria-label="Required Field"
-            variant="link"
-            icon={<RequiredIcon />}
-          />
+        <Tooltip content={t("template:indicator_icons.required")}>
+          <IconButton colorPalette="black" minW="auto" aria-label="Required Field" variant="plain">
+            <RequiredIcon />
+          </IconButton>
         </Tooltip>
       ),
 
-      <Tooltip label={t("template:action_icons.edit")}>
+      <Tooltip content={t("template:action_icons.edit")}>
         <IconButton
           marginLeft={95}
-          colorScheme="green"
+          colorPalette="green"
           minW="auto"
           aria-label="Edit Field"
-          variant="link"
+          variant="plain"
           onClick={() => setCurrentField(row.node)}
-          icon={<EditIcon />}
-        />
+          size={"sm"}
+        >
+          <EditIcon />
+        </IconButton>
       </Tooltip>,
 
-      <Tooltip label={t("template:action_icons.delete")}>
+      <Tooltip content={t("template:action_icons.delete")}>
         <IconButton
-          colorScheme="red"
+          colorPalette="red"
           minW="auto"
           aria-label="Delete Field"
-          variant="link"
+          variant="plain"
           onClick={() => removeFieldById(row.node.fieldId)}
-          icon={<DeleteIcon />}
-        />
+          size={"sm"}
+        >
+          <DeleteIcon />
+        </IconButton>
       </Tooltip>
     ].filter(Boolean)
   });

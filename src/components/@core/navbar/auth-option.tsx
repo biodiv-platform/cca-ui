@@ -1,4 +1,4 @@
-import { Avatar, Box, Link, Menu, MenuButton, MenuItem, MenuList } from "@chakra-ui/react";
+import { Box, Button, Link } from "@chakra-ui/react";
 import useGlobalState from "@hooks/use-global-state";
 import LoginIcon from "@icons/login";
 import { FORWARD_BLACKLIST } from "@static/constants";
@@ -6,6 +6,9 @@ import { encode } from "base64-url";
 import { useRouter } from "next/router";
 import useTranslation from "next-translate/useTranslation";
 import React, { useEffect, useState } from "react";
+
+import { Avatar } from "@/components/ui/avatar";
+import { MenuContent, MenuItem, MenuRoot, MenuTrigger } from "@/components/ui/menu";
 
 import LocalLink from "../local-link";
 import Tooltip from "../tooltip";
@@ -25,30 +28,32 @@ export default function NavbarAuthOption() {
   }, [router.asPath]);
 
   return (
-    <Box ml={4} hidden={isPreviewMode}>
+    <Box hidden={isPreviewMode}>
       {isLoggedIn ? (
-        <Menu>
-          <MenuButton as={Link} rounded="full" variant="link" cursor="pointer" minW={0}>
+        <MenuRoot>
+          <MenuTrigger as={Link} rounded="full" cursor="pointer" minW={0}>
             <Avatar size="sm" name={user?.name} />
-          </MenuButton>
-          <MenuList>
-            <MenuItem>
+          </MenuTrigger>
+          <MenuContent>
+            <MenuItem value="usershow">
               <LocalLink href={`/user/show/${user.id}`} params={params} prefixGroup={true}>
                 <Link>{user.name}</Link>
               </LocalLink>
             </MenuItem>
-            <MenuItem>
+            <MenuItem value="logout">
               <LocalLink href="/logout" params={params} prefixGroup={true}>
                 <Link>{t("auth:sign_out")}</Link>
               </LocalLink>
             </MenuItem>
-          </MenuList>
-        </Menu>
+          </MenuContent>
+        </MenuRoot>
       ) : (
         <LocalLink href="/login" params={params} prefixGroup={true}>
           <Link lineHeight={1}>
             <Tooltip title={t("header:login_register")}>
-              <LoginIcon fontSize="2xl" aria-label="Login or Register" />
+              <Button size="xl" variant={"plain"} role="button" aria-label="Login or Register">
+                <LoginIcon />
+              </Button>
             </Tooltip>
           </Link>
         </LocalLink>

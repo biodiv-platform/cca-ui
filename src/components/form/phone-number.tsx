@@ -1,4 +1,4 @@
-import { FormControl, FormErrorMessage, FormHelperText, Input } from "@chakra-ui/react";
+import { Box, Input } from "@chakra-ui/react";
 import SITE_CONFIG from "@configs/site-config";
 import styled from "@emotion/styled";
 import { namedFormErrorMessage } from "@utils/field";
@@ -6,6 +6,7 @@ import React from "react";
 import { useController } from "react-hook-form";
 import MobileInput from "react-phone-number-input";
 
+import { Field } from "../ui/field";
 import { FormLabel } from "./common";
 
 const PhoneFormControl = styled.div`
@@ -43,6 +44,7 @@ interface ISelectProps {
   defaultCountry?: string;
   onBlur?;
   isLargeVariant?;
+  isRequired?;
 }
 
 export const PhoneNumberInputField = ({
@@ -56,29 +58,39 @@ export const PhoneNumberInputField = ({
   defaultCountry = SITE_CONFIG.MAP.COUNTRY,
   disabled = false,
   isLargeVariant,
+  isRequired,
   ...props
 }: ISelectProps) => {
   const { field, fieldState } = useController({ name });
 
   return (
-    <FormControl as={PhoneFormControl} isInvalid={!!fieldState.error} mb={mb} id={name} {...props}>
+    <Field
+      as={PhoneFormControl}
+      invalid={!!fieldState.error}
+      mb={mb}
+      id={name}
+      errorText={namedFormErrorMessage(fieldState?.error?.message, name, title)}
+      {...props}
+    >
       <FormLabel
         isLargeVariant={isLargeVariant}
         title={title}
         label={label}
         name={name}
         helpText={helpText}
+        required={isRequired}
       />
-      <MobileInput
-        id={name}
-        inputComponent={Input}
-        countrySelectProps={{ unicodeFlags: true }}
-        defaultCountry={defaultCountry as any}
-        disabled={disabled}
-        {...field}
-      />
-      <FormErrorMessage children={namedFormErrorMessage(fieldState?.error?.message, name, title)} />
-      {hint && <FormHelperText color="gray.600">{hint}</FormHelperText>}
-    </FormControl>
+      <Box width={"full"}>
+        <MobileInput
+          id={name}
+          inputComponent={Input}
+          countrySelectProps={{ unicodeFlags: true }}
+          defaultCountry={defaultCountry as any}
+          disabled={disabled}
+          {...field}
+        />
+      </Box>
+      {hint && <Field color="gray.600" helperText={hint} />}
+    </Field>
   );
 };

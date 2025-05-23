@@ -22,10 +22,11 @@ export default function MasterFieldTree() {
           <IconButton
             minW="auto"
             aria-label="Copy Field"
-            variant="link"
+            variant="ghost"
             onClick={() => copyField(row.node)}
-            icon={<CopyIcon />}
-          />
+          >
+            <CopyIcon />
+          </IconButton>
         ]
   });
 

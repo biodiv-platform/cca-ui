@@ -30,7 +30,7 @@ export default function UserShowPageComponent({ user }: UserProfileProps) {
           ]
         }}
       />
-      <SimpleGrid mt={16} columns={{ base: 1, md: 4 }} spacing={{ base: 0, md: 4 }}>
+      <SimpleGrid mt={16} columns={{ base: 1, md: 4 }} gap={{ base: 0, md: 4 }}>
         <UserInfoSidebar user={user} />
         <UserInfoTabs user={user} />
       </SimpleGrid>

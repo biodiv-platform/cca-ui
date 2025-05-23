@@ -1,10 +1,12 @@
-import { Box, Button, Flex, Select, Stack, Tab, TabList, Tabs, Text } from "@chakra-ui/react";
+import { Box, Button, Flex, Stack, Tabs, Text } from "@chakra-ui/react";
 import LocalLink from "@components/@core/local-link";
 import useGlobalState from "@hooks/use-global-state";
 import { sortByOptions, viewTabs } from "@static/documnet-list";
 import { format } from "indian-number-format";
 import useTranslation from "next-translate/useTranslation";
 import React from "react";
+
+import { NativeSelectField, NativeSelectRoot } from "@/components/ui/native-select";
 
 import useDocumentFilter from "../../common/use-document-filter";
 
@@ -27,7 +29,7 @@ export default function ListHeader() {
   };
 
   const buttonProps = {
-    colorScheme: "blue",
+    colorPalette: "blue",
     _hover: { bg: "blue.600" },
     style: { height: "32px", width: "10rem" }
   };
@@ -35,43 +37,48 @@ export default function ListHeader() {
   return (
     <>
       <Flex mt={4} direction={{ base: "column", md: "row" }} justify="space-between">
-        <Tabs
+        <Tabs.Root
           display="inline-block"
           className="icon-tabs"
-          variant="soft-rounded"
-          isManual={true}
-          defaultIndex={0}
+          variant="subtle"
+          activationMode="manual"
+          defaultValue={viewTabs[0].name}
           mb={4}
-          isLazy={true}
+          lazyMount
         >
-          <TabList aria-orientation="vertical">
+          <Tabs.List aria-orientation="vertical">
             {viewTabs.map(({ name, icon, key }) => (
-              <Tab key={key} aria-label={t(name)} aria-controls={`view_${key}`}>
+              <Tabs.Trigger
+                value={name}
+                key={key}
+                aria-label={t(name)}
+                aria-controls={`view_${key}`}
+              >
                 {icon} {t(name)}
-              </Tab>
+              </Tabs.Trigger>
             ))}
-          </TabList>
-        </Tabs>
-        <Stack isInline={true} spacing={4} mb={4}>
+          </Tabs.List>
+        </Tabs.Root>
+        <Stack direction="row" gap={4} mb={4}>
           <Box hidden={!hasCreateAccess}>
             <LocalLink href={"/document/create"} prefixGroup={true}>
               <Button {...buttonProps}>{t("document:create.title")}</Button>
             </LocalLink>
           </Box>
           <Box>
-            <Select
-              maxW="10rem"
-              height="32px"
+            <NativeSelectRoot
               aria-label={t("common:list.sort_by")}
-              value={filter?.sort}
+              defaultValue={filter?.sort}
               onChange={handleOnSort}
             >
-              {sortByOptions.map(({ name, key }) => (
-                <option key={key} value={key}>
-                  {t(name)}
-                </option>
-              ))}
-            </Select>
+              <NativeSelectField>
+                {sortByOptions.map(({ name, key }) => (
+                  <option key={key} value={key}>
+                    {t(name)}
+                  </option>
+                ))}
+              </NativeSelectField>
+            </NativeSelectRoot>
           </Box>
         </Stack>
       </Flex>

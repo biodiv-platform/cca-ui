@@ -1,9 +1,10 @@
-import { FormControl, FormErrorMessage, FormHelperText } from "@chakra-ui/react";
+import { Box } from "@chakra-ui/react";
 import { namedFormErrorMessage } from "@utils/field";
 import React from "react";
 import { useController } from "react-hook-form";
 import Select, { components } from "react-select";
 
+import { Field } from "../ui/field";
 import { FormLabel, OthersInput } from "./common";
 import { selectStyles } from "./configs";
 
@@ -55,13 +56,14 @@ export const SelectInputField = ({
   const { field, fieldState } = useController({ name });
 
   return (
-    <FormControl
-      isInvalid={!!fieldState.error}
+    <Field
+      invalid={!!fieldState.error}
+      errorText={namedFormErrorMessage(fieldState?.error?.message, name, title)}
       className="dropdown"
       aria-invalid={fieldState.invalid}
       mb={mb}
       hidden={hidden}
-      isRequired={isRequired}
+      required={isRequired}
       {...props}
     >
       <FormLabel
@@ -70,35 +72,37 @@ export const SelectInputField = ({
         label={label}
         name={name}
         helpText={helpText}
+        required={isRequired}
       />
-      <Select
-        id={name}
-        instanceId={name}
-        inputId={name}
-        onChange={(o) => {
-          field.onChange(o?.value);
-          onChangeCallback && onChangeCallback(o?.value);
-        }}
-        onBlur={field.onBlur}
-        options={options}
-        components={{
-          Option: optionComponent
-        }}
-        menuPortalTarget={process.browser && shouldPortal && document.body}
-        isSearchable={true}
-        isClearable={isClearable}
-        isDisabled={disabled}
-        styles={selectStyles}
-        {...{
-          [isControlled ? "value" : "defaultValue"]: options.find((o) => o.value === field.value)
-        }}
-        ref={selectRef}
-      />
+      <Box width={"full"}>
+        <Select
+          id={name}
+          instanceId={name}
+          inputId={name}
+          onChange={(o) => {
+            field.onChange(o?.value);
+            onChangeCallback && onChangeCallback(o?.value);
+          }}
+          onBlur={field.onBlur}
+          options={options}
+          components={{
+            Option: optionComponent
+          }}
+          menuPortalTarget={process.browser && shouldPortal && document.body}
+          isSearchable={true}
+          isClearable={isClearable}
+          isDisabled={disabled}
+          styles={selectStyles}
+          {...{
+            [isControlled ? "value" : "defaultValue"]: options.find((o) => o.value === field.value)
+          }}
+          ref={selectRef}
+        />
+      </Box>
 
       {isOthers && <OthersInput name={name} value={field.value} />}
 
-      <FormErrorMessage children={namedFormErrorMessage(fieldState?.error?.message, name, title)} />
-      {hint && <FormHelperText color="gray.600">{hint}</FormHelperText>}
-    </FormControl>
+      {hint && <Field color="gray.600" helperText={hint} />}
+    </Field>
   );
 };

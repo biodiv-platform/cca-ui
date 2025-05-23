@@ -15,8 +15,8 @@ export default function WhyThisPortal() {
         placeItems="center"
         columns={{ base: 1, md: 2 }}
         py={12}
-        spacingY={{ base: 10, md: 32 }}
-        spacingX={{ base: 10, md: 24 }}
+        gapY={{ base: 10, md: 32 }}
+        gapX={{ base: 10, md: 24 }}
       >
         <Image
           src="/next-assets/home-human-chain.webp"
@@ -30,7 +30,6 @@ export default function WhyThisPortal() {
           <chakra.h2
             mb={6}
             fontSize={{ base: "3xl", sm: "4xl" }}
-            lineHeight="8"
             fontWeight="bold"
             letterSpacing="tight"
             color="gray.900"
@@ -42,7 +41,7 @@ export default function WhyThisPortal() {
           </chakra.p>
           <GridItem display="flex" alignItems="center" justifyContent={{ md: "flex-end" }}>
             <LocalLink href={SITE_CONFIG.PAGES.ABOUT[lang]} prefixGroup={true}>
-              <Button w={{ base: "full", sm: "auto" }} size="lg" colorScheme="blue" as="a">
+              <Button w={{ base: "full", sm: "auto" }} size="lg" colorPalette="blue" as="a">
                 {t("common:learn_more")}
               </Button>
             </LocalLink>

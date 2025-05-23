@@ -30,50 +30,45 @@ export function PageSlider({ images }: PageSliderProps) {
   }, []);
 
   return (
-    <>
-      <Box position="relative" height={carouselHeight} width="full" overflow="hidden">
-        {/* CSS files for react-slick */}
-        <link
-          rel="stylesheet"
-          type="text/css"
-          charSet="UTF-8"
-          href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.min.css"
-        />
-        <link
-          rel="stylesheet"
-          type="text/css"
-          href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick-theme.min.css"
-        />
+    <Box position="relative" height={carouselHeight} width="full" overflow="hidden">
+      {/* CSS files for react-slick */}
+      <link
+        rel="stylesheet"
+        type="text/css"
+        // charSet="UTF-8"
+        href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.min.css"
+      />
+      <link
+        rel="stylesheet"
+        type="text/css"
+        href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick-theme.min.css"
+      />
 
-        {/* Slider */}
-        <Slider {...settings}>
-          {images.map((image, index) => (
-            <>
-              <Box
-                key={index}
-                height={carouselHeight}
-                position="relative"
-                backgroundImage={getNextResourceThumbnail(
-                  RESOURCE_CTX.PAGES,
-                  image.fileName,
-                  RESOURCE_SIZE.PAGE
-                )}
-                backgroundPosition="center"
-                backgroundRepeat="no-repeat"
-                backgroundSize="cover"
-              />
-              {image.attribution && (
-                <Box position="absolute" left={0} bottom={0} p={4}>
-                  {image.caption} by {image.attribution} (
-                  {licenses.filter((license) => license.id === image.licenseId)[0]?.name ||
-                    "Unknown"}
-                  )
-                </Box>
+      {/* Slider */}
+      <Slider {...settings}>
+        {images.map((image, index) => (
+          <Box key={index} position="relative" height={carouselHeight}>
+            <Box
+              height="full"
+              backgroundImage={getNextResourceThumbnail(
+                RESOURCE_CTX.PAGES,
+                image.fileName,
+                RESOURCE_SIZE.PAGE
               )}
-            </>
-          ))}
-        </Slider>
-      </Box>
-    </>
+              backgroundPosition="center"
+              backgroundRepeat="no-repeat"
+              backgroundSize="cover"
+            />
+            {image.attribution && (
+              <Box position="absolute" left={0} bottom={0} p={4}>
+                {image.caption} by {image.attribution} (
+                {licenses.filter((license) => license.id === image.licenseId)[0]?.name || "Unknown"}
+                )
+              </Box>
+            )}
+          </Box>
+        ))}
+      </Slider>
+    </Box>
   );
 }

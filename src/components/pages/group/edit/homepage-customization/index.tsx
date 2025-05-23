@@ -1,36 +1,36 @@
-import {
-  Accordion,
-  AccordionButton,
-  AccordionIcon,
-  AccordionItem,
-  AccordionPanel,
-  Box
-} from "@chakra-ui/react";
+import { Box } from "@chakra-ui/react";
 import useTranslation from "next-translate/useTranslation";
 import React from "react";
+
+import {
+  AccordionItem,
+  AccordionItemContent,
+  AccordionItemTrigger,
+  AccordionRoot
+} from "@/components/ui/accordion";
 
 import HomePageCustomizationForm from "./form";
 
 export default function GroupHomePageCustomization({ userGroupId, homePageDetails }) {
   const { t } = useTranslation();
   return (
-    <Accordion allowToggle>
+    <AccordionRoot multiple>
       <AccordionItem
         mb={8}
         bg="white"
         border="1px solid var(--chakra-colors-gray-300)"
         borderRadius="md"
+        value="homepage"
       >
-        <AccordionButton _expanded={{ bg: "gray.100" }}>
+        <AccordionItemTrigger _expanded={{ bg: "gray.100" }} pl={4} pr={4}>
           <Box flex={1} textAlign="left" fontSize="lg">
             🧰 {t("group:homepage_customization.title")}
           </Box>
-          <AccordionIcon />
-        </AccordionButton>
-        <AccordionPanel>
+        </AccordionItemTrigger>
+        <AccordionItemContent p={4}>
           <HomePageCustomizationForm userGroupId={userGroupId} homePageDetails={homePageDetails} />
-        </AccordionPanel>
+        </AccordionItemContent>
       </AccordionItem>
-    </Accordion>
+    </AccordionRoot>
   );
 }

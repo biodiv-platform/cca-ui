@@ -1,36 +1,16 @@
-import {
-  Box,
-  HStack,
-  NumberDecrementStepper,
-  NumberIncrementStepper,
-  NumberInput,
-  NumberInputField,
-  NumberInputStepper,
-  RangeSlider,
-  RangeSliderFilledTrack,
-  RangeSliderThumb,
-  RangeSliderTrack
-} from "@chakra-ui/react";
-import Tooltip from "@components/@core/tooltip";
+import { Box, HStack } from "@chakra-ui/react";
 import { useDebounce } from "@hooks/use-debounce";
 import React, { useEffect, useMemo, useState } from "react";
 
+import { NumberInputField, NumberInputRoot } from "@/components/ui/number-input";
+import { Slider } from "@/components/ui/slider";
+
 import useResponseList from "../../use-response-list";
 
-const Slider = ({ value, index }) => (
-  <Tooltip label={value} placement="top" hasArrow={true}>
-    <RangeSliderThumb boxSizing="border-box" bg="blue.500" index={index} />
-  </Tooltip>
-);
-
 const NumInput = (props) => (
-  <NumberInput {...props}>
+  <NumberInputRoot {...props} width={"full"}>
     <NumberInputField />
-    <NumberInputStepper>
-      <NumberIncrementStepper />
-      <NumberDecrementStepper />
-    </NumberInputStepper>
-  </NumberInput>
+  </NumberInputRoot>
 );
 
 export function NumberFilter({ filterField }) {
@@ -67,23 +47,17 @@ export function NumberFilter({ filterField }) {
   }, [debouncedRState]);
 
   return (
-    <Box py={3}>
+    <Box p={3}>
       <Box pr={3}>
-        <RangeSlider
-          aria-label={["min", "max"]}
+        <Slider
           value={rState}
           min={values.min}
           max={values.max}
-          onChange={setRState}
-        >
-          <RangeSliderTrack bg="gray.300">
-            <RangeSliderFilledTrack bg="blue.500" />
-          </RangeSliderTrack>
-          <Slider value={rState[0]?.toString()} index={0} />
-          <Slider value={rState[1]?.toString()} index={1} />
-        </RangeSlider>
+          colorPalette={"blue"}
+          onValueChange={(e) => setRState(e.value)}
+        />
       </Box>
-      <HStack mt={4} spacing={4}>
+      <HStack mt={4} gap={4}>
         <NumInput
           name={`${filterField.fieldId}.0`}
           value={rState[0]}

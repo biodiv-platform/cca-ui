@@ -55,7 +55,7 @@ const getMediaElement = (resource) => {
         <Image
           className="carousel--image"
           loading="lazy"
-          ignoreFallback
+          // ignoreFallback
           src={getResourceThumbnail(path, "?h=416")}
           alt={attribution || path}
         />

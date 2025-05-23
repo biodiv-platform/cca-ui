@@ -1,9 +1,10 @@
-import { SimpleGrid, Table, TableContainer, Tbody, Td, Tr } from "@chakra-ui/react";
-import { Prose } from "@nikolovlazar/chakra-ui-prose";
+import { Container, SimpleGrid, Table } from "@chakra-ui/react";
 import { axGetCCAData } from "@services/cca.service";
 import { formatDate } from "@utils/date";
 import { getInjectableHTML } from "@utils/text";
 import React, { useEffect, useMemo, useState } from "react";
+
+import { Prose } from "@/components/ui/prose";
 
 export default function ExpandedComponent(props) {
   const ccaId = props.data.id;
@@ -94,29 +95,29 @@ export default function ExpandedComponent(props) {
 
   return (
     <div>
-      <SimpleGrid columns={1} spacing={0} borderBottomWidth="1px">
-        <TableContainer>
-          <Table variant="striped">
-            <Tbody>
+      <SimpleGrid columns={1} gap={0} borderBottomWidth="1px">
+        <Container>
+          <Table.Root variant="line" striped>
+            <Table.Body>
               {infoRows.map(([k, v]: any) => (
-                <Tr key={k}>
-                  <Td>{k}</Td>
-                  <Td whiteSpace="initial" wordBreak="break-word">
+                <Table.Row key={k}>
+                  <Table.Cell>{k}</Table.Cell>
+                  <Table.Cell whiteSpace="initial" wordBreak="break-word">
                     <Prose>{renderSwitch(k, v)}</Prose>
-                  </Td>
-                </Tr>
+                  </Table.Cell>
+                </Table.Row>
               ))}
               {ccaFiledValue.map(([k, v]: any) => (
-                <Tr key={k}>
-                  <Td>{k}</Td>
-                  <Td whiteSpace="initial" wordBreak="break-word">
+                <Table.Row key={k}>
+                  <Table.Cell>{k}</Table.Cell>
+                  <Table.Cell whiteSpace="initial" wordBreak="break-word">
                     <Prose>{renderSwitch(k, v)}</Prose>
-                  </Td>
-                </Tr>
+                  </Table.Cell>
+                </Table.Row>
               ))}
-            </Tbody>
-          </Table>
-        </TableContainer>
+            </Table.Body>
+          </Table.Root>
+        </Container>
       </SimpleGrid>
     </div>
   );

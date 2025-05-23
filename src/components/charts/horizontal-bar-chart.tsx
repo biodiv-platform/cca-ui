@@ -76,7 +76,9 @@ export default function HorizontalBarChart({
       .select(".y-axis")
       .join("g")
       .attr("transform", `translate(${leftOffset},0)`)
-      .call(axisLeft(y).tickSizeOuter(0) as any);
+      .call(axisLeft(y).tickSizeOuter(0) as any)
+      .selectAll("text")
+      .style("font-size", "10px"); // Adjust the size as needed
 
     // Bars
     svg

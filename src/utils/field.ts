@@ -39,7 +39,7 @@ const postProcessValue = (field, value, othersValue?) => {
 
     const valueSingle = field.valueOptions.find((opt) => value === opt.value);
 
-    return isOthersField(valueSingle.value) ? { ...valueSingle, label: othersValue } : valueSingle;
+    return isOthersField(valueSingle?.value) ? { ...valueSingle, label: othersValue } : valueSingle;
   }
 
   if (field.type === FORM_TYPE.GEOMETRY && value?.length) {
@@ -212,7 +212,12 @@ export const splitIntoGroups = (fieldList) => {
 
 export const arrayOfSize = (size) => new Array(size).fill(0).map((_, index) => index);
 
-export const isOthersField = (value) => value.replace(/\s/g, "").includes("?");
+// export const isOthersField = (value) => value.replace(/\s/g, "").includes("?");
+
+export const isOthersField = (value) => {
+  if (typeof value !== "string") return false; // Ensure it's a string
+  return value.replace(/\s/g, "").includes("?");
+};
 
 export const optionLabelShow = (label, value?) =>
   value?.startsWith("http")

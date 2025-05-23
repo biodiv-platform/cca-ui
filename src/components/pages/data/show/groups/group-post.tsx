@@ -1,4 +1,13 @@
-import { Box, Button, Collapse, Heading, Input, SimpleGrid, useDisclosure } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Collapsible,
+  Flex,
+  Heading,
+  Input,
+  SimpleGrid,
+  useDisclosure
+} from "@chakra-ui/react";
 import EditIcon from "@icons/edit";
 import { UserGroupCCA } from "@interfaces/userGroup";
 import { DEFAULT_GROUP } from "@static/constants";
@@ -35,7 +44,7 @@ export default function GroupPost({
     selectedDefault?.map((g) => g?.id?.toString())
   );
   const { t } = useTranslation();
-  const { isOpen, onToggle, onClose } = useDisclosure();
+  const { open, onToggle, onClose } = useDisclosure();
   const editButtonRef: any = useRef(null);
 
   const [filterGroups, setFilterGroups] = useState(groups);
@@ -83,22 +92,25 @@ export default function GroupPost({
   return (
     <Box>
       <SimpleGrid columns={3}>
-        <Heading>
-          👥 {t("common:usergroups")}
+        <Flex alignItems="center">
+          <Heading size="4xl">👥 {t("common:usergroups")}</Heading>
           <Button
-            mb={6}
-            variant="link"
-            rightIcon={<EditIcon />}
-            colorScheme="blue"
-            size="lg"
+            colorPalette="blue"
+            size="sm"
             className="no-print"
             ref={editButtonRef}
             onClick={onEditClick}
-          />
-        </Heading>
+            variant="plain"
+            ml={2} // Add some spacing
+            display="inline-flex"
+            alignItems="center"
+          >
+            <EditIcon />
+          </Button>
+        </Flex>
       </SimpleGrid>
 
-      <SimpleGrid columns={columns || defaultGridColumns} spacing={4} hidden={isOpen}>
+      <SimpleGrid columns={columns || defaultGridColumns} gap={4} hidden={open}>
         <GroupBox
           link={DEFAULT_GROUP.webAddress}
           icon={`${DEFAULT_GROUP.icon}?h=40`}
@@ -110,35 +122,43 @@ export default function GroupPost({
             <GroupBox key={og.id} link={og.webAddress} icon={og.icon + "?h=40"} name={og.name} />
           ))}
       </SimpleGrid>
+      <Collapsible.Root open={open} unmountOnExit={true}>
+        <Collapsible.Content>
+          <Input mb={6} onChange={onQuery} placeholder={t("header:search")} />
+          {groups?.length > 0 ? (
+            <CheckBoxItems
+              gridColumns={columns || defaultGridColumns}
+              options={filterGroups}
+              defaultValue={selectedGroups}
+              onChange={setSelectedGroups}
+            />
+          ) : (
+            <div>{t("common:no_groups_joined")}</div>
+          )}
 
-      <Collapse in={isOpen} unmountOnExit={true}>
-        <Input mb={6} onChange={onQuery} placeholder={t("header:search")} />
-        {groups?.length > 0 ? (
-          <CheckBoxItems
-            gridColumns={columns || defaultGridColumns}
-            options={filterGroups}
-            defaultValue={selectedGroups}
-            onChange={setSelectedGroups}
-          />
-        ) : (
-          <div>{t("common:no_groups_joined")}</div>
-        )}
-
-        <Box mt={2}>
-          <Button
-            size="sm"
-            colorScheme="blue"
-            aria-label="Save"
-            type="submit"
-            onClick={handleOnSave}
-          >
-            {t("common:save")}
-          </Button>
-          <Button size="sm" ml={2} colorScheme="gray" aria-label="Cancel" onClick={handleOnCancel}>
-            {t("common:close")}
-          </Button>
-        </Box>
-      </Collapse>
+          <Box mt={2}>
+            <Button
+              size="sm"
+              colorPalette="blue"
+              aria-label="Save"
+              type="submit"
+              onClick={handleOnSave}
+              variant={"plain"}
+            >
+              {t("common:save")}
+            </Button>
+            <Button
+              size="sm"
+              ml={2}
+              aria-label="Cancel"
+              onClick={handleOnCancel}
+              variant={"subtle"}
+            >
+              {t("common:close")}
+            </Button>
+          </Box>
+        </Collapsible.Content>
+      </Collapsible.Root>
     </Box>
   );
 }
