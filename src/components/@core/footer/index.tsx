@@ -19,6 +19,8 @@ import { containerMaxW } from "@static/navmenu";
 import useTranslation from "next-translate/useTranslation";
 import React from "react";
 
+import { APP_VERSION } from "@/static/constants";
+
 import ExternalBlueLink from "../blue-link/external";
 import { Container } from "../container";
 import LocalLink from "../local-link";
@@ -57,6 +59,11 @@ export default function Footer() {
             <Flex gap={6}>
               <Image alt={t("common:site.title")} src="/next-assets/logo.png" />
             </Flex>
+            <Text fontSize="sm">
+              <ExternalBlueLink color="gray.600" href="https://github.com/biodiv-platform">
+                {t("common:powered_by")} Biodiversity Informatics Platform - v{APP_VERSION}
+              </ExternalBlueLink>
+            </Text>
             <Text fontSize="sm">
               <ExternalBlueLink
                 color="gray.600"
