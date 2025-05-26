@@ -9,19 +9,18 @@ import { MenuContent, MenuItem } from "@/components/ui/menu";
 
 const SubMenuLink = ({ item, onClose }) => (
   <>
-    <LocalLink href={item.to} params={item.params} prefixGroup={true}>
-      <Link unstyled>
-        <MenuItem
-          value={item.to}
-          as="a"
-          w="full"
-          onClick={onClose}
-          fontWeight={item?.rows ? "bold" : "normal"}
-        >
-          {item.name}
-        </MenuItem>
-      </Link>
-    </LocalLink>
+    <MenuItem
+      value={item.to}
+      as="a"
+      w="full"
+      onClick={onClose}
+      fontWeight={item?.rows ? "bold" : "normal"}
+    >
+      <LocalLink href={item.to} params={item.params} prefixGroup={true}>
+        <Link unstyled>{item.name}</Link>
+      </LocalLink>
+    </MenuItem>
+
     {item?.rows && item.rows.map((i) => <SubMenuLink item={i} onClose={onClose} key={i.name} />)}
     {item?.rows && <Separator />}
   </>

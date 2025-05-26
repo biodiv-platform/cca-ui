@@ -60,17 +60,19 @@ const GroupListItem = () => {
           return (
             <MenuItem key={g.id} minH="3rem" value={g.id}>
               <LocalLink href={groupURL}>
-                <Flex alignItems="center">
-                  <Image
-                    boxSize="2rem"
-                    objectFit="contain"
-                    loading="lazy"
-                    src={`${g.icon}?w=40`}
-                    aria-label={`${g.name} Logo`}
-                    mr={2}
-                  />
-                  <Text lineHeight="1rem">{g.name}</Text>
-                </Flex>
+                <Link w="full">
+                  <Flex alignItems="center">
+                    <Image
+                      boxSize="2rem"
+                      objectFit="contain"
+                      loading="lazy"
+                      src={`${g.icon}?w=40`}
+                      aria-label={`${g.name} Logo`}
+                      mr={2}
+                    />
+                    <Text lineHeight="1rem">{g.name}</Text>
+                  </Flex>
+                </Link>
               </LocalLink>
             </MenuItem>
           );
