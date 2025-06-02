@@ -1,10 +1,10 @@
 import { Box, Input } from "@chakra-ui/react";
-import CalendarIcon from "@icons/calendar";
 import { parseToDateObject } from "@utils/date";
 import { namedFormErrorMessage } from "@utils/field";
 import React from "react";
 import DatePicker from "react-datepicker";
 import { useController } from "react-hook-form";
+import { LuCalendar } from "react-icons/lu";
 
 import { Field } from "../ui/field";
 import { InputGroup } from "../ui/input-group";
@@ -66,10 +66,11 @@ export const YearPickerField = ({
         endElement={
           <Box hidden={isClearable}>
             <label htmlFor={name} style={{ cursor: "pointer" }}>
-              <CalendarIcon color="gray.300" />
+              <LuCalendar color="gray.300" />
             </label>
           </Box>
         }
+        width={"full"}
       >
         <DatePicker
           id={name}

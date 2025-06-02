@@ -73,7 +73,9 @@ export default function FieldEditor({ field, onClose }) {
         <ParticipateTemplateFieldRenderer field={field} />
         <HStack my={2}>
           <SubmitButton>{t("common:save")}</SubmitButton>
-          <Button onClick={onClose}>{t("common:cancel")}</Button>
+          <Button onClick={onClose} variant={"subtle"}>
+            {t("common:cancel")}
+          </Button>
         </HStack>
       </form>
     </FormProvider>

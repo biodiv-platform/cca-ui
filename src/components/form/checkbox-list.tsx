@@ -38,10 +38,16 @@ export const CheckboxListField = ({
   isRequired,
   ...props
 }: ICheckboxListProps) => {
-  const {
-    field: { onChange, value },
-    fieldState
-  } = useController({ name });
+  const { field, fieldState } = useController({
+    name,
+    defaultValue: []
+  });
+
+  const value = Array.isArray(field.value) ? field.value : [];
+
+  const handleChange = (selectedValues: string[]) => {
+    field.onChange(selectedValues);
+  };
 
   return (
     <Box mb={mb}>
@@ -60,10 +66,10 @@ export const CheckboxListField = ({
         />
       </Field>
       <CheckboxGroup
-        defaultValue={value}
-        onChange={onChange}
+        value={value}
+        onValueChange={handleChange}
         isDisabled={disabled}
-        colorPalette={"blue"}
+        colorPalette="blue"
       >
         <Stack id={name}>
           {options.map((option) => (
@@ -74,7 +80,7 @@ export const CheckboxListField = ({
         </Stack>
       </CheckboxGroup>
 
-      {isOthers && <OthersInput name={name} value={value} />}
+      {isOthers && <OthersInput name={name} value={field.value} />}
 
       {hint && <Field color="gray.600" helperText={hint} />}
     </Box>
