@@ -11,6 +11,8 @@ import React from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import * as Yup from "yup";
 
+import { FORM_TYPE } from "@/static/constants";
+
 import useTemplateResponseEdit from "./use-template-response-edit";
 
 export default function FieldEditor({ field, onClose }) {
@@ -51,19 +53,28 @@ export default function FieldEditor({ field, onClose }) {
       return;
     }
 
-    const { data } = participationResponse;
-    if (data?.centroid) {
-      const locationResponse = await getLoactionInfo(data.centroid);
-      if (locationResponse.success) {
-        await axUpdateLocation({
-          id: data.id,
-          location: locationResponse.data
-        });
-      }
+    // Check if centroid has changed and update location if needed
+    if (
+      field.type === FORM_TYPE.GEOMETRY &&
+      participationResponse.data?.centroid &&
+      JSON.stringify(response.centroid) !== JSON.stringify(participationResponse.data.centroid)
+    ) {
+      const locationData = await (async () => {
+        try {
+          const { success, data } = await getLoactionInfo(participationResponse.data.centroid);
+          return success ? null : data;
+        } catch {
+          return null;
+        }
+      })();
+      await axUpdateLocation({
+        id: participationResponse.data.id,
+        location: locationData
+      });
     }
 
     notification(t("form:saved.success"), NotificationType.Success);
-    setResponse(data);
+    setResponse(participationResponse.data);
     onClose();
   };
 
@@ -73,7 +84,9 @@ export default function FieldEditor({ field, onClose }) {
         <ParticipateTemplateFieldRenderer field={field} />
         <HStack my={2}>
           <SubmitButton>{t("common:save")}</SubmitButton>
-          <Button onClick={onClose}>{t("common:cancel")}</Button>
+          <Button onClick={onClose} variant={"subtle"}>
+            {t("common:cancel")}
+          </Button>
         </HStack>
       </form>
     </FormProvider>

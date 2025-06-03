@@ -23,54 +23,53 @@ const ResponseShowPage = (props) =>
   );
 
 export const getServerSideProps = async (ctx) => {
-  const { data: response } = await axGetTemplateResponseById(ctx.query.responseId, ctx.locale);
+  try {
+    const { data: response } = await axGetTemplateResponseById(ctx.query.responseId, ctx.locale);
 
-  // if response is empty then record does not exist
-  if (!response) {
-    return {
-      props: {
-        success: false
-      }
-    };
-  }
+    if (!response) {
+      return { props: { success: false } };
+    }
 
-  const template = await getTemplateByShortOrParentName(response.shortName, ctx.locale);
+    const [
+      template,
+      {
+        data: [header]
+      },
+      groupsData
+    ] = await Promise.all([
+      getTemplateByShortOrParentName(response.shortName, ctx.locale),
+      axGetTemplateResponseList({ id: ctx.query.responseId, language: ctx.locale }),
+      axGroupList(absoluteUrl(ctx).href)
+    ]);
 
-  const {
-    data: [header]
-  } = await axGetTemplateResponseList({ id: ctx.query.responseId, language: ctx.locale });
+    const userIds = [response.userId, ...response.allowedUsers];
+    const [owner, ...editors] = await getUserIBPsByIds(userIds);
+    const canEdit = canEditData(userIds, ctx);
 
-  if (response?.location) {
-    try {
+    if (response?.location?.district && response?.location?.state) {
       header.values.push({
         type: FORM_TYPE.TEXT,
         fieldId: "loc",
         name: "Location",
-        value: capitalize(`${response?.location?.district}, ${response?.location?.state}`)
+        value: capitalize(`${response.location.district}, ${response.location.state}`)
       });
-    } catch (e) {
-      console.error(e);
     }
+
+    return {
+      props: {
+        success: true,
+        permissions: { owner, editors },
+        template,
+        response,
+        canEdit,
+        header,
+        groups: groupsData.groups
+      }
+    };
+  } catch (error) {
+    console.error("Error in getServerSideProps:", error);
+    return { props: { success: false } };
   }
-
-  const canEdit = canEditData([response.userId, ...response.allowedUsers], ctx);
-
-  const [owner, ...editors] = await getUserIBPsByIds([response.userId, ...response.allowedUsers]);
-
-  const aURL = absoluteUrl(ctx).href;
-  const { groups } = await axGroupList(aURL);
-
-  return {
-    props: {
-      success: true,
-      permissions: { owner, editors },
-      template,
-      response,
-      canEdit,
-      header,
-      groups
-    }
-  };
 };
 
 export default ResponseShowPage;

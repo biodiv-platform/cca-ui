@@ -82,7 +82,7 @@ export default function UpdateFieldForm({ defaultValues, onClose }) {
     <FormProvider {...hForm}>
       <form onSubmit={hForm.handleSubmit(handleOnSubmit)}>
         <DialogContent>
-          <DialogHeader>
+          <DialogHeader fontSize={"xl"} fontWeight={"bold"}>
             {t("template:manage_field")} ({SITE_CONFIG.LANG.LIST[template.language].NAME})
           </DialogHeader>
           <DialogCloseTrigger />
@@ -163,7 +163,7 @@ export default function UpdateFieldForm({ defaultValues, onClose }) {
           </DialogBody>
 
           <DialogFooter>
-            <Button colorPalette="gray" mr={3} onClick={onClose}>
+            <Button variant={"subtle"} mr={3} onClick={onClose}>
               {t("common:close")}
             </Button>
             <SubmitButton>{t("common:save")}</SubmitButton>
