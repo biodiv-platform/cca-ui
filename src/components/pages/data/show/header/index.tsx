@@ -17,13 +17,13 @@ import MailIcon from "@icons/mail";
 import NotificationsActiveIcon from "@icons/notifications-active";
 import NotificationsNoneIcon from "@icons/notifications-none";
 import { Role } from "@interfaces/custom";
-import { axToggleDocumentFollow } from "@services/cca.service";
+import { axToggleDocumentFollow, axUpdateLocation, getLoactionInfo } from "@services/cca.service";
 import { findTitleFromHeader, renderSimpleValue } from "@utils/field";
 import { getUserImage } from "@utils/media";
 import notification, { NotificationType } from "@utils/notification";
 import { NextSeo } from "next-seo";
 import useTranslation from "next-translate/useTranslation";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { Avatar } from "@/components/ui/avatar";
 import {
@@ -53,6 +53,31 @@ export default function ShowHeader() {
     response.followers?.includes(user?.id?.toString())
   );
   const { open, onOpen, onClose } = useDisclosure();
+
+  useEffect(() => {
+    const fetchAndUpdateLocation = async () => {
+      if (
+        !response?.location?.district &&
+        !response?.location?.state &&
+        response?.centroid &&
+        canEdit
+      ) {
+        try {
+          const locationResponse = await getLoactionInfo(response.centroid);
+          if (locationResponse.success) {
+            await axUpdateLocation({
+              id: response.id,
+              location: locationResponse.data
+            });
+          }
+        } catch (e) {
+          console.error("Location info error:", e);
+        }
+      }
+    };
+
+    fetchAndUpdateLocation();
+  }, []);
 
   const toggleFollow = async () => {
     const { success } = await axToggleDocumentFollow(!isFollowing, response.id);

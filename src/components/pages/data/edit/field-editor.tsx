@@ -2,7 +2,7 @@ import { Button, HStack } from "@chakra-ui/react";
 import { SubmitButton } from "@components/form/submit-button";
 import ParticipateTemplateFieldRenderer from "@components/pages/participate/template/participate-template-field-renderer";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { axUpdateParticipation } from "@services/cca.service";
+import { axUpdateLocation, axUpdateParticipation, getLoactionInfo } from "@services/cca.service";
 import { reverseFlatSaveData, toFlatSaveData } from "@utils/field";
 import notification, { NotificationType } from "@utils/notification";
 import { generateValidationStatement } from "@utils/validation";
@@ -10,6 +10,8 @@ import useTranslation from "next-translate/useTranslation";
 import React from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import * as Yup from "yup";
+
+import { FORM_TYPE } from "@/static/constants";
 
 import useTemplateResponseEdit from "./use-template-response-edit";
 
@@ -49,6 +51,26 @@ export default function FieldEditor({ field, onClose }) {
     if (!participationResponse.success) {
       notification(t("form:saved.error"));
       return;
+    }
+
+    // Check if centroid has changed and update location if needed
+    if (
+      field.type === FORM_TYPE.GEOMETRY &&
+      participationResponse.data?.centroid &&
+      JSON.stringify(response.centroid) !== JSON.stringify(participationResponse.data.centroid)
+    ) {
+      const locationData = await (async () => {
+        try {
+          const { success, data } = await getLoactionInfo(participationResponse.data.centroid);
+          return success ? null : data;
+        } catch {
+          return null;
+        }
+      })();
+      await axUpdateLocation({
+        id: participationResponse.data.id,
+        location: locationData
+      });
     }
 
     notification(t("form:saved.success"), NotificationType.Success);

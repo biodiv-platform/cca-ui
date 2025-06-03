@@ -5,8 +5,6 @@ import { axGroupList } from "@services/app.service";
 import {
   axGetTemplateResponseById,
   axGetTemplateResponseList,
-  axUpdateLocation,
-  getLoactionInfo,
   getTemplateByShortOrParentName
 } from "@services/cca.service";
 import { getUserIBPsByIds } from "@services/user.service";
@@ -55,27 +53,6 @@ export const getServerSideProps = async (ctx) => {
         name: "Location",
         value: capitalize(`${response.location.district}, ${response.location.state}`)
       });
-    } else if (response?.centroid && canEdit) {
-      try {
-        const locationResponse = await getLoactionInfo(response.centroid);
-        if (locationResponse.success) {
-          const updateLocationResponse = await axUpdateLocation({
-            id: response.id,
-            location: locationResponse.data
-          });
-
-          if (updateLocationResponse.success) {
-            header.values.push({
-              type: FORM_TYPE.TEXT,
-              fieldId: "loc",
-              name: "Location",
-              value: capitalize(`${locationResponse.data.district}, ${locationResponse.data.state}`)
-            });
-          }
-        }
-      } catch (e) {
-        console.error("Location info error:", e);
-      }
     }
 
     return {
