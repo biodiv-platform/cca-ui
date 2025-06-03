@@ -62,7 +62,7 @@ export default function FieldEditor({ field, onClose }) {
       const locationData = await (async () => {
         try {
           const { success, data } = await getLoactionInfo(participationResponse.data.centroid);
-          return success ? null : data;
+          return success ? data : null;
         } catch {
           return null;
         }
