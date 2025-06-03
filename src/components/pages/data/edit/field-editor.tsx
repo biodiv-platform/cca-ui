@@ -2,7 +2,7 @@ import { Button, HStack } from "@chakra-ui/react";
 import { SubmitButton } from "@components/form/submit-button";
 import ParticipateTemplateFieldRenderer from "@components/pages/participate/template/participate-template-field-renderer";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { axUpdateLocation, axUpdateParticipation, getLoactionInfo } from "@services/cca.service";
+import { axUpdateParticipation } from "@services/cca.service";
 import { reverseFlatSaveData, toFlatSaveData } from "@utils/field";
 import notification, { NotificationType } from "@utils/notification";
 import { generateValidationStatement } from "@utils/validation";
@@ -51,19 +51,8 @@ export default function FieldEditor({ field, onClose }) {
       return;
     }
 
-    const { data } = participationResponse;
-    if (data?.centroid) {
-      const locationResponse = await getLoactionInfo(data.centroid);
-      if (locationResponse.success) {
-        await axUpdateLocation({
-          id: data.id,
-          location: locationResponse.data
-        });
-      }
-    }
-
     notification(t("form:saved.success"), NotificationType.Success);
-    setResponse(data);
+    setResponse(participationResponse.data);
     onClose();
   };
 
