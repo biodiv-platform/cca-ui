@@ -91,7 +91,7 @@ export default function GroupPost({
 
   return (
     <Box>
-      <SimpleGrid columns={3}>
+      <SimpleGrid columns={3} mb={4}>
         <Flex alignItems="center">
           <Heading size="4xl">👥 {t("common:usergroups")}</Heading>
           <Button
@@ -143,7 +143,6 @@ export default function GroupPost({
               aria-label="Save"
               type="submit"
               onClick={handleOnSave}
-              variant={"plain"}
             >
               {t("common:save")}
             </Button>

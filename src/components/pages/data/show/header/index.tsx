@@ -40,7 +40,9 @@ import NewRequestForm from "./requestorForm";
 
 const UserAvatar = ({ u, ...rest }) => (
   <Tooltip showArrow={true} title={u.name}>
-    <Avatar src={getUserImage(u.profilePic, u.name, 400)} size="sm" name={u.name} {...rest} />
+    <Box display="inline-block">
+      <Avatar src={getUserImage(u.profilePic, u.name, 400)} size="sm" name={u.name} {...rest} />
+    </Box>
   </Tooltip>
 );
 
