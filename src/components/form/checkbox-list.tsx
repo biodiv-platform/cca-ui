@@ -73,7 +73,12 @@ export const CheckboxListField = ({
       >
         <Stack id={name}>
           {options.map((option) => (
-            <Checkbox key={option.value} disabled={option?.isDisabled} value={option.value}>
+            <Checkbox
+              key={option.value}
+              disabled={option?.isDisabled}
+              value={option.value}
+              required={field.value.length <= 0 && isRequired}
+            >
               {optionLabelShow(option.label)}
             </Checkbox>
           ))}

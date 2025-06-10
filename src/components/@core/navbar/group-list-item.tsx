@@ -58,8 +58,8 @@ const GroupListItem = () => {
 
           return (
             <MenuItem key={g.id} minH="3rem" value={g.id}>
-              <Link w="full" asChild>
-                <LocalLink href={groupURL}>
+              <LocalLink href={groupURL}>
+                <Link w="full">
                   <Flex alignItems="center">
                     <Image
                       boxSize="2rem"
@@ -71,8 +71,8 @@ const GroupListItem = () => {
                     />
                     <Text lineHeight="1rem">{g.name}</Text>
                   </Flex>
-                </LocalLink>
-              </Link>
+                </Link>
+              </LocalLink>
             </MenuItem>
           );
         })}
