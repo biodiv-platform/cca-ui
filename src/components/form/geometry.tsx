@@ -97,7 +97,7 @@ export const GeometryField = ({
                   ref={gmapsSearchRef}
                   placeholder={t("form:find_gmaps")}
                   w="full"
-                  required={false}
+                  required={field.value.length <= 0 && isRequired}
                 />
               </InputGroup>
             }
@@ -117,7 +117,11 @@ export const GeometryField = ({
                 geoJSONImport={undefined}
               />
             }
-            importButtonComponent={<Button type="button">{t("common:add")}</Button>}
+            importButtonComponent={
+              <Button type="button" variant={"subtle"}>
+                {t("common:add")}
+              </Button>
+            }
             importDeleteIcon={<DeleteIcon />}
             importLocationIcon={<LocationIcon />}
             importFileIcon={<FileIcon />}

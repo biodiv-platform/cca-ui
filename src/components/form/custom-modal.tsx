@@ -12,11 +12,12 @@ import {
 
 const CustomModal = ({ isOpen, onClose, nakshaImport, geoJSONImport }) => {
   return (
-    // blockScrollOnMount={false} ??
     <DialogRoot open={isOpen} onOpenChange={onClose}>
       <DialogBackdrop />
       <DialogContent paddingBottom={10} maxW="lg">
-        <DialogHeader>Import</DialogHeader>
+        <DialogHeader fontSize={"2xl"} fontWeight={"bold"}>
+          Import
+        </DialogHeader>
         <DialogCloseTrigger />
         <DialogBody>
           <Box border="1px" borderColor="gray.200" borderRadius="md" padding="4">
