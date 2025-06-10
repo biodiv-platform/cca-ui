@@ -23,7 +23,7 @@ interface BasicTableProps {
 }
 
 const IndeterminateCheckbox = React.forwardRef(({ indeterminate, ...rest }: any, ref) => {
-  const defaultRef = React.useRef();
+  const defaultRef = React.useRef<HTMLInputElement>(null);
   const resolvedRef: any = ref || defaultRef;
 
   React.useEffect(() => {

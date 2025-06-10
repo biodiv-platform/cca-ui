@@ -1,13 +1,12 @@
 import "react-datepicker/dist/react-datepicker.css";
 
-import { Input } from "@chakra-ui/react";
+import { Input, InputGroup } from "@chakra-ui/react";
 import CalendarIcon from "@icons/calendar";
 import React from "react";
 import DatePicker from "react-datepicker";
 import { Controller } from "react-hook-form";
 
 import { Field } from "../ui/field";
-import { InputGroup } from "../ui/input-group";
 
 interface DatePickerNextFieldProps {
   disabled?: boolean;

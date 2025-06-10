@@ -1,4 +1,4 @@
-import { Input } from "@chakra-ui/react";
+import { Input, InputGroup } from "@chakra-ui/react";
 import { parseToDateObject } from "@utils/date";
 import { namedFormErrorMessage } from "@utils/field";
 import React from "react";
@@ -7,7 +7,6 @@ import { useController } from "react-hook-form";
 import { LuCalendar } from "react-icons/lu";
 
 import { Field } from "../ui/field";
-import { InputGroup } from "../ui/input-group";
 import { FormLabel } from "./common";
 
 interface IDatePickerBoxProps {

@@ -1,4 +1,4 @@
-import { CheckboxGroup, Image, Input, Stack } from "@chakra-ui/react";
+import { CheckboxGroup, Image, Input, InputGroup, Stack } from "@chakra-ui/react";
 import { getTraitIcon } from "@utils/media";
 import useTranslation from "next-translate/useTranslation";
 import React, { useState } from "react";
@@ -6,7 +6,6 @@ import { LuSearch } from "react-icons/lu";
 
 import useDocumentFilter from "@/components/pages/document/common/use-document-filter";
 import { Checkbox } from "@/components/ui/checkbox";
-import { InputGroup } from "@/components/ui/input-group";
 
 import FilterStat from "../stat";
 
@@ -27,7 +26,7 @@ export default function FilterCheckboxes({
   statKey,
   options,
   skipOptionsTranslation,
-  showSearch,
+  showSearch
 }: FilterCheckboxesProps) {
   const { filter, addFilter, removeFilter } = useDocumentFilter();
   const defaultValue = filter?.[filterKey] ? filter?.[filterKey]?.split(",") : [];

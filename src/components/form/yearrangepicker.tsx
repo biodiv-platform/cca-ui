@@ -1,4 +1,4 @@
-import { Box, Input } from "@chakra-ui/react";
+import { Box, Input, InputGroup } from "@chakra-ui/react";
 import CalendarIcon from "@icons/calendar";
 import { parseToDateObject } from "@utils/date";
 import { namedFormErrorMessage } from "@utils/field";
@@ -7,7 +7,6 @@ import DatePicker from "react-datepicker";
 import { useController } from "react-hook-form";
 
 import { Field } from "../ui/field";
-import { InputGroup } from "../ui/input-group";
 import { FormLabel } from "./common";
 
 interface YearRangePickerProps {
