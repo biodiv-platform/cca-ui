@@ -4,15 +4,15 @@ import React, { useEffect, useRef, useState } from "react";
 const INPUT_TYPE = {
   MIN: "min",
   MAX: "max"
-};
+} as const;
 
 interface RangeInputProps {
-  initialValue;
-  onChange;
-  min;
-  max;
-  separator?;
-  inputProps?;
+  initialValue?: [number?, number?];
+  onChange: (value: [number?, number?]) => void;
+  min?: number;
+  max?: number;
+  separator?: string;
+  inputProps?: React.ComponentProps<typeof Input>;
 }
 
 export const RangeInput = ({
@@ -20,48 +20,48 @@ export const RangeInput = ({
   onChange,
   min,
   max,
-  separator,
+  separator = "-",
   inputProps
 }: RangeInputProps) => {
-  const minRef = useRef<any>();
-  const maxRef = useRef<any>();
+  const minRef = useRef<HTMLInputElement>(null);
+  const maxRef = useRef<HTMLInputElement>(null);
 
   const [value, setValue] = useState({
     min: initialValue?.[0],
     max: initialValue?.[1]
   });
 
-  const clamp = (val) => Math.max(min, Math.min(max, val));
+  const clamp = (val: number) => Math.max(min ?? -Infinity, Math.min(max ?? Infinity, val));
 
-  const clampMin = (v) => {
-    if (!v) return;
+  const clampMin = (v: number) => {
+    if (!v) return undefined;
 
-    if (!min) return v;
+    if (min === undefined) return v;
 
     let val = clamp(v);
 
     if (value.max !== undefined) val = Math.min(val, value.max);
 
-    if (v !== val) minRef.current.value = val;
+    if (v !== val && minRef.current) minRef.current.value = val.toString();
 
     return val;
   };
 
-  const clampMax = (v) => {
-    if (!v) return;
+  const clampMax = (v: number) => {
+    if (!v) return undefined;
 
-    if (!max) return v;
+    if (max === undefined) return v;
 
     let val = clamp(v);
 
     if (value.min !== undefined) val = Math.max(val, value.min);
 
-    if (v !== val) maxRef.current.value = val;
+    if (v !== val && maxRef.current) maxRef.current.value = val.toString();
 
     return val;
   };
 
-  const handleOnChange = (e, type) => {
+  const handleOnChange = (e: React.FocusEvent<HTMLInputElement>, type: "min" | "max") => {
     const numValue = Number(e.target.value);
 
     const newValue = {
@@ -70,13 +70,12 @@ export const RangeInput = ({
     };
 
     setValue(newValue);
-
     onChange([newValue.min, newValue.max]);
   };
 
   useEffect(() => {
-    if (value.min) minRef.current.value = value.min;
-    if (value.max) maxRef.current.value = value.max;
+    if (value.min !== undefined && minRef.current) minRef.current.value = value.min.toString();
+    if (value.max !== undefined && maxRef.current) maxRef.current.value = value.max.toString();
   }, []);
 
   return (

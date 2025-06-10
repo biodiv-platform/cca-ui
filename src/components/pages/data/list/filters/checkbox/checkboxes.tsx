@@ -1,11 +1,10 @@
-import { CheckboxGroup, Image, Input, Stack } from "@chakra-ui/react";
+import { CheckboxGroup, Image, Input, InputGroup, Stack } from "@chakra-ui/react";
 import { getTraitIcon } from "@utils/media";
 import useTranslation from "next-translate/useTranslation";
 import React, { useState } from "react";
 import { LuSearch } from "react-icons/lu";
 
 import { Checkbox } from "@/components/ui/checkbox";
-import { InputGroup } from "@/components/ui/input-group";
 
 import useResponseList from "../../use-response-list";
 import FilterStat from "../stat";

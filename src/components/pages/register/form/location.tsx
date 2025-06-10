@@ -1,4 +1,4 @@
-import { Box, Button, Input, useDisclosure } from "@chakra-ui/react";
+import { Box, Button, Input, InputGroup, useDisclosure } from "@chakra-ui/react";
 import MapLocationPicker from "@components/pages/common/map-location-picker";
 import SITE_CONFIG from "@configs/site-config";
 import { Autocomplete, LoadScriptNext } from "@react-google-maps/api";
@@ -10,7 +10,6 @@ import React, { useEffect, useMemo, useState } from "react";
 import { useController } from "react-hook-form";
 
 import { Field } from "@/components/ui/field";
-import { InputGroup } from "@/components/ui/input-group";
 
 export const LocationPicker = () => {
   const { t } = useTranslation();

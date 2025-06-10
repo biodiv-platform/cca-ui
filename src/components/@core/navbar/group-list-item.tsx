@@ -30,7 +30,6 @@ const GroupListItem = () => {
         as={Link}
         role="button"
         rounded="md"
-        // variant="link"
         cursor="pointer"
         minW={0}
         px={6}
@@ -45,11 +44,11 @@ const GroupListItem = () => {
           <Input w="full" onChange={onQuery} placeholder={t("header:search")} />
         </Box>
         <MenuItem minH="3rem" value="list">
-          <LocalLink href="/group/list" prefixGroup={true}>
-            <Link w="full">
+          <Link w="full" asChild>
+            <LocalLink href="/group/list" prefixGroup={true}>
               {t("header:menu_primary.groups.see_all")} <LuArrowRight />
-            </Link>
-          </LocalLink>
+            </LocalLink>
+          </Link>
         </MenuItem>
 
         {filterGroups?.map((g) => {
@@ -59,8 +58,8 @@ const GroupListItem = () => {
 
           return (
             <MenuItem key={g.id} minH="3rem" value={g.id}>
-              <LocalLink href={groupURL}>
-                <Link w="full">
+              <Link w="full" asChild>
+                <LocalLink href={groupURL}>
                   <Flex alignItems="center">
                     <Image
                       boxSize="2rem"
@@ -72,8 +71,8 @@ const GroupListItem = () => {
                     />
                     <Text lineHeight="1rem">{g.name}</Text>
                   </Flex>
-                </Link>
-              </LocalLink>
+                </LocalLink>
+              </Link>
             </MenuItem>
           );
         })}

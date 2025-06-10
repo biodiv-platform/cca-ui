@@ -66,4 +66,5 @@ export const stripSpecialCharacters = (text): string => {
   return text.replace(/(\B[A-Z])/g, " $1").replace(/^./, text[0].toUpperCase());
 };
 
-export const stripTags = (string): string => (string ? string.replace(/<[^>{^}]*>?/gm, "") : null);
+export const stripTags = (string: string | null | undefined): string | undefined =>
+  string ? string.replace(/<[^>]*>/g, "") : undefined;

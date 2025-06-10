@@ -1,5 +1,5 @@
 import { GMAP_FEATURE_TYPES, NakshaGmapsDraw } from "@biodiv-platform/naksha-gmaps-draw";
-import { Box, Button, Input, useDisclosure } from "@chakra-ui/react";
+import { Box, Button, Input, InputGroup, useDisclosure } from "@chakra-ui/react";
 import SITE_CONFIG from "@configs/site-config";
 import styled from "@emotion/styled";
 import DeleteIcon from "@icons/delete";
@@ -13,7 +13,6 @@ import { useController } from "react-hook-form";
 import { LuCircleCheck, LuSearch, LuX } from "react-icons/lu";
 
 import { Field } from "../ui/field";
-import { InputGroup } from "../ui/input-group";
 import { FormLabel } from "./common";
 import CustomModal from "./custom-modal";
 

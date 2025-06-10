@@ -1,8 +1,6 @@
-import { Box, Button, Input } from "@chakra-ui/react";
+import { Box, Button, Input, InputGroup } from "@chakra-ui/react";
 import { axSearchMapCCAData } from "@services/cca.service";
 import React from "react";
-
-import { InputGroup } from "@/components/ui/input-group";
 
 import useResponseList from "../use-response-list";
 

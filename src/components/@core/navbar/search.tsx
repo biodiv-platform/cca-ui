@@ -1,10 +1,8 @@
-import { Input } from "@chakra-ui/react";
+import { Input, InputGroup } from "@chakra-ui/react";
 import { googleSearch } from "@utils/search";
 import useTranslation from "next-translate/useTranslation";
 import React from "react";
 import { LuSearch } from "react-icons/lu";
-
-import { InputGroup } from "@/components/ui/input-group";
 
 export default function Search() {
   const { t } = useTranslation();
