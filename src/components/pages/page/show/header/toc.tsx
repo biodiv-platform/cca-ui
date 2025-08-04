@@ -43,10 +43,10 @@ export function TableOfContents() {
   return showToC ? (
     <PopoverRoot
       open={isOpen}
-      onOpenChange={() => setIsOpen(true)}
+      onOpenChange={(e) => setIsOpen(e.open)}
       positioning={{ placement: "bottom-start" }}
     >
-      <PopoverTrigger>
+      <PopoverTrigger asChild>
         <Button variant="outline" size="sm" colorScheme="gray" bg="white" fontWeight={"bold"}>
           <MenuIcon />
           {t("page:quick_navigation")}

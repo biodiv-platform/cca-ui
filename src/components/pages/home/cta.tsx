@@ -20,7 +20,6 @@ const Feature = (props) => (
         size="lg"
         colorPalette="blue"
         variant={"solid"}
-        as="a"
       >
         {props.actionText}
       </Button>
