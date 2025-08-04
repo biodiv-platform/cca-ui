@@ -1,13 +1,14 @@
-import { Button, Image, Text } from "@chakra-ui/react";
+import { Button, Text } from "@chakra-ui/react";
 import BlueLink from "@components/@core/blue-link";
-import DownloadIcon from "@icons/copy";
 import { ENDPOINT } from "@static/constants";
 import { adminOrAuthor } from "@utils/auth";
 import { formatDate } from "@utils/date";
 import { getUserImage } from "@utils/media";
 import { stripSpecialCharacters, stripTags } from "@utils/text";
-import Link from "next/link";
 import React from "react";
+import { LuDownload } from "react-icons/lu";
+
+import { ImageWithFallback } from "@/components/@core/image-with-fallback";
 
 const doFilter = (data) => {
   if (data[0]) {
@@ -26,9 +27,9 @@ export const downloadLogsRow = (data, downloadLabel, unknown) => {
           Header: "Source",
           accessor: "sourceType",
           Cell: ({ row }) => (
-            <a href={`${data[row.index].filterUrl}`}>
-              <BlueLink> {row.values.sourceType || unknown} </BlueLink>
-            </a>
+            <BlueLink href={`${data[row.index].filterUrl}`}>
+              {row.values.sourceType || unknown}
+            </BlueLink>
           )
         };
 
@@ -38,11 +39,11 @@ export const downloadLogsRow = (data, downloadLabel, unknown) => {
           accessor: "user",
           Cell: ({ value }) => (
             <a href={`/user/show/${value.id}`}>
-              <Image
+              <ImageWithFallback
                 borderRadius={50}
                 title={value.name}
                 boxSize="2rem"
-                alt={`/api/avatar?t=${value.name}&s=${100}`}
+                fallbackSrc={`/api/avatar?t=${value.name}&s=${100}`}
                 src={getUserImage(value.profilePic, value.name, 100)}
               />
             </a>
@@ -64,26 +65,32 @@ export const downloadLogsRow = (data, downloadLabel, unknown) => {
         return {
           Header: "File",
           accessor: item,
-          Cell: ({ row: { values } }) => (
-            <Button
-              variant="outline"
-              size="sm"
-              as="a"
-              // download={true}
-              disabled={!adminOrAuthor(values.user.id)}
-              colorPalette="blue"
-            >
-              <DownloadIcon />
-              <Link
-                href={
-                  values.filePath.startsWith("/naksha")
-                    ? values.filePath
-                    : `${ENDPOINT.RAW}${values.filePath}`
-                }
-              ></Link>
-              {downloadLabel}
-            </Button>
-          )
+          Cell: ({ row: { values } }) => {
+            const isDisabled = !adminOrAuthor(values.user.id) || values.type == "PNG";
+            return (
+              <Button
+                variant="outline"
+                size="sm"
+                as={isDisabled ? "button" : "a"}
+                disabled={isDisabled}
+                colorPalette="blue"
+                asChild
+              >
+                <a
+                  href={
+                    !isDisabled
+                      ? values.filePath.startsWith("/naksha")
+                        ? values.filePath
+                        : `${ENDPOINT.RAW}${values.filePath}`
+                      : undefined
+                  }
+                >
+                  <LuDownload />
+                  {downloadLabel}
+                </a>
+              </Button>
+            );
+          }
         };
 
       default:

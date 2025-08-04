@@ -23,7 +23,7 @@ interface BasicTableProps {
 }
 
 const IndeterminateCheckbox = React.forwardRef(({ indeterminate, ...rest }: any, ref) => {
-  const defaultRef = React.useRef<HTMLInputElement>(null);
+  const defaultRef = React.useRef();
   const resolvedRef: any = ref || defaultRef;
 
   React.useEffect(() => {
@@ -85,7 +85,7 @@ export function BasicTable({
   }, [state.selectedRowIds]);
 
   return data?.length ? (
-    <Table.Root variant="line" style={tableStyle} size={size} {...getTableProps()} striped>
+    <Table.Root striped style={tableStyle} size={size} {...getTableProps()}>
       <Table.Header>
         {headerGroups.map((headerGroup) => (
           <Table.Row {...headerGroup.getHeaderGroupProps()}>
@@ -117,7 +117,9 @@ export function BasicTable({
             <Table.Row {...row.getRowProps()}>
               {row.cells.map((cell) => (
                 <Table.Cell
-                  {...cell.getCellProps({ style: cell.column.style })}
+                  {...cell.getCellProps({
+                    style: { whiteSpace: "nowrap", wordBreak: "keep-all", ...cell.column.style }
+                  })}
                   isNumeric={cell.column.isNumeric}
                 >
                   {cell.render("Cell")}
