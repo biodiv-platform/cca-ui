@@ -1,4 +1,4 @@
-import { Link } from "@chakra-ui/react";
+import { Box } from "@chakra-ui/react";
 import SITE_CONFIG from "@configs/site-config";
 import useGlobalState from "@hooks/use-global-state";
 import { axGetTree } from "@services/app.service";
@@ -22,11 +22,11 @@ const NavLink = ({ children, href, hidden }: NavLinkProps) => {
   const extraProps = { _hover: { bg: "gray.200" } };
 
   return (
-    <LocalLink href={href} prefixGroup={true}>
-      <Link px={2} py={1} rounded={"md"} {...extraProps} hidden={hidden}>
+    <Box px={2} py={1} rounded={"md"} {...extraProps} hidden={hidden} asChild>
+      <LocalLink href={href} prefixGroup={true}>
         {children}
-      </Link>
-    </LocalLink>
+      </LocalLink>
+    </Box>
   );
 };
 
@@ -48,9 +48,7 @@ export default function PagesItems() {
   return (
     <>
       <Search />
-      {pagesMenu?.map((item) => (
-        <MenuItems key={item.name} {...item} prefixGroup={false} />
-      ))}
+      {pagesMenu?.map((item) => <MenuItems key={item.name} {...item} prefixGroup={false} />)}
       {header.map((i) => (
         <NavLink
           href={i.url}

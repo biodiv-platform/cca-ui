@@ -33,7 +33,6 @@ const SocialButton = ({ children, label, href }) => (
       w={8}
       h={8}
       cursor="pointer"
-      as="a"
       display="inline-flex"
       alignItems="center"
       justifyContent="center"
@@ -102,7 +101,7 @@ export default function Footer() {
                 .filter((page) => page.showInFooter !== false)
                 .map((page) => (
                   <LocalLink href={`/page/show/${page.id}`} key={page.id} prefixGroup={true}>
-                    <Link>{page.title}</Link>
+                    {page.title}
                   </LocalLink>
                 ))}
             </SimpleGrid>

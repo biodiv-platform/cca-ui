@@ -1,4 +1,4 @@
-import { Box, Button, Link } from "@chakra-ui/react";
+import { Avatar, Box, Button, Link, Menu, Portal } from "@chakra-ui/react";
 import useGlobalState from "@hooks/use-global-state";
 import LoginIcon from "@icons/login";
 import { FORWARD_BLACKLIST } from "@static/constants";
@@ -6,10 +6,6 @@ import { encode } from "base64-url";
 import { useRouter } from "next/router";
 import useTranslation from "next-translate/useTranslation";
 import React, { useEffect, useState } from "react";
-
-import { Avatar } from "@/components/ui/avatar";
-import { MenuContent, MenuItem, MenuRoot, MenuTrigger } from "@/components/ui/menu";
-
 import LocalLink from "../local-link";
 import Tooltip from "../tooltip";
 
@@ -30,32 +26,36 @@ export default function NavbarAuthOption() {
   return (
     <Box hidden={isPreviewMode}>
       {isLoggedIn ? (
-        <MenuRoot>
-          <MenuTrigger as={Link} rounded="full" cursor="pointer" minW={0}>
-            <Avatar size="sm" name={user?.name} />
-          </MenuTrigger>
-          <MenuContent>
-            <MenuItem value="usershow">
-              <LocalLink href={`/user/show/${user.id}`} params={params} prefixGroup={true}>
-                <Link>{user.name}</Link>
-              </LocalLink>
-            </MenuItem>
-            <MenuItem value="logout">
-              <LocalLink href="/logout" params={params} prefixGroup={true}>
-                <Link>{t("auth:sign_out")}</Link>
-              </LocalLink>
-            </MenuItem>
-          </MenuContent>
-        </MenuRoot>
+        <Menu.Root>
+          <Menu.Trigger as={Link} rounded="full" cursor="pointer" minW={0}>
+            <Avatar.Root size="sm">
+              <Avatar.Fallback name={user?.name} />
+            </Avatar.Root>
+          </Menu.Trigger>
+          <Portal>
+            <Menu.Positioner>
+              <Menu.Content>
+                <Menu.Item value="usershow" asChild>
+                  <LocalLink href={`/user/show/${user.id}`} params={params} prefixGroup={true}>
+                    {user.name}
+                  </LocalLink>
+                </Menu.Item>
+                <Menu.Item value="logout" asChild>
+                  <LocalLink href="/logout" params={params} prefixGroup={true}>
+                    {t("auth:sign_out")}
+                  </LocalLink>
+                </Menu.Item>
+              </Menu.Content>
+            </Menu.Positioner>
+          </Portal>
+        </Menu.Root>
       ) : (
         <LocalLink href="/login" params={params} prefixGroup={true}>
-          <Link lineHeight={1}>
-            <Tooltip title={t("header:login_register")}>
-              <Button size="xl" variant={"plain"} role="button" aria-label="Login or Register">
-                <LoginIcon />
-              </Button>
-            </Tooltip>
-          </Link>
+          <Tooltip title={t("header:login_register")}>
+            <Button size="xl" variant={"plain"} role="button" aria-label="Login or Register">
+              <LoginIcon />
+            </Button>
+          </Tooltip>
         </LocalLink>
       )}
     </Box>

@@ -1,24 +1,23 @@
-import { Link, Separator } from "@chakra-ui/react";
+import { Link, Menu, Separator } from "@chakra-ui/react";
 import LocalLink from "@components/@core/local-link";
 import useGlobalState from "@hooks/use-global-state";
 import { getPagesMenu } from "@utils/pages";
 import useTranslation from "next-translate/useTranslation";
 import React, { useMemo } from "react";
 
-import { MenuContent, MenuItem } from "@/components/ui/menu";
-
 const SubMenuLink = ({ item, onClose }) => (
   <>
-    <LocalLink href={item.to} params={item.params} prefixGroup={true}>
-      <MenuItem
-        value={item.to}
-        w="full"
-        onClick={onClose}
-        fontWeight={item?.rows ? "bold" : "normal"}
-      >
+    <Menu.Item
+      asChild
+      value={item.to}
+      w="full"
+      onClick={onClose}
+      fontWeight={item?.rows ? "bold" : "normal"}
+    >
+      <LocalLink href={item.to} params={item.params} prefixGroup={true}>
         {item.name}
-      </MenuItem>
-    </LocalLink>
+      </LocalLink>
+    </Menu.Item>
 
     {item?.rows && item.rows.map((i) => <SubMenuLink item={i} onClose={onClose} key={i.name} />)}
     {item?.rows && <Separator />}
@@ -31,16 +30,16 @@ export default function PagesMenuItem({ onClose }) {
   const pagesMenu = useMemo(() => getPagesMenu(pages), [pages]);
 
   return (
-    <MenuContent maxH="18.5rem" overflow="auto">
+    <Menu.Content maxH="18.5rem" overflow="auto">
       {pages.length ? (
         pagesMenu.map((item) => <SubMenuLink item={item} onClose={onClose} key={item.name} />)
       ) : (
         <LocalLink prefixGroup={true} href="/page/empty">
-          <MenuItem value="page" as="a" w="full" onClick={onClose}>
+          <Menu.Item value="page" w="full" onClick={onClose}>
             {t("header:menu_secondary.pages.empty")}
-          </MenuItem>
+          </Menu.Item>
         </LocalLink>
       )}
-    </MenuContent>
+    </Menu.Content>
   );
 }

@@ -1,13 +1,11 @@
 import { Box, Flex, HStack, IconButton, Link, Stack, useDisclosure } from "@chakra-ui/react";
 import SITE_CONFIG from "@configs/site-config";
-import dynamic from "next/dynamic";
 import React from "react";
 import { LuMenu, LuX } from "react-icons/lu";
-
-const LanguageSwitcher = dynamic(() => import("./language-switcher"), { ssr: false });
-const MenuItems = dynamic(() => import("./menu-items"), { ssr: false });
-const NavbarAuthOption = dynamic(() => import("./auth-option"), { ssr: false });
-const GroupListItem = dynamic(() => import("./group-list-item"), { ssr: false });
+import NavbarAuthOption from "./auth-option";
+import GroupListItem from "./group-list-item";
+import LanguageSwitcher from "./language-switcher";
+import MenuItems from "./menu-items";
 
 export default function NavBar() {
   const { open, onOpen, onClose } = useDisclosure();
