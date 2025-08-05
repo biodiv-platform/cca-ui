@@ -1,10 +1,8 @@
-import { Box, Button, Link } from "@chakra-ui/react";
+import { Box, Button, Link, Menu, Portal } from "@chakra-ui/react";
 import LocalLink from "@components/@core/local-link";
 import useTranslation from "next-translate/useTranslation";
 import React from "react";
 import { LuChevronDown } from "react-icons/lu";
-
-import { MenuContent, MenuItem, MenuRoot, MenuTrigger } from "@/components/ui/menu";
 
 const SimpleLink = ({ children, to, params, isDarkButton, prefixGroup }) => (
   <LocalLink href={to} params={params} prefixGroup={prefixGroup}>
@@ -17,10 +15,10 @@ const SimpleLink = ({ children, to, params, isDarkButton, prefixGroup }) => (
         height={"8"}
         rounded={"sm"}
       >
-        <a>{children}</a>
+        {children}
       </Button>
     ) : (
-      <Link>{children}</Link>
+      children
     )}
   </LocalLink>
 );
@@ -47,8 +45,8 @@ export default function MenuItems(props) {
   );
 
   return isDropdown ? (
-    <MenuRoot>
-      <MenuTrigger asChild pl={4}>
+    <Menu.Root>
+      <Menu.Trigger asChild pl={4}>
         <Box display="flex" alignItems="center">
           <SimpleLink to={to} params={params} prefixGroup={prefixGroup} isDarkButton={isDarkButton}>
             {linkContent}
@@ -57,22 +55,25 @@ export default function MenuItems(props) {
             <LuChevronDown aria-label="Open Menu" />
           </Box>
         </Box>
-      </MenuTrigger>
-
-      {CCell ? (
-        <CCell />
-      ) : (
-        <MenuContent>
-          {rows.map((row, index) => (
-            <MenuItem key={index} value={index}>
-              <LocalLink href={row.to} params={row.params} prefixGroup={prefixGroup}>
-                <Link w="full">{t(`${row.name}`)}</Link>
-              </LocalLink>
-            </MenuItem>
-          ))}
-        </MenuContent>
-      )}
-    </MenuRoot>
+      </Menu.Trigger>
+      <Portal>
+        <Menu.Positioner>
+          {CCell ? (
+            <CCell />
+          ) : (
+            <Menu.Content>
+              {rows.map((row) => (
+                <Menu.Item key={row.to} value={row.name} asChild>
+                  <LocalLink href={row.to} params={row.params} prefixGroup={prefixGroup}>
+                    {t(`${row.name}`)}
+                  </LocalLink>
+                </Menu.Item>
+              ))}
+            </Menu.Content>
+          )}
+        </Menu.Positioner>
+      </Portal>
+    </Menu.Root>
   ) : (
     <SimpleLink to={to} params={params} isDarkButton={isDarkButton} prefixGroup={prefixGroup}>
       {NameIcon && <NameIcon mr={1} />}

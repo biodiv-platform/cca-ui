@@ -32,7 +32,7 @@ function CarouselResourceInfo({ currentResource }: CarouselResourceInfoProps) {
         closeOnInteractOutside={false}
         lazyMount={true}
       >
-        <PopoverTrigger>
+        <PopoverTrigger asChild>
           <IconButton
             aria-label={t("form:resource_info")}
             zIndex={4}

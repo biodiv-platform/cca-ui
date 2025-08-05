@@ -41,7 +41,7 @@ export default function WhyThisPortal() {
           </chakra.p>
           <GridItem display="flex" alignItems="center" justifyContent={{ md: "flex-end" }}>
             <LocalLink href={SITE_CONFIG.PAGES.ABOUT[lang]} prefixGroup={true}>
-              <Button w={{ base: "full", sm: "auto" }} size="lg" colorPalette="blue" as="a">
+              <Button w={{ base: "full", sm: "auto" }} size="lg" colorPalette="blue">
                 {t("common:learn_more")}
               </Button>
             </LocalLink>

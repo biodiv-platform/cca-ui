@@ -1,10 +1,8 @@
-import { Button } from "@chakra-ui/react";
+import { Button, Popover, Portal } from "@chakra-ui/react";
 import styled from "@emotion/styled";
 import MenuIcon from "@icons/menu";
 import useTranslation from "next-translate/useTranslation";
 import React, { useState } from "react";
-
-import { PopoverBody, PopoverContent, PopoverRoot, PopoverTrigger } from "@/components/ui/popover";
 
 const ToCContainer = styled.div`
   ul {
@@ -28,33 +26,37 @@ const ToCContainer = styled.div`
 
 export function TableOfContents({ quickNavLinks }) {
   const { t } = useTranslation();
-  const [isOpen, setIsOpen] = useState(false);
+  const [open, setOpen] = useState(false);
 
   return (
-    <PopoverRoot
-      open={isOpen}
-      onOpenChange={() => setIsOpen(true)}
+    <Popover.Root
+      open={open}
+      onOpenChange={(e) => setOpen(e.open)}
       positioning={{ placement: "bottom-start" }}
     >
-      <PopoverTrigger>
+      <Popover.Trigger asChild>
         <Button variant="outline" size="md" colorPalette="gray" bg="gray.200" fontWeight={"bold"}>
           <MenuIcon />
           {t("chart:quick_navigation")}
         </Button>
-      </PopoverTrigger>
-      <PopoverContent>
-        <PopoverBody maxH="20rem" overflow="auto" onClick={() => setIsOpen(false)}>
-          <ToCContainer className="toc">
-            <ul>
-              {quickNavLinks.map((link, index) => (
-                <li key={index}>
-                  <a href={link.href}>{link.Title}</a>
-                </li>
-              ))}
-            </ul>
-          </ToCContainer>
-        </PopoverBody>
-      </PopoverContent>
-    </PopoverRoot>
+      </Popover.Trigger>
+      <Portal>
+        <Popover.Positioner>
+          <Popover.Content>
+            <Popover.Body maxH="20rem" overflow="auto" onClick={() => setOpen(false)}>
+              <ToCContainer className="toc">
+                <ul>
+                  {quickNavLinks.map((link, index) => (
+                    <li key={index}>
+                      <a href={link.href}>{link.Title}</a>
+                    </li>
+                  ))}
+                </ul>
+              </ToCContainer>
+            </Popover.Body>
+          </Popover.Content>
+        </Popover.Positioner>
+      </Portal>
+    </Popover.Root>
   );
 }

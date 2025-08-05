@@ -71,7 +71,7 @@ export default function Statistics(featured) {
           </GridItem>
           <GridItem display="flex" alignItems="center" justifyContent={{ md: "flex-end" }}>
             <LocalLink href="/chart" prefixGroup={true}>
-              <Button size="lg" colorPalette="blue" as="a">
+              <Button size="lg" colorPalette="blue">
                 {t("home:statistics.title")}
               </Button>
             </LocalLink>

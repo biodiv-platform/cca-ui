@@ -12,7 +12,6 @@ import LocalLink from "@components/@core/local-link";
 import Tooltip from "@components/@core/tooltip";
 import SITE_CONFIG from "@configs/site-config";
 import useGlobalState from "@hooks/use-global-state";
-import EditIcon from "@icons/edit";
 import MailIcon from "@icons/mail";
 import NotificationsActiveIcon from "@icons/notifications-active";
 import NotificationsNoneIcon from "@icons/notifications-none";
@@ -37,6 +36,8 @@ import {
 
 import useTemplateResponseShow from "../use-template-response-show";
 import NewRequestForm from "./requestorForm";
+import NoSSR from "@/components/@core/no-ssr";
+import { LuPencil } from "react-icons/lu";
 
 const UserAvatar = ({ u, ...rest }) => (
   <Tooltip showArrow={true} title={u.name}>
@@ -141,23 +142,25 @@ export default function ShowHeader() {
         />
         <Heading mb={4} fontWeight="semibold" size={"4xl"}>
           {title}
-          {canEdit && (
-            <LocalLink href={`/data/edit/${header.id}`} prefixGroup={true}>
-              <IconButton
-                size="lg"
-                className="no-print"
-                rounded={"full"}
-                variant="ghost"
-                colorPalette="blue"
-                aria-label={t("common:edit")}
-                as={LinkOverlay}
-                ml={3}
-                position="relative"
-              >
-                <EditIcon />
-              </IconButton>
-            </LocalLink>
-          )}
+          <NoSSR>
+            {canEdit && (
+              <LocalLink href={`/data/edit/${header.id}`} prefixGroup={true}>
+                <IconButton
+                  size="lg"
+                  className="no-print"
+                  rounded={"full"}
+                  variant="ghost"
+                  colorPalette="blue"
+                  aria-label={t("common:edit")}
+                  as={LinkOverlay}
+                  ml={3}
+                  position="relative"
+                >
+                  <LuPencil />
+                </IconButton>
+              </LocalLink>
+            )}
+          </NoSSR>
           {isLoggedIn && (
             <IconButton
               className="no-print"

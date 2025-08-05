@@ -1,12 +1,10 @@
-import { Box, Flex, Image, Input, Link, Text } from "@chakra-ui/react";
+import { Box, Flex, Image, Input, Link, Menu, Portal, Text } from "@chakra-ui/react";
 import SITE_CONFIG from "@configs/site-config";
 import useGlobalState from "@hooks/use-global-state";
 import debounce from "debounce-promise";
 import useTranslation from "next-translate/useTranslation";
 import React, { useState } from "react";
 import { LuArrowRight, LuChevronDown } from "react-icons/lu";
-
-import { MenuContent, MenuItem, MenuRoot, MenuTrigger } from "@/components/ui/menu";
 
 import LocalLink from "../local-link";
 
@@ -25,59 +23,50 @@ const GroupListItem = () => {
   const extraProps = { _hover: { bg: "gray.200" } };
 
   return (
-    <MenuRoot>
-      <MenuTrigger
-        as={Link}
-        role="button"
-        rounded="md"
-        cursor="pointer"
-        minW={0}
-        px={6}
-        py={1}
-        {...extraProps}
-      >
-        {t("header:menu_primary.groups.title")}
-        <LuChevronDown />
-      </MenuTrigger>
-      <MenuContent h="18rem" w="360px" overflowY="scroll">
-        <Box px={2}>
-          <Input w="full" onChange={onQuery} placeholder={t("header:search")} />
-        </Box>
-        <MenuItem minH="3rem" value="list">
-          <Link w="full" asChild>
-            <LocalLink href="/group/list" prefixGroup={true}>
-              {t("header:menu_primary.groups.see_all")} <LuArrowRight />
-            </LocalLink>
-          </Link>
-        </MenuItem>
-
-        {filterGroups?.map((g) => {
-          const groupURL: any = removePrefix
-            ? g?.webAddress?.replace(SITE_CONFIG.SITE.URL, "")
-            : g?.webAddress;
-
-          return (
-            <MenuItem key={g.id} minH="3rem" value={g.id}>
-              <LocalLink href={groupURL}>
-                <Link w="full">
-                  <Flex alignItems="center">
-                    <Image
-                      boxSize="2rem"
-                      objectFit="contain"
-                      loading="lazy"
-                      src={`${g.icon}?w=40`}
-                      aria-label={`${g.name} Logo`}
-                      mr={2}
-                    />
-                    <Text lineHeight="1rem">{g.name}</Text>
-                  </Flex>
-                </Link>
+    <Menu.Root>
+      <Menu.Trigger asChild rounded="md" cursor="pointer" minW={0} px={4} py={1} {...extraProps}>
+        <Flex alignItems="center" gap={2}>
+          {t("header:menu_primary.groups.title")}
+          <LuChevronDown />
+        </Flex>
+      </Menu.Trigger>
+      <Portal>
+        <Menu.Positioner>
+          <Menu.Content h="18rem" w="360px" overflowY="scroll">
+            <Input w="full" onChange={onQuery} placeholder={t("header:search")} />
+            <Menu.Item minH="3rem" value="list" asChild>
+              <LocalLink href="/group/list" prefixGroup={true}>
+                {t("header:menu_primary.groups.see_all")} <LuArrowRight />
               </LocalLink>
-            </MenuItem>
-          );
-        })}
-      </MenuContent>
-    </MenuRoot>
+            </Menu.Item>
+
+            {filterGroups?.map((g) => {
+              const groupURL: any = removePrefix
+                ? g?.webAddress?.replace(SITE_CONFIG.SITE.URL, "")
+                : g?.webAddress;
+
+              return (
+                <Menu.Item key={groupURL} minH="3rem" value={g.name} asChild>
+                  <LocalLink href={groupURL}>
+                    <Flex alignItems="center">
+                      <Image
+                        boxSize="2rem"
+                        objectFit="contain"
+                        loading="lazy"
+                        src={`${g.icon}?w=40`}
+                        aria-label={`${g.name} Logo`}
+                        mr={2}
+                      />
+                      <Text lineHeight="1rem">{g.name}</Text>
+                    </Flex>
+                  </LocalLink>
+                </Menu.Item>
+              );
+            })}
+          </Menu.Content>
+        </Menu.Positioner>
+      </Portal>
+    </Menu.Root>
   );
 };
 
