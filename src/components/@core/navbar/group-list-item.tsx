@@ -47,7 +47,7 @@ const GroupListItem = () => {
 
               return (
                 <Menu.Item key={groupURL} minH="3rem" value={g.name} asChild>
-                  <LocalLink href={groupURL}>
+                  <a href={groupURL}>
                     <Flex alignItems="center">
                       <Image
                         boxSize="2rem"
@@ -57,9 +57,11 @@ const GroupListItem = () => {
                         aria-label={`${g.name} Logo`}
                         mr={2}
                       />
-                      <Text lineHeight="1rem">{g.name}</Text>
+                      <Text lineHeight="1rem">
+                        {g.name} {console.info(g.name, groupURL)}
+                      </Text>
                     </Flex>
-                  </LocalLink>
+                  </a>
                 </Menu.Item>
               );
             })}
