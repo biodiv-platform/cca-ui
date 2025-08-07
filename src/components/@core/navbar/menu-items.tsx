@@ -11,6 +11,7 @@ import React, { useEffect, useState } from "react";
 import LocalLink from "../local-link";
 import MenuItems from "../navigation-menu/common/menu-items";
 import Search from "./search";
+import NoSSR from "../no-ssr";
 
 interface NavLinkProps {
   children;
@@ -47,17 +48,19 @@ export default function PagesItems() {
 
   return (
     <>
-      <Search />
-      {pagesMenu?.map((item) => <MenuItems key={item.name} {...item} prefixGroup={false} />)}
-      {header.map((i) => (
-        <NavLink
-          href={i.url}
-          key={i.url}
-          hidden={!hasAccess(i.access) || (isPreviewMode && i.preview !== isPreviewMode)}
-        >
-          {t(i.title)}
-        </NavLink>
-      ))}
+      <NoSSR>
+        <Search />
+        {pagesMenu?.map((item) => <MenuItems key={item.name} {...item} prefixGroup={false} />)}
+        {header.map((i) => (
+          <NavLink
+            href={i.url}
+            key={i.url}
+            hidden={!hasAccess(i.access) || (isPreviewMode && i.preview !== isPreviewMode)}
+          >
+            {t(i.title)}
+          </NavLink>
+        ))}
+      </NoSSR>
     </>
   );
 }
