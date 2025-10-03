@@ -1,7 +1,7 @@
 {
   "about": {
-    "closed_group": "Closed Group",
-    "open_group": "Open Group",
+    "closed_microsite": "Closed Microsite",
+    "open_microsite": "Open Microsite",
     "title": "About"
   },
   "admin": {
@@ -10,21 +10,21 @@
     "moderator": "Moderators",
     "no_access": "Contact administrator",
     "title": "User Roles",
-    "view_members": "View All Members",
-    "updated": "Group Users Updated Successfully"
+    "updated": "Microsite Users Updated Successfully",
+    "view_members": "View All Members"
   },
-  "confirm_closed_group": "This is a closed group, Membership request has to be approved by a moderator. Press OK to send join request",
-  "confirm_leave": "Leave Group?",
+  "confirm_closed_microsite": "This is a closed microsite, Membership request has to be approved by a moderator. Press OK to send join request",
+  "confirm_leave": "Leave Microsite?",
   "create": {
-    "error": "There was some error while creating Group",
-    "success": "Group Created Successfully",
-    "title": "Create a Group"
+    "error": "There was some error while creating Microsite",
+    "success": "Microsite Created Successfully",
+    "title": "Create a Microsite"
   },
   "delete_member": "Are you sure you want to delete?",
   "edit": {
-    "error": "There was some error while updating Group",
-    "success": "Group Updated Successfully",
-    "title": "Edit Group"
+    "error": "There was some error while updating Microsite",
+    "success": "Microsite Updated Successfully",
+    "title": "Edit Microsite"
   },
   "homepage_customization": {
     "about_us": "About Us",
@@ -79,23 +79,23 @@
   "invite": "Type user name",
   "invite_founders": "Invite Founders",
   "invite_moderators": "Invite Moderators",
-  "join": "Join Group",
-  "join_without_invitation": "Allow user to join the group without invitation",
-  "leave": "Leave Group",
+  "join": "Join Microsite",
+  "join_without_invitation": "Allow user to join the microsite without invitation",
+  "leave": "Leave Microsite",
   "list": {
-    "title": "Groups"
+    "title": "Microsites"
   },
   "member": {
-    "joined": "Group joined successfully",
-    "joined_error": "Unable to join Group",
-    "left": "Group left successfully",
-    "left_error": "Unable to leave Group",
-    "requested": "Group join request sent"
+    "joined": "Microsite joined successfully",
+    "joined_error": "Unable to join Microsite",
+    "left": "Microsite left successfully",
+    "left_error": "Unable to leave Microsite",
+    "requested": "Microsite join request sent"
   },
-  "name": "Group Name",
-  "post": "Post to Group",
-  "save": "Create Group",
+  "name": "Microsite Name",
+  "post": "Post to Microsite",
+  "save": "Create Microsite",
   "spatial_coverge": "Spatial Coverage",
   "tags": "Tags",
-  "update": "Update Group"
+  "update": "Update Microsite"
 }

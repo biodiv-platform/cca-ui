@@ -31,6 +31,7 @@ interface ISelectProps {
   isClearable?;
   resetOnSubmit?;
   isRaw?;
+  portalled?: boolean;
 }
 
 const dummyOnQuery = (q) =>
@@ -62,6 +63,7 @@ export const SelectAsyncInputField = ({
   resetOnSubmit = true,
   isClearable = true,
   isRaw,
+  portalled = true,
   ...props
 }: ISelectProps) => {
   const form = useFormContext();
@@ -111,7 +113,7 @@ export const SelectAsyncInputField = ({
           isMulti={multiple}
           defaultOptions={options}
           loadOptions={onQueryDebounce}
-          menuPortalTarget={MENU_PORTAL_TARGET}
+          menuPortalTarget={portalled && MENU_PORTAL_TARGET}
           components={{
             Option: optionComponent,
             DropdownIndicator: () => null,

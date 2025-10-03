@@ -54,7 +54,7 @@
   "user": {
     "contributor": "Contributor",
     "email": "email",
-    "group_role_title": "Usergroup Roles",
+    "group_role_title": "Microsite Roles",
     "institution_title": "Institution",
     "name_of_user": "Name of User",
     "phone": "Phone Number",
@@ -68,6 +68,6 @@
     "username": "User Name"
   },
   "usergroup": {
-    "title": "User Groups"
+    "title": "Microsite"
   }
 }

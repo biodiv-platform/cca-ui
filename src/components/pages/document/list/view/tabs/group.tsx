@@ -12,7 +12,7 @@ export default function GroupsTab({ o }) {
 
   return (
     <>
-      <BoxHeading>👥 {t("common:usergroups")}</BoxHeading>
+      <BoxHeading>👥 {t("common:microsites")}</BoxHeading>
       <Box height="100%" overflowX="auto" p={4}>
         <GroupPost
           groups={loggedInUserGroups}

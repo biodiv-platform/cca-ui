@@ -33,7 +33,7 @@ const DocumentFilterContext = createContext<DocumentFilterContextProps>(
 export const DocumentFilterProvider = (props) => {
   const initialOffset = props.filter.offset;
   const [filter, setFilter] = useImmer({ f: props.filter });
-  const [documentData, setDocumentData] = useImmer(props.documentData);
+  const [documentData, setDocumentData] = useImmer(props?.documentData);
   const { isLoggedIn } = useGlobalState();
   const [loggedInUserGroups, setLoggedInUserGroups] = useState<UserGroupIbp[]>();
 

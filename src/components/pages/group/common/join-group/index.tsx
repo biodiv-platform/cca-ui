@@ -30,7 +30,7 @@ export default function JoinUserGroup({
   const addUserGroupMember = async () => {
     waitForAuth();
     setLoading(true);
-    const canAddMember = currentGroup.isParticipatory || confirm(t("group:confirm_closed_group"));
+    const canAddMember = currentGroup.isParticipatory || confirm(t("group:confirm_closed_microsite"));
     if (canAddMember) {
       const { success } = await axJoinUserGroup(currentGroup.id);
       if (success) {

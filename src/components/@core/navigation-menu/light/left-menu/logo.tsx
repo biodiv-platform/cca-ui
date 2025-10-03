@@ -107,7 +107,7 @@ export default function PrimaryLogo({ isOpen, onToggle }) {
             setIsCurrentGroupMember={setIsCurrentGroupMember}
           />
           <CreatePagesButton label={t("header:create_pages")} />
-          <EditLinkButton label={t("header:group_edit")} />
+          <EditLinkButton label={t("header:microsite_edit")} />
         </>
       )}
     </Logo>

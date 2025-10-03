@@ -37,7 +37,7 @@ export const actionTabs = [
     icon: "ℹ️"
   },
   {
-    name: "common:usergroups",
+    name: "common:microsites",
     active: SITE_CONFIG.USERGROUP.ACTIVE,
     icon: "👥"
   },

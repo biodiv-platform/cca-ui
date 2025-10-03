@@ -12,13 +12,13 @@ interface ITraitInputProps {
 }
 
 const CustomCheckBox = (props: any) => {
-  const { getControlProps, getLabelProps } = useCheckbox(props);
+  const { getHiddenInputProps, getControlProps } = useCheckbox(props);
 
   return (
     <label>
-      <input {...getControlProps()} required={false} />
+      <input {...getHiddenInputProps()} required={false} />
       <Box
-        {...getLabelProps()}
+        {...getControlProps()}
         p={2}
         cursor="pointer"
         borderWidth="2px"
@@ -46,14 +46,13 @@ const CheckBoxItems = ({
   gridColumns = [1, 1, 3, 5]
 }: ITraitInputProps) => {
   const { getItemProps } = useCheckboxGroup({
-    defaultValue: defaultValue && defaultValue.map((o) => o.toString()),
+    defaultValue: defaultValue && defaultValue.map((o) => o?.toString()),
     onValueChange: (v) => onChange(v.map((i) => Number(i)))
   });
 
   return (
     <SimpleGrid columns={gridColumns} gridGap={4}>
       {options.map((o) => {
-        console.warn("0", o);
         return (
           <CustomCheckBox key={o.id} {...getItemProps({ value: String(o.id) })}>
             <Flex alignItems="center" h="2rem" overflow="hidden" title={o.name}>
@@ -67,8 +66,8 @@ const CheckBoxItems = ({
                     ? o.id === "null"
                       ? o.icon
                       : o.icon.startsWith("http")
-                      ? o.icon + "?h=32"
-                      : getGroupImageThumb(o.icon)
+                        ? o.icon + "?h=32"
+                        : getGroupImageThumb(o.icon)
                     : ""
                 }
                 alt={o.name}

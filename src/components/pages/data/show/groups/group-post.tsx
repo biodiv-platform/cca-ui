@@ -93,7 +93,7 @@ export default function GroupPost({
     <Box>
       <SimpleGrid columns={3} mb={4}>
         <Flex alignItems="center">
-          <Heading size="4xl">👥 {t("common:usergroups")}</Heading>
+          <Heading size="4xl">👥 {t("common:microsites")}</Heading>
           <Button
             colorPalette="blue"
             size="sm"

@@ -3,10 +3,9 @@
   "browse": "Browse CCAs",
   "create_pages": "Create Pages",
   "documents": "Documents",
-  "group_edit": "Edit Group",
-  "logged_user_only": "Please login to join the group",
+  "logged_user_only": "Please login to join the microsite",
   "login_register": "Log In/Register",
-  "member_only": "Please join the group to upload CCAs",
+  "member_only": "Please join the microsite to upload CCAs",
   "pages": {
     "empty": "No Pages",
     "title": "Pages"
@@ -23,6 +22,7 @@
       "title": "Pages"
     }
   },
+  "microsite_edit": "Edit Microsite",
   "participate": "Participate",
   "search": "Search",
   "stats": "Statistics",
