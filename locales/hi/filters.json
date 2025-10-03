@@ -54,7 +54,7 @@
   "user": {
     "contributor": "योगदान देने वाला",
     "email": "ईमेल",
-    "group_role_title": "उपयोगकर्ता समूह भूमिकाएँ",
+    "group_role_title": "माइक्रोसाइट भूमिकाएँ",
     "institution_title": "संस्थान",
     "name_of_user": "उपयोगकर्ता का नाम",
     "phone": "फ़ोन नंबर",
@@ -68,6 +68,6 @@
     "username": "उपयोगकर्ता नाम"
   },
   "usergroup": {
-    "title": "यूसर समूह"
+    "title": "माइक्रोसाइट"
   }
 }

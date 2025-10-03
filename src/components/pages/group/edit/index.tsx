@@ -33,7 +33,7 @@ export default function EditGroupPageComponent({
     <Center>
       <Box pt={10} className="container" width={"60%"}>
         <div className="container mt">
-          <PageHeading>👥 {t("group:edit.title")}</PageHeading>
+          <PageHeading size="3xl">👥 {t("group:edit.title")}</PageHeading>
 
           {groupInfo ? (
             <UserGroupEditForm groupInfo={groupInfo} userGroupId={userGroupId} />

@@ -125,7 +125,7 @@ export default function Container({ o }) {
 
           {SITE_CONFIG.USERGROUP.ACTIVE && (
             <Tabs.Content
-              value="common:usergroups"
+              value="common:microsites"
               height="100%"
               className="tab-content"
               position="relative"

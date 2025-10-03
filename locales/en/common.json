@@ -24,7 +24,7 @@
   "bulk_action": {
     "failure": "Unable to trigger bulk action",
     "success": "Successfully triggered  bulk action, Changes will be reflected  shortly",
-    "title": "Remove Users from Group - "
+    "title": "Remove Users from Microsite - "
   },
   "cancel": "Cancel",
   "case_studies": "Case Studies",
@@ -52,10 +52,11 @@
   },
   "load_more": "load more",
   "loading": "Loading...",
+  "microsites": "Microsites",
   "navigation": "Navigation",
   "next": "Next",
   "no_data": "No Data",
-  "no_groups_joined": "You have not joined any group",
+  "no_microsites_joined": "You have not joined any microsite",
   "no_results": "No Results",
   "notifications": {
     "invalid_credentials": "The username or password you entered is incorrect.",
@@ -65,7 +66,7 @@
   },
   "or": "or",
   "owner": "Owner",
-  "post_to_groups": "Post to Groups",
+  "post_to_microsites": "Post to Microsites",
   "powered_by": "Powered by",
   "prev": "Previous",
   "read_more": "Read More",
@@ -75,6 +76,5 @@
     "title": "Community Conserved Areas"
   },
   "view": "View",
-  "unknown": "Unknown",
-  "usergroups": "Groups"
+  "unknown": "Unknown"
 }
