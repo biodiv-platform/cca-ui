@@ -13,7 +13,10 @@ export function FiltersHeader() {
   };
 
   const filtersCount = useMemo(
-    () => Object.keys(filter.f).filter((k) => !["offset", "limit", "language"].includes(k)).length,
+    () =>
+      Object.keys(filter.f).filter(
+        (k) => !["offset", "limit", "language", "groupName", "usergroups"].includes(k)
+      ).length,
     [filter.f]
   );
 
@@ -38,7 +41,13 @@ export function FiltersHeader() {
         <Heading as="h2" fontSize="xl" fontWeight="semibold">
           {t("template:filters")} ({filtersCount})
         </Heading>
-        <Button size="xs" onClick={handleOnClearFilter} variant={"subtle"} rounded={"full"} fontWeight={"bold"}>
+        <Button
+          size="xs"
+          onClick={handleOnClearFilter}
+          variant={"subtle"}
+          rounded={"full"}
+          fontWeight={"bold"}
+        >
           {t("common:clear")}
         </Button>
       </Flex>
