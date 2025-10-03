@@ -14,7 +14,6 @@ import React from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import * as Yup from "yup";
 
-import AreaDrawField from "../common/area-draw-field";
 import ImageUploaderField from "../common/image-uploader-field";
 import { STATIC_GROUP_PAYLOAD } from "../common/static";
 
@@ -28,18 +27,7 @@ export default function UserGroupEditForm({ groupInfo, userGroupId }: IuserGroup
   const router = useLocalRouter();
   const { languageId } = useGlobalState();
 
-  const {
-    neLatitude,
-    neLongitude,
-    swLatitude,
-    swLongitude,
-    name,
-    description,
-    icon,
-    habitatId,
-    speciesGroupId,
-    allowUserToJoin
-  } = groupInfo;
+  const { name, description, icon, habitatId, speciesGroupId, allowUserToJoin } = groupInfo;
 
   const hForm = useForm<any>({
     mode: "onChange",
@@ -47,11 +35,7 @@ export default function UserGroupEditForm({ groupInfo, userGroupId }: IuserGroup
       Yup.object().shape({
         name: Yup.string().required(),
         speciesGroupId: Yup.array().required(),
-        habitatId: Yup.array().required(),
-        spacialCoverage: Yup.object().shape({
-          ne: Yup.array().required(),
-          se: Yup.array().required()
-        })
+        habitatId: Yup.array().required()
       })
     ),
     defaultValues: {
@@ -60,8 +44,7 @@ export default function UserGroupEditForm({ groupInfo, userGroupId }: IuserGroup
       icon,
       habitatId,
       speciesGroupId,
-      allowUserToJoin,
-      spacialCoverage: `${neLongitude},${neLatitude},${neLongitude},${swLatitude},${swLongitude},${swLatitude},${swLongitude},${neLatitude},${neLongitude},${neLatitude}`
+      allowUserToJoin
     }
   });
 
@@ -71,11 +54,7 @@ export default function UserGroupEditForm({ groupInfo, userGroupId }: IuserGroup
     const payload = {
       ...STATIC_GROUP_PAYLOAD,
       ...otherValues,
-      languageId: values.languageId || languageId,
-      neLatitude: spacialCoverage?.ne?.[1],
-      neLongitude: spacialCoverage?.ne?.[0],
-      swLatitude: spacialCoverage?.se?.[1],
-      swLongitude: spacialCoverage?.se?.[0]
+      languageId: values.languageId || languageId
     };
 
     const { success } = await axUserGroupUpdate(payload, userGroupId);
@@ -98,7 +77,6 @@ export default function UserGroupEditForm({ groupInfo, userGroupId }: IuserGroup
           <ImageUploaderField label="Logo" name="icon" />
         </SimpleGrid>
         <CheckboxField name="allowUserToJoin" label={t("group:join_without_invitation")} />
-        <AreaDrawField label={t("group:spatial_coverge")} name={"spacialCoverage"} />
         <SubmitButton mb={8}>{t("group:update")}</SubmitButton>
       </form>
     </FormProvider>

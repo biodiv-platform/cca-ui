@@ -11,7 +11,7 @@ export default function ListView({ no }) {
   const { documentData, nextPage } = useDocumentFilter();
   const { t } = useTranslation();
 
-  return Array.isArray(documentData.l) ? (
+  return Array.isArray(documentData?.l) ? (
     <>
       <InfiniteScroll
         dataLength={documentData.l.length}
