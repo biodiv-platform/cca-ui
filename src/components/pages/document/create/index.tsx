@@ -81,7 +81,7 @@ export default function DocumentCreatePageComponent({ documentTypes, licensesLis
       habitatIds: [],
       docCoverageData: [],
       userGroupId: currentGroup.id && currentGroup.id > 0 ? [currentGroup.id.toString()] : [],
-      licenseId: licensesList?.[0]?.value
+      licenseId: licensesList?.[2]?.value
     }
   });
 
@@ -125,7 +125,7 @@ export default function DocumentCreatePageComponent({ documentTypes, licensesLis
             licensesList={licensesList}
           />
           <Metadata bibFields={bibField.fields} />
-          <UserGroups name="userGroupId" label={t("common:post_to_groups")} />
+          <UserGroups name="userGroupId" label={t("common:post_to_microsites")} />
           <SubmitButton leftIcon={<CheckIcon />}>{t("document:create.title")}</SubmitButton>
         </form>
       </FormProvider>

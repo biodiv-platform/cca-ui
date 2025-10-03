@@ -107,7 +107,7 @@ export const FileField = ({
       await timeOut(5000);
       append({
         attribution: "",
-        license: LICENSES[0],
+        license: LICENSES[1],
         path: `${ENDPOINT.FILES}/get/raw/pages${resource.uri}`
       });
     }
@@ -179,10 +179,10 @@ export const FileField = ({
                   placeholder={t("form:attribution")}
                 />
 
-                <NativeSelectRoot size="sm" width="240px">
+                <NativeSelectRoot size="sm">
                   <NativeSelectField
                     {...register(`${name}.${index}.license`)}
-                    defaultValue={LICENSES[0]}
+                    defaultValue={LICENSES[1]}
                     placeholder="Select framework"
                     items={LICENSES}
                   />
