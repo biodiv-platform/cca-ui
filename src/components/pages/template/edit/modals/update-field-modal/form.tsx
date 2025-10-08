@@ -1,4 +1,4 @@
-import { Button, SimpleGrid } from "@chakra-ui/react";
+import { Button, Dialog, SimpleGrid } from "@chakra-ui/react";
 import { CheckboxField } from "@components/form/checkbox";
 import { DateRangePickerField } from "@components/form/daterangepicker";
 import { NumberRangeField } from "@components/form/number-range";
@@ -22,14 +22,6 @@ import useTranslation from "next-translate/useTranslation";
 import React, { useMemo } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import * as Yup from "yup";
-
-import {
-  DialogBody,
-  DialogCloseTrigger,
-  DialogContent,
-  DialogFooter,
-  DialogHeader
-} from "@/components/ui/dialog";
 
 import useTemplate from "../../use-template";
 
@@ -79,14 +71,14 @@ export default function UpdateFieldForm({ defaultValues, onClose }) {
   };
 
   return (
-    <FormProvider {...hForm}>
-      <form onSubmit={hForm.handleSubmit(handleOnSubmit)}>
-        <DialogContent>
-          <DialogHeader fontSize={"xl"} fontWeight={"bold"}>
+    <Dialog.Content>
+      <FormProvider {...hForm}>
+        <form onSubmit={hForm.handleSubmit(handleOnSubmit)}>
+          <Dialog.Header fontSize={"xl"} fontWeight={"bold"}>
             {t("template:manage_field")} ({SITE_CONFIG.LANG.LIST[template.language].NAME})
-          </DialogHeader>
-          <DialogCloseTrigger />
-          <DialogBody>
+          </Dialog.Header>
+          <Dialog.CloseTrigger />
+          <Dialog.Body>
             <SimpleGrid columns={[1, 1, 2, 2]} gap={4}>
               <TextBoxField name="fieldId" disabled={true} label={t("form:field_id")} />
               <TextBoxField name="name" isRequired={true} label={t("form:name")} />
@@ -160,16 +152,16 @@ export default function UpdateFieldForm({ defaultValues, onClose }) {
               disableValues={areFieldsReadOnly}
               label={t("form:options.title")}
             />
-          </DialogBody>
+          </Dialog.Body>
 
-          <DialogFooter>
+          <Dialog.Footer>
             <Button variant={"subtle"} mr={3} onClick={onClose}>
               {t("common:close")}
             </Button>
             <SubmitButton>{t("common:save")}</SubmitButton>
-          </DialogFooter>
-        </DialogContent>
-      </form>
-    </FormProvider>
+          </Dialog.Footer>
+        </form>
+      </FormProvider>
+    </Dialog.Content>
   );
 }

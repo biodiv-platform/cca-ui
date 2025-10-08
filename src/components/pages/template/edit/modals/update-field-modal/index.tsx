@@ -1,17 +1,22 @@
 import React from "react";
 
-import { DialogBackdrop, DialogRoot } from "@/components/ui/dialog";
-
 import useTemplate from "../../use-template";
 import UpdateFieldForm from "./form";
+import { Dialog, Portal } from "@chakra-ui/react";
 
 export default function UpdateFieldModal() {
   const { currentField, clearCurrentField } = useTemplate();
 
   return (
-    <DialogRoot open={currentField} onOpenChange={clearCurrentField} size="xl">
-      <DialogBackdrop />
-      {currentField && <UpdateFieldForm defaultValues={currentField} onClose={clearCurrentField} />}
-    </DialogRoot>
+    <Dialog.Root size="xl" open={currentField} modal={false}>
+      <Portal>
+        <Dialog.Backdrop />
+        <Dialog.Positioner>
+          {currentField && (
+            <UpdateFieldForm defaultValues={currentField} onClose={clearCurrentField} />
+          )}
+        </Dialog.Positioner>
+      </Portal>
+    </Dialog.Root>
   );
 }
