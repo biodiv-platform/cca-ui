@@ -1,10 +1,9 @@
 import WYSIWYGEditor from "@components/@core/wysiwyg-editor";
 import { namedFormErrorMessage } from "@utils/field";
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { useController } from "react-hook-form";
-
-import { Field } from "../ui/field";
 import { FormLabel } from "./common";
+import { Field } from "@chakra-ui/react";
 
 interface IWYSIWYGFieldProps {
   helpText?: string;
@@ -36,12 +35,24 @@ const WYSIWYGField = ({
   ...props
 }: IWYSIWYGFieldProps) => {
   const { field, fieldState } = useController({ name });
+  const wrapperRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    if (fieldState.error && wrapperRef.current) {
+      wrapperRef.current.scrollIntoView({
+        behavior: "smooth",
+        block: "center"
+      });
+    }
+  }, [fieldState.error]);
 
   return (
-    <Field
+    <Field.Root
       invalid={!!fieldState.error}
-      errorText={namedFormErrorMessage(fieldState?.error?.message, name, title)}
+      required={isRequired}
       mb={mb}
+      color="gray.600"
+      ref={wrapperRef}
       {...props}
     >
       <FormLabel
@@ -64,9 +75,11 @@ const WYSIWYGField = ({
       >
         {label}
       </WYSIWYGEditor>
-
-      {hint && <Field color="gray.600" helperText={hint} />}
-    </Field>
+      {hint && <Field.HelperText>{hint}</Field.HelperText>}
+      <Field.ErrorText>
+        {namedFormErrorMessage(fieldState?.error?.message, name, title)}
+      </Field.ErrorText>
+    </Field.Root>
   );
 };
 
