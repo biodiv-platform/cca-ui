@@ -81,7 +81,7 @@ export default function TemplateParticipateComponent({ template }) {
       }
     }
     notification(t("form:saved.success"), NotificationType.Success);
-    router.push(`/data/edit/${data.id}#naksha-gmaps-view`, true);
+    router.push(`/data/show/${data.id}#naksha-gmaps-view`, true);
   };
 
   const handleOnSubmitInvalid = (fields) => {
@@ -98,44 +98,34 @@ export default function TemplateParticipateComponent({ template }) {
       <Sidebar fields={templateFields}>
         <FormProvider {...hForm}>
           <form onSubmit={hForm.handleSubmit(handleOnSubmit, handleOnSubmitInvalid)}>
-            <AccordionRoot multiple defaultValue={groupFieldsEnabled}>
-              {templateGroups
-                .filter(
-                  ({ heading, fields }) =>
-                    heading.isRequired || fields.some((field) => field.isRequired)
-                )
-                .map(({ heading, fields }) => (
-                  <AccordionItem key={heading?.fieldId} value={heading?.fieldId}>
-                    <AccordionItemTrigger>
-                      {heading ? (
-                        <ParticipateTemplateFieldRenderer field={heading} />
-                      ) : (
-                        t("form:no_heading")
-                      )}
-                    </AccordionItemTrigger>
-                    <AccordionItemContent pb={4} px={0}>
-                      {fields
-                        .filter((field) => heading.isRequired || field.isRequired)
-                        .map((field) => (
-                          <Box
-                            key={field.fieldId}
-                            border="1px solid"
-                            borderColor="gray.300"
-                            borderRadius="md"
-                            p={4}
-                            mb={6}
-                            bg="white"
-                          >
-                            <ParticipateTemplateFieldRenderer field={field} />
-                          </Box>
-                        ))}
-                    </AccordionItemContent>
-                  </AccordionItem>
-                ))}
+            <AccordionRoot defaultValue={groupFieldsEnabled} multiple={true}>
+              {templateGroups.map(({ heading, fields }) => (
+                <AccordionItem key={heading?.fieldId} value={heading?.fieldId}>
+                  <AccordionItemTrigger>
+                    {heading ? <ParticipateTemplateFieldRenderer field={heading} /> : "No Heading"}
+                  </AccordionItemTrigger>
+
+                  <AccordionItemContent pb={4} px={0}>
+                    {fields.map((field) => (
+                      <Box
+                        border="1px solid"
+                        borderColor="gray.300"
+                        borderRadius="md"
+                        p={4}
+                        key={field.fieldId}
+                        mb={6}
+                        bg="white"
+                      >
+                        <ParticipateTemplateFieldRenderer field={field} />
+                      </Box>
+                    ))}
+                  </AccordionItemContent>
+                </AccordionItem>
+              ))}
               <UserGroups name="userGroupId" label={t("group:post")} />
             </AccordionRoot>
             <CheckboxField mt={6} name="terms" label={t("form:terms")} />
-            <SubmitButton>{t("form:saved.title")}</SubmitButton>
+            <SubmitButton>{t("form:submit")}</SubmitButton>
           </form>
         </FormProvider>
       </Sidebar>
