@@ -52,7 +52,7 @@ export default function ParticipateTemplateFieldRenderer({ field }) {
           display="flex"
           size="md"
           fontWeight="600"
-          style={{ scrollMarginTop: "var(--content-top)" }}
+          style={{ scrollMarginTop: "var(--heading-height)" }}
         >
           <Box ref={headingRef} color="gray.400" as="a" mr={2}>
             #

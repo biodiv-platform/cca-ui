@@ -26,7 +26,12 @@ export default function ToC({ templateFields }) {
   const headings = useMemo(() => templateFields.filter((tf) => tf.type === FORM_TYPE.HEADING), []);
 
   return (
-    <Box position="sticky" top="var(--content-top)">
+    <Box
+      position={{ base: "sticky", md: "fixed" }}
+      top="var(--content-top)"
+      maxWidth="220px"
+      maxHeight={{ md: "calc(100vh - var(--content-top) - 20px)" }} // Prevent overflow
+    >
       <Stack>
         <Text textTransform={"uppercase"} fontWeight={700} fontSize={"sm"} letterSpacing={1}>
           {t("common:navigation")}
