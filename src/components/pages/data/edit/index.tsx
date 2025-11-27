@@ -58,7 +58,7 @@ export default function ResponseEditPageComponent() {
                   fontSize="xl"
                   fontWeight="bold"
                   id={heading.fieldId}
-                  css={{ scrollMarginTop: "var(--content-top)" }}
+                  css={{ scrollMarginTop: "var(--heading-height)" }}
                 >
                   {heading.name}
                 </chakra.h2>
