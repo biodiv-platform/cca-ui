@@ -65,7 +65,6 @@ export const transformMemberPayload = (membersList) => {
 
 const steps = [
   { label: "Basic Details", translation: "group:basic_details", icon: EditIcon },
-  { label: "Group Coverage", translation: "group:group_coverage", icon: GlobeIcon },
   { label: "User Roles", translation: "group:admin.title", icon: UserCheckIcon },
   {
     label: "Homepage Components",
@@ -102,7 +101,6 @@ export default function CreateGroupPageComponent({ languages }: GroupCreatePageC
           .matches(/^[^/]*$/, "Name cannot contain '/'"),
 
         allowUserToJoin: Yup.boolean().required(),
-        // spacialCoverage: Yup.string().required(),
         icon: Yup.string().nullable(),
         founder: Yup.array().nullable(),
         moderator: Yup.array().nullable(),
@@ -110,8 +108,6 @@ export default function CreateGroupPageComponent({ languages }: GroupCreatePageC
         showStats: Yup.boolean(),
         showDesc: Yup.boolean(),
         showGridMap: Yup.boolean()
-        // showPartners: Yup.boolean(),
-        // mediaToggle: Yup.boolean()
       })
     ),
     defaultValues: {
@@ -121,8 +117,6 @@ export default function CreateGroupPageComponent({ languages }: GroupCreatePageC
       showGridMap: true,
       showPartners: true,
       showDesc: true
-      // mediaToggle: true,
-      // spacialCoverage: null
     }
   });
   const isAdmin = hasAccess([Role.Admin]);
@@ -150,15 +144,7 @@ export default function CreateGroupPageComponent({ languages }: GroupCreatePageC
     const { success, data } = await axUserGroupCreate(payload);
     if (success) {
       notification(t("group:create.success"), NotificationType.Success);
-      const {
-        showDesc,
-        showGallery,
-        showGridMap,
-        showPartners,
-        showRecentObservation,
-        showStats,
-        description
-      } = hForm.getValues();
+      const { showDesc, showGallery, showGridMap, showStats, description } = hForm.getValues();
       let miniGallery_overall_success = true;
       const miniGalleryIds: string[] = [];
       for (const miniGallery of miniGalleryList) {
@@ -212,8 +198,6 @@ export default function CreateGroupPageComponent({ languages }: GroupCreatePageC
         showDesc,
         showGallery,
         showGridMap,
-        showPartners,
-        showRecentObservation,
         showStats,
         description
       };
@@ -234,17 +218,12 @@ export default function CreateGroupPageComponent({ languages }: GroupCreatePageC
   const handleNext = async () => {
     let isValid = false;
     if (
-      steps[currentStep].translation === "group:homepage_customization.mini_gallery_setup.title" ||
-      steps[currentStep].translation === "group:custom_field.title" ||
-      steps[currentStep].translation === "group:rules.title" ||
-      steps[currentStep].translation === "group:observation_display"
+      steps[currentStep].translation === "group:homepage_customization.mini_gallery_setup.title"
     ) {
       isValid = true;
     }
     if (steps[currentStep].translation === "group:basic_details") {
       isValid = await hForm.trigger(["name"]);
-    } else if (steps[currentStep].translation === "group:group_coverage") {
-      isValid = await hForm.trigger(["speciesGroup", "habitatId", "spacialCoverage"]);
     } else if (steps[currentStep].translation === "group:admin.title") {
       isValid = await hForm.trigger(["allowUserToJoin", "founder", "moderator"]);
     } else if (steps[currentStep].translation === "group:homepage_customization.title") {
@@ -376,12 +355,12 @@ export default function CreateGroupPageComponent({ languages }: GroupCreatePageC
                 <AdminInviteField
                   name="founder"
                   label={t("group:invite_founders")}
-                  // hint={t("group:invite_founders_hint")}
+                  hint={t("group:invite_founders_hint")}
                 />
                 <AdminInviteField
                   name="moderator"
                   label={t("group:invite_moderators")}
-                  // hint={t("group:invite_moderators_hint")}
+                  hint={t("group:invite_moderators_hint")}
                 />
               </>
             )}
@@ -401,7 +380,7 @@ export default function CreateGroupPageComponent({ languages }: GroupCreatePageC
                     />
                     <SwitchField
                       name="showGridMap"
-                      label={t("group:homepage_customization.observation_map")}
+                      label={t("group:homepage_customization.cca_map")}
                     />
                     <SwitchField
                       name="showDesc"
@@ -410,9 +389,6 @@ export default function CreateGroupPageComponent({ languages }: GroupCreatePageC
                   </Box>
                 </Box>
               </>
-            )}
-            {steps[currentStep].translation == "group:observation_display" && (
-              <SwitchField name="mediaToggle" label={t("group:observations_having_media")} />
             )}
           </form>
         </FormProvider>

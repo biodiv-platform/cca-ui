@@ -10,7 +10,10 @@
   "continue": "Continue",
   "contributors_for_document": "Contributors for this Document",
   "created_on": "Created On",
-  "description": "Description",
+  "description": {
+    "hint": "Please provide a concise overview of the aims and objectives of the microsite.",
+    "title": "Description"
+  },
   "edit": "Edit",
   "edit_fields": "Edit Fields",
   "edit_meta": "Edit MetaData",

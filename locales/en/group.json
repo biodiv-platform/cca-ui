@@ -13,10 +13,14 @@
     "updated": "Microsite Users Updated Successfully",
     "view_members": "View All Members"
   },
+  "basic_details": "Basic Details",
   "confirm_closed_microsite": "This is a closed microsite, Membership request has to be approved by a moderator. Press OK to send join request",
   "confirm_leave": "Leave Microsite?",
   "create": {
     "error": "There was some error while creating Microsite",
+    "next": "Next",
+    "previous": "Previous",
+    "step": "Step",
     "success": "Microsite Created Successfully",
     "title": "Create a Microsite"
   },
@@ -30,9 +34,11 @@
     "about_us": "About Us",
     "add_options": "Add Options",
     "back": "Back to List",
+    "cca_map": "Show CCA Map",
     "default": "Default",
     "failure": "Unable to Save changes",
     "gallery": "Gallery",
+    "gallery_hint": "Upload images to the homepage gallery.",
     "gallery_setup": {
       "alert": "Please save changes to re-order",
       "create": "Create Gallery Image",
@@ -40,7 +46,23 @@
       "show_image_upload": "Show Image Uploader",
       "title": "Gallery Setup"
     },
-    "observation_map": "Show Grid Map",
+    "hint": "Switch on or off homepage components such as descriptions, content stats, etc.",
+    "mini_gallery_setup": {
+      "active_label": "Enabled",
+      "create": "Create Mini Gallery",
+      "create_error": "Unable to create mini gallery",
+      "create_success": "Mini Gallery Created Successfully",
+      "delete_error": "Unable to delete",
+      "delete_success": "Mini Gallery Deleted Successfully",
+      "edit_error": "Unable to update mini gallery",
+      "edit_success": "Mini Gallery Updated Successfully",
+      "horizontal_slider_label": "Horizontal Slide (Slides move left and right)",
+      "slides_per_view": "Slides In View",
+      "title": "Mini Gallery",
+      "vertical_label": "Slider Type",
+      "vertical_slider_label": "Vertical Slide (Slides move up and down)"
+    },
+    "module_stats": "Module Stats",
     "remove": {
       "failure": "Unable to remove Gallery Image",
       "success": "Deleted Gallery Image Successfully"
@@ -78,13 +100,17 @@
   "invalid_wkt": "Enter Valid WKT String",
   "invite": "Type user name",
   "invite_founders": "Invite Founders",
+  "invite_founders_hint": "Founders will be able to edit the microsite and change all microsite settings.",
   "invite_moderators": "Invite Moderators",
+  "invite_moderators_hint": "Moderators cannot edit the microsite settings but will have additional privileges such as posting content in bulk and featuring objects.",
   "join": "Join Microsite",
   "join_without_invitation": "Allow user to join the microsite without invitation",
+  "join_without_invitation_hint": "Allow users to join the microsite as members without invitation? Closed microsites will need moderators to approve requests before joining.",
   "leave": "Leave Microsite",
   "list": {
     "title": "Microsites"
   },
+  "logo_hint": "Upload a logo for the microsite. It should preferably be cropped to a square.",
   "member": {
     "joined": "Microsite joined successfully",
     "joined_error": "Unable to join Microsite",
@@ -93,6 +119,7 @@
     "requested": "Microsite join request sent"
   },
   "name": "Microsite Name",
+  "name_hint": "Kindly provide the name of your microsite. Keep the name concise, as longer names may not be properly formatted in all locations, and the microsite URL will be generated based on this.",
   "post": "Post to Microsite",
   "save": "Create Microsite",
   "spatial_coverge": "Spatial Coverage",
