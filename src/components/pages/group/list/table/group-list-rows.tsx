@@ -13,7 +13,7 @@ export const UserGroupListTableRows = [
     style: { width: "12rem" },
     Cell: ({ cell, value }) => (
       <LocalLink href={cell.row.original.webAddress} prefixGroup={true}>
-        <Link w="full">
+        <>
           <Flex alignItems="center">
             <Image
               minW="4rem"
@@ -27,7 +27,7 @@ export const UserGroupListTableRows = [
             />
             <Text lineHeight="1rem">{value}</Text>
           </Flex>
-        </Link>
+        </>
       </LocalLink>
     )
   },

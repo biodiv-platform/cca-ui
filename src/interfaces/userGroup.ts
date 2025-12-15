@@ -225,6 +225,7 @@ export interface UserGroupHomePageEditData {
   gallerySlider?: GroupGallerySlider[];
 }
 export interface UserGroupCCA {
+  groupId?: number;
   id?: number; // int64
   name?: string;
   icon?: string;
@@ -272,4 +273,18 @@ export interface UserIbp {
   name?: string;
   profilePic?: string;
   isAdmin?: boolean;
+}
+
+export interface GallerySlider {
+  id?: number; // int64
+  ugId?: number; // int64
+  fileName?: string;
+  observationId?: number; // int64
+  authorId?: number; // int64
+  authorName?: string;
+  authorImage?: string;
+  title?: string;
+  customDescripition?: string;
+  moreLinks?: string;
+  translations?;
 }

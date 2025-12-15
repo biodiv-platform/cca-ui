@@ -19,24 +19,27 @@ import NProgress from "nprogress";
 import React from "react";
 
 import { customTheme } from "@/configs/theme";
+import { axGetActiveAnnouncement } from "@/services/utility.service";
+import Announcement from "@/components/@core/announcements";
 
 Router.events.on("routeChangeStart", () => NProgress.start());
 Router.events.on("routeChangeComplete", () => NProgress.done());
 Router.events.on("routeChangeError", () => NProgress.done());
 
-function MainApp({ Component, pageProps, user, groups, currentGroup, languageId }) {
+function MainApp({ Component, pageProps, user, groups, currentGroup, languageId, announcement }) {
   const config = { header: true, footer: true, ...Component?.config };
   const router = useRouter();
 
   return (
     <ChakraProvider value={customTheme}>
-      <GlobalStateProvider initialState={{ user, groups, currentGroup, languageId }}>
+      <GlobalStateProvider initialState={{ user, groups, currentGroup, languageId, announcement }}>
         <Metadata />
         <div className="content">
           {config.header && (
             <>
               <NavBar />
               <NavigationMenuLight />
+              <Announcement />
             </>
           )}
         </div>
@@ -59,9 +62,15 @@ MainApp.getInitialProps = async (appContext) => {
   const user = getParsedUser(appContext.ctx);
   const languageId = SITE_CONFIG.LANG.LIST[appContext.ctx.locale]?.ID;
 
-  const { currentGroup, groups } = await axGroupList(aReq.href, appContext.ctx.locale);
+  const { currentGroup, groups } = await axGroupList(
+    aReq.href,
+    languageId ? languageId : SITE_CONFIG.LANG.DEFAULT_ID,
+    appContext.ctx.locale
+  );
 
-  return { pageProps, user, groups, domain, currentGroup, languageId };
+  const { data: announcement } = await axGetActiveAnnouncement();
+
+  return { pageProps, user, groups, domain, currentGroup, languageId, announcement };
 };
 
 export default MainApp;

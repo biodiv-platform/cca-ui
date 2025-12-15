@@ -26,9 +26,9 @@ export const axGetUserGroupById = async (userGroupId) => {
   }
 };
 
-export const axGroupListExpanded = async () => {
+export const axGroupListExpanded = async (langId) => {
   try {
-    const { data } = await plainHttp.get(`${ENDPOINT.USERGROUP}/v1/group/list`);
+    const { data } = await plainHttp.get(`${ENDPOINT.USERGROUP}/v1/group/list/${langId}`);
     return { success: true, data: transformUserGroupList(data) };
   } catch (e) {
     console.error(e);
@@ -207,13 +207,15 @@ export const axLeaveUserGroup = async (userGroupId) => {
   }
 };
 
-export const axGetGroupHompageDetails = async (userGroupId) => {
+export const axGetGroupHompageDetails = async (userGroupId, langId) => {
   try {
-    const { data } = await plainHttp.get(`${ENDPOINT.USERGROUP}/v1/group/homePage/${userGroupId}`);
+    const { data } = await plainHttp.get(
+      `${ENDPOINT.USERGROUP}/v1/group/homePage/${userGroupId}/${langId}`
+    );
     return { success: true, data };
   } catch (e) {
     console.error(e);
-    return { success: false, data: [] };
+    return { success: false };
   }
 };
 
@@ -280,5 +282,43 @@ export const axEditGroupHomePageGallery = async (userGroupId, galleryId, payload
   } catch (e) {
     console.error(e);
     return { success: false, data: [] };
+  }
+};
+
+export const axCreateMiniGroupGallery = async (payload, groupId) => {
+  try {
+    const { data } = await http.post(
+      `${ENDPOINT.USERGROUP}/v1/group/homePage/miniGallery/create/${groupId}`,
+      payload
+    );
+    return { success: true, data };
+  } catch (e) {
+    console.error(e);
+    return { success: false, data: null };
+  }
+};
+
+export const axEditMiniGroupGallery = async (groupId, galleryId, payload) => {
+  try {
+    const { data } = await http.put(
+      `${ENDPOINT.USERGROUP}/v1/group/homePage/miniGallery/edit/${groupId}/${galleryId}`,
+      payload
+    );
+    return { success: true, data };
+  } catch (e) {
+    console.error(e);
+    return { success: false, data: null };
+  }
+};
+
+export const axRemoveMiniGroupGallery = async (groupId, galleryId) => {
+  try {
+    await http.delete(
+      `${ENDPOINT.USERGROUP}/v1/group/homePage/miniGallery/remove/${groupId}/${galleryId}`
+    );
+    return { success: true, data: null };
+  } catch (e) {
+    console.error(e);
+    return { success: false, data: null };
   }
 };

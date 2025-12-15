@@ -1,3 +1,4 @@
+import { getLanguageId } from "@/utils/i18n";
 import HomePageComponent from "@components/pages/home";
 import SITE_CONFIG from "@configs/site-config";
 import { axGroupList } from "@services/app.service";
@@ -12,9 +13,15 @@ function index({ featured }) {
 
 export const getServerSideProps = async (ctx) => {
   const aURL = absoluteUrl(ctx).href;
-  const { currentGroup } = await axGroupList(aURL);
+  const { currentGroup } = await axGroupList(
+    aURL,
+    getLanguageId(ctx.locale)?.ID ?? SITE_CONFIG.LANG.DEFAULT_ID
+  );
 
-  const { data: groupdata } = await axGetGroupHompageDetails(currentGroup?.id);
+  const { data: groupdata } = await axGetGroupHompageDetails(
+    currentGroup?.id,
+    getLanguageId(ctx.locale)?.ID ?? SITE_CONFIG.LANG.DEFAULT_ID
+  );
 
   interface Payload {
     language: any;
@@ -42,7 +49,7 @@ export const getServerSideProps = async (ctx) => {
     props: {
       featured: {
         featured: featured,
-        groupdata: groupdata,
+        groupdata: currentGroup?.groupId ? groupdata : null,
         aggregationData: aggregationData
       }
     }

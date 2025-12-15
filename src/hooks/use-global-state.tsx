@@ -23,6 +23,12 @@ interface GlobalStateContextProps {
   setIsCurrentGroupMember;
   languageId?;
 
+  open?;
+  setOpen?;
+
+  announcement?;
+  setAnnouncement?;
+
   pages;
   setPages;
   getPageTree?;
@@ -42,6 +48,9 @@ export const GlobalStateProvider = ({ initialState, children }: GlobalStateProvi
   const [user, setUser] = useState<any>(initialState.user || {});
   const [pages, setPages] = useState<any[]>([]);
   const [isCurrentGroupMember, setIsCurrentGroupMember] = useState<boolean>();
+
+  const [open, setOpen] = useState(true);
+  const [announcement, setAnnouncement] = useState(initialState.announcement || {});
 
   const router = useRouter();
   const { lang, t } = useTranslation();
@@ -112,9 +121,27 @@ export const GlobalStateProvider = ({ initialState, children }: GlobalStateProvi
 
       languageId: initialState.languageId,
 
+      open,
+      setOpen,
+
+      announcement,
+      setAnnouncement,
+
       isPreviewMode
     }),
-    [value, initialState, pages, user, isLoggedIn, isCurrentGroupMember, initialState.languageId]
+    [
+      value,
+      initialState,
+      pages,
+      user,
+      isLoggedIn,
+      isCurrentGroupMember,
+      initialState.languageId,
+      open,
+      setOpen,
+      announcement,
+      setAnnouncement
+    ]
   );
 
   return (

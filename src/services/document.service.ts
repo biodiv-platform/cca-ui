@@ -12,6 +12,18 @@ export const axGetDocumentById = async (documentId) => {
   }
 };
 
+export const axGetLangList = async () => {
+  try {
+    const { data } = await plainHttp.get(`${ENDPOINT.DOCUMENT}/v1/services/language`, {
+      params: { isDirty: false }
+    });
+    return { success: true, data };
+  } catch (e) {
+    console.error(e);
+    return { success: false, data: [] };
+  }
+};
+
 export const axGetEditDocumentById = async (ctx, documentId) => {
   try {
     const { data } = await http.get(`${ENDPOINT.DOCUMENT}/v1/services/edit/${documentId}`, {
