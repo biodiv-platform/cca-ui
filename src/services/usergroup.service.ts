@@ -311,6 +311,19 @@ export const axEditMiniGroupGallery = async (groupId, galleryId, payload) => {
   }
 };
 
+export const axEditMiniGroupHomePageGallery = async (userGroupId, galleryId, payload) => {
+  try {
+    const { data } = await http.put(
+      `${ENDPOINT.USERGROUP}/v1/group/homePage/miniSlider/edit/${userGroupId}/${galleryId}`,
+      payload
+    );
+    return { success: true, data };
+  } catch (e) {
+    console.error(e);
+    return { success: false, data: [] };
+  }
+};
+
 export const axRemoveMiniGroupGallery = async (groupId, galleryId) => {
   try {
     await http.delete(
@@ -320,5 +333,40 @@ export const axRemoveMiniGroupGallery = async (groupId, galleryId) => {
   } catch (e) {
     console.error(e);
     return { success: false, data: null };
+  }
+};
+
+export const axRemoveMiniGroupHomePageGalleryImage = async (userGroupId, galleryList, index) => {
+  try {
+    await http.put(
+      `${ENDPOINT.USERGROUP}/v1/group/homePage/miniSlider/remove/${userGroupId}/${Number(
+        galleryList[index].sliderId
+      )}`
+    );
+    const { response, payload } = reorderRemovedGallerySetup(galleryList, index);
+    if (payload.length > 1) {
+      await http.put(
+        `${ENDPOINT.USERGROUP}/v1/group/homePage/miniSlider/reordering/${userGroupId}`,
+        payload
+      );
+    }
+
+    return { success: true, data: response };
+  } catch (e) {
+    console.error(e);
+    return { success: false, data: [] };
+  }
+};
+
+export const axReorderMiniGroupHomePageGallery = async (userGroupId, payload) => {
+  try {
+    const { data } = await http.put(
+      `${ENDPOINT.USERGROUP}/v1/group/homePage/miniSlider/reordering/${userGroupId}`,
+      payload
+    );
+    return { success: true, data };
+  } catch (e) {
+    console.error(e);
+    return { success: false, data: [] };
   }
 };

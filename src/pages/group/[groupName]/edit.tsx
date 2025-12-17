@@ -1,4 +1,3 @@
-import SITE_CONFIG from "@/configs/site-config";
 import { axGetLangList } from "@/services/utility.service";
 import { getLanguageId } from "@/utils/i18n";
 import { authorizedPageSSP, throwUnauthorized } from "@components/auth/auth-redirect";

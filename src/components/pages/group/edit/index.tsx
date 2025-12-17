@@ -63,7 +63,6 @@ export default function EditGroupPageComponent({
 }: GroupEditPageProps) {
   const { t } = useTranslation();
   const isAdmin = hasAccess([Role.Admin]);
-  const isFounder = founders.some((founder) => founder.value === getParsedUser().id);
   const [currentStep, setCurrentStep] = useState(0);
 
   return (

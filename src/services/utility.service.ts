@@ -2,7 +2,7 @@ import { ENDPOINT } from "@static/constants";
 import { http, plainHttp } from "@utils/http";
 import axios from "axios";
 
-export const axGetLangList = async (document = false) => {
+export const axGetLangList = async () => {
   try {
     const { data } = await plainHttp.get(`${ENDPOINT.DOCUMENT}/v1/services/language`, {
       params: { isDirty: false }
