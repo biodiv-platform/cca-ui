@@ -124,5 +124,6 @@
   "save": "Create Microsite",
   "spatial_coverge": "Spatial Coverage",
   "tags": "Tags",
-  "update": "Update Microsite"
+  "update": "Update Microsite",
+  "webAddress": "WebAddress"
 }
