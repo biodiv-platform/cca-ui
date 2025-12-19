@@ -8,7 +8,7 @@ import Sidebar from "./sidebar";
 import Slide from "./slide";
 import SlideInfo from "./slide-info";
 
-export default function GroupCarousel({ featured }) {
+export default function GroupCarousel({ featured,mini, slidesPerView = 1 }) {
   const [currentSlide, setCurrentSlide] = useState(0);
 
   const [sliderRef, iSlider] = useKeenSlider<HTMLDivElement>(

@@ -11,9 +11,11 @@ import Mission from "./mission";
 import Posts from "./posts";
 import Statistics from "./statistics";
 import WhyThisPortal from "./why-this-portal";
+import { Heading } from "@chakra-ui/react";
+import VerticalCarousel from "./group/groupCarousel/vertical";
 
 export default function HomePageComponent({ featured }) {
-  const { currentGroup } = useGlobalState();
+  const { currentGroup, languageId } = useGlobalState();
 
   return (
     <>
@@ -41,8 +43,22 @@ export default function HomePageComponent({ featured }) {
             }}
           />
           {featured.groupdata.gallerySlider.length > 0 && featured.groupdata.showGallery && (
-            <GroupCarousel featured={featured.groupdata.gallerySlider} />
+            <GroupCarousel featured={featured.groupdata.gallerySlider} mini={false} />
           )}
+
+          {featured.groupdata.miniGallery &&
+            featured.groupdata.miniGallery.map((item) => (
+              <>
+                {/* <Heading as="h2" fontSize="2rem">
+                  {item.title || item.title}
+                </Heading> */}
+                <VerticalCarousel
+                  key={`gallery-${item.galleryId}-${languageId}`}
+                  featured={item.gallerySlider}
+                  slidesPerView={item.slidesPerView}
+                />
+              </>
+            ))}
           {featured.groupdata.showDesc && <GroupHome info={featured.groupdata} />}
           <Statistics featured={featured} />
         </>
