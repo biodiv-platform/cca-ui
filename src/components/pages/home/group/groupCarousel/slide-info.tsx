@@ -3,7 +3,7 @@ import React from "react";
 
 import Indicators from "./indicators";
 
-export default function SlideInfo({ size, currentSlide, scrollTo }) {
+export default function SlideInfo({ size, page, setPage }) {
   const showIndicators = useBreakpointValue({ base: false, md: true });
 
   return (
@@ -18,7 +18,7 @@ export default function SlideInfo({ size, currentSlide, scrollTo }) {
       <Flex justifyContent="space-between" alignItems="flex-end">
         {showIndicators && size > 1 && (
           <div>
-            <Indicators size={size} currentSlide={currentSlide} scrollTo={scrollTo} />
+            <Indicators size={size} page={page} setPage={setPage} />
           </div>
         )}
       </Flex>

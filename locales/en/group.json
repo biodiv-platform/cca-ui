@@ -72,6 +72,7 @@
       "success": "Gallery List reordered successfully"
     },
     "resources": {
+      "background_color": "Background Color",
       "error": "Enter valid observation id",
       "imageurl": "Choose Gallery Image",
       "link": "Show Page Link",

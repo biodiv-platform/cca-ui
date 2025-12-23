@@ -1,87 +1,56 @@
-import "keen-slider/keen-slider.min.css";
-
-import { Box, SimpleGrid } from "@chakra-ui/react";
-import { useKeenSlider } from "keen-slider/react";
+import { Box, Carousel, SimpleGrid } from "@chakra-ui/react";
 import React, { useState } from "react";
 
 import Sidebar from "./sidebar";
 import Slide from "./slide";
 import SlideInfo from "./slide-info";
 
-export default function GroupCarousel({ featured,mini, slidesPerView = 1 }) {
-  const [currentSlide, setCurrentSlide] = useState(0);
+export default function GroupCarousel({ featured }) {
+  const [page, setPage] = useState(0);
 
-  const [sliderRef, iSlider] = useKeenSlider<HTMLDivElement>(
-    {
-      loop: featured.length > 1,
-      slideChanged: (s) => setCurrentSlide(s?.track?.details?.rel)
-    },
-    [
-      (slider) => {
-        let timeout: ReturnType<typeof setTimeout>;
-        let mouseOver = false;
-        function clearNextTimeout() {
-          clearTimeout(timeout);
-        }
-        function nextTimeout() {
-          clearTimeout(timeout);
-          if (mouseOver) return;
-          timeout = setTimeout(() => {
-            slider.next();
-          }, 4000);
-        }
-        slider.on("created", () => {
-          slider.container.addEventListener("mouseover", () => {
-            mouseOver = true;
-            clearNextTimeout();
-          });
-          slider.container.addEventListener("mouseout", () => {
-            mouseOver = false;
-            nextTimeout();
-          });
-          nextTimeout();
-        });
-        slider.on("dragStarted", clearNextTimeout);
-        slider.on("animationEnded", nextTimeout);
-        slider.on("updated", nextTimeout);
-      }
-    ]
-  );
+  // Check if current page has a title
+  const hasTitle = featured[page]?.title;
 
-  return featured[currentSlide].title ? (
+  return (
     <SimpleGrid
-      columns={{ base: 1, md: 3 }}
+      columns={{ base: 1, md: hasTitle ? 3 : 1 }} // Dynamically adjust columns
       borderRadius="md"
       overflow="hidden"
       bg="gray.300"
       color="white"
     >
-      <Box gridColumn={{ md: "1/3" }} position="relative">
-        <Box ref={sliderRef} className="keen-slider fade">
-          {featured.map((o) => (
-            <Slide resource={o} key={o.id} />
-          ))}
-        </Box>
-        <SlideInfo
-          size={featured.length}
-          currentSlide={currentSlide}
-          scrollTo={iSlider?.current?.moveToIdx}
-        />
+      <Box
+        gridColumn={{
+          base: "1",
+          md: hasTitle ? "1/3" : "1/4" // Dynamically adjust grid span
+        }}
+        position="relative"
+      >
+        <Carousel.Root
+          slideCount={featured.length}
+          mx="auto"
+          gap="4"
+          position="relative"
+          colorPalette="white"
+          autoplay={{ delay: 5000 }}
+          page={page}
+          onPageChange={(e) => setPage(e.page)}
+        >
+          <Carousel.Control gap="4" width="full" position="relative">
+            <Carousel.ItemGroup width="full">
+              {featured.map((item, index) => (
+                <Carousel.Item key={index} index={index}>
+                  <Slide resource={item} />
+                </Carousel.Item>
+              ))}
+            </Carousel.ItemGroup>
+
+            <SlideInfo size={featured.length} page={page} setPage={setPage} />
+          </Carousel.Control>
+        </Carousel.Root>
       </Box>
-      <Sidebar resource={featured[currentSlide]} />
+
+      {hasTitle && <Sidebar resource={featured[page]} />}
     </SimpleGrid>
-  ) : (
-    <Box gridColumn={{ md: "1/3" }} position="relative">
-      <Box ref={sliderRef} className="keen-slider fade">
-        {featured.map((o) => (
-          <Slide resource={o} key={o.id} />
-        ))}
-      </Box>
-      <SlideInfo
-        size={featured.length}
-        currentSlide={currentSlide}
-        scrollTo={iSlider?.current?.moveToIdx}
-      />
-    </Box>
   );
 }

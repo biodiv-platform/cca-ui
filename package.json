@@ -14,7 +14,7 @@
   },
   "dependencies": {
     "@braintree/sanitize-url": "^6.0.0",
-    "@chakra-ui/react": "^3.24.0",
+    "@chakra-ui/react": "^3.30.0",
     "@chakra-ui/skip-nav": "^2.1.0",
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.0",

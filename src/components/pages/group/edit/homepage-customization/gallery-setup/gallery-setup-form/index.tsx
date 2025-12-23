@@ -1,82 +1,3 @@
-// import { Box, Button } from "@chakra-ui/react";
-// import { CheckboxField } from "@components/form/checkbox";
-// import { SubmitButton } from "@components/form/submit-button";
-// import { TextAreaField } from "@components/form/textarea";
-// import { yupResolver } from "@hookform/resolvers/yup";
-// import useGlobalState from "@hooks/use-global-state";
-// import useTranslation from "next-translate/useTranslation";
-// import React, { useEffect, useState } from "react";
-// import { FormProvider, useForm } from "react-hook-form";
-// import { LuMoveLeft } from "react-icons/lu";
-
-// import { galleryFieldValidationSchema } from "./common";
-// import NewResourceForm from "./new-resource-form";
-
-// interface IGallerySetupForm {
-//   title: string;
-//   customDescripition: string;
-//   fileName: string;
-//   moreLinks: string;
-//   observationId: number;
-//   authorId?: string;
-//   authorName?: string;
-//   profilePic?: string;
-//   options?: any[];
-//   truncated?: boolean;
-// }
-
-// export default function GallerySetupFrom({ setIsCreate, galleryList, setGalleryList }) {
-//   const { t } = useTranslation();
-//   const { currentGroup } = useGlobalState();
-//   const [defaultValues] = useState<IGallerySetupForm | any>(
-//     currentGroup.id ? undefined : { truncated: true }
-//   );
-//   const hForm = useForm<any>({
-//     mode: "onChange",
-//     resolver: yupResolver(galleryFieldValidationSchema),
-//     defaultValues
-//   });
-
-//   const handleFormSubmit = (value) => {
-//     const payload = {
-//       authorId: defaultValues?.authorInfo?.id,
-//       authorName: defaultValues?.authorInfo?.name,
-//       authorImage: defaultValues?.authorInfo?.profilePic,
-//       ...value
-//     };
-//     setGalleryList([...galleryList, payload]);
-//     setIsCreate(false);
-//   };
-
-//   useEffect(() => {
-//     hForm.reset(defaultValues);
-//   }, [defaultValues]);
-
-//   return (
-//     <FormProvider {...hForm}>
-//       <form onSubmit={hForm.handleSubmit(handleFormSubmit)}>
-//         <Box display="flex" justifyContent="space-between" alignItems="center">
-//           <Button m={3} type="button" onClick={() => setIsCreate(false)} variant={"subtle"}>
-//             <LuMoveLeft />
-//             {t("group:homepage_customization.back")}
-//           </Button>
-//         </Box>
-//         <NewResourceForm />
-
-//         <TextAreaField
-//           name="customDescripition"
-//           label={t("group:homepage_customization.table.description")}
-//         />
-
-//         {!currentGroup.id && (
-//           <CheckboxField name="truncated" label={t("group:homepage_customization.table.enabled")} />
-//         )}
-//         <SubmitButton>{t("group:homepage_customization.gallery_setup.create")}</SubmitButton>
-//       </form>
-//     </FormProvider>
-//   );
-// }
-
 import { Box, Button, ColorPicker, Flex, HStack, parseColor, Portal, Text } from "@chakra-ui/react";
 import { CheckboxField } from "@components/form/checkbox";
 import { SelectInputField } from "@components/form/select";
@@ -93,7 +14,6 @@ import { LuArrowLeft } from "react-icons/lu";
 import * as Yup from "yup";
 
 import TranslationTab from "@/components/pages/common/translation-tab";
-import { Switch } from "@/components/ui/switch";
 
 import { galleryFieldValidationSchema } from "./common";
 import NewResourceForm from "./new-resource-form";
@@ -131,7 +51,6 @@ export default function GallerySetupFrom({
     { label: t("group:homepage_customization.resources.sidebar_opaque"), value: "opaque" },
     { label: t("group:homepage_customization.resources.sidebar_translucent"), value: "translucent" }
   ];
-  const [imagePicker, setImagePicker] = useState<boolean>(true);
   const { languageId } = useGlobalState();
   const [defaultValues, setDefaultValues] = useState<IGallerySetupForm | any>(undefined);
   const validationSchema = Yup.lazy((value) => {
@@ -139,7 +58,7 @@ export default function GallerySetupFrom({
 
     for (const langId in value || {}) {
       languageMapShape[langId] = Yup.object().shape({
-        title: Yup.string().required("Title is required"),
+        title: Yup.string(),
         languageId: Yup.number()
       });
     }
@@ -195,10 +114,6 @@ export default function GallerySetupFrom({
     setIsCreate(false);
   };
 
-  const handleChange = () => {
-    setImagePicker(!imagePicker);
-  };
-
   useEffect(() => {
     hForm.reset(defaultValues);
   }, [defaultValues]);
@@ -226,8 +141,6 @@ export default function GallerySetupFrom({
           </Button>
           <Flex alignItems="center">
             <Text m={3}>{t("group:homepage_customization.resources.new_image")}</Text>
-            <Switch onChange={handleChange} colorPalette={"blue"} />
-            <Text m={3}>{t("group:homepage_customization.resources.observation_image")}</Text>
           </Flex>
         </Box>
         <TranslationTab
@@ -239,9 +152,8 @@ export default function GallerySetupFrom({
           setTranslationSelected={setTranslationSelected}
         />
         <form onSubmit={hForm.handleSubmit(handleFormSubmit)}>
-          {imagePicker && (
-            <NewResourceForm translation={translationSelected} galleryId={galleryId} />
-          )}
+          <NewResourceForm translation={translationSelected} galleryId={galleryId} />
+
           <TextAreaField
             key={`decription-${translationSelected}`}
             name={`translations.${translationSelected}.description`}
@@ -262,16 +174,6 @@ export default function GallerySetupFrom({
             disabled={translationSelected != SITE_CONFIG.LANG.DEFAULT_ID}
             shouldPortal={true}
           />
-          {galleryId == -1 && (
-            <SelectInputField
-              key={`sidebar`}
-              name={`gallerySidebar`}
-              label={t("group:homepage_customization.resources.gallery_sidebar")}
-              options={gallerySidebarBackgroundOptions}
-              disabled={translationSelected != SITE_CONFIG.LANG.DEFAULT_ID}
-              shouldPortal={true}
-            />
-          )}
 
           {galleryId != -1 && (
             <>

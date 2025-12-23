@@ -1,23 +1,3 @@
-// import { TextBoxField } from "@components/form/text";
-// import ImageUploaderField from "@components/pages/group/common/image-uploader-field";
-// import useTranslation from "next-translate/useTranslation";
-// import React from "react";
-
-// export default function NewResourceForm() {
-//   const { t } = useTranslation();
-
-//   return (
-//     <>
-//       <TextBoxField name="title" label={t("group:homepage_customization.resources.title")} />
-//       <TextBoxField name="moreLinks" label={t("group:homepage_customization.resources.link")} />
-//       <ImageUploaderField
-//         label={t("group:homepage_customization.resources.imageurl")}
-//         name="fileName"
-//       />
-//     </>
-//   );
-// }
-
 import { TextBoxField } from "@components/form/text";
 import ImageUploaderField from "@components/pages/group/common/image-uploader-field";
 import SITE_CONFIG from "@configs/site-config";
@@ -32,7 +12,6 @@ export default function NewResourceForm({ translation, galleryId }) {
       <TextBoxField
         key={`title-${translation}`}
         name={`translations.${translation}.title`}
-        isRequired={true}
         label={t("group:homepage_customization.resources.title")}
         {...(galleryId != -1 && { maxLength: 20 })}
       />
