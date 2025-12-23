@@ -68,7 +68,7 @@ export const CheckboxListField = ({
       <CheckboxGroup
         value={value}
         onValueChange={handleChange}
-        isDisabled={disabled}
+        disabled={disabled}
         colorPalette="blue"
       >
         <Stack id={name}>
