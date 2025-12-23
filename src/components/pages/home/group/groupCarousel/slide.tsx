@@ -7,7 +7,7 @@ export default function Slide({ resource }) {
   const resourceType = RESOURCE_CTX.USERGROUPS;
 
   return (
-    <AspectRatio ratio={16 / 9} maxH="380px" w="full">
+    <AspectRatio ratio={16 / 9} maxH="380px" w="full" overflow="hidden">
       <Image
         src={getNextResourceThumbnail(resourceType, resource?.fileName, RESOURCE_SIZE.PREVIEW)}
         objectFit="cover"

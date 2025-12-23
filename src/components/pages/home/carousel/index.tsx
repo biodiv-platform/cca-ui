@@ -32,7 +32,7 @@ const Gallery = () => {
         <Carousel.ItemGroup width="full">
           {slides.map((src, index) => (
             <Carousel.Item key={index} index={index}>
-              <AspectRatio ratio={16 / 9} maxH="380px" w="full">
+              <AspectRatio ratio={16 / 9} maxH="380px" w="full" overflow="hidden">
                 <Image src={src} alt={`Product ${index + 1}`} objectFit="contain" />
               </AspectRatio>
             </Carousel.Item>
