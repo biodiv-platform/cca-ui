@@ -11,6 +11,7 @@ function AdminComponent() {
     {
       title: t("admin:utils"),
       items: [
+        { href: "/admin/homegallery", label: t("group:homepage_customization.title") },
         { href: "/admin/announcements", label: t("admin:links.announcements_configure") },
         { href: "/api/memory-cache/clear", label: t("admin:links.clear_cache") }
       ]

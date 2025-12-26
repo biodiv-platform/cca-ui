@@ -4,10 +4,11 @@ import LocalLink from "@components/@core/local-link";
 import useTranslation from "next-translate/useTranslation";
 import React from "react";
 
-export default function Statistics(featured) {
+export default function Statistics(stats) {
+  console.info("featured in statistics:", stats);
   const { t } = useTranslation();
 
-  const sumOfArea = featured.featured.aggregationData?.numericAggregation.reduce(
+  const sumOfArea = stats.featured.numericAggregation.reduce(
     (accumulator, currentValue) => {
       return accumulator + (Object.values(currentValue)[0] as { value?: number }).value || 0;
     },
@@ -36,7 +37,7 @@ export default function Statistics(featured) {
               <chakra.p fontSize="lg">{t("home:statistics.total_documented")}</chakra.p>
 
               <chakra.p fontSize="2xl" color={"black"}>
-                {featured.featured.aggregationData.total}
+                {stats.featured.total}
               </chakra.p>
             </Box>
           </Box>

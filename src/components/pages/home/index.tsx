@@ -13,12 +13,14 @@ import WhyThisPortal from "./why-this-portal";
 import Gallery from "./carousel";
 import MiniCarousel from "./group/groupCarousel/vertical";
 
-export default function HomePageComponent({ featured }) {
+export default function HomePageComponent({ homeInfo }) {
   const { currentGroup, languageId } = useGlobalState();
+
+  console.info("homeInfo in homepage component:", homeInfo);
 
   return (
     <>
-      {!currentGroup?.id ? (
+      {/* {!currentGroup?.id ? (
         <>
           <Gallery />
           <Mission />
@@ -55,7 +57,21 @@ export default function HomePageComponent({ featured }) {
             ))}
           {featured.groupdata.showStats && <Statistics featured={featured} />}
         </>
-      )}
+      )} */}
+
+      {homeInfo?.showGallery &&
+        Array.isArray(homeInfo.gallerySlider) &&
+        homeInfo.gallerySlider.length > 0 && <GroupCarousel featured={homeInfo.gallerySlider} />}
+
+      {homeInfo?.miniGallery &&
+        homeInfo.miniGallery.map((item, index) => (
+          <>
+            <MiniCarousel featured={item} index={index} />
+          </>
+        ))}
+
+      <Statistics featured={homeInfo.aggregationData} />
+
       <CTA />
     </>
   );
