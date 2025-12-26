@@ -72,7 +72,7 @@ export default function CreateMiniGalleryForm({
         }
       },
       isVertical: "false",
-      slidesPerView: 3,
+      slidesPerView: 1,
       languageId: languageId
     }
   });
@@ -166,7 +166,7 @@ export default function CreateMiniGalleryForm({
               key={`slidesPerView`}
               name={`slidesPerView`}
               label={t("group:homepage_customization.mini_gallery_setup.slides_per_view")}
-              disabled={translationSelected != SITE_CONFIG.LANG.DEFAULT_ID}
+              disabled
             />
             <SubmitButton>
               {t("group:homepage_customization.mini_gallery_setup.create")}

@@ -35,6 +35,7 @@
     "add_options": "Add Options",
     "back": "Back to List",
     "cca_map": "Show CCA Map",
+    "cta": "Show CTA",
     "default": "Default",
     "failure": "Unable to Save changes",
     "gallery": "Gallery",
@@ -62,7 +63,7 @@
       "vertical_label": "Slider Type",
       "vertical_slider_label": "Vertical Slide (Slides move up and down)"
     },
-    "module_stats": "Module Stats",
+    "module_charts": "Show Charts",
     "remove": {
       "failure": "Unable to remove Gallery Image",
       "success": "Deleted Gallery Image Successfully"

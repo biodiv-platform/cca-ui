@@ -4,20 +4,16 @@ import LocalLink from "@components/@core/local-link";
 import useTranslation from "next-translate/useTranslation";
 import React from "react";
 
-export default function Statistics(stats) {
-  console.info("featured in statistics:", stats);
+export default function Statistics({ stats, props }) {
   const { t } = useTranslation();
 
-  const sumOfArea = stats.featured.numericAggregation.reduce(
-    (accumulator, currentValue) => {
-      return accumulator + (Object.values(currentValue)[0] as { value?: number }).value || 0;
-    },
-    0
-  );
+  const sumOfArea = stats.numericAggregation.reduce((accumulator, currentValue) => {
+    return accumulator + (Object.values(currentValue)[0] as { value?: number }).value || 0;
+  }, 0);
 
   return (
-    <Box borderRadius="lg" overflow="hidden" bg="white">
-      <Container bg="white">
+    <Box borderRadius="lg" overflow="hidden" bg={props.bgColor}>
+      <Container>
         <SimpleGrid columns={{ base: 1, md: 2 }} py={12} gap={10}>
           <Box
             display="flex"
@@ -37,7 +33,7 @@ export default function Statistics(stats) {
               <chakra.p fontSize="lg">{t("home:statistics.total_documented")}</chakra.p>
 
               <chakra.p fontSize="2xl" color={"black"}>
-                {stats.featured.total}
+                {stats.total}
               </chakra.p>
             </Box>
           </Box>
@@ -67,7 +63,7 @@ export default function Statistics(stats) {
         <SimpleGrid columns={{ base: 1, md: 5 }} gap={3} mb={6}>
           <GridItem colSpan={4}>
             <chakra.p mb={6} textAlign="left" color={"gray.500"} fontSize="lg">
-              {t("home:statistics.description")}
+              {props.customDescripition}
             </chakra.p>
           </GridItem>
           <GridItem display="flex" alignItems="center" justifyContent={{ md: "flex-end" }}>

@@ -173,7 +173,7 @@ export default function EditMiniGalleryForm({
               key={`slidesPerView`}
               name={`slidesPerView`}
               label={t("group:homepage_customization.mini_gallery_setup.slides_per_view")}
-              disabled={translationSelected != SITE_CONFIG.LANG.DEFAULT_ID}
+              disabled
             />
             <SubmitButton>{t("common:update")}</SubmitButton>
           </Box>

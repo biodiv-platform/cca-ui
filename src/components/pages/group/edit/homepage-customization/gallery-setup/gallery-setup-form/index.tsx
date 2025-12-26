@@ -47,10 +47,6 @@ export default function GallerySetupFrom({
     { label: t("group:homepage_customization.resources.read_more_link"), value: "link" },
     { label: t("group:homepage_customization.resources.read_more_button"), value: "button" }
   ];
-  const gallerySidebarBackgroundOptions = [
-    { label: t("group:homepage_customization.resources.sidebar_opaque"), value: "opaque" },
-    { label: t("group:homepage_customization.resources.sidebar_translucent"), value: "translucent" }
-  ];
   const { languageId } = useGlobalState();
   const [defaultValues, setDefaultValues] = useState<IGallerySetupForm | any>(undefined);
   const validationSchema = Yup.lazy((value) => {
@@ -94,8 +90,7 @@ export default function GallerySetupFrom({
   });
 
   const [langId, setLangId] = useState(0);
-  const [color, setColor] = useState("rgba(255,255,255,1)");
-  const [bgColor, setBgColor] = useState("rgba(26, 32, 44, 1)");
+  const [bgColor, setBgColor] = useState("#f4f4f5");
 
   const handleFormSubmit = ({ translations, title, customDescripition, ...value }) => {
     const payload = {
@@ -104,7 +99,6 @@ export default function GallerySetupFrom({
       authorName: value?.authorInfo?.name,
       authorImage: value?.authorInfo?.profilePic,
       galleryId: galleryId,
-      color: color,
       bgColor: bgColor,
       title: translations[SITE_CONFIG.LANG.DEFAULT_ID].title,
       customDescripition: translations[SITE_CONFIG.LANG.DEFAULT_ID].description,
@@ -176,36 +170,6 @@ export default function GallerySetupFrom({
           {galleryId != -1 && (
             <>
               <ColorPicker.Root
-                defaultValue={parseColor(color)}
-                maxW="200px"
-                onValueChange={(v) => setColor(v.valueAsString)}
-                mb={4}
-                disabled={translationSelected != SITE_CONFIG.LANG.DEFAULT_ID}
-              >
-                <ColorPicker.HiddenInput />
-                <ColorPicker.Label>
-                  {t("group:homepage_customization.resources.text_color")}
-                </ColorPicker.Label>
-                <ColorPicker.Control>
-                  <ColorPicker.Trigger p="2">
-                    <ColorPicker.ValueSwatch boxSize="8" />
-                  </ColorPicker.Trigger>
-                </ColorPicker.Control>
-                <Portal>
-                  <ColorPicker.Positioner>
-                    <ColorPicker.Content>
-                      <ColorPicker.Area />
-                      <HStack>
-                        <ColorPicker.EyeDropper size="sm" variant="outline" />
-                        <ColorPicker.Sliders />
-                        <ColorPicker.ValueSwatch />
-                      </HStack>
-                    </ColorPicker.Content>
-                  </ColorPicker.Positioner>
-                </Portal>
-              </ColorPicker.Root>
-
-              <ColorPicker.Root
                 defaultValue={parseColor(bgColor)}
                 maxW="200px"
                 onValueChange={(v) => setBgColor(v.valueAsString)}
@@ -218,6 +182,7 @@ export default function GallerySetupFrom({
                 </ColorPicker.Label>
                 <ColorPicker.Control>
                   <ColorPicker.Trigger p="2">
+                    <ColorPicker.Input />
                     <ColorPicker.ValueSwatch boxSize="8" />
                   </ColorPicker.Trigger>
                 </ColorPicker.Control>

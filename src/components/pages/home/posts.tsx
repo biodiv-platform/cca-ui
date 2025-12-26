@@ -1,15 +1,11 @@
-import { Box, chakra, Heading, Image, List, SimpleGrid } from "@chakra-ui/react";
+import { RESOURCE_SIZE } from "@/static/constants";
+import { Box, chakra, Heading, Image, Text, SimpleGrid } from "@chakra-ui/react";
 import { Container } from "@components/@core/container";
 import LocalLink from "@components/@core/local-link";
-import SITE_CONFIG from "@configs/site-config";
-import { findTitleFromHeader, renderSimpleValue } from "@utils/field";
-import { getResourceThumbnail } from "@utils/media";
-import useTranslation from "next-translate/useTranslation";
+import { getNextResourceThumbnail, RESOURCE_CTX } from "@utils/media";
 import React from "react";
 
-export default function Posts({ featured }) {
-  const { t } = useTranslation();
-
+export default function Posts({ props }) {
   return (
     <Box bg="gray.100" py={12}>
       <Container>
@@ -20,16 +16,19 @@ export default function Posts({ featured }) {
           color="gray.900"
           mb={10}
         >
-          {t("home:featured.title")}
+          {props.title}
         </chakra.h2>
         <SimpleGrid columns={{ base: 1, md: 4 }} gap={10}>
-          {featured.map((f) => {
-            const imageSrc = getResourceThumbnail(f?.files?.[0]?.path, "?h=164");
-
+          {props.gallerySlider.map((item, index) => {
+            const imageSrc = getNextResourceThumbnail(
+              RESOURCE_CTX.USERGROUPS,
+              item.fileName,
+              RESOURCE_SIZE.PREVIEW
+            );
             return (
-              <Box borderRadius="lg" overflow="hidden" key={f.id} shadow="xl" bg="white">
+              <Box borderRadius="lg" overflow="hidden" key={index} shadow="xl" bg="white">
                 <Box position="relative" w="full" h="160px" overflow="hidden">
-                  <LocalLink href={`/data/show/${f.id}`} prefixGroup={true}>
+                  <LocalLink href={item.moreLinks} prefixGroup={true}>
                     <Image
                       transform="scale(1.0)"
                       src={imageSrc || "/next-assets/cca-fallback.svg"}
@@ -49,30 +48,13 @@ export default function Posts({ featured }) {
                       backgroundImage="linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.6))"
                     >
                       <Heading fontSize="2xl" lineHeight={1.2} color="white" fontWeight="bold">
-                        {findTitleFromHeader(f)}
+                        {item.title}
                       </Heading>
                     </Box>
                   </LocalLink>
                 </Box>
                 <Box p={4} h="154px">
-                  <List.Root gap={1} variant={"plain"}>
-                    {f.values
-                      .filter((f) => !SITE_CONFIG.CCA.TITLE_FIELD_IDS.includes(f.fieldId))
-                      .map((field, index) => (
-                        <List.Item key={index} lineHeight={1.2}>
-                          <Box as="span" mr={1}>
-                            <Box as="span" fontWeight="semibold" mr={1}>
-                              {field.name}:
-                            </Box>
-                            <span
-                              dangerouslySetInnerHTML={{
-                                __html: renderSimpleValue(field.value, field.type) || "NA"
-                              }}
-                            />
-                          </Box>
-                        </List.Item>
-                      ))}
-                  </List.Root>
+                  <Text lineClamp={5}>{item.customDescripition}</Text>
                 </Box>
               </Box>
             );

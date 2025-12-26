@@ -49,10 +49,6 @@ export default function GalleryEditForm({
     { label: t("group:homepage_customization.resources.read_more_link"), value: "link" },
     { label: t("group:homepage_customization.resources.read_more_button"), value: "button" }
   ];
-  const gallerySidebarBackgroundOptions = [
-    { label: t("group:homepage_customization.resources.sidebar_opaque"), value: "opaque" },
-    { label: t("group:homepage_customization.resources.sidebar_translucent"), value: "translucent" }
-  ];
   const [translationSelected, setTranslationSelected] = useState<number>(
     SITE_CONFIG.LANG.DEFAULT_ID
   );
@@ -202,16 +198,6 @@ export default function GalleryEditForm({
           shouldPortal={true}
           disabled={translationSelected != SITE_CONFIG.LANG.DEFAULT_ID}
         />
-
-        {galleryId == -1 && (
-          <SelectInputField
-            name="gallerySidebar"
-            label={t("group:homepage_customization.resources.gallery_sidebar")}
-            options={gallerySidebarBackgroundOptions}
-            shouldPortal={true}
-            disabled={translationSelected != SITE_CONFIG.LANG.DEFAULT_ID}
-          />
-        )}
 
         {galleryId != -1 && (
           <>
