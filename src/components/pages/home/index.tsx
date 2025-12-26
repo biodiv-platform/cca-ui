@@ -45,17 +45,15 @@ export default function HomePageComponent({ featured }) {
             <GroupCarousel featured={featured.groupdata.gallerySlider} />
           )}
 
+          {featured.groupdata.showDesc && <GroupHome info={featured.groupdata} />}
+
           {featured.groupdata.miniGallery &&
-            featured.groupdata.miniGallery.map((item) => (
+            featured.groupdata.miniGallery.map((item, index) => (
               <>
-                <MiniCarousel
-                  key={`gallery-${item.galleryId}-${languageId}`}
-                  featured={item}
-                />
+                <MiniCarousel featured={item} index={index} />
               </>
             ))}
-          {featured.groupdata.showDesc && <GroupHome info={featured.groupdata} />}
-          <Statistics featured={featured} />
+          {featured.groupdata.showStats && <Statistics featured={featured} />}
         </>
       )}
       <CTA />

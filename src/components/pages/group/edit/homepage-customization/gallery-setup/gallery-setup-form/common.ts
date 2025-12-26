@@ -4,7 +4,7 @@ import * as Yup from "yup";
 export const galleryFieldValidationSchema = Yup.object().shape({
   title: Yup.string(),
   customDescripition: Yup.string(),
-  fileName: Yup.string().required(),
+  fileName: Yup.string().nullable(),
   moreLinks: Yup.string(),
   options: Yup.array().nullable(),
   truncated: Yup.boolean()
