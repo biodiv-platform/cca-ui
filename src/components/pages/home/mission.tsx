@@ -1,43 +1,66 @@
-import { Box, Button, chakra, GridItem, SimpleGrid } from "@chakra-ui/react";
+import { Box, Button, chakra, GridItem, SimpleGrid, Carousel } from "@chakra-ui/react";
 import { Container } from "@components/@core/container";
 import LocalLink from "@components/@core/local-link";
-import React from "react";
 import { LuMoveRight } from "react-icons/lu";
+import React from "react";
+import { stripTags } from "@/utils/text";
 
-export default function Mission({ props }) {
+export default function Mission({ featured }) {
+  if (!featured.gallerySlider?.length) return null;
+
   return (
-    <Box bg={props.bgColor}>
+    <Box bg={featured.gallerySlider[0]?.bgColor}>
       <Container py={10}>
-        <SimpleGrid columns={{ base: 1, md: 5 }} gap={4}>
-          <GridItem colSpan={4}>
-            <chakra.h2
-              fontSize={{ base: "3xl", sm: "4xl" }}
-              fontWeight="bold"
-              letterSpacing="tight"
-              colorPalette="gray.900"
-              mb={6}
-            >
-              {props.title}
-            </chakra.h2>
-            <chakra.p maxW="6xl" fontSize="lg" mx={{ lg: "auto" }} color={"gray.500"}>
-              {props.customDescripition}
-            </chakra.p>
-          </GridItem>
-          <GridItem display="flex" alignItems="center" justifyContent={{ md: "flex-end" }}>
-            <LocalLink href={props.moreLinks} prefixGroup={true}>
-              <Button
-                w={{ base: "full", sm: "auto" }}
-                size="lg"
-                colorPalette="blue"
-                variant="solid"
-              >
-                {props.readMoreText}
+        <Carousel.Root
+          slideCount={featured.gallerySlider.length}
+          slidesPerPage={1}
+          autoplay={{ delay: 5000 }}
+          position="relative"
+          orientation={featured.isVertical ? "vertical" : "horizontal"}
+          mx="auto"
+          height="auto"
+        >
+          <Carousel.Control width="full">
+            <Carousel.ItemGroup>
+              {featured.gallerySlider.map((item, index) => (
+                <Carousel.Item key={index} index={index}>
+                  <SimpleGrid columns={{ base: 1, md: 5 }} gap={4}>
+                    <GridItem colSpan={4}>
+                      <chakra.h2
+                        fontSize={{ base: "3xl", sm: "4xl" }}
+                        fontWeight="bold"
+                        letterSpacing="tight"
+                        color="gray.900"
+                        mb={6}
+                      >
+                        {item.title}
+                      </chakra.h2>
 
-                {<LuMoveRight />}
-              </Button>
-            </LocalLink>
-          </GridItem>
-        </SimpleGrid>
+                      <chakra.p fontSize="lg" color="gray.500">
+                        {stripTags(item.customDescripition)}
+                      </chakra.p>
+                    </GridItem>
+
+                    {item.readMoreText && (
+                      <GridItem
+                        display="flex"
+                        alignItems="center"
+                        justifyContent={{ md: "flex-end" }}
+                      >
+                        <LocalLink href={item.moreLinks} prefixGroup>
+                          <Button size="lg" colorPalette="blue">
+                            {item.readMoreText}
+                            <LuMoveRight />
+                          </Button>
+                        </LocalLink>
+                      </GridItem>
+                    )}
+                  </SimpleGrid>
+                </Carousel.Item>
+              ))}
+            </Carousel.ItemGroup>
+          </Carousel.Control>
+        </Carousel.Root>
       </Container>
     </Box>
   );

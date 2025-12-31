@@ -1,8 +1,8 @@
 import React from "react";
 
-import CTA from "./cta";
 import GroupCarousel from "./group/groupCarousel";
 import MiniCarousel from "./group/groupCarousel/mini-carousel";
+import CTA from "./cta";
 
 export default function HomePageComponent({ homeInfo }) {
   return (

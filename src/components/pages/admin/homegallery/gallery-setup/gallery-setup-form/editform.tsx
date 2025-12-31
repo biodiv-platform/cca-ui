@@ -3,7 +3,6 @@ import { CheckboxField } from "@components/form/checkbox";
 import { SelectInputField } from "@components/form/select";
 import { SubmitButton } from "@components/form/submit-button";
 import { TextBoxField } from "@components/form/text";
-import { TextAreaField } from "@components/form/textarea";
 import ImageUploaderField from "@components/pages/group/common/image-uploader-field";
 import { galleryFieldValidationSchema } from "@components/pages/group/edit/homepage-customization/gallery-setup/gallery-setup-form/common";
 import SITE_CONFIG from "@configs/site-config";
@@ -18,6 +17,9 @@ import { LuArrowLeft } from "react-icons/lu";
 import * as Yup from "yup";
 
 import TranslationTab from "@/components/pages/common/translation-tab";
+import dynamic from "next/dynamic";
+
+const WYSIWYGField = dynamic(() => import("@components/form/wysiwyg"), { ssr: false });
 
 export default function GalleryEditForm({
   setIsEdit,
@@ -168,7 +170,7 @@ export default function GalleryEditForm({
           disabled={translationSelected != SITE_CONFIG.LANG.DEFAULT_ID}
         />
 
-        <TextAreaField
+        <WYSIWYGField
           key={`description-${translationSelected}`}
           name={`translations.${translationSelected}.description`}
           label={t("group:homepage_customization.table.description")}

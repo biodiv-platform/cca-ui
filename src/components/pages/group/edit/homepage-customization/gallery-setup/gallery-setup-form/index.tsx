@@ -3,7 +3,6 @@ import { CheckboxField } from "@components/form/checkbox";
 import { SelectInputField } from "@components/form/select";
 import { SubmitButton } from "@components/form/submit-button";
 import { TextBoxField } from "@components/form/text";
-import { TextAreaField } from "@components/form/textarea";
 import SITE_CONFIG from "@configs/site-config";
 import { yupResolver } from "@hookform/resolvers/yup";
 import useGlobalState from "@hooks/use-global-state";
@@ -17,6 +16,7 @@ import TranslationTab from "@/components/pages/common/translation-tab";
 
 import { galleryFieldValidationSchema } from "./common";
 import NewResourceForm from "./new-resource-form";
+import dynamic from "next/dynamic";
 
 interface IGallerySetupForm {
   title: string;
@@ -32,6 +32,8 @@ interface IGallerySetupForm {
   galleryId?: number;
   index?: number;
 }
+
+const WYSIWYGField = dynamic(() => import("@components/form/wysiwyg"), { ssr: false });
 
 export default function GallerySetupFrom({
   setIsCreate,
@@ -148,7 +150,7 @@ export default function GallerySetupFrom({
         <form onSubmit={hForm.handleSubmit(handleFormSubmit)}>
           <NewResourceForm translation={translationSelected} galleryId={galleryId} />
 
-          <TextAreaField
+          <WYSIWYGField
             key={`decription-${translationSelected}`}
             name={`translations.${translationSelected}.description`}
             label={t("group:homepage_customization.table.description")}

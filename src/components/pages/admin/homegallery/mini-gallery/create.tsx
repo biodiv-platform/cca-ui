@@ -15,7 +15,7 @@ import useGlobalState from "@/hooks/use-global-state";
 import { axCreateMiniGroupGallery } from "@/services/usergroup.service";
 import { axCreateMiniGallery } from "@/services/utility.service";
 import notification, { NotificationType } from "@/utils/notification";
-import { NumberInputField } from "@/components/form/number";
+import { NumberField } from "@/components/form/number-input";
 
 export default function CreateMiniGalleryForm({
   setIsCreate,
@@ -162,11 +162,10 @@ export default function CreateMiniGalleryForm({
               options={SLIDER_TYPE}
               disabled={translationSelected != SITE_CONFIG.LANG.DEFAULT_ID}
             />
-            <NumberInputField
+            <NumberField
               key={`slidesPerView`}
               name={`slidesPerView`}
               label={t("group:homepage_customization.mini_gallery_setup.slides_per_view")}
-              disabled
             />
             <SubmitButton>
               {t("group:homepage_customization.mini_gallery_setup.create")}

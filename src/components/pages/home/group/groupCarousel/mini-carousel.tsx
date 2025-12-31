@@ -24,34 +24,34 @@ export default function MiniCarousel({ featured, aggregationData }) {
   const { gallerySlider, slidesPerView } = featured;
 
   const isSingle = gallerySlider.length === 1;
-  const singleItem = gallerySlider[0];
+  const firstItem = gallerySlider[0];
 
-  const hasImage = Boolean(singleItem?.fileName);
+  const hasImage = Boolean(firstItem?.fileName);
   const showGrid = !isSingle && slidesPerView === gallerySlider.length;
 
-  if (isSingle && singleItem.title?.toLowerCase() === "stats") {
-    return <Statistics stats={aggregationData} props={singleItem} />;
-  }
-
-  /* -------------------------------------------------------------------------- */
-  /*                         SINGLE ITEM — NO IMAGE                              */
-  /* -------------------------------------------------------------------------- */
-  if (isSingle && !hasImage) {
-    return <Mission props={singleItem} />;
-  }
-
-  /* -------------------------------------------------------------------------- */
-  /*                         SINGLE ITEM — WITH IMAGE                            */
-  /* -------------------------------------------------------------------------- */
-  if (isSingle && hasImage) {
-    return <WhyThisPortal props={singleItem} />;
+  if (isSingle && firstItem.title?.toLowerCase() === "stats") {
+    return <Statistics stats={aggregationData} props={firstItem} />;
   }
 
   /* -------------------------------------------------------------------------- */
   /*                         MULTIPLE ITEMS — GRID                               */
   /* -------------------------------------------------------------------------- */
-  if (showGrid) {
+  if (showGrid && hasImage) {
     return <Posts props={featured} />;
+  }
+
+  /* -------------------------------------------------------------------------- */
+  /*                         MULTIPLE ITEM — NO IMAGE                              */
+  /* -------------------------------------------------------------------------- */
+  if (!hasImage) {
+    return <Mission featured={featured} />;
+  }
+
+  /* -------------------------------------------------------------------------- */
+  /*                         SINGLE ITEM — WITH IMAGE                            */
+  /* -------------------------------------------------------------------------- */
+  if (hasImage) {
+    return <WhyThisPortal items={featured.gallerySlider} />;
   }
 
   /* -------------------------------------------------------------------------- */

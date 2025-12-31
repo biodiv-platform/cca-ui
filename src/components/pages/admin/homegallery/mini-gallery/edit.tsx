@@ -15,7 +15,7 @@ import TranslationTab from "@/components/pages/common/translation-tab";
 import { axEditMiniGroupGallery } from "@/services/usergroup.service";
 import { axEditMiniGallery } from "@/services/utility.service";
 import notification, { NotificationType } from "@/utils/notification";
-import { NumberInputField } from "@/components/form/number";
+import { NumberField } from "@/components/form/number-input";
 
 export default function EditMiniGalleryForm({
   setIsEdit,
@@ -169,11 +169,10 @@ export default function EditMiniGalleryForm({
               label={t("group:homepage_customization.mini_gallery_setup.active_label")}
               disabled={translationSelected != SITE_CONFIG.LANG.DEFAULT_ID}
             />
-            <NumberInputField
+            <NumberField
               key={`slidesPerView`}
               name={`slidesPerView`}
               label={t("group:homepage_customization.mini_gallery_setup.slides_per_view")}
-              disabled
             />
             <SubmitButton>{t("common:update")}</SubmitButton>
           </Box>

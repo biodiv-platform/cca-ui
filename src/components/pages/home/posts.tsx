@@ -1,4 +1,5 @@
 import { RESOURCE_SIZE } from "@/static/constants";
+import { getInjectableHTML } from "@/utils/text";
 import { Box, chakra, Heading, Image, Text, SimpleGrid } from "@chakra-ui/react";
 import { Container } from "@components/@core/container";
 import LocalLink from "@components/@core/local-link";
@@ -53,9 +54,12 @@ export default function Posts({ props }) {
                     </Box>
                   </LocalLink>
                 </Box>
-                <Box p={4} h="154px">
-                  <Text lineClamp={5}>{item.customDescripition}</Text>
-                </Box>
+                <Box
+                  p={4}
+                  dangerouslySetInnerHTML={{
+                    __html: getInjectableHTML(item.customDescripition)
+                  }}
+                />
               </Box>
             );
           })}

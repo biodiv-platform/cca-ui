@@ -1,17 +1,13 @@
 import { Box, Button } from "@chakra-ui/react";
 import { SwitchField } from "@components/form/switch";
-import { axUploadHomePageEditorResource } from "@services/pages.service";
 import { axInsertHomePageGallery } from "@services/utility.service";
 import notification, { NotificationType } from "@utils/notification";
-import dynamic from "next/dynamic";
 import useTranslation from "next-translate/useTranslation";
 import React, { useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 
 import GallerySetup from "./gallery-setup";
 import MiniGallery from "./mini-gallery";
-
-const WYSIWYGField = dynamic(() => import("@components/form/wysiwyg"), { ssr: false });
 
 export default function HomePageGalleryCustomizationForm({
   homePageDetails,
