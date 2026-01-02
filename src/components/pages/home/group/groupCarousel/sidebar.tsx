@@ -1,6 +1,6 @@
-import { Button, Center, Heading, Text } from "@chakra-ui/react";
+import { stripTags } from "@/utils/text";
+import { Box, Button, Center, Flex, Heading, Text } from "@chakra-ui/react";
 import BlurBox from "@components/@core/blur-box";
-import LocalLink from "@components/@core/local-link";
 import { RESOURCE_SIZE } from "@static/constants";
 import { getNextResourceThumbnail, RESOURCE_CTX } from "@utils/media";
 import useTranslation from "next-translate/useTranslation";
@@ -8,22 +8,25 @@ import React, { useMemo } from "react";
 import { LuMoveRight } from "react-icons/lu";
 
 const ReadMore = ({ resource, readMoreButtonText, readMoreUIType }) => {
-  return resource.moreLinks && readMoreUIType == "button" ? (
-    <Button colorPalette="blue" variant="solid" size="lg" fontSize="xl">
-      <LocalLink href={resource.moreLinks}>
+  return (
+    <Box>
+      {resource.moreLinks && readMoreUIType === "button" ? (
+        <Button colorPalette="blue" variant="solid" size="lg" fontSize="xl" asChild>
+          <a href={resource.moreLinks}>
+            {readMoreButtonText} <LuMoveRight />
+          </a>
+        </Button>
+      ) : (
         <a
+          href={resource.moreLinks}
           style={{ display: "inline-flex", alignItems: "center", gap: "4px", whiteSpace: "nowrap" }}
         >
-          {readMoreButtonText} <LuMoveRight />
+          <Flex alignItems="center" justifyContent="flex-end">
+            {readMoreButtonText} <LuMoveRight />
+          </Flex>
         </a>
-      </LocalLink>
-    </Button>
-  ) : (
-    <LocalLink href={resource.moreLinks}>
-      <a style={{ display: "inline-flex", alignItems: "center", gap: "4px", whiteSpace: "nowrap" }}>
-        {readMoreButtonText} <LuMoveRight />
-      </a>
-    </LocalLink>
+      )}
+    </Box>
   );
 };
 
@@ -56,7 +59,7 @@ export default function Sidebar({ resource }) {
             {resource.title}
           </Heading>
           <Text fontSize={{ md: "sm", lg: "lg" }} mb={4} maxH="14rem" overflow="auto">
-            {resource.customDescripition}
+            {stripTags(resource.customDescripition)}
           </Text>
           <ReadMore
             resource={resource}
