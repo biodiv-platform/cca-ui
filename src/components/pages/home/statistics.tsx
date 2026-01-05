@@ -3,8 +3,9 @@ import { Container } from "@components/@core/container";
 import LocalLink from "@components/@core/local-link";
 import useTranslation from "next-translate/useTranslation";
 import React from "react";
+import { LuMoveRight } from "react-icons/lu";
 
-export default function Statistics({ stats, props }) {
+export default function Statistics({ stats, props, hasArrowIcon }) {
   const { t } = useTranslation();
 
   const sumOfArea = stats.numericAggregation.reduce((accumulator, currentValue) => {
@@ -70,6 +71,7 @@ export default function Statistics({ stats, props }) {
             <LocalLink href="/chart" prefixGroup={true}>
               <Button size="lg" colorPalette="blue">
                 {t("home:statistics.title")}
+                {hasArrowIcon && <LuMoveRight />}
               </Button>
             </LocalLink>
           </GridItem>

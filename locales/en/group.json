@@ -73,18 +73,18 @@
       "success": "Gallery List reordered successfully"
     },
     "resources": {
-      "background_color": "Background Color",
+      "background_color": "Background Color (Set by First slide only)",
       "error": "Enter valid observation id",
       "imageurl": "Choose Gallery Image",
       "link": "Show Page Link",
       "new_image": "Image Upload",
       "read_more": "Read more button text",
-      "read_more_button": "button",
-      "read_more_link": "link",
+      "read_more_button": "Button",
+      "read_more_button_with_arrow": "Button with arrow",
       "read_more_ui": "Read more UI type",
       "sidebar_opaque": "opaque",
       "sidebar_translucent": "translucent",
-      "text_color": "Text Color",
+      "slide_color": "Slide Color",
       "title": "Title"
     },
     "save": "Save Homepage Details",

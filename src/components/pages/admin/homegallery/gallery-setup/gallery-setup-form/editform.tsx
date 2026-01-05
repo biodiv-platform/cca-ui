@@ -33,7 +33,10 @@ export default function GalleryEditForm({
   const { t } = useTranslation();
 
   const readMoreUIOptions = [
-    { label: t("group:homepage_customization.resources.read_more_link"), value: "link" },
+    {
+      label: t("group:homepage_customization.resources.read_more_button_with_arrow"),
+      value: "button_with_arrow"
+    },
     { label: t("group:homepage_customization.resources.read_more_button"), value: "button" }
   ];
 
@@ -71,8 +74,10 @@ export default function GalleryEditForm({
   });
 
   const [bgColor, setBgColor] = useState(
-    editGalleryData.bgColor ? editGalleryData.bgColor : "#f4f4f5)"
+    editGalleryData.bgColor ? editGalleryData.bgColor : "#f4f4f5"
   );
+
+  const [color, setColor] = useState(editGalleryData.color ? editGalleryData.color : "#FFFFFF");
 
   const hForm = useForm<any>({
     mode: "onChange",
@@ -115,6 +120,7 @@ export default function GalleryEditForm({
     const payload = {
       translations: Object.values(translations),
       bgColor: bgColor,
+      color: color,
       ...value
     };
     const { success, data } =
@@ -191,13 +197,47 @@ export default function GalleryEditForm({
         />
 
         {galleryId != -1 && (
+          <ColorPicker.Root
+            defaultValue={parseColor(color)}
+            maxW="200px"
+            onValueChange={(v) => setColor(v.valueAsString)}
+            mb={4}
+            disabled={translationSelected != SITE_CONFIG.LANG.DEFAULT_ID}
+          >
+            <ColorPicker.HiddenInput />
+            <ColorPicker.Label>
+              {t("group:homepage_customization.resources.slide_color")}
+            </ColorPicker.Label>
+
+            <ColorPicker.Control>
+              <ColorPicker.Trigger p="2">
+                <ColorPicker.Input />
+                <ColorPicker.ValueSwatch boxSize="8" />
+              </ColorPicker.Trigger>
+            </ColorPicker.Control>
+            <Portal>
+              <ColorPicker.Positioner>
+                <ColorPicker.Content>
+                  <ColorPicker.Area />
+                  <HStack>
+                    <ColorPicker.EyeDropper size="sm" variant="outline" />
+                    <ColorPicker.Sliders />
+                    <ColorPicker.ValueSwatch />
+                  </HStack>
+                </ColorPicker.Content>
+              </ColorPicker.Positioner>
+            </Portal>
+          </ColorPicker.Root>
+        )}
+
+        {galleryId != -1 && (
           <>
             <ColorPicker.Root
               defaultValue={parseColor(bgColor)}
               maxW="200px"
               onValueChange={(v) => setBgColor(v.valueAsString)}
               mb={4}
-              disabled={translationSelected != SITE_CONFIG.LANG.DEFAULT_ID}
+              disabled={translationSelected != SITE_CONFIG.LANG.DEFAULT_ID || displayOrder != 0}
             >
               <ColorPicker.HiddenInput />
               <ColorPicker.Label>
@@ -206,7 +246,6 @@ export default function GalleryEditForm({
               <ColorPicker.Control>
                 <ColorPicker.Trigger p="2">
                   <ColorPicker.Input />
-
                   <ColorPicker.ValueSwatch boxSize="8" />
                 </ColorPicker.Trigger>
               </ColorPicker.Control>

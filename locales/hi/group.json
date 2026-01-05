@@ -74,17 +74,18 @@
       "success": "गैलरी सूची सफलतापूर्वक पुन: व्यवस्थित"
     },
     "resources": {
-      "background_color": "पृष्ठभूमि का रंग",
+      "background_color": "पृष्ठभूमि का रंग (केवल पहली स्लाइड द्वारा निर्धारित)",
       "error": "मान्य अवलोकन आईडी दर्ज करें",
       "imageurl": "गैलरी छवि चुनें",
       "link": "पेज लिंक दिखाएं",
       "new_image": "छवि अपलोड",
       "read_more": "अधिक बटन पाठ पढ़ें",
-      "read_more_button": "बटन",
+      "read_more_button_with_arrow": "तीर वाला बटन",
       "read_more_link": "जोड़ना",
       "read_more_ui": "अधिक UI प्रकार पढ़ें",
       "sidebar_opaque": "अस्पष्ट",
       "sidebar_translucent": "पारदर्शी",
+      "slide_color": "स्लाइड का रंग",
       "text_color": "पाठ का रंग",
       "title": "शीर्षक"
     },
