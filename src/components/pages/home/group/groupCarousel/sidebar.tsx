@@ -1,3 +1,5 @@
+import NoSSR from "@/components/@core/no-ssr";
+import { preProcessContent } from "@/utils/pages.util";
 import { stripTags } from "@/utils/text";
 import { Box, Button, Center, Flex, Heading, Text } from "@chakra-ui/react";
 import BlurBox from "@components/@core/blur-box";
@@ -8,23 +10,19 @@ import React, { useMemo } from "react";
 import { LuMoveRight } from "react-icons/lu";
 
 const ReadMore = ({ resource, readMoreButtonText, readMoreUIType }) => {
+  const isButtonWithArrow = readMoreUIType?.toLowerCase() === "button_with_arrow";
   return (
     <Box>
-      {resource.moreLinks && readMoreUIType === "button" ? (
+      {resource.moreLinks && isButtonWithArrow ? (
         <Button colorPalette="blue" variant="solid" size="lg" fontSize="xl" asChild>
           <a href={resource.moreLinks}>
             {readMoreButtonText} <LuMoveRight />
           </a>
         </Button>
       ) : (
-        <a
-          href={resource.moreLinks}
-          style={{ display: "inline-flex", alignItems: "center", gap: "4px", whiteSpace: "nowrap" }}
-        >
-          <Flex alignItems="center" justifyContent="flex-end">
-            {readMoreButtonText} <LuMoveRight />
-          </Flex>
-        </a>
+        <Button colorPalette="blue" variant="solid" size="lg" fontSize="xl" asChild>
+          <a href={resource.moreLinks}>{readMoreButtonText}</a>
+        </Button>
       )}
     </Box>
   );
@@ -58,14 +56,22 @@ export default function Sidebar({ resource }) {
           >
             {resource.title}
           </Heading>
-          <Text fontSize={{ md: "sm", lg: "lg" }} mb={4} maxH="14rem" overflow="auto">
-            {stripTags(resource.customDescripition)}
-          </Text>
-          <ReadMore
-            resource={resource}
-            readMoreButtonText={readMoreButtonText}
-            readMoreUIType={readMoreUIType}
-          />
+          <NoSSR>
+            <Text
+              fontSize={{ md: "sm", lg: "lg" }}
+              mb={4}
+              maxH="14rem"
+              overflow="auto"
+              dangerouslySetInnerHTML={{ __html: preProcessContent(resource.customDescripition) }}
+            ></Text>
+          </NoSSR>
+          {readMoreUIType != "none" && (
+            <ReadMore
+              resource={resource}
+              readMoreButtonText={readMoreButtonText}
+              readMoreUIType={readMoreUIType}
+            />
+          )}
         </div>
       </Center>
     </BlurBox>

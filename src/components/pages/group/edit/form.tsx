@@ -229,11 +229,6 @@ export default function UserGroupEditForm({
                 label={t("group:webAddress")}
                 disabled={!isAdmin}
               />
-              <RichTextareaField
-                key={`description-${translationSelected}`}
-                name={`translation.${translationSelected}.description`}
-                label={t("form:description.title")}
-              />
             </Box>
             <ImageUploaderField label="Logo" name="icon" />
           </SimpleGrid>

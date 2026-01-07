@@ -54,7 +54,7 @@ export default function ImageUploaderField({
           />
         </Box>
       ) : disabled ? (
-        <p>{t("group:custom_field.image_unavailable")} </p>
+        <p>{t("group:image_not_available")} </p>
       ) : (
         <Box width={"full"}>
           <DropTarget

@@ -9,7 +9,7 @@ import { FormProvider, useForm } from "react-hook-form";
 import * as Yup from "yup";
 
 import GallerySetup from "./gallery-setup";
-import MiniGallery from "@/components/pages/home/group/mini-gallery";
+import MiniGallery from "@/components/pages/admin/homegallery/mini-gallery";
 
 export default function GroupHomePageCustomization({
   userGroupId,
@@ -108,15 +108,7 @@ export default function GroupHomePageCustomization({
           <form onSubmit={hForm.handleSubmit(handleFormSubmit)} className="fade">
             <Box width={["100%", 350]} justifyContent="space-between">
               <SwitchField name="showGallery" label={t("group:homepage_customization.gallery")} />
-              <SwitchField
-                name="showStats"
-                label={t("group:homepage_customization.module_stats")}
-              />
-              <SwitchField
-                name="showGridMap"
-                label={t("group:homepage_customization.cca_map")}
-              />
-              <SwitchField name="showDesc" label={t("group:homepage_customization.show_desc")} />
+              <SwitchField name="showDonors" label={t("group:homepage_customization.cta")} />
             </Box>
           </form>
         </FormProvider>
@@ -138,7 +130,6 @@ export default function GroupHomePageCustomization({
           miniGallery={miniGalleryList}
           setMiniGallery={setMiniGalleryList}
           languages={languages}
-          handleFormSubmit={hForm.handleSubmit(handleFormSubmit)}
           groupId={userGroupId}
         />
       )}

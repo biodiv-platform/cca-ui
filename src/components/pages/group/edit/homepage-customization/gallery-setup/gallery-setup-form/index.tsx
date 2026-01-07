@@ -13,6 +13,8 @@ import { LuArrowLeft } from "react-icons/lu";
 import * as Yup from "yup";
 
 import TranslationTab from "@/components/pages/common/translation-tab";
+import { axCreateHomePageGallery, axMiniInsertHomePageGallery } from "@/services/utility.service";
+import notification, { NotificationType } from "@/utils/notification";
 
 import { galleryFieldValidationSchema } from "./common";
 import NewResourceForm from "./new-resource-form";
@@ -42,13 +44,19 @@ export default function GallerySetupFrom({
   languages,
   galleryId = -1,
   group = true,
-  vertical = false
+  vertical = false,
+  index = 0
 }) {
   const { t } = useTranslation();
   const readMoreUIOptions = [
-    { label: t("group:homepage_customization.resources.read_more_link"), value: "link" },
+    { label: t("group:homepage_customization.resources.read_more_none"), value: "none" },
+    {
+      label: t("group:homepage_customization.resources.read_more_button_with_arrow"),
+      value: "button_with_arrow"
+    },
     { label: t("group:homepage_customization.resources.read_more_button"), value: "button" }
   ];
+
   const { languageId } = useGlobalState();
   const [defaultValues, setDefaultValues] = useState<IGallerySetupForm | any>(undefined);
   const validationSchema = Yup.lazy((value) => {
@@ -56,7 +64,7 @@ export default function GallerySetupFrom({
 
     for (const langId in value || {}) {
       languageMapShape[langId] = Yup.object().shape({
-        title: Yup.string(),
+        title: Yup.string().required("Title is required"),
         languageId: Yup.number()
       });
     }
@@ -94,7 +102,7 @@ export default function GallerySetupFrom({
   const [langId, setLangId] = useState(0);
   const [bgColor, setBgColor] = useState("#f4f4f5");
 
-  const handleFormSubmit = ({ translations, title, customDescripition, ...value }) => {
+  const handleFormSubmit = async ({ translations, title, customDescripition, ...value }) => {
     const payload = {
       translations: Object.values(translations),
       authorId: value?.authorInfo?.id,
@@ -104,10 +112,28 @@ export default function GallerySetupFrom({
       bgColor: bgColor,
       title: translations[SITE_CONFIG.LANG.DEFAULT_ID].title,
       customDescripition: translations[SITE_CONFIG.LANG.DEFAULT_ID].description,
+      displayOrder: galleryList.length,
       ...value
     };
-    setGalleryList([...galleryList, payload]);
-    setIsCreate(false);
+    if (!group) {
+      const { success, data } =
+        galleryId == -1
+          ? await axCreateHomePageGallery(payload)
+          : await axMiniInsertHomePageGallery(payload);
+
+      if (success) {
+        notification(t("group:homepage_customization.update.success"), NotificationType.Success);
+        setGalleryList(
+          galleryId == -1 ? data.gallerySlider : data.miniGallery[index].gallerySlider
+        );
+        setIsCreate(false);
+      } else {
+        notification(t("group:homepage_customization.update.failure"), NotificationType.Success);
+      }
+    } else {
+      setGalleryList([...galleryList, payload]);
+      setIsCreate(false);
+    }
   };
 
   useEffect(() => {
@@ -155,11 +181,7 @@ export default function GallerySetupFrom({
             name={`translations.${translationSelected}.description`}
             label={t("group:homepage_customization.table.description")}
           />
-          <TextBoxField
-            key={`readmore-${translationSelected}`}
-            name={`translations.${translationSelected}.readMoreText`}
-            label={t("group:homepage_customization.resources.read_more")}
-          />
+
           <SelectInputField
             key={`readmoreui`}
             name={`readMoreUIType`}
@@ -167,6 +189,16 @@ export default function GallerySetupFrom({
             options={readMoreUIOptions}
             disabled={translationSelected != SITE_CONFIG.LANG.DEFAULT_ID}
             shouldPortal={true}
+          />
+          <TextBoxField
+            name="moreLinks"
+            label={t("group:homepage_customization.resources.link")}
+            disabled={translationSelected != SITE_CONFIG.LANG.DEFAULT_ID}
+          />
+          <TextBoxField
+            key={`readmore-${translationSelected}`}
+            name={`translations.${translationSelected}.readMoreText`}
+            label={t("group:homepage_customization.resources.read_more")}
           />
 
           {galleryId != -1 && (

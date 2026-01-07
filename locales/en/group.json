@@ -80,6 +80,7 @@
       "new_image": "Image Upload",
       "read_more": "Read more button text",
       "read_more_button": "Button",
+      "read_more_none": "none",
       "read_more_button_with_arrow": "Button with arrow",
       "read_more_ui": "Read more UI type",
       "sidebar_opaque": "opaque",
@@ -106,6 +107,7 @@
     }
   },
   "icon": "Icon",
+  "image_not_available": "Image not available",
   "invalid_wkt": "Enter Valid WKT String",
   "invite": "Type user name",
   "invite_founders": "Invite Founders",

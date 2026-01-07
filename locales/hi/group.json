@@ -82,6 +82,7 @@
       "read_more": "अधिक बटन पाठ पढ़ें",
       "read_more_button_with_arrow": "तीर वाला बटन",
       "read_more_link": "जोड़ना",
+      "read_more_none": "कोई नहीं",
       "read_more_ui": "अधिक UI प्रकार पढ़ें",
       "sidebar_opaque": "अस्पष्ट",
       "sidebar_translucent": "पारदर्शी",
@@ -108,6 +109,7 @@
     }
   },
   "icon": "आइकन",
+  "image_not_available": "छवि उपलब्ध नहीं है",
   "invalid_wkt": "मान्य WKT स्ट्रिंग दर्ज करें",
   "invite": "उपयोगकर्ता नाम टाइप करें",
   "invite_founders": "संस्थापक को आमंत्रित करें",

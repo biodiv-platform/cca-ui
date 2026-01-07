@@ -46,7 +46,11 @@ export default function GalleryEditForm({
   } = editGalleryData;
   const { t } = useTranslation();
   const readMoreUIOptions = [
-    { label: t("group:homepage_customization.resources.read_more_link"), value: "link" },
+    { label: t("group:homepage_customization.resources.read_more_none"), value: "none" },
+    {
+      label: t("group:homepage_customization.resources.read_more_button_with_arrow"),
+      value: "button_with_arrow"
+    },
     { label: t("group:homepage_customization.resources.read_more_button"), value: "button" }
   ];
   const [translationSelected, setTranslationSelected] = useState<number>(
@@ -143,7 +147,7 @@ export default function GalleryEditForm({
   return (
     <FormProvider {...hForm}>
       <Box display="flex" justifyContent="space-between" alignItems="center">
-        <Button m={3} type="button" onClick={() => setIsEdit(false)}>
+        <Button m={3} type="button" onClick={() => setIsEdit(false)} variant={"subtle"}>
           <LuArrowLeft />
           {t("group:homepage_customization.back")}
         </Button>
@@ -185,18 +189,23 @@ export default function GalleryEditForm({
           label={t("group:homepage_customization.table.description")}
         />
 
-        <TextBoxField
-          key={`readmore-${translationSelected}`}
-          name={`translations.${translationSelected}.readMoreText`}
-          label={t("group:homepage_customization.resources.read_more")}
-        />
-
         <SelectInputField
           name={"readMoreUIType"}
           label={t("group:homepage_customization.resources.read_more_ui")}
           options={readMoreUIOptions}
           shouldPortal={true}
           disabled={translationSelected != SITE_CONFIG.LANG.DEFAULT_ID}
+        />
+        <TextBoxField
+          name="moreLinks"
+          label={t("group:homepage_customization.resources.link")}
+          disabled={translationSelected != SITE_CONFIG.LANG.DEFAULT_ID}
+        />
+
+        <TextBoxField
+          key={`readmore-${translationSelected}`}
+          name={`translations.${translationSelected}.readMoreText`}
+          label={t("group:homepage_customization.resources.read_more")}
         />
 
         {galleryId != -1 && (
@@ -210,10 +219,12 @@ export default function GalleryEditForm({
             >
               <ColorPicker.HiddenInput />
               <ColorPicker.Label>
-                {t("group:homepage_customization.resources.text_color")}
+                {t("group:homepage_customization.resources.slide_color")}
               </ColorPicker.Label>
+
               <ColorPicker.Control>
                 <ColorPicker.Trigger p="2">
+                  <ColorPicker.Input />
                   <ColorPicker.ValueSwatch boxSize="8" />
                 </ColorPicker.Trigger>
               </ColorPicker.Control>
@@ -244,6 +255,7 @@ export default function GalleryEditForm({
               </ColorPicker.Label>
               <ColorPicker.Control>
                 <ColorPicker.Trigger p="2">
+                  <ColorPicker.Input />
                   <ColorPicker.ValueSwatch boxSize="8" />
                 </ColorPicker.Trigger>
               </ColorPicker.Control>

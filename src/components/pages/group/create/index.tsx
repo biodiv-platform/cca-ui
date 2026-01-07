@@ -40,13 +40,12 @@ import ImageUploaderField from "../common/image-uploader-field";
 import { STATIC_GROUP_PAYLOAD } from "../common/static";
 import GallerySetupFrom from "../edit/homepage-customization/gallery-setup/gallery-setup-form";
 import GallerySetupTable from "../edit/homepage-customization/gallery-setup/gallery-setup-tabel";
-import GlobeIcon from "@/icons/globe";
 import HomeIcon from "@/icons/home";
 import ImageIcon from "@/icons/image";
 import UserCheckIcon from "@/icons/user-check";
 import { GallerySlider } from "@/interfaces/userGroup";
 import AreaDrawField from "../common/area-draw-field";
-import MiniGallery from "../../home/group/mini-gallery";
+import MiniGallery from "../../admin/homegallery/mini-gallery";
 
 interface GroupCreatePageComponentProps {
   languages;
@@ -374,18 +373,7 @@ export default function CreateGroupPageComponent({ languages }: GroupCreatePageC
                       name="showGallery"
                       label={t("group:homepage_customization.gallery")}
                     />
-                    <SwitchField
-                      name="showStats"
-                      label={t("group:homepage_customization.module_stats")}
-                    />
-                    <SwitchField
-                      name="showGridMap"
-                      label={t("group:homepage_customization.cca_map")}
-                    />
-                    <SwitchField
-                      name="showDesc"
-                      label={t("group:homepage_customization.show_desc")}
-                    />
+                    <SwitchField name="showDonors" label={t("group:homepage_customization.cta")} />
                   </Box>
                 </Box>
               </>
@@ -420,7 +408,6 @@ export default function CreateGroupPageComponent({ languages }: GroupCreatePageC
             miniGallery={miniGalleryList}
             setMiniGallery={setMiniGalleryList}
             languages={languages}
-            handleFormSubmit={hForm.handleSubmit(handleFormSubmit)}
             mode={"create"}
           />
         )}

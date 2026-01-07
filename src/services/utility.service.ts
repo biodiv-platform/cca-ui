@@ -234,3 +234,26 @@ export const axGetActiveAnnouncement = async () => {
     return { success: false, data: null };
   }
 };
+
+export const axCreateHomePageGallery = async (payload) => {
+  try {
+    const { data } = await http.put(`${ENDPOINT.UTILITY}/v1/services/homePage/create`, payload);
+    return { success: true, data };
+  } catch (e) {
+    console.error(e);
+    return { success: false, data: [] };
+  }
+};
+
+export const axMiniInsertHomePageGallery = async (payload) => {
+  try {
+    const { data } = await http.put(
+      `${ENDPOINT.UTILITY}/v1/services/homePage/insert/miniSlider`,
+      payload
+    );
+    return { success: true, data };
+  } catch (e) {
+    console.error(e);
+    return { success: false, data: [] };
+  }
+};
