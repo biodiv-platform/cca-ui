@@ -32,6 +32,13 @@
   "close": "Close",
   "confirm_delete": "Are you sure want to delete?",
   "contributors": "Contributors",
+  "create_form": {
+    "add_translation_button": "Add Translation",
+    "cancel": "Cancel",
+    "create": "Create",
+    "language": "Language",
+    "language_placeholder": "Select Language"
+  },
   "delete": "Delete",
   "download": "Download",
   "edit": "Edit",
@@ -76,5 +83,6 @@
     "title": "Community Conserved Areas"
   },
   "view": "View",
-  "unknown": "Unknown"
+  "unknown": "Unknown",
+  "update": "Update"
 }

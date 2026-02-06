@@ -11,6 +11,7 @@ module.exports = {
     "rgx:/document/": ["document", "observation", "filters", "activity"],
     "/group/[groupName]": ["home"],
     "/group/[groupName]/show": ["home"],
+    "rgx:/admin": ["admin", "group"],
     "/group/[groupName]/chart": ["chart"],
     "rgx:/map": ["page", "map"],
     "/chart": ["chart"],

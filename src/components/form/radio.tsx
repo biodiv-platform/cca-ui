@@ -22,6 +22,7 @@ interface IRadioProps {
   isOthers?;
   isClearable?;
   isRequired?;
+  disabled?: boolean;
 }
 
 export const RadioInputField = ({
@@ -32,6 +33,7 @@ export const RadioInputField = ({
   title,
   hint,
   mb = 4,
+  disabled,
   isInline = true,
   options = [],
   isLargeVariant,
@@ -60,10 +62,10 @@ export const RadioInputField = ({
         helpText={helpText}
         required={isRequired}
       />
-      <RadioGroup id={name} {...field} colorPalette="blue">
+      <RadioGroup id={name} {...field} colorPalette="blue" disabled={disabled}>
         <Stack direction={isInline ? "row" : "column"} py={2}>
           {options.map((o) => (
-            <Radio key={o.value} value={o.value}>
+            <Radio key={o.value} value={o.value} disabled={disabled}>
               {optionLabelShow(o.label)}
             </Radio>
           ))}

@@ -10,7 +10,7 @@ import LocalLink from "../local-link";
 import Tooltip from "../tooltip";
 
 export default function NavbarAuthOption() {
-  const { user, isLoggedIn, isPreviewMode } = useGlobalState();
+  const { user, isLoggedIn, isPreviewMode, setOpen, open } = useGlobalState();
   const { t } = useTranslation();
   const router = useRouter();
   const [params, setParams] = useState({});
@@ -35,6 +35,14 @@ export default function NavbarAuthOption() {
           <Portal>
             <Menu.Positioner>
               <Menu.Content>
+                {!open && (
+                  <Menu.Item value="" asChild>
+                    <Box onClick={() => setOpen(true)}>
+                      Notifications
+                      {!open && <Box w="8px" h="8px" bg="teal.500" borderRadius="full" ml={2} />}
+                    </Box>
+                  </Menu.Item>
+                )}
                 <Menu.Item value="usershow" asChild>
                   <LocalLink href={`/user/show/${user.id}`} params={params} prefixGroup={true}>
                     {user.name}

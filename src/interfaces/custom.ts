@@ -38,3 +38,12 @@ export interface DocumentData {
   n: number;
   hasMore: boolean;
 }
+
+export interface AnnouncementType {
+  id: number;
+  bgColor: string;
+  color: string;
+  translations: {
+    [key: number]: string;
+  };
+}

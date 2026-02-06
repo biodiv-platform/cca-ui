@@ -1,3 +1,5 @@
+import SITE_CONFIG from "@/configs/site-config";
+import { getLanguageId } from "@/utils/i18n";
 import GroupListPageComponent from "@components/pages/group/list";
 import { GroupListFilterProvider } from "@components/pages/group/list/use-group-list";
 import { axGroupListExpanded } from "@services/usergroup.service";
@@ -11,7 +13,9 @@ const GroupListPage = (props) => (
 );
 
 export const getServerSideProps = async (ctx) => {
-  const [groupListExpanded] = await Promise.all([axGroupListExpanded()]);
+  const [groupListExpanded] = await Promise.all([
+    axGroupListExpanded(getLanguageId(ctx.locale)?.ID ?? SITE_CONFIG.LANG.DEFAULT_ID)
+  ]);
 
   return {
     props: {

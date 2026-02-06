@@ -32,6 +32,13 @@
   "close": "बंद करे",
   "confirm_delete": "क्या आप वाकई हटाना चाहते हैं?",
   "contributors": "योगदानकर्ताओं",
+  "create_form": {
+    "add_translation_button": "अनुवाद जोड़ें",
+    "cancel": "रद्द करना",
+    "create": "बनाएं",
+    "language": "भाषा",
+    "language_placeholder": "भाषा चुने"
+  },
   "delete": "हटाएं",
   "download": "डाउनलोड",
   "edit": "संपादित करें",
@@ -74,5 +81,6 @@
     "title": "समुदाय संरक्षित क्षेत्र"
   },
   "unknown": "अज्ञात",
+  "update": "अद्यतन",
   "view": "राय"
 }

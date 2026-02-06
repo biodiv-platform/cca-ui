@@ -3,6 +3,6 @@ import React from "react";
 
 export { getServerSideProps } from "../../index";
 
-const GroupHomePage = ({ featured }) => <HomePageComponent featured={featured} />;
+const GroupHomePage = ({ homeInfo }) => <HomePageComponent homeInfo={homeInfo} />;
 
 export default GroupHomePage;

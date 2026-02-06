@@ -25,10 +25,21 @@ export const findCurrentUserGroup = (
     name: SITE_CONFIG.SITE.TITLE?.[lang || SITE_CONFIG.LANG.DEFAULT] || DEFAULT_GROUP.name
   };
 
+  const groupPattern = /\/group\/([^/]+)/;
+  const urlMatch = currentURL.match(groupPattern);
+  const groupNameFromUrl = urlMatch ? urlMatch[1] : null;
+
   return (
     (currentURL &&
       groups.find(
-        (group: UserGroupCCA) => group.webAddress && currentURL.startsWith(group.webAddress)
+        (group: UserGroupCCA) =>
+          group.webAddress &&
+          // Case 1: Direct match when group.webAddress doesn't start with site base URL
+          ((!group.webAddress.startsWith(SITE_CONFIG.SITE.URL) &&
+            currentURL.startsWith(group.webAddress)) ||
+            // Case 2: Match /group/{groupName} pattern
+            group.webAddress.endsWith(`/group/${groupNameFromUrl}`) ||
+            group.webAddress.endsWith(`/group/${groupNameFromUrl}/`))
       )) ||
     defaultGroup
   );

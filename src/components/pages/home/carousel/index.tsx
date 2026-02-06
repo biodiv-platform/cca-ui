@@ -1,23 +1,7 @@
-import { Box } from "@chakra-ui/react";
-import React from "react";
-import Slider from "react-slick";
-
-import { NavigationButtons } from "./navigation";
-
-// Settings for the slider
-const settings = {
-  dots: false,
-  arrows: false,
-  fade: true,
-  infinite: true,
-  autoplay: true,
-  speed: 500,
-  autoplaySpeed: 5000,
-  slidesToShow: 1,
-  slidesToScroll: 1
-};
-
-const carouselHeight = { base: "200px", md: "380px" };
+import type { IconButtonProps } from "@chakra-ui/react";
+import { AspectRatio, Carousel, IconButton, Image } from "@chakra-ui/react";
+import { forwardRef } from "react";
+import { LuArrowLeft, LuArrowRight } from "react-icons/lu";
 
 const slides = [
   "/next-assets/carousel/5.webp",
@@ -28,40 +12,58 @@ const slides = [
   "/next-assets/carousel/4.webp"
 ];
 
-export default function Carousel() {
-  const [slider, setSlider] = React.useState<Slider | null>(null);
-
+const Gallery = () => {
   return (
-    <Box position="relative" height={carouselHeight} width="full" overflow="hidden">
-      {/* CSS files for react-slick */}
-      <link
-        rel="stylesheet"
-        type="text/css"
-        // charSet="UTF-8"
-        href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.min.css"
-      />
-      <link
-        rel="stylesheet"
-        type="text/css"
-        href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick-theme.min.css"
-      />
+    <Carousel.Root
+      slideCount={slides.length}
+      mx="auto"
+      gap="4"
+      position="relative"
+      colorPalette="white"
+      autoplay={{ delay: 4000 }}
+    >
+      <Carousel.Control gap="4" width="full" position="relative">
+        <Carousel.PrevTrigger asChild>
+          <ActionButton insetStart="4">
+            <LuArrowLeft />
+          </ActionButton>
+        </Carousel.PrevTrigger>
 
-      <NavigationButtons slider={slider} />
+        <Carousel.ItemGroup width="full">
+          {slides.map((src, index) => (
+            <Carousel.Item key={index} index={index}>
+              <AspectRatio ratio={16 / 9} maxH="380px" w="full" overflow="hidden">
+                <Image src={src} alt={`Product ${index + 1}`} objectFit="contain" />
+              </AspectRatio>
+            </Carousel.Item>
+          ))}
+        </Carousel.ItemGroup>
 
-      {/* Slider */}
-      <Slider {...settings} ref={(slider) => setSlider(slider)}>
-        {slides.map((url, index) => (
-          <Box
-            key={index}
-            height={carouselHeight}
-            position="relative"
-            backgroundImage={`url(${url})`}
-            backgroundPosition="center"
-            backgroundRepeat="no-repeat"
-            backgroundSize="cover"
-          />
-        ))}
-      </Slider>
-    </Box>
+        <Carousel.NextTrigger asChild>
+          <ActionButton insetEnd="4">
+            <LuArrowRight />
+          </ActionButton>
+        </Carousel.NextTrigger>
+      </Carousel.Control>
+    </Carousel.Root>
   );
-}
+};
+
+const ActionButton = forwardRef<HTMLButtonElement, IconButtonProps>(
+  function ActionButton(props, ref) {
+    return (
+      <IconButton
+        {...props}
+        ref={ref}
+        size="xs"
+        variant="outline"
+        rounded="full"
+        position="absolute"
+        zIndex="1"
+        bg="bg"
+      />
+    );
+  }
+);
+
+export default Gallery;

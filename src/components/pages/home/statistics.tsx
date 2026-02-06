@@ -3,20 +3,18 @@ import { Container } from "@components/@core/container";
 import LocalLink from "@components/@core/local-link";
 import useTranslation from "next-translate/useTranslation";
 import React from "react";
+import { LuMoveRight } from "react-icons/lu";
 
-export default function Statistics(featured) {
+export default function Statistics({ stats, props, hasArrowIcon }) {
   const { t } = useTranslation();
 
-  const sumOfArea = featured.featured.aggregationData?.numericAggregation.reduce(
-    (accumulator, currentValue) => {
-      return accumulator + (Object.values(currentValue)[0] as { value?: number }).value || 0;
-    },
-    0
-  );
+  const sumOfArea = stats.numericAggregation.reduce((accumulator, currentValue) => {
+    return accumulator + (Object.values(currentValue)[0] as { value?: number }).value || 0;
+  }, 0);
 
   return (
-    <Box borderRadius="lg" overflow="hidden" bg="white">
-      <Container bg="white">
+    <Box borderRadius="lg" overflow="hidden" bg={props.bgColor}>
+      <Container>
         <SimpleGrid columns={{ base: 1, md: 2 }} py={12} gap={10}>
           <Box
             display="flex"
@@ -36,7 +34,7 @@ export default function Statistics(featured) {
               <chakra.p fontSize="lg">{t("home:statistics.total_documented")}</chakra.p>
 
               <chakra.p fontSize="2xl" color={"black"}>
-                {featured.featured.aggregationData.total}
+                {stats.total}
               </chakra.p>
             </Box>
           </Box>
@@ -66,13 +64,14 @@ export default function Statistics(featured) {
         <SimpleGrid columns={{ base: 1, md: 5 }} gap={3} mb={6}>
           <GridItem colSpan={4}>
             <chakra.p mb={6} textAlign="left" color={"gray.500"} fontSize="lg">
-              {t("home:statistics.description")}
+              {props.customDescripition}
             </chakra.p>
           </GridItem>
           <GridItem display="flex" alignItems="center" justifyContent={{ md: "flex-end" }}>
             <LocalLink href="/chart" prefixGroup={true}>
               <Button size="lg" colorPalette="blue">
                 {t("home:statistics.title")}
+                {hasArrowIcon && <LuMoveRight />}
               </Button>
             </LocalLink>
           </GridItem>

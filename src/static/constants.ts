@@ -3,7 +3,6 @@ import { UserGroupCCAExtended } from "@interfaces/custom";
 
 import packageJson from "../../package.json";
 
-
 export const isBrowser = typeof window !== `undefined`;
 
 const API_ENDPOINT = process.browser
@@ -24,6 +23,7 @@ export const ENDPOINT = {
   PAGES: `${API_ENDPOINT}pages-api/api`,
   USER: `${API_ENDPOINT}user-api/api`,
   USERGROUP: `${API_ENDPOINT}userGroup-api/api`,
+  UTILITY: `${API_ENDPOINT}utility-api/api`,
   RAW: `${API_ENDPOINT}biodiv`
 };
 
@@ -34,7 +34,8 @@ export const DEFAULT_GROUP: UserGroupCCAExtended = {
   icon: `${ENDPOINT.FILES}${SITE_CONFIG.SITE.ICON}`,
   name: SITE_CONFIG.SITE.TITLE[SITE_CONFIG.LANG.DEFAULT],
   nameLocal: SITE_CONFIG.SITE?.TITLE_LOCAL,
-  webAddress: SITE_CONFIG.SITE.URL
+  webAddress: SITE_CONFIG.SITE.URL,
+  groupId: null as any
 };
 
 export const TOKEN = {
