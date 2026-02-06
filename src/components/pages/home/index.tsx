@@ -2,7 +2,6 @@ import React from "react";
 
 import GroupCarousel from "./group/groupCarousel";
 import MiniCarousel from "./group/groupCarousel/mini-carousel";
-import CTA from "./cta";
 
 export default function HomePageComponent({ homeInfo }) {
   return (
@@ -17,8 +16,6 @@ export default function HomePageComponent({ homeInfo }) {
             <MiniCarousel featured={item} aggregationData={homeInfo.aggregationData} />
           </>
         ))}
-
-      {homeInfo?.showDonors && <CTA />}
     </>
   );
 }
