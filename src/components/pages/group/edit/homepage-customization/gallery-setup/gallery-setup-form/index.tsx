@@ -20,21 +20,6 @@ import { galleryFieldValidationSchema } from "./common";
 import NewResourceForm from "./new-resource-form";
 import dynamic from "next/dynamic";
 
-interface IGallerySetupForm {
-  title: string;
-  customDescripition: string;
-  fileName: string;
-  moreLinks: string;
-  observationId: number;
-  authorId?: string;
-  authorName?: string;
-  profilePic?: string;
-  options?: any[];
-  truncated?: boolean;
-  galleryId?: number;
-  index?: number;
-}
-
 const WYSIWYGField = dynamic(() => import("@components/form/wysiwyg"), { ssr: false });
 
 export default function GallerySetupFrom({
@@ -58,7 +43,6 @@ export default function GallerySetupFrom({
   ];
 
   const { languageId } = useGlobalState();
-  const [defaultValues, setDefaultValues] = useState<IGallerySetupForm | any>(undefined);
   const validationSchema = Yup.lazy((value) => {
     const languageMapShape: Record<string, any> = {};
 
@@ -135,10 +119,6 @@ export default function GallerySetupFrom({
       setIsCreate(false);
     }
   };
-
-  useEffect(() => {
-    hForm.reset(defaultValues);
-  }, [defaultValues]);
 
   const [translationSelected, setTranslationSelected] = useState<number>(languageId);
 
