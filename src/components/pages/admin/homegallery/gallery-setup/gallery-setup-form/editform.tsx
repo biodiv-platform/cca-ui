@@ -66,7 +66,7 @@ export default function GalleryEditForm({
 
     for (const langId in value || {}) {
       languageMapShape[langId] = Yup.object().shape({
-        title: Yup.string().required("Title is required"),
+        title: Yup.string(),
         languageId: Yup.number()
       });
     }
@@ -102,7 +102,7 @@ export default function GalleryEditForm({
       readMoreText,
       gallerySidebar,
       galleryId,
-      translations: Object.fromEntries(translations.map((item) => [Number(item.languageId), item]))
+      translations: Object?.fromEntries(translations?.map((item) => [Number(item.languageId), item]))
     }
   });
 

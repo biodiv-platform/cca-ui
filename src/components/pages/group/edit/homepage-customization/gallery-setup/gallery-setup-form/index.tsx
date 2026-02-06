@@ -64,7 +64,7 @@ export default function GallerySetupFrom({
 
     for (const langId in value || {}) {
       languageMapShape[langId] = Yup.object().shape({
-        title: Yup.string().required("Title is required"),
+        title: Yup.string(),
         languageId: Yup.number()
       });
     }
