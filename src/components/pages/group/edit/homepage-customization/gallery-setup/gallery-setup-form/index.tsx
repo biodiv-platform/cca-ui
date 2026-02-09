@@ -19,6 +19,10 @@ import notification, { NotificationType } from "@/utils/notification";
 import { galleryFieldValidationSchema } from "./common";
 import NewResourceForm from "./new-resource-form";
 import dynamic from "next/dynamic";
+import {
+  axCreateGroupHomePageGallery,
+  axInsertMiniGroupHomePageGallery
+} from "@/services/usergroup.service";
 
 const WYSIWYGField = dynamic(() => import("@components/form/wysiwyg"), { ssr: false });
 
@@ -28,6 +32,7 @@ export default function GallerySetupFrom({
   setGalleryList,
   languages,
   galleryId = -1,
+  groupId = -1,
   group = true,
   vertical = false,
   index = 0
@@ -85,6 +90,7 @@ export default function GallerySetupFrom({
 
   const [langId, setLangId] = useState(0);
   const [bgColor, setBgColor] = useState("#f4f4f5");
+  const [color, setColor] = useState("#f4f4f5");
 
   const handleFormSubmit = async ({ translations, title, customDescripition, ...value }) => {
     const payload = {
@@ -99,7 +105,7 @@ export default function GallerySetupFrom({
       displayOrder: galleryList.length,
       ...value
     };
-    if (!group) {
+    if (groupId == -1) {
       const { success, data } =
         galleryId == -1
           ? await axCreateHomePageGallery(payload)
@@ -115,8 +121,19 @@ export default function GallerySetupFrom({
         notification(t("group:homepage_customization.update.failure"), NotificationType.Success);
       }
     } else {
-      setGalleryList([...galleryList, payload]);
-      setIsCreate(false);
+      const { success, data } =
+        galleryId == -1
+          ? await axCreateGroupHomePageGallery(groupId, payload)
+          : await axInsertMiniGroupHomePageGallery(groupId, payload);
+      if (success) {
+        notification(t("group:homepage_customization.update.success"), NotificationType.Success);
+        setGalleryList(
+          galleryId == -1 ? data.gallerySlider : data.miniGallery[index].gallerySlider
+        );
+        setIsCreate(false);
+      } else {
+        notification(t("group:homepage_customization.update.failure"), NotificationType.Success);
+      }
     }
   };
 
@@ -141,9 +158,6 @@ export default function GallerySetupFrom({
             <LuArrowLeft />
             {t("group:homepage_customization.back")}
           </Button>
-          <Flex alignItems="center">
-            <Text m={3}>{t("group:homepage_customization.resources.new_image")}</Text>
-          </Flex>
         </Box>
         <TranslationTab
           values={Object.keys(hForm.getValues().translations)}
@@ -183,6 +197,37 @@ export default function GallerySetupFrom({
 
           {galleryId != -1 && (
             <>
+              <ColorPicker.Root
+                defaultValue={parseColor(color)}
+                maxW="200px"
+                onValueChange={(v) => setColor(v.valueAsString)}
+                mb={4}
+                disabled={translationSelected != SITE_CONFIG.LANG.DEFAULT_ID}
+              >
+                <ColorPicker.HiddenInput />
+                <ColorPicker.Label>
+                  {t("group:homepage_customization.resources.slide_color")}
+                </ColorPicker.Label>
+
+                <ColorPicker.Control>
+                  <ColorPicker.Trigger p="2">
+                    <ColorPicker.Input />
+                    <ColorPicker.ValueSwatch boxSize="8" />
+                  </ColorPicker.Trigger>
+                </ColorPicker.Control>
+                <Portal>
+                  <ColorPicker.Positioner>
+                    <ColorPicker.Content>
+                      <ColorPicker.Area />
+                      <HStack>
+                        <ColorPicker.EyeDropper size="sm" variant="outline" />
+                        <ColorPicker.Sliders />
+                        <ColorPicker.ValueSwatch />
+                      </HStack>
+                    </ColorPicker.Content>
+                  </ColorPicker.Positioner>
+                </Portal>
+              </ColorPicker.Root>
               <ColorPicker.Root
                 defaultValue={parseColor(bgColor)}
                 maxW="200px"

@@ -67,10 +67,12 @@ const GallerySetupTable = ({
     setGalleryList(galleryList.filter((_, idx) => idx !== index));
     notification(t("group:homepage_customization.remove.success"), NotificationType.Success);
   };
-
   const editGalleryItem = async (index) => {
+    setEditGalleryData({
+      ...galleryList[index],
+      sliderPosition: index
+    });
     setIsEdit(true);
-    setEditGalleryData(galleryList[index]);
   };
 
   return (

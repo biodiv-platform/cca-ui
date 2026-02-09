@@ -43,6 +43,7 @@ export default function GalleryEditForm({
 
   const {
     id,
+    sliderPosition,
     title,
     fileName,
     customDescripition,
@@ -102,7 +103,15 @@ export default function GalleryEditForm({
       readMoreText,
       gallerySidebar,
       galleryId,
-      translations: Object?.fromEntries(translations?.map((item) => [Number(item.languageId), item]))
+      translations: Object?.fromEntries(
+        translations?.map((item) => [
+          Number(item.languageId),
+          {
+            ...item,
+            title: item.title ?? ""
+          }
+        ])
+      )
     }
   });
 
@@ -158,7 +167,6 @@ export default function GalleryEditForm({
         <TextBoxField
           key={`title-${translationSelected}`}
           name={`translations.${translationSelected}.title`}
-          isRequired={true}
           label={
             translationSelected != SITE_CONFIG.LANG.DEFAULT_ID
               ? hForm.getValues().translations[SITE_CONFIG.LANG.DEFAULT_ID].title
@@ -238,7 +246,7 @@ export default function GalleryEditForm({
               maxW="200px"
               onValueChange={(v) => setBgColor(v.valueAsString)}
               mb={4}
-              disabled={translationSelected != SITE_CONFIG.LANG.DEFAULT_ID}
+              disabled={translationSelected != SITE_CONFIG.LANG.DEFAULT_ID || sliderPosition != 0}
             >
               <ColorPicker.HiddenInput />
               <ColorPicker.Label>

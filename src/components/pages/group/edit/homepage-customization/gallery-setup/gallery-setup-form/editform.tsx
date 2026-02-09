@@ -20,6 +20,9 @@ import * as Yup from "yup";
 
 import { galleryFieldValidationSchema } from "./common";
 import TranslationTab from "@/components/pages/common/translation-tab";
+import dynamic from "next/dynamic";
+
+const WYSIWYGField = dynamic(() => import("@components/form/wysiwyg"), { ssr: false });
 
 export default function GalleryEditForm({
   setIsEdit,
@@ -32,6 +35,7 @@ export default function GalleryEditForm({
 }) {
   const {
     id,
+    sliderPosition,
     title,
     fileName,
     customDescripition,
@@ -105,7 +109,6 @@ export default function GalleryEditForm({
   );
 
   const handleAddTranslation = () => {
-    setTranslationSelected(langId);
     hForm.setValue(`translations.${langId}`, {
       id: null,
       title: "",
@@ -113,6 +116,7 @@ export default function GalleryEditForm({
       description: "",
       readMoreText: ""
     });
+    setTranslationSelected(langId);
   };
 
   const handleFormSubmit = async ({ translations, ...value }) => {
@@ -167,14 +171,9 @@ export default function GalleryEditForm({
           isRequired={true}
           label={
             translationSelected != SITE_CONFIG.LANG.DEFAULT_ID
-              ? hForm.getValues().translation[SITE_CONFIG.LANG.DEFAULT_ID].title
+              ? hForm.getValues().translations[SITE_CONFIG.LANG.DEFAULT_ID].title
               : t("group:homepage_customization.resources.title")
           }
-        />
-        <TextBoxField
-          name="moreLinks"
-          label={t("group:homepage_customization.resources.link")}
-          disabled={translationSelected != SITE_CONFIG.LANG.DEFAULT_ID}
         />
 
         <ImageUploaderField
@@ -183,7 +182,7 @@ export default function GalleryEditForm({
           disabled={translationSelected != SITE_CONFIG.LANG.DEFAULT_ID}
         />
 
-        <TextAreaField
+        <WYSIWYGField
           key={`description-${translationSelected}`}
           name={`translations.${translationSelected}.description`}
           label={t("group:homepage_customization.table.description")}
@@ -208,7 +207,7 @@ export default function GalleryEditForm({
           label={t("group:homepage_customization.resources.read_more")}
         />
 
-        {galleryId != -1 && (
+        {galleryId != 0 && (
           <>
             <ColorPicker.Root
               defaultValue={parseColor(color)}
@@ -247,7 +246,7 @@ export default function GalleryEditForm({
               maxW="200px"
               onValueChange={(v) => setBgColor(v.valueAsString)}
               mb={4}
-              disabled={translationSelected != SITE_CONFIG.LANG.DEFAULT_ID}
+              disabled={translationSelected != SITE_CONFIG.LANG.DEFAULT_ID || sliderPosition != 0}
             >
               <ColorPicker.HiddenInput />
               <ColorPicker.Label>
