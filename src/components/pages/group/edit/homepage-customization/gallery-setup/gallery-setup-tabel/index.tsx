@@ -77,8 +77,11 @@ const GallerySetupTable = ({
   };
 
   const editGalleryItem = async (index) => {
+    setEditGalleryData({
+      ...galleryList[index],
+      sliderPosition: index
+    });
     setIsEdit(true);
-    setEditGalleryData(galleryList[index]);
   };
 
   return (

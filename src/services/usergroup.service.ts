@@ -370,3 +370,29 @@ export const axReorderMiniGroupHomePageGallery = async (userGroupId, payload) =>
     return { success: false, data: [] };
   }
 };
+
+export const axCreateGroupHomePageGallery = async (userGroupId, payload) => {
+  try {
+    const { data } = await http.put(
+      `${ENDPOINT.USERGROUP}/v1/group/homePage/insert/${userGroupId}`,
+      payload
+    );
+    return { success: true, data };
+  } catch (e) {
+    console.error(e);
+    return { success: false, data: [] };
+  }
+};
+
+export const axInsertMiniGroupHomePageGallery = async (userGroupId, payload) => {
+  try {
+    const { data } = await http.put(
+      `${ENDPOINT.USERGROUP}/v1/group/homePage/miniSlider/insert/${userGroupId}`,
+      payload
+    );
+    return { success: true, data };
+  } catch (e) {
+    console.error(e);
+    return { success: false, data: [] };
+  }
+};

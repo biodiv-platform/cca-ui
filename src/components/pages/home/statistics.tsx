@@ -1,3 +1,4 @@
+import { getInjectableHTML } from "@/utils/text";
 import { Box, Button, chakra, GridItem, Image, SimpleGrid } from "@chakra-ui/react";
 import { Container } from "@components/@core/container";
 import LocalLink from "@components/@core/local-link";
@@ -63,9 +64,13 @@ export default function Statistics({ stats, props, hasArrowIcon }) {
 
         <SimpleGrid columns={{ base: 1, md: 5 }} gap={3} mb={6}>
           <GridItem colSpan={4}>
-            <chakra.p mb={6} textAlign="left" color={"gray.500"} fontSize="lg">
-              {props.customDescripition}
-            </chakra.p>
+            <chakra.div
+              fontSize="lg"
+              color="gray.500"
+              dangerouslySetInnerHTML={{
+                __html: getInjectableHTML(props.customDescripition)
+              }}
+            />
           </GridItem>
           <GridItem display="flex" alignItems="center" justifyContent={{ md: "flex-end" }}>
             <LocalLink href="/chart" prefixGroup={true}>

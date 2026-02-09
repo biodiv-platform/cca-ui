@@ -15,12 +15,6 @@ export default function NewResourceForm({ translation, galleryId }) {
         label={t("group:homepage_customization.resources.title")}
         {...(galleryId != -1 && { maxLength: 20 })}
       />
-      <TextBoxField
-        key={`link`}
-        name={`moreLinks`}
-        label={t("group:homepage_customization.resources.link")}
-        disabled={translation != SITE_CONFIG.LANG.DEFAULT_ID}
-      />
       <ImageUploaderField
         key={`file`}
         label={t("group:homepage_customization.resources.imageurl")}

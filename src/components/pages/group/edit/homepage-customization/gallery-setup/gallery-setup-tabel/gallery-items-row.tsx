@@ -1,3 +1,4 @@
+import { getInjectableHTML } from "@/utils/text";
 import { Box, Button, Image, Link } from "@chakra-ui/react";
 import useGlobalState from "@hooks/use-global-state";
 import { RESOURCE_SIZE } from "@static/constants";
@@ -25,7 +26,13 @@ const GalleryItemsRow: any = SortableElement(({ itemDetails, onDelete, onEdit })
       <td>
         <Image src={imgUrl} />
       </td>
-      <td>{customDescripition}</td>
+      <td>
+        <Box
+          dangerouslySetInnerHTML={{
+            __html: getInjectableHTML(customDescripition)
+          }}
+        ></Box>
+      </td>
 
       {currentGroup.id ? (
         <td>

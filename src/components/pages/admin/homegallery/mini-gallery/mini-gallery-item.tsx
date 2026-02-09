@@ -41,8 +41,8 @@ export default function MiniGalleryItem({ item, index, onEdit, onDelete }) {
         <Flex flex={1} align="center" justify="space-between" pl={4}>
           <Heading as="h2" fontSize="1.2rem">
             {(() => {
-              const translationsMap = Object.fromEntries(
-                item.translations.map((t) => [Number(t.languageId), t])
+              const translationsMap = Object?.fromEntries(
+                item?.translations?.map((t) => [Number(t.languageId), t])
               );
 
               return `${

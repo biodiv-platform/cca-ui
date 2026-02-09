@@ -29,11 +29,15 @@ export const getServerSideProps = async (ctx) => {
   const { currentGroup } = await axGroupList(aReq.href, langId);
 
   // This can throw error if user is not authorized
-  const { success: s1, data: groupInfo } = await axGetGroupEditInfoByGroupId(currentGroup.id, ctx);
-  const { success: s2, data } = await axGetGroupAdministratorsByGroupId(currentGroup.id);
+  const { success: s1, data: groupInfo } = await axGetGroupEditInfoByGroupId(
+    currentGroup.groupId,
+    ctx
+  );
+  const { success: s2, data } = await axGetGroupAdministratorsByGroupId(currentGroup.groupId);
+
   const { data: languagesList } = await axGetLangList();
 
-  const { data: homePageDetails } = await axGetGroupHompageDetails(currentGroup.id, langId);
+  const { data: homePageDetails } = await axGetGroupHompageDetails(currentGroup.groupId, langId);
   if (s1 && s2) {
     return {
       props: {

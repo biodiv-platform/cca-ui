@@ -72,7 +72,6 @@ export default function HomePageGalleryCustomizationForm({
           <form onSubmit={hForm.handleSubmit(handleFormSubmit)} className="fade">
             <Box width={["100%", 350]} justifyContent="space-between">
               <SwitchField name="showGallery" label={t("group:homepage_customization.gallery")} />
-              <SwitchField name="showDonors" label={t("group:homepage_customization.cta")} />
             </Box>
           </form>
         </FormProvider>

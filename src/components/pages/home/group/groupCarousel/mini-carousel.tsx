@@ -31,7 +31,8 @@ const TextOnlyCard = memo(function TextOnlyCard({
   item,
   slidesPerView,
   hasButton,
-  hasArrowIcon
+  hasArrowIcon,
+  border = true
 }: any) {
   const showRightCTA = slidesPerView === 1;
   const desc = useHtml(item.customDescripition);
@@ -40,9 +41,9 @@ const TextOnlyCard = memo(function TextOnlyCard({
     <SimpleGrid
       columns={showRightCTA ? { base: 1, md: 5 } : 1}
       gap={6}
-      border={slidesPerView > 1 ? "1px solid" : "none"}
-      borderColor={slidesPerView > 1 ? "gray.200" : "transparent"}
-      borderRadius={slidesPerView > 1 ? "2xl" : "none"}
+      border={slidesPerView > 1 && border ? "1px solid" : "none"}
+      borderColor={slidesPerView > 1 && border ? "gray.200" : "transparent"}
+      borderRadius={slidesPerView > 1 && border ? "2xl" : "none"}
       height={"full"}
       p={4}
       bg={item.color}
@@ -217,7 +218,13 @@ const PropertyCard = memo(function PropertyCard({
     return getNextResourceThumbnail(RESOURCE_CTX.USERGROUPS, item.fileName, RESOURCE_SIZE.PREVIEW);
   }, [hasImage, item?.fileName]);
 
-  const isStats = useMemo(() => (item?.title ?? "").toLowerCase() === "stats", [item?.title]);
+  const STATS_KEYWORDS = ["stats", "स्टैट्स", "आँकड़े", "आंकड़े"];
+
+  const isStats = useMemo(
+    () => STATS_KEYWORDS.includes((item?.title || "").toLowerCase()),
+    [item?.title]
+  );
+
   if (isStats)
     return <Statistics stats={aggregationData} props={item} hasArrowIcon={hasArrowIcon} />;
 
@@ -295,10 +302,15 @@ export default function MiniCarousel({ featured, aggregationData }: any) {
 
   const bgColor = gallerySlider[0]?.bgColor || "white";
 
+  const isCta = useMemo(() => {
+    const ctaValues = ["cta", "सीटीए", "कॉल टू एक्शन"];
+    return !ctaValues.includes((featured?.title || "").toLowerCase());
+  }, [featured?.title]);
+
   return (
     <Box bg={bgColor}>
       <Container py={{ base: 6, md: 12 }}>
-        {slidesPerView > 1 && (
+        {slidesPerView > 1 && isCta && (
           <chakra.h2
             fontSize={{ base: "3xl", sm: "4xl" }}
             fontWeight="bold"
