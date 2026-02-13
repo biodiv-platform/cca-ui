@@ -13,6 +13,7 @@ interface IMenuProps {
 
 const RightMenuContainer = styled.div`
   display: flex;
+  align-items: center;
   z-index: 3;
   & > a,
   & > button {

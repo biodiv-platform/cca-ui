@@ -53,6 +53,7 @@ export default function MenuItems(props) {
           alignItems="center"
           justifyContent="space-between"
           pl={{ base: pl, md: 4 }}
+          width={pl != 2 ? "full" : "auto"}
         >
           <SimpleLink to={to} params={params} prefixGroup={prefixGroup} isDarkButton={isDarkButton}>
             {linkContent}
@@ -68,7 +69,7 @@ export default function MenuItems(props) {
             <CCell />
           ) : (
             <Menu.Content>
-              {rows.map((row) => (
+              {rows.map((row: any) => (
                 <Menu.Item key={row.to} value={row.name} asChild>
                   <LocalLink href={row.to} params={row.params} prefixGroup={prefixGroup}>
                     {t(`${row.name}`)}
