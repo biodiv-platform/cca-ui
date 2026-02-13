@@ -32,7 +32,8 @@ export default function MenuItems(props) {
     cell: CCell,
     params,
     isDarkButton,
-    prefixGroup
+    prefixGroup,
+    pl = 2
   } = props;
   const isDropdown = rows.length > 0 || CCell;
   const { t } = useTranslation();
@@ -46,12 +47,17 @@ export default function MenuItems(props) {
 
   return isDropdown ? (
     <Menu.Root>
-      <Menu.Trigger asChild pl={4}>
-        <Box display="flex" alignItems="center">
+      <Menu.Trigger asChild>
+        <Box
+          display="flex"
+          alignItems="center"
+          justifyContent="space-between"
+          pl={{ base: pl, md: 4 }}
+        >
           <SimpleLink to={to} params={params} prefixGroup={prefixGroup} isDarkButton={isDarkButton}>
             {linkContent}
           </SimpleLink>
-          <Box as="button" role="button" tabIndex={0} ml={2}>
+          <Box as="button" role="button" tabIndex={0} mr={2}>
             <LuChevronDown aria-label="Open Menu" />
           </Box>
         </Box>
