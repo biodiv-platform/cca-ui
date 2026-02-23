@@ -1,74 +1,61 @@
-import { Box } from "@chakra-ui/react";
-import { DETAILEDLICENSES, RESOURCE_SIZE } from "@static/constants";
+import { Box, Carousel } from "@chakra-ui/react";
+import { axGetLicenseList } from "@services/resources.service";
+import { RESOURCE_SIZE } from "@static/constants";
 import { getNextResourceThumbnail, RESOURCE_CTX } from "@utils/media";
 import React, { useEffect, useState } from "react";
-import Slider from "react-slick";
 
 interface PageSliderProps {
   images?;
+  description;
 }
 
-export function PageSlider({ images }: PageSliderProps) {
-  const [licenses, setLicenses] = useState<any>([]);
-  const carouselHeight = { base: "200px", md: "380px" };
-
-  // Settings for the slider
-  const settings = {
-    dots: false,
-    arrows: false,
-    fade: true,
-    infinite: true,
-    autoplay: true,
-    speed: 500,
-    autoplaySpeed: 5000,
-    slidesToShow: 1,
-    slidesToScroll: 1
-  };
+export function PageSlider({ images, description }: PageSliderProps) {
+  const [licenses, setLicenses] = useState({});
 
   useEffect(() => {
-    setLicenses(DETAILEDLICENSES);
+    axGetLicenseList().then(({ data }) =>
+      setLicenses(Object.fromEntries(data.map((l) => [l.value, l.label])))
+    );
   }, []);
 
   return (
-    <Box position="relative" height={carouselHeight} width="full" overflow="hidden">
-      {/* CSS files for react-slick */}
-      <link
-        rel="stylesheet"
-        type="text/css"
-        // charSet="UTF-8"
-        href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.min.css"
-      />
-      <link
-        rel="stylesheet"
-        type="text/css"
-        href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick-theme.min.css"
-      />
+    <>
+      <Box position="absolute" inset={0} w="full" h="full" overflow="hidden">
+        <Carousel.Root autoplay loop slideCount={images.length} w="full" h="full">
+          <Carousel.Control w="full" h="full" position="relative">
+            <Carousel.ItemGroup w="full" h="full">
+              {images.map((image, index) => (
+                <Carousel.Item key={image.id} index={index} w="full" h="full" position="relative">
+                  <Box
+                    position="absolute"
+                    inset={0}
+                    bgImage={`url(${getNextResourceThumbnail(
+                      RESOURCE_CTX.PAGES,
+                      image.fileName,
+                      RESOURCE_SIZE.PAGE
+                    )})`}
+                    bgSize="cover"
+                  />
 
-      {/* Slider */}
-      <Slider {...settings}>
-        {images.map((image, index) => (
-          <Box key={index} position="relative" height={carouselHeight}>
-            <Box
-              height="full"
-              backgroundImage={getNextResourceThumbnail(
-                RESOURCE_CTX.PAGES,
-                image.fileName,
-                RESOURCE_SIZE.PAGE
-              )}
-              backgroundPosition="center"
-              backgroundRepeat="no-repeat"
-              backgroundSize="cover"
-            />
-            {image.attribution && (
-              <Box position="absolute" left={0} bottom={0} p={4}>
-                {image.caption} by {image.attribution} (
-                {licenses.filter((license) => license.id === image.licenseId)[0]?.name || "Unknown"}
-                )
-              </Box>
-            )}
-          </Box>
-        ))}
-      </Slider>
-    </Box>
+                  <Box
+                    position="absolute"
+                    inset={0}
+                    bgGradient="linear(to-r, blackAlpha.500, blackAlpha.400)"
+                  />
+
+                  {description}
+
+                  {image.attribution && (
+                    <Box position="absolute" left={0} bottom={0} p={4}>
+                      {image.caption} by {image.attribution} ({licenses[image.licenseId]})
+                    </Box>
+                  )}
+                </Carousel.Item>
+              ))}
+            </Carousel.ItemGroup>
+          </Carousel.Control>
+        </Carousel.Root>
+      </Box>
+    </>
   );
 }

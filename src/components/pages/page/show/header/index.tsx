@@ -41,10 +41,10 @@ export const NextPageHeader = ({ page }) => {
         h="380px"
         position="sticky"
       >
-        {page.galleryData?.length ? <PageSlider images={page.galleryData} /> : null}
-        <PageHeading description={page.description} >
-          {page.title}
-        </PageHeading>
+        {page.galleryData?.length ? (
+          <PageSlider images={page.galleryData} description={page.description} />
+        ) : null}
+        <PageHeading description={page.description}>{page.title}</PageHeading>
       </Box>
       <PageOptions title={page.title} pageId={page.id} />
     </>

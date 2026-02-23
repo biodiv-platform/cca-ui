@@ -1,5 +1,4 @@
 import "../styles/globals.scss";
-import "keen-slider/keen-slider.min.css";
 import "react-datepicker/dist/react-datepicker.css";
 
 import { Box, ChakraProvider } from "@chakra-ui/react";
