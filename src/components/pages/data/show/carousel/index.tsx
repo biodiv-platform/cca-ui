@@ -35,7 +35,7 @@ export default function Gallery() {
           draggable={false}
         >
           <Carousel.Control>
-            <Carousel.ItemGroup>
+            <Carousel.ItemGroup w="full">
               {resources.map((resource, index) => (
                 <Carousel.Item key={resource.path} index={index}>
                   <Flex
