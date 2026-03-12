@@ -66,7 +66,7 @@ const TextOnlyCard = memo(function TextOnlyCard({
 
       {hasButton && (
         <GridItem display="flex" alignItems="center" justifyContent={{ md: "flex-end" }}>
-          <LocalLink href="/data/list" prefixGroup>
+          <LocalLink href={item.moreLinks} prefixGroup>
             <Button w={{ base: "full", sm: "auto" }} size="lg" colorPalette="blue" variant="solid">
               {item.readMoreText}
               {hasArrowIcon && <LuMoveRight />}
@@ -119,7 +119,7 @@ const SingleImageCard = memo(function SingleImageCard({
 
         {hasButton && (
           <GridItem display="flex" alignItems="center" justifyContent={{ md: "flex-end" }}>
-            <LocalLink href="/data/list" prefixGroup>
+            <LocalLink href={item.moreLinks} prefixGroup>
               <Button
                 w={{ base: "full", sm: "auto" }}
                 size="lg"
