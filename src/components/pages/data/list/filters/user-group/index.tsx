@@ -7,8 +7,8 @@ import CheckboxFilterPanel from "../checkbox";
 export default function UserGroupFilter() {
   const { currentGroup, groups } = useGlobalState();
   const groupOptions = useMemo(
-    () => groups?.map((g) => ({ label: g.name, value: g.id?.toString(), stat: g.name })),
-    []
+    () => groups?.map((g) => ({ label: g.name, value: g.id?.toString() })),
+    [groups]
   );
 
   return !currentGroup?.id && SITE_CONFIG.USERGROUP.ACTIVE ? (
@@ -18,6 +18,7 @@ export default function UserGroupFilter() {
       showSearch={true}
       skipOptionsTranslation={true}
       translateKey="filters:usergroup."
+      statKey="usergroups"
     />
   ) : null;
 }
