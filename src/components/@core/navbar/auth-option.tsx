@@ -24,7 +24,7 @@ export default function NavbarAuthOption() {
   }, [router.asPath]);
 
   return (
-    <Box hidden={isPreviewMode}>
+    <Box hidden={isPreviewMode} pl={{ base: 2, md: 0 }}>
       {isLoggedIn ? (
         <Menu.Root>
           <Menu.Trigger as={Link} rounded="full" cursor="pointer" minW={0}>

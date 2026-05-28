@@ -38,20 +38,30 @@ export default function NavBar() {
               <img src={`/next-assets/logo.png`} alt={"cca logo"} width={150} />
             </Link>
           </Flex>
-          <Flex alignItems="center" className="no-print">
+          <Flex alignItems="center" gap={4} className="no-print">
             <HStack as="nav" gap={4} display={{ base: "none", md: "flex" }}>
               <MenuItems />
             </HStack>
+
             <GroupListItem />
-            <LanguageSwitcher />
-            <NavbarAuthOption />
+
+            {/* Desktop Only */}
+            <Box display={{ base: "none", md: "block" }}>
+              <LanguageSwitcher />
+            </Box>
+
+            <Box display={{ base: "none", md: "block" }}>
+              <NavbarAuthOption />
+            </Box>
           </Flex>
         </Flex>
 
         {open ? (
-          <Box p={4} display={{ md: "none" }}>
+          <Box p={2} display={{ md: "none" }}>
             <Stack as="nav" gap={4}>
               <MenuItems />
+              <LanguageSwitcher />
+              <NavbarAuthOption />
             </Stack>
           </Box>
         ) : null}
