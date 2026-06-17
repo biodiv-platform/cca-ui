@@ -1,7 +1,6 @@
-import { Box, SimpleGrid, Spinner } from "@chakra-ui/react";
+import { Box, Flex, Heading, IconButton, SimpleGrid, Spinner } from "@chakra-ui/react";
 import { Container } from "@components/@core/container";
 import HTMLContainer from "@components/@core/html-container";
-import PageHeading from "@components/@core/page-heading";
 import SITE_CONFIG from "@configs/site-config";
 import { axGetAllTemplates } from "@services/cca.service";
 import { axGetPageByID } from "@services/pages.service";
@@ -12,11 +11,18 @@ import useTranslation from "next-translate/useTranslation";
 import React, { useEffect, useState } from "react";
 
 import ParticipateCard from "./participate-card";
+import EditIcon from "@/icons/edit";
+import { useLocalRouter } from "@/components/@core/local-link";
+import { Role } from "@/interfaces/custom";
+import { hasAccess } from "@/utils/auth";
 
 export default function TemplateParticipateListPageComponent() {
   const [templates, setTemplates] = useState<any>();
   const [info, setInfo] = useState<any>("");
   const { t, lang } = useTranslation();
+
+  const router = useLocalRouter();
+  const isAdmin = hasAccess([Role.Admin]);
 
   useEffect(() => {
     const platform = isMobile() ? "MOBILE" : "DESKTOP";
@@ -28,10 +34,28 @@ export default function TemplateParticipateListPageComponent() {
     );
   }, [lang]);
 
+  const handleOnEdit = () =>
+    router.push(`/page/edit/${SITE_CONFIG.PAGES.PARTICIPATE_ID[lang]}`, true);
+
   return (
     <Container>
       <NextSeo title={t("template:participate")} />
-      <PageHeading title={t("template:participate")} icon="📝" size="4xl" />
+      <Flex align="center" gap={2} my={10}>
+        <Heading size="4xl">📝 {t("template:participate")}</Heading>
+
+        {isAdmin && (
+          <IconButton
+            title={t("common:edit")}
+            onClick={handleOnEdit}
+            colorPalette="teal"
+            variant="plain"
+            aria-label={t("common:edit")}
+            size="xl"
+          >
+            <EditIcon />
+          </IconButton>
+        )}
+      </Flex>
 
       <Box
         as={HTMLContainer}
