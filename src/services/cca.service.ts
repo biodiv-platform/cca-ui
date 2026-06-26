@@ -430,3 +430,21 @@ export const axSearchMapCCAData = async (params) => {
     return { success: false, data: {} };
   }
 };
+
+export const axGetGBIFObservations = async (ccaId, offset = 0, limit = 10) => {
+  try {
+    const { data } = await plainHttp.get(
+      `${ENDPOINT.CCA}/v1/data/${ccaId}/gbif-observations`,
+      {
+        params: { offset, limit }
+      }
+    );
+    return { success: true, data };
+  } catch (e) {
+    console.error(e);
+    return {
+      success: false,
+      data: { totalCount: 0, offset: 0, limit: 10, aggregations: [], observations: [] }
+    };
+  }
+};

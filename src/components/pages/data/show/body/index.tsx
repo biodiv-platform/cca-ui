@@ -7,6 +7,7 @@ import { axMemberGroupListByUserId } from "@services/usergroup.service";
 import { RESOURCE_TYPE } from "@static/constants";
 import React, { useEffect, useState } from "react";
 
+import GBIFObservations from "../gbif-observations";
 import Group from "../groups";
 import useTemplateResponseShow from "../use-template-response-show";
 import ShowSection from "./section";
@@ -65,6 +66,8 @@ export default function ShowBody() {
           {renderDivider()}
         </>
       )}
+      <GBIFObservations ccaId={header.id} />
+      {renderDivider()}
       <Activity
         resourceId={header.id}
         resourceType={RESOURCE_TYPE.CCA_DATA}
