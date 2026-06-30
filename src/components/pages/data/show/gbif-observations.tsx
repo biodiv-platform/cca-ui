@@ -6,6 +6,7 @@ interface SpeciesAggregation {
   scientificName: string;
   count: number;
   iucnRedListCategory: string;
+  speciesGroup: string;
 }
 
 interface GBIFObservationsProps {
@@ -101,7 +102,8 @@ export default function GBIFObservations({ ccaId }: GBIFObservationsProps) {
                 <Table.Header>
                   <Table.Row>
                     <Table.ColumnHeader fontWeight="bold">Scientific Name</Table.ColumnHeader>
-                    <Table.ColumnHeader textAlign="right" fontWeight="bold">Observations</Table.ColumnHeader>
+                    <Table.ColumnHeader fontWeight="bold">Species Group</Table.ColumnHeader>
+                    <Table.ColumnHeader fontWeight="bold">Observations</Table.ColumnHeader>
                     <Table.ColumnHeader fontWeight="bold">IUCN Status</Table.ColumnHeader>
                   </Table.Row>
                 </Table.Header>
@@ -109,7 +111,16 @@ export default function GBIFObservations({ ccaId }: GBIFObservationsProps) {
                   {aggregations.map((agg, index) => (
                     <Table.Row key={`${agg.scientificName}-${index}`}>
                       <Table.Cell fontStyle="italic">{agg.scientificName}</Table.Cell>
-                      <Table.Cell textAlign="right">{agg.count.toLocaleString()}</Table.Cell>
+                      <Table.Cell>
+                        {agg.speciesGroup ? (
+                          <Text>{agg.speciesGroup}</Text>
+                        ) : (
+                          <Text color="gray.400" fontSize="sm">
+                            -
+                          </Text>
+                        )}
+                      </Table.Cell>
+                      <Table.Cell>{agg.count.toLocaleString()}</Table.Cell>
                       <Table.Cell>
                         {agg.iucnRedListCategory ? (
                           <Badge colorPalette={getIUCNColor(agg.iucnRedListCategory)}>
