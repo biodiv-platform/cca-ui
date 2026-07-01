@@ -1,4 +1,4 @@
-import { Box, Heading, Spinner, Table, Text } from "@chakra-ui/react";
+import { Badge, Box, Button, Heading, Spinner, Table, Text } from "@chakra-ui/react";
 import { axGetSpeciesGroupAggregation } from "@services/cca.service";
 import React, { useEffect, useState } from "react";
 
@@ -10,9 +10,15 @@ interface SpeciesGroupAggregation {
 
 interface SpeciesGroupAggregationProps {
   ccaId: number;
+  onSelectSpeciesGroup: (speciesGroup: string | null) => void;
+  selectedSpeciesGroup: string | null;
 }
 
-export default function SpeciesGroupAggregation({ ccaId }: SpeciesGroupAggregationProps) {
+export default function SpeciesGroupAggregation({
+  ccaId,
+  onSelectSpeciesGroup,
+  selectedSpeciesGroup
+}: SpeciesGroupAggregationProps) {
   const [aggregations, setAggregations] = useState<SpeciesGroupAggregation[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -42,10 +48,15 @@ export default function SpeciesGroupAggregation({ ccaId }: SpeciesGroupAggregati
   return (
     <Box borderRadius="md" boxShadow="md" overflow="hidden">
       {/* Header Panel */}
-      <Box bg="teal.500" px={6} py={4}>
+      <Box bg="teal.500" px={6} py={4} display="flex" justifyContent="space-between" alignItems="center">
         <Heading size="md" color="white">
           Species Groups
         </Heading>
+        {selectedSpeciesGroup && (
+          <Button size="xs" colorPalette="white" variant="outline" onClick={() => onSelectSpeciesGroup(null)}>
+            Clear Filter
+          </Button>
+        )}
       </Box>
 
       {/* Content Panel */}
@@ -69,8 +80,16 @@ export default function SpeciesGroupAggregation({ ccaId }: SpeciesGroupAggregati
               </Table.Header>
               <Table.Body>
                 {aggregations.map((agg, index) => (
-                  <Table.Row key={`${agg.speciesGroup}-${index}`}>
-                    <Table.Cell>{agg.speciesGroup}</Table.Cell>
+                  <Table.Row
+                    key={`${agg.speciesGroup}-${index}`}
+                    onClick={() => onSelectSpeciesGroup(agg.speciesGroup)}
+                    cursor="pointer"
+                    bg={selectedSpeciesGroup === agg.speciesGroup ? "teal.50" : undefined}
+                    _hover={{ bg: selectedSpeciesGroup === agg.speciesGroup ? "teal.100" : "gray.50" }}
+                  >
+                    <Table.Cell fontWeight={selectedSpeciesGroup === agg.speciesGroup ? "bold" : "normal"}>
+                      {agg.speciesGroup}
+                    </Table.Cell>
                     <Table.Cell>{agg.totalCount.toLocaleString()}</Table.Cell>
                     <Table.Cell>{agg.uniqueSpeciesCount.toLocaleString()}</Table.Cell>
                   </Table.Row>

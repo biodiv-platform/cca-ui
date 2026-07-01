@@ -431,13 +431,15 @@ export const axSearchMapCCAData = async (params) => {
   }
 };
 
-export const axGetGBIFObservations = async (ccaId, offset = 0, limit = 10) => {
+export const axGetGBIFObservations = async (ccaId, offset = 0, limit = 10, speciesGroup = null) => {
   try {
+    const params: any = { offset, limit };
+    if (speciesGroup) {
+      params.speciesGroup = speciesGroup;
+    }
     const { data } = await plainHttp.get(
       `${ENDPOINT.CCA}/v1/data/${ccaId}/gbif-observations`,
-      {
-        params: { offset, limit }
-      }
+      { params }
     );
     return { success: true, data };
   } catch (e) {

@@ -23,6 +23,7 @@ export default function ShowBody() {
 
   const [memberGroups, setMemberGroups] = useState<[]>();
   const [loading, setLoading] = useState(true);
+  const [selectedSpeciesGroup, setSelectedSpeciesGroup] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchMemberData = async () => {
@@ -42,6 +43,10 @@ export default function ShowBody() {
   if (loading) {
     return <p>Loading...</p>;
   }
+
+  const handleSpeciesGroupSelect = (speciesGroup: string | null) => {
+    setSelectedSpeciesGroup(speciesGroup);
+  };
 
   const renderDivider = () => (
     <Center className="no-print">
@@ -70,10 +75,14 @@ export default function ShowBody() {
       )}
       <Grid templateColumns={{ base: "1fr", lg: "1fr 2fr" }} gap={6}>
         <Stack gap={6}>
-          <SpeciesGroupAggregation ccaId={header.id} />
+          <SpeciesGroupAggregation
+            ccaId={header.id}
+            onSelectSpeciesGroup={handleSpeciesGroupSelect}
+            selectedSpeciesGroup={selectedSpeciesGroup}
+          />
           <IUCNAggregation ccaId={header.id} />
         </Stack>
-        <GBIFObservations ccaId={header.id} />
+        <GBIFObservations ccaId={header.id} selectedSpeciesGroup={selectedSpeciesGroup} />
       </Grid>
       {renderDivider()}
       <Activity

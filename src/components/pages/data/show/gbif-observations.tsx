@@ -11,6 +11,7 @@ interface SpeciesAggregation {
 
 interface GBIFObservationsProps {
   ccaId: number;
+  selectedSpeciesGroup?: string | null;
 }
 
 const IUCN_COLORS = {
@@ -23,7 +24,7 @@ const IUCN_COLORS = {
   NE: "gray" // Not Evaluated
 };
 
-export default function GBIFObservations({ ccaId }: GBIFObservationsProps) {
+export default function GBIFObservations({ ccaId, selectedSpeciesGroup }: GBIFObservationsProps) {
   const [aggregations, setAggregations] = useState<SpeciesAggregation[]>([]);
   const [totalCount, setTotalCount] = useState(0);
   const [offset, setOffset] = useState(0);
@@ -34,7 +35,7 @@ export default function GBIFObservations({ ccaId }: GBIFObservationsProps) {
   const fetchObservations = async (currentOffset: number, isInitial = false) => {
     setLoading(true);
     try {
-      const { success, data } = await axGetGBIFObservations(ccaId, currentOffset, limit);
+      const { success, data } = await axGetGBIFObservations(ccaId, currentOffset, limit, selectedSpeciesGroup);
 
       if (success && data) {
         setTotalCount(data.totalCount);
@@ -59,8 +60,9 @@ export default function GBIFObservations({ ccaId }: GBIFObservationsProps) {
   };
 
   useEffect(() => {
+    setOffset(0);
     fetchObservations(0, true);
-  }, [ccaId]);
+  }, [ccaId, selectedSpeciesGroup]);
 
   const handleLoadMore = () => {
     const newOffset = offset + limit;
@@ -83,6 +85,11 @@ export default function GBIFObservations({ ccaId }: GBIFObservationsProps) {
       <Box bg="teal.500" px={6} py={4}>
         <Heading size="md" color="white">
           GBIF Species Observations {totalCount > 0 && `(${totalCount} species)`}
+          {selectedSpeciesGroup && (
+            <Badge ml={3} colorPalette="yellow">
+              Filtered: {selectedSpeciesGroup}
+            </Badge>
+          )}
         </Heading>
       </Box>
 
