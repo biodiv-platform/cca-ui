@@ -1,4 +1,4 @@
-import { Center, Separator } from "@chakra-ui/react";
+import { Box, Center, Grid, Separator, Stack } from "@chakra-ui/react";
 import Activity from "@components/@core/activity";
 import { Container } from "@components/@core/container";
 import useGlobalState from "@hooks/use-global-state";
@@ -9,6 +9,8 @@ import React, { useEffect, useState } from "react";
 
 import GBIFObservations from "../gbif-observations";
 import Group from "../groups";
+import IUCNAggregation from "../iucn-aggregation";
+import SpeciesGroupAggregation from "../species-group-aggregation";
 import useTemplateResponseShow from "../use-template-response-show";
 import ShowSection from "./section";
 
@@ -66,7 +68,13 @@ export default function ShowBody() {
           {renderDivider()}
         </>
       )}
-      <GBIFObservations ccaId={header.id} />
+      <Grid templateColumns={{ base: "1fr", lg: "1fr 2fr" }} gap={6}>
+        <Stack gap={6}>
+          <SpeciesGroupAggregation ccaId={header.id} />
+          <IUCNAggregation ccaId={header.id} />
+        </Stack>
+        <GBIFObservations ccaId={header.id} />
+      </Grid>
       {renderDivider()}
       <Activity
         resourceId={header.id}

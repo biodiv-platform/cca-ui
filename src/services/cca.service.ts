@@ -448,3 +448,33 @@ export const axGetGBIFObservations = async (ccaId, offset = 0, limit = 10) => {
     };
   }
 };
+
+export const axGetSpeciesGroupAggregation = async (ccaId) => {
+  try {
+    const { data } = await plainHttp.get(
+      `${ENDPOINT.CCA}/v1/data/${ccaId}/species-group-aggregation`
+    );
+    return { success: true, data };
+  } catch (e) {
+    console.error(e);
+    return {
+      success: false,
+      data: { aggregations: [] }
+    };
+  }
+};
+
+export const axGetIUCNAggregation = async (ccaId) => {
+  try {
+    const { data } = await plainHttp.get(
+      `${ENDPOINT.CCA}/v1/data/${ccaId}/iucn-aggregation`
+    );
+    return { success: true, data };
+  } catch (e) {
+    console.error(e);
+    return {
+      success: false,
+      data: { aggregations: [] }
+    };
+  }
+};
