@@ -431,7 +431,12 @@ export const axSearchMapCCAData = async (params) => {
   }
 };
 
-export const axGetGBIFObservations = async (ccaId, offset = 0, limit = 10, speciesGroup = null) => {
+export const axGetGBIFObservations = async (
+  ccaId: number,
+  offset = 0,
+  limit = 10,
+  speciesGroup: string | null | undefined = null
+) => {
   try {
     const params: any = { offset, limit };
     if (speciesGroup) {
