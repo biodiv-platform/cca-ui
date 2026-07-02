@@ -1,4 +1,4 @@
-import { Badge, Box, Button, Heading, Spinner, Table, Text } from "@chakra-ui/react";
+import { Badge, Box, Button, Heading, Link, Spinner, Table, Text } from "@chakra-ui/react";
 import { axGetGBIFObservations } from "@services/cca.service";
 import React, { useEffect, useState } from "react";
 
@@ -7,6 +7,7 @@ interface SpeciesAggregation {
   count: number;
   iucnRedListCategory: string;
   speciesGroup: string;
+  taxonKey: number;
 }
 
 interface GBIFObservationsProps {
@@ -123,7 +124,17 @@ export default function GBIFObservations({ ccaId, selectedSpeciesGroup, selected
                 <Table.Body>
                   {aggregations.map((agg, index) => (
                     <Table.Row key={`${agg.scientificName}-${index}`}>
-                      <Table.Cell fontStyle="italic">{agg.scientificName}</Table.Cell>
+                      <Table.Cell fontStyle="italic">
+                        <Link
+                          href={`https://www.gbif.org/species/${agg.taxonKey}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          color="teal.600"
+                          _hover={{ textDecoration: "underline" }}
+                        >
+                          {agg.scientificName}
+                        </Link>
+                      </Table.Cell>
                       <Table.Cell>
                         {agg.speciesGroup ? (
                           <Text>{agg.speciesGroup}</Text>
