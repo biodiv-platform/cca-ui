@@ -24,6 +24,7 @@ export default function ShowBody() {
   const [memberGroups, setMemberGroups] = useState<[]>();
   const [loading, setLoading] = useState(true);
   const [selectedSpeciesGroup, setSelectedSpeciesGroup] = useState<string | null>(null);
+  const [selectedIucnCategory, setSelectedIucnCategory] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchMemberData = async () => {
@@ -46,6 +47,10 @@ export default function ShowBody() {
 
   const handleSpeciesGroupSelect = (speciesGroup: string | null) => {
     setSelectedSpeciesGroup(speciesGroup);
+  };
+
+  const handleIucnCategorySelect = (category: string | null) => {
+    setSelectedIucnCategory(category);
   };
 
   const renderDivider = () => (
@@ -80,9 +85,17 @@ export default function ShowBody() {
             onSelectSpeciesGroup={handleSpeciesGroupSelect}
             selectedSpeciesGroup={selectedSpeciesGroup}
           />
-          <IUCNAggregation ccaId={header.id} />
+          <IUCNAggregation
+            ccaId={header.id}
+            onSelectIucnCategory={handleIucnCategorySelect}
+            selectedIucnCategory={selectedIucnCategory}
+          />
         </Stack>
-        <GBIFObservations ccaId={header.id} selectedSpeciesGroup={selectedSpeciesGroup} />
+        <GBIFObservations
+          ccaId={header.id}
+          selectedSpeciesGroup={selectedSpeciesGroup}
+          selectedIucnCategory={selectedIucnCategory}
+        />
       </Grid>
       {renderDivider()}
       <Activity

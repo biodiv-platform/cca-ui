@@ -12,6 +12,7 @@ interface SpeciesAggregation {
 interface GBIFObservationsProps {
   ccaId: number;
   selectedSpeciesGroup?: string | null;
+  selectedIucnCategory?: string | null;
 }
 
 const IUCN_COLORS = {
@@ -24,7 +25,7 @@ const IUCN_COLORS = {
   NE: "gray" // Not Evaluated
 };
 
-export default function GBIFObservations({ ccaId, selectedSpeciesGroup }: GBIFObservationsProps) {
+export default function GBIFObservations({ ccaId, selectedSpeciesGroup, selectedIucnCategory }: GBIFObservationsProps) {
   const [aggregations, setAggregations] = useState<SpeciesAggregation[]>([]);
   const [totalCount, setTotalCount] = useState(0);
   const [offset, setOffset] = useState(0);
@@ -35,7 +36,7 @@ export default function GBIFObservations({ ccaId, selectedSpeciesGroup }: GBIFOb
   const fetchObservations = async (currentOffset: number, isInitial = false) => {
     setLoading(true);
     try {
-      const { success, data } = await axGetGBIFObservations(ccaId, currentOffset, limit, selectedSpeciesGroup);
+      const { success, data } = await axGetGBIFObservations(ccaId, currentOffset, limit, selectedSpeciesGroup, selectedIucnCategory);
 
       if (success && data) {
         setTotalCount(data.totalCount);
@@ -62,7 +63,7 @@ export default function GBIFObservations({ ccaId, selectedSpeciesGroup }: GBIFOb
   useEffect(() => {
     setOffset(0);
     fetchObservations(0, true);
-  }, [ccaId, selectedSpeciesGroup]);
+  }, [ccaId, selectedSpeciesGroup, selectedIucnCategory]);
 
   const handleLoadMore = () => {
     const newOffset = offset + limit;
@@ -87,7 +88,12 @@ export default function GBIFObservations({ ccaId, selectedSpeciesGroup }: GBIFOb
           GBIF Species Observations {totalCount > 0 && `(${totalCount} species)`}
           {selectedSpeciesGroup && (
             <Badge ml={3} colorPalette="yellow">
-              Filtered: {selectedSpeciesGroup}
+              Species: {selectedSpeciesGroup}
+            </Badge>
+          )}
+          {selectedIucnCategory && (
+            <Badge ml={3} colorPalette="orange">
+              IUCN: {selectedIucnCategory}
             </Badge>
           )}
         </Heading>

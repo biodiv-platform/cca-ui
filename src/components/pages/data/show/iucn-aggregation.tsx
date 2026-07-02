@@ -1,4 +1,4 @@
-import { Badge, Box, Heading, Spinner, Table, Text } from "@chakra-ui/react";
+import { Badge, Box, Button, Heading, Spinner, Table, Text } from "@chakra-ui/react";
 import { axGetIUCNAggregation } from "@services/cca.service";
 import React, { useEffect, useState } from "react";
 
@@ -10,6 +10,8 @@ interface IUCNAggregation {
 
 interface IUCNAggregationProps {
   ccaId: number;
+  onSelectIucnCategory: (category: string | null) => void;
+  selectedIucnCategory: string | null;
 }
 
 const IUCN_COLORS = {
@@ -22,7 +24,11 @@ const IUCN_COLORS = {
   NE: "gray" // Not Evaluated
 };
 
-export default function IUCNAggregation({ ccaId }: IUCNAggregationProps) {
+export default function IUCNAggregation({
+  ccaId,
+  onSelectIucnCategory,
+  selectedIucnCategory
+}: IUCNAggregationProps) {
   const [aggregations, setAggregations] = useState<IUCNAggregation[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -56,10 +62,15 @@ export default function IUCNAggregation({ ccaId }: IUCNAggregationProps) {
   return (
     <Box borderRadius="md" boxShadow="md" overflow="hidden">
       {/* Header Panel */}
-      <Box bg="teal.500" px={6} py={4}>
+      <Box bg="teal.500" px={6} py={4} display="flex" justifyContent="space-between" alignItems="center">
         <Heading size="md" color="white">
           IUCN Red List Categories
         </Heading>
+        {selectedIucnCategory && (
+          <Button size="xs" colorPalette="white" variant="outline" onClick={() => onSelectIucnCategory(null)}>
+            Clear Filter
+          </Button>
+        )}
       </Box>
 
       {/* Content Panel */}
@@ -83,9 +94,18 @@ export default function IUCNAggregation({ ccaId }: IUCNAggregationProps) {
               </Table.Header>
               <Table.Body>
                 {aggregations.map((agg, index) => (
-                  <Table.Row key={`${agg.iucnRedListCategory}-${index}`}>
+                  <Table.Row
+                    key={`${agg.iucnRedListCategory}-${index}`}
+                    onClick={() => onSelectIucnCategory(agg.iucnRedListCategory)}
+                    cursor="pointer"
+                    bg={selectedIucnCategory === agg.iucnRedListCategory ? "teal.50" : undefined}
+                    _hover={{ bg: selectedIucnCategory === agg.iucnRedListCategory ? "teal.100" : "gray.50" }}
+                  >
                     <Table.Cell>
-                      <Badge colorPalette={getIUCNColor(agg.iucnRedListCategory)}>
+                      <Badge
+                        colorPalette={getIUCNColor(agg.iucnRedListCategory)}
+                        fontWeight={selectedIucnCategory === agg.iucnRedListCategory ? "bold" : "normal"}
+                      >
                         {agg.iucnRedListCategory}
                       </Badge>
                     </Table.Cell>

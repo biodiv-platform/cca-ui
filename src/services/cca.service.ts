@@ -435,12 +435,16 @@ export const axGetGBIFObservations = async (
   ccaId: number,
   offset = 0,
   limit = 10,
-  speciesGroup: string | null | undefined = null
+  speciesGroup: string | null | undefined = null,
+  iucnCategory: string | null | undefined = null
 ) => {
   try {
     const params: any = { offset, limit };
     if (speciesGroup) {
       params.speciesGroup = speciesGroup;
+    }
+    if (iucnCategory) {
+      params.iucnCategory = iucnCategory;
     }
     const { data } = await plainHttp.get(
       `${ENDPOINT.CCA}/v1/data/${ccaId}/gbif-observations`,
