@@ -68,7 +68,7 @@ export default function ShowBody() {
         </div>
       ))}
       <Heading fontSize="3xl" textAlign="center" mb={8}>
-        Biodiversity in India
+        Biodiversity
       </Heading>
       <Grid templateColumns={{ base: "1fr", lg: "1fr 2fr" }} gap={6}>
         <Stack gap={6}>

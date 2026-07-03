@@ -1,6 +1,7 @@
-import { Badge, Box, Button, Heading, Link, Spinner, Stack, Table, Text } from "@chakra-ui/react";
+import { Badge, Box, Button, Heading, HStack, Link, Spinner, Stack, Table, Text } from "@chakra-ui/react";
 import { axGetGBIFObservations } from "@services/cca.service";
 import React, { useEffect, useState } from "react";
+import { FiLink } from "react-icons/fi";
 
 import {
   AccordionItem,
@@ -108,14 +109,22 @@ export default function GBIFObservations({ ccaId, selectedSpeciesGroup, selected
             </AccordionItemTrigger>
           </h3>
           <AccordionItemContent bg="white" p={4}>
-            <Stack gap={3}>
-              <Text>
-                Extracted from GBIF Species Occurrences provided as snapshots compiled in periodic snapshots and made available on cloud-computing platforms. The June-09-2026 snapshot is currently being used.
-              </Text>
-              <Text>
-                A bounding box of 11 km is drawn around the CCA point location point and occurrences within the bounding box is fetched from the GBIF Species Occurrence. If the CCA has a polygon, a bounding box is drawn around the polygon and occurrences are fetched.
-              </Text>
-            </Stack>
+            <Text>
+              Extracted from GBIF Species Occurrences. Downloaded on{" "}
+              <Link
+                href="https://doi.org/10.15468/dl.ug8est"
+                target="_blank"
+                rel="noopener noreferrer"
+                color="blue.600"
+                textDecoration="underline"
+              >
+                June-09-2026
+              </Link>
+              .
+            </Text>
+            <Text mt={3}>
+              A bounding box of 11 km is drawn around the CCA point location point and occurrences within the bounding box is fetched from the GBIF Species Occurrence. If the CCA has a polygon, a bounding box is drawn around the polygon and occurrences are fetched.
+            </Text>
           </AccordionItemContent>
         </AccordionItem>
       </AccordionRoot>
@@ -178,7 +187,10 @@ export default function GBIFObservations({ ccaId, selectedSpeciesGroup, selected
                           color="teal.600"
                           _hover={{ textDecoration: "underline" }}
                         >
-                          {agg.scientificName}
+                          <HStack gap={1} display="inline-flex" alignItems="center">
+                            <Text as="span">{agg.scientificName}</Text>
+                            <FiLink size={16} />
+                          </HStack>
                         </Link>
                       </Table.Cell>
                       <Table.Cell>
@@ -199,9 +211,12 @@ export default function GBIFObservations({ ccaId, selectedSpeciesGroup, selected
                               target="_blank"
                               rel="noopener noreferrer"
                             >
-                              <Badge colorPalette={getIUCNColor(agg.iucnRedListCategory)}>
-                                {agg.iucnRedListCategory}
-                              </Badge>
+                              <HStack gap={1} display="inline-flex" alignItems="center">
+                                <Badge colorPalette={getIUCNColor(agg.iucnRedListCategory)}>
+                                  {agg.iucnRedListCategory}
+                                </Badge>
+                                <FiLink size={16} />
+                              </HStack>
                             </Link>
                           ) : (
                             <Badge colorPalette={getIUCNColor(agg.iucnRedListCategory)}>
