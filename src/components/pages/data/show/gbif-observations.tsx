@@ -1,6 +1,13 @@
-import { Badge, Box, Button, Heading, Link, Spinner, Table, Text } from "@chakra-ui/react";
+import { Badge, Box, Button, Heading, Link, Spinner, Stack, Table, Text } from "@chakra-ui/react";
 import { axGetGBIFObservations } from "@services/cca.service";
 import React, { useEffect, useState } from "react";
+
+import {
+  AccordionItem,
+  AccordionItemContent,
+  AccordionItemTrigger,
+  AccordionRoot
+} from "@/components/ui/accordion";
 
 interface SpeciesAggregation {
   scientificName: string;
@@ -83,11 +90,47 @@ export default function GBIFObservations({ ccaId, selectedSpeciesGroup, selected
   }
 
   return (
-    <Box borderRadius="md" boxShadow="md" overflow="hidden">
-      {/* Header Panel */}
-      <Box bg="teal.500" px={6} py={4}>
-        <Heading size="md" color="white">
-          GBIF Species Observations {totalCount > 0 && `(${totalCount} species)`}
+    <Stack gap={4}>
+      {/* Information Accordion */}
+      <AccordionRoot collapsible defaultValue={[]}>
+        <AccordionItem
+          bg="white"
+          borderRadius="md"
+          border="1px solid var(--chakra-colors-gray-300)"
+          boxShadow="sm"
+          value="info"
+        >
+          <h3>
+            <AccordionItemTrigger
+              px={4}
+              py={3}
+              _hover={{ bg: "gray.100" }}
+              _expanded={{ bg: "gray.100" }}
+            >
+              <Box flex="1" textAlign="left">
+                About GBIF Data
+              </Box>
+            </AccordionItemTrigger>
+          </h3>
+          <AccordionItemContent bg="white" p={4}>
+            <Stack gap={3}>
+              <Text>
+                Extracted from GBIF Species Occurrences provided as snapshots compiled in periodic snapshots and made available on cloud-computing platforms. The XXX snapshot is currently being used.
+              </Text>
+              <Text>
+                A bounding box of 11 km is drawn around the CCA point location point and occurrences within the bounding box is fetched from the GBIF Species Occurrence. If the CCA has a polygon, a bounding box is drawn around the polygon and occurrences are fetched.
+              </Text>
+            </Stack>
+          </AccordionItemContent>
+        </AccordionItem>
+      </AccordionRoot>
+
+      {/* GBIF Observations Table */}
+      <Box borderRadius="md" border="1px solid var(--chakra-colors-gray-300)" boxShadow="sm" overflow="hidden">
+        {/* Header Panel */}
+        <Box bg="white" px={6} py={4} borderBottom="1px solid var(--chakra-colors-gray-300)">
+          <Heading size="md" color="gray.800">
+            GBIF Species Observations {totalCount > 0 && `(${totalCount} species)`}
           {selectedSpeciesGroup && (
             <Badge ml={3} colorPalette="yellow">
               Species: {selectedSpeciesGroup}
@@ -199,6 +242,7 @@ export default function GBIFObservations({ ccaId, selectedSpeciesGroup, selected
           </>
         )}
       </Box>
-    </Box>
+      </Box>
+    </Stack>
   );
 }

@@ -1,4 +1,6 @@
-import { Badge, Box, Button, Heading, Spinner, Table, Text } from "@chakra-ui/react";
+import { Badge, Box, Button, Heading, HStack, Spinner, Table, Text } from "@chakra-ui/react";
+import { Tooltip } from "@/components/ui/tooltip";
+import { IoInformationCircleOutline } from "react-icons/io5";
 import { axGetSpeciesGroupAggregation } from "@services/cca.service";
 import React, { useEffect, useState } from "react";
 
@@ -49,9 +51,16 @@ export default function SpeciesGroupAggregation({
     <Box borderRadius="md" boxShadow="md" overflow="hidden">
       {/* Header Panel */}
       <Box bg="teal.500" px={6} py={4} display="flex" justifyContent="space-between" alignItems="center">
-        <Heading size="md" color="white">
-          Species Groups
-        </Heading>
+        <HStack gap={2}>
+          <Heading size="md" color="white">
+            Species Groups (Click to filter)
+          </Heading>
+          <Tooltip content="Click on any species group row to filter GBIF observations by that group">
+            <Box color="white" cursor="help" display="flex" alignItems="center">
+              <IoInformationCircleOutline size={20} />
+            </Box>
+          </Tooltip>
+        </HStack>
         {selectedSpeciesGroup && (
           <Button size="xs" colorPalette="white" variant="outline" onClick={() => onSelectSpeciesGroup(null)}>
             Clear Filter

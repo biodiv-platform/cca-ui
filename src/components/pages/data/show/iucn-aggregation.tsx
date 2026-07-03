@@ -1,4 +1,6 @@
-import { Badge, Box, Button, Heading, Spinner, Table, Text } from "@chakra-ui/react";
+import { Badge, Box, Button, Heading, HStack, Spinner, Table, Text } from "@chakra-ui/react";
+import { Tooltip } from "@/components/ui/tooltip";
+import { IoInformationCircleOutline } from "react-icons/io5";
 import { axGetIUCNAggregation } from "@services/cca.service";
 import React, { useEffect, useState } from "react";
 
@@ -63,9 +65,16 @@ export default function IUCNAggregation({
     <Box borderRadius="md" boxShadow="md" overflow="hidden">
       {/* Header Panel */}
       <Box bg="teal.500" px={6} py={4} display="flex" justifyContent="space-between" alignItems="center">
-        <Heading size="md" color="white">
-          IUCN Red List Categories
-        </Heading>
+        <HStack gap={2}>
+          <Heading size="md" color="white">
+            IUCN Red List Categories (Click to filter)
+          </Heading>
+          <Tooltip content="Click on any IUCN category row to filter GBIF observations by that conservation status">
+            <Box color="white" cursor="help" display="flex" alignItems="center">
+              <IoInformationCircleOutline size={20} />
+            </Box>
+          </Tooltip>
+        </HStack>
         {selectedIucnCategory && (
           <Button size="xs" colorPalette="white" variant="outline" onClick={() => onSelectIucnCategory(null)}>
             Clear Filter
