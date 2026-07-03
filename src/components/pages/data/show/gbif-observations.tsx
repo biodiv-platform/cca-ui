@@ -40,7 +40,7 @@ export default function GBIFObservations({ ccaId, selectedSpeciesGroup, selected
   const [offset, setOffset] = useState(0);
   const [loading, setLoading] = useState(true);
   const [hasMore, setHasMore] = useState(true);
-  const limit = 10;
+  const limit = 20;
 
   const fetchObservations = async (currentOffset: number, isInitial = false) => {
     setLoading(true);
@@ -83,11 +83,6 @@ export default function GBIFObservations({ ccaId, selectedSpeciesGroup, selected
   const getIUCNColor = (category: string) => {
     return IUCN_COLORS[category] || "gray";
   };
-
-  // Don't show anything if there are no observations and we're done loading
-  if (totalCount === 0 && !loading) {
-    return null;
-  }
 
   return (
     <Stack gap={4}>
@@ -166,7 +161,14 @@ export default function GBIFObservations({ ccaId, selectedSpeciesGroup, selected
                   </Table.Row>
                 </Table.Header>
                 <Table.Body>
-                  {aggregations.map((agg, index) => (
+                  {aggregations.length === 0 ? (
+                    <Table.Row>
+                      <Table.Cell colSpan={4} textAlign="center" py={8}>
+                        <Text color="gray.500">No observations found</Text>
+                      </Table.Cell>
+                    </Table.Row>
+                  ) : (
+                    aggregations.map((agg, index) => (
                     <Table.Row key={`${agg.scientificName}-${index}`}>
                       <Table.Cell fontStyle="italic">
                         <Link
@@ -213,7 +215,7 @@ export default function GBIFObservations({ ccaId, selectedSpeciesGroup, selected
                         )}
                       </Table.Cell>
                     </Table.Row>
-                  ))}
+                  )))}
                 </Table.Body>
               </Table.Root>
             </Box>
