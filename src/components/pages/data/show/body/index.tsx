@@ -1,4 +1,4 @@
-import { Box, Center, Grid, Separator, Stack } from "@chakra-ui/react";
+import { Box, Center, Grid, Heading, Separator, Stack } from "@chakra-ui/react";
 import Activity from "@components/@core/activity";
 import { Container } from "@components/@core/container";
 import useGlobalState from "@hooks/use-global-state";
@@ -67,17 +67,9 @@ export default function ShowBody() {
           {renderDivider()}
         </div>
       ))}
-      {user.id && (
-        <>
-          <Group
-            ccaId={header.id}
-            groups={groups}
-            memberGroups={memberGroups}
-            defaultGroups={usergroupsAsIntegers || []}
-          />
-          {renderDivider()}
-        </>
-      )}
+      <Heading fontSize="3xl" textAlign="center" mb={8}>
+        Biodiversity in India
+      </Heading>
       <Grid templateColumns={{ base: "1fr", lg: "1fr 2fr" }} gap={6}>
         <Stack gap={6}>
           <SpeciesGroupAggregation
@@ -98,6 +90,17 @@ export default function ShowBody() {
         />
       </Grid>
       {renderDivider()}
+      {user.id && (
+        <>
+          <Group
+            ccaId={header.id}
+            groups={groups}
+            memberGroups={memberGroups}
+            defaultGroups={usergroupsAsIntegers || []}
+          />
+          {renderDivider()}
+        </>
+      )}
       <Activity
         resourceId={header.id}
         resourceType={RESOURCE_TYPE.CCA_DATA}

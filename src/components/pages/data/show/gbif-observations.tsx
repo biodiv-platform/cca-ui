@@ -8,6 +8,7 @@ interface SpeciesAggregation {
   iucnRedListCategory: string;
   speciesGroup: string;
   taxonKey: number;
+  iucnLink: string;
 }
 
 interface GBIFObservationsProps {
@@ -147,9 +148,21 @@ export default function GBIFObservations({ ccaId, selectedSpeciesGroup, selected
                       <Table.Cell>{agg.count.toLocaleString()}</Table.Cell>
                       <Table.Cell>
                         {agg.iucnRedListCategory ? (
-                          <Badge colorPalette={getIUCNColor(agg.iucnRedListCategory)}>
-                            {agg.iucnRedListCategory}
-                          </Badge>
+                          agg.iucnLink ? (
+                            <Link
+                              href={agg.iucnLink}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                            >
+                              <Badge colorPalette={getIUCNColor(agg.iucnRedListCategory)}>
+                                {agg.iucnRedListCategory}
+                              </Badge>
+                            </Link>
+                          ) : (
+                            <Badge colorPalette={getIUCNColor(agg.iucnRedListCategory)}>
+                              {agg.iucnRedListCategory}
+                            </Badge>
+                          )
                         ) : (
                           <Text color="gray.400" fontSize="sm">
                             -
