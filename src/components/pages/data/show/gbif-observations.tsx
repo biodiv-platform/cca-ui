@@ -110,7 +110,7 @@ export default function GBIFObservations({ ccaId, selectedSpeciesGroup, selected
           <AccordionItemContent bg="white" p={4}>
             <Stack gap={3}>
               <Text>
-                Extracted from GBIF Species Occurrences provided as snapshots compiled in periodic snapshots and made available on cloud-computing platforms. The XXX snapshot is currently being used.
+                Extracted from GBIF Species Occurrences provided as snapshots compiled in periodic snapshots and made available on cloud-computing platforms. The June-09-2026 snapshot is currently being used.
               </Text>
               <Text>
                 A bounding box of 11 km is drawn around the CCA point location point and occurrences within the bounding box is fetched from the GBIF Species Occurrence. If the CCA has a polygon, a bounding box is drawn around the polygon and occurrences are fetched.
