@@ -86,7 +86,7 @@ export default function GBIFObservations({ ccaId, selectedSpeciesGroup, selected
   };
 
   return (
-    <Stack gap={4}>
+    <Stack gap={4} minW={0}>
       {/* Information Accordion */}
       <AccordionRoot collapsible defaultValue={[]}>
         <AccordionItem
@@ -159,14 +159,22 @@ export default function GBIFObservations({ ccaId, selectedSpeciesGroup, selected
           </Box>
         ) : (
           <>
-            <Box overflowX="auto">
-              <Table.Root size="sm">
+            <Table.ScrollArea maxH="500px" borderWidth="1px" borderColor="gray.200" borderRadius="md">
+              <Table.Root size="sm" minW="640px" stickyHeader>
                 <Table.Header>
                   <Table.Row>
-                    <Table.ColumnHeader fontWeight="bold">Scientific Name</Table.ColumnHeader>
-                    <Table.ColumnHeader fontWeight="bold">Species Group</Table.ColumnHeader>
-                    <Table.ColumnHeader fontWeight="bold">Observations</Table.ColumnHeader>
-                    <Table.ColumnHeader fontWeight="bold">IUCN Status</Table.ColumnHeader>
+                    <Table.ColumnHeader fontWeight="bold" whiteSpace="nowrap" data-sticky bg="white">
+                      Scientific Name
+                    </Table.ColumnHeader>
+                    <Table.ColumnHeader fontWeight="bold" whiteSpace="nowrap">
+                      Species Group
+                    </Table.ColumnHeader>
+                    <Table.ColumnHeader fontWeight="bold" whiteSpace="nowrap">
+                      Observations
+                    </Table.ColumnHeader>
+                    <Table.ColumnHeader fontWeight="bold" whiteSpace="nowrap">
+                      IUCN Status
+                    </Table.ColumnHeader>
                   </Table.Row>
                 </Table.Header>
                 <Table.Body>
@@ -179,7 +187,7 @@ export default function GBIFObservations({ ccaId, selectedSpeciesGroup, selected
                   ) : (
                     aggregations.map((agg, index) => (
                     <Table.Row key={`${agg.scientificName}-${index}`}>
-                      <Table.Cell fontStyle="italic">
+                      <Table.Cell fontStyle="italic" whiteSpace="nowrap" data-sticky bg="white">
                         <Link
                           href={`https://www.gbif.org/species/${agg.taxonKey}`}
                           target="_blank"
@@ -193,7 +201,7 @@ export default function GBIFObservations({ ccaId, selectedSpeciesGroup, selected
                           </HStack>
                         </Link>
                       </Table.Cell>
-                      <Table.Cell>
+                      <Table.Cell whiteSpace="nowrap">
                         {agg.speciesGroup ? (
                           <Text>{agg.speciesGroup}</Text>
                         ) : (
@@ -202,8 +210,8 @@ export default function GBIFObservations({ ccaId, selectedSpeciesGroup, selected
                           </Text>
                         )}
                       </Table.Cell>
-                      <Table.Cell>{agg.count.toLocaleString()}</Table.Cell>
-                      <Table.Cell>
+                      <Table.Cell whiteSpace="nowrap">{agg.count.toLocaleString()}</Table.Cell>
+                      <Table.Cell whiteSpace="nowrap">
                         {agg.iucnRedListCategory ? (
                           agg.iucnLink ? (
                             <Link
@@ -233,7 +241,7 @@ export default function GBIFObservations({ ccaId, selectedSpeciesGroup, selected
                   )))}
                 </Table.Body>
               </Table.Root>
-            </Box>
+            </Table.ScrollArea>
 
             {loading && aggregations.length > 0 && (
               <Box textAlign="center" py={4}>
