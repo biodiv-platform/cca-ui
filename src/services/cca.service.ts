@@ -455,7 +455,7 @@ export const axGetGBIFObservations = async (
     console.error(e);
     return {
       success: false,
-      data: { totalCount: 0, offset: 0, limit: 10, aggregations: [], observations: [] }
+      data: { totalCount: 0, totalOccurrenceRecords: 0, offset: 0, limit: 10, aggregations: [], observations: [] }
     };
   }
 };

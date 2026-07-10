@@ -38,6 +38,7 @@ const IUCN_COLORS = {
 export default function GBIFObservations({ ccaId, selectedSpeciesGroup, selectedIucnCategory }: GBIFObservationsProps) {
   const [aggregations, setAggregations] = useState<SpeciesAggregation[]>([]);
   const [totalCount, setTotalCount] = useState(0);
+  const [totalOccurrenceRecords, setTotalOccurrenceRecords] = useState(0);
   const [offset, setOffset] = useState(0);
   const [loading, setLoading] = useState(true);
   const [hasMore, setHasMore] = useState(true);
@@ -50,6 +51,7 @@ export default function GBIFObservations({ ccaId, selectedSpeciesGroup, selected
 
       if (success && data) {
         setTotalCount(data.totalCount);
+        setTotalOccurrenceRecords(data.totalOccurrenceRecords);
 
         if (currentOffset === 0 || isInitial) {
           // Initial load
@@ -134,7 +136,9 @@ export default function GBIFObservations({ ccaId, selectedSpeciesGroup, selected
         {/* Header Panel */}
         <Box bg="white" px={6} py={4} borderBottom="1px solid var(--chakra-colors-gray-300)">
           <Heading size="md" color="gray.800">
-            GBIF Species Observations {totalCount > 0 && `(${totalCount} species)`}
+            GBIF Species Observations{" "}
+            {totalCount > 0 &&
+              `(${totalCount} species, ${totalOccurrenceRecords} occurrence records)`}
           {selectedSpeciesGroup && (
             <Badge ml={3} colorPalette="yellow">
               Species: {selectedSpeciesGroup}
