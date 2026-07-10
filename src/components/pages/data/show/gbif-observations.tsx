@@ -88,7 +88,7 @@ export default function GBIFObservations({ ccaId, selectedSpeciesGroup, selected
   return (
     <Stack gap={4} minW={0}>
       {/* Information Accordion */}
-      <AccordionRoot collapsible defaultValue={[]}>
+      <AccordionRoot collapsible defaultValue={["info"]}>
         <AccordionItem
           bg="white"
           borderRadius="md"
@@ -110,7 +110,7 @@ export default function GBIFObservations({ ccaId, selectedSpeciesGroup, selected
           </h3>
           <AccordionItemContent bg="white" p={4}>
             <Text>
-              Extracted from GBIF Species Occurrences. Downloaded on{" "}
+              This species occurrence data sourced from the Global Biodiversity Information Facility (GBIF), an open-access global biodiversity database. Unlike the rest of the information on this page, this data is not user-submitted on this portal. GBIF.org (9 June 2026) GBIF Occurrence{" "}
               <Link
                 href="https://doi.org/10.15468/dl.ug8est"
                 target="_blank"
@@ -118,7 +118,7 @@ export default function GBIFObservations({ ccaId, selectedSpeciesGroup, selected
                 color="blue.600"
                 textDecoration="underline"
               >
-                June-09-2026
+                Download
               </Link>
               .
             </Text>
