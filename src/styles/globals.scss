@@ -13,7 +13,7 @@ html,
 body {
   background: var(--chakra-colors-gray-50) !important;
   scroll-behavior: smooth;
-  overflow-x: hidden;
+  overflow-x: clip;
 }
 
 * {

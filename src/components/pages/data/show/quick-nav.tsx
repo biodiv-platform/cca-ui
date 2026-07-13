@@ -52,6 +52,7 @@ export default function QuickNav({ sections }: { sections: QuickNavSection[] }) 
       backdropFilter="saturate(180%) blur(5px)"
       borderBottom="1px solid"
       borderColor="gray.200"
+      shadow="sm"
     >
       <Container px={0}>
         <Flex
