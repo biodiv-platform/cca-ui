@@ -66,7 +66,6 @@ export default function QuickNav({ sections }: { sections: QuickNavSection[] }) 
             <Box
               as="button"
               key={s.id}
-              type="button"
               onClick={() => handleTabClick(s.id)}
               flex={{ base: "0 0 auto", md: "1" }}
               whiteSpace={{ base: "nowrap", md: "normal" }}
