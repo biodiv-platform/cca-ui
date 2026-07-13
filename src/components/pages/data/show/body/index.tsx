@@ -5,17 +5,20 @@ import useGlobalState from "@hooks/use-global-state";
 import { axAddAcitivityComment } from "@services/cca.service";
 import { axMemberGroupListByUserId } from "@services/usergroup.service";
 import { RESOURCE_TYPE } from "@static/constants";
-import React, { useEffect, useState } from "react";
+import useTranslation from "next-translate/useTranslation";
+import React, { useEffect, useMemo, useState } from "react";
 
 import GBIFObservations from "../gbif-observations";
 import Group from "../groups";
 import IUCNAggregation from "../iucn-aggregation";
+import QuickNav from "../quick-nav";
 import SpeciesGroupAggregation from "../species-group-aggregation";
 import useTemplateResponseShow from "../use-template-response-show";
 import ShowSection from "./section";
 
 export default function ShowBody() {
   const { templateGroups, header, groups, response } = useTemplateResponseShow();
+  const { t } = useTranslation();
 
   const usergroupsAsIntegers = (response?.usergroups ?? []).map(Number);
 
@@ -41,6 +44,16 @@ export default function ShowBody() {
     fetchMemberData();
   }, [user.id]);
 
+  const sections = useMemo(
+    () => [
+      ...templateGroups.map((tg) => ({ id: tg.heading.fieldId, label: tg.heading.name })),
+      { id: "biodiversity", label: "Biodiversity" },
+      ...(user.id ? [{ id: "groups", label: t("common:microsites") }] : []),
+      { id: "comments", label: t("common:activity") }
+    ],
+    [templateGroups, user.id]
+  );
+
   if (loading) {
     return <p>Loading...</p>;
   }
@@ -60,52 +73,63 @@ export default function ShowBody() {
   );
 
   return (
-    <Container py={16}>
-      {templateGroups.map((tg, index) => (
-        <div key={index}>
-          <ShowSection {...tg} />
-          {renderDivider()}
-        </div>
-      ))}
-      <Heading fontSize="3xl" textAlign="center" mb={8}>
-        Biodiversity
-      </Heading>
-      <Grid templateColumns={{ base: "1fr", lg: "1fr 2fr" }} gap={6}>
-        <Stack gap={6}>
-          <SpeciesGroupAggregation
+    <>
+      <QuickNav sections={sections} />
+      <Container py={16}>
+        {templateGroups.map((tg, index) => (
+          <div key={index}>
+            <ShowSection {...tg} />
+            {renderDivider()}
+          </div>
+        ))}
+        <Heading
+          id="biodiversity"
+          css={{ scrollMarginTop: "7rem" }}
+          fontSize="3xl"
+          textAlign="center"
+          mb={8}
+        >
+          Biodiversity
+        </Heading>
+        <Grid templateColumns={{ base: "1fr", lg: "1fr 2fr" }} gap={6}>
+          <Stack gap={6}>
+            <SpeciesGroupAggregation
+              ccaId={header.id}
+              onSelectSpeciesGroup={handleSpeciesGroupSelect}
+              selectedSpeciesGroup={selectedSpeciesGroup}
+            />
+            <IUCNAggregation
+              ccaId={header.id}
+              onSelectIucnCategory={handleIucnCategorySelect}
+              selectedIucnCategory={selectedIucnCategory}
+            />
+          </Stack>
+          <GBIFObservations
             ccaId={header.id}
-            onSelectSpeciesGroup={handleSpeciesGroupSelect}
             selectedSpeciesGroup={selectedSpeciesGroup}
-          />
-          <IUCNAggregation
-            ccaId={header.id}
-            onSelectIucnCategory={handleIucnCategorySelect}
             selectedIucnCategory={selectedIucnCategory}
           />
-        </Stack>
-        <GBIFObservations
-          ccaId={header.id}
-          selectedSpeciesGroup={selectedSpeciesGroup}
-          selectedIucnCategory={selectedIucnCategory}
-        />
-      </Grid>
-      {renderDivider()}
-      {user.id && (
-        <>
-          <Group
-            ccaId={header.id}
-            groups={groups}
-            memberGroups={memberGroups}
-            defaultGroups={usergroupsAsIntegers || []}
+        </Grid>
+        {renderDivider()}
+        {user.id && (
+          <Box id="groups" css={{ scrollMarginTop: "7rem" }}>
+            <Group
+              ccaId={header.id}
+              groups={groups}
+              memberGroups={memberGroups}
+              defaultGroups={usergroupsAsIntegers || []}
+            />
+            {renderDivider()}
+          </Box>
+        )}
+        <Box id="comments" css={{ scrollMarginTop: "7rem" }}>
+          <Activity
+            resourceId={header.id}
+            resourceType={RESOURCE_TYPE.CCA_DATA}
+            commentFunc={axAddAcitivityComment}
           />
-          {renderDivider()}
-        </>
-      )}
-      <Activity
-        resourceId={header.id}
-        resourceType={RESOURCE_TYPE.CCA_DATA}
-        commentFunc={axAddAcitivityComment}
-      />
-    </Container>
+        </Box>
+      </Container>
+    </>
   );
 }
