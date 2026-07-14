@@ -112,7 +112,7 @@ export default function GBIFObservations({ ccaId, selectedSpeciesGroup, selected
           </h3>
           <AccordionItemContent bg="white" p={4}>
             <Text>
-              This species occurrence data sourced from the Global Biodiversity Information Facility (GBIF), an open-access global biodiversity database. Unlike the rest of the information on this page, this data is not user-submitted on this portal. GBIF.org (9 June 2026) GBIF Occurrence{" "}
+              This species occurrence data is sourced from the Global Biodiversity Information Facility (GBIF), an open-access global biodiversity database. Unlike the rest of the information on this page, this data is not user-submitted on this portal.  It is downloaded from GBIF.org (9 June 2026) GBIF Occurrence{" "}
               <Link
                 href="https://doi.org/10.15468/dl.ug8est"
                 target="_blank"
