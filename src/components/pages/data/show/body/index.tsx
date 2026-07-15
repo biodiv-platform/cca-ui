@@ -1,4 +1,4 @@
-import { Box, Center, Grid, Heading, Separator, Stack } from "@chakra-ui/react";
+import { Box, Center, Grid, GridItem, Heading, Separator, Stack } from "@chakra-ui/react";
 import Activity from "@components/@core/activity";
 import { Container } from "@components/@core/container";
 import useGlobalState from "@hooks/use-global-state";
@@ -82,16 +82,21 @@ export default function ShowBody() {
             {renderDivider()}
           </div>
         ))}
-        <Heading
-          id="biodiversity"
-          css={{ scrollMarginTop: "7rem" }}
-          fontSize="3xl"
-          textAlign="center"
-          mb={8}
+        <Grid
+          templateColumns={{ base: "1fr", lg: "1fr 2fr" }}
+          columnGap={6}
+          rowGap={{ base: 6, lg: 0 }}
         >
-          Biodiversity
-        </Heading>
-        <Grid templateColumns={{ base: "1fr", lg: "1fr 2fr" }} gap={6}>
+          <GridItem display={{ base: "none", lg: "block" }} />
+          <Heading
+            id="biodiversity"
+            css={{ scrollMarginTop: "7rem" }}
+            fontSize="3xl"
+            textAlign="left"
+            mb={8}
+          >
+            Biodiversity
+          </Heading>
           <Stack gap={6}>
             <SpeciesGroupAggregation
               ccaId={header.id}
