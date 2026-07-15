@@ -1,7 +1,7 @@
 import { Box, Flex, Text } from "@chakra-ui/react";
 import { Container } from "@components/@core/container";
 import useTranslation from "next-translate/useTranslation";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { LuList } from "react-icons/lu";
 
 interface QuickNavSection {
@@ -12,6 +12,15 @@ interface QuickNavSection {
 export default function QuickNav({ sections }: { sections: QuickNavSection[] }) {
   const { t } = useTranslation();
   const [activeId, setActiveId] = useState(sections[0]?.id);
+  const tabRefs = useRef<Record<string, HTMLElement | null>>({});
+
+  useEffect(() => {
+    tabRefs.current[activeId]?.scrollIntoView({
+      behavior: "smooth",
+      block: "nearest",
+      inline: "nearest"
+    });
+  }, [activeId]);
 
   useEffect(() => {
     const elements = sections.map((s) => document.getElementById(s.id)).filter(Boolean);
@@ -100,6 +109,9 @@ export default function QuickNav({ sections }: { sections: QuickNavSection[] }) 
                 <Box
                   as="button"
                   key={s.id}
+                  ref={(el: HTMLElement | null) => {
+                    tabRefs.current[s.id] = el;
+                  }}
                   onClick={() => handleTabClick(s.id)}
                   aria-current={isActive ? "true" : undefined}
                   flexShrink={0}
