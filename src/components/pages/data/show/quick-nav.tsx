@@ -13,13 +13,24 @@ export default function QuickNav({ sections }: { sections: QuickNavSection[] }) 
   const { t } = useTranslation();
   const [activeId, setActiveId] = useState(sections[0]?.id);
   const tabRefs = useRef<Record<string, HTMLElement | null>>({});
+  const scrollContainerRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
-    tabRefs.current[activeId]?.scrollIntoView({
-      behavior: "smooth",
-      block: "nearest",
-      inline: "nearest"
-    });
+    const container = scrollContainerRef.current;
+    const tab = tabRefs.current[activeId];
+
+    if (!container || !tab) {
+      return;
+    }
+
+    const containerRect = container.getBoundingClientRect();
+    const tabRect = tab.getBoundingClientRect();
+
+    if (tabRect.left < containerRect.left) {
+      container.scrollBy({ left: tabRect.left - containerRect.left, behavior: "smooth" });
+    } else if (tabRect.right > containerRect.right) {
+      container.scrollBy({ left: tabRect.right - containerRect.right, behavior: "smooth" });
+    }
   }, [activeId]);
 
   useEffect(() => {
@@ -34,6 +45,7 @@ export default function QuickNav({ sections }: { sections: QuickNavSection[] }) 
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             setActiveId(entry.target.id);
+            window.history.replaceState(null, "", `#${entry.target.id}`);
           }
         });
       },
@@ -45,9 +57,29 @@ export default function QuickNav({ sections }: { sections: QuickNavSection[] }) 
     return () => observer.disconnect();
   }, [sections]);
 
+  const hasAppliedInitialHash = useRef(false);
+
+  useEffect(() => {
+    if (hasAppliedInitialHash.current) {
+      return;
+    }
+
+    const hash = window.location.hash.replace("#", "");
+    const match = sections.find((s) => s.id === hash);
+
+    if (!match) {
+      return;
+    }
+
+    hasAppliedInitialHash.current = true;
+    document.getElementById(hash)?.scrollIntoView({ block: "start" });
+    setActiveId(hash);
+  }, [sections]);
+
   const handleTabClick = (id: string) => {
     document.getElementById(id)?.scrollIntoView({ block: "start" });
     setActiveId(id);
+    window.history.replaceState(null, "", `#${id}`);
   };
 
   if (!sections.length) {
@@ -85,6 +117,7 @@ export default function QuickNav({ sections }: { sections: QuickNavSection[] }) 
           </Flex>
 
           <Flex
+            ref={scrollContainerRef}
             overflowX="auto"
             gap={1}
             pt={2}
