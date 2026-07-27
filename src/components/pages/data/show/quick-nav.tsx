@@ -1,7 +1,7 @@
 import { Box, Flex, Text } from "@chakra-ui/react";
 import { Container } from "@components/@core/container";
 import useTranslation from "next-translate/useTranslation";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { LuList } from "react-icons/lu";
 
 interface QuickNavSection {
@@ -9,11 +9,31 @@ interface QuickNavSection {
   label: string;
 }
 
+const slugify = (value: string) =>
+  value
+    .toLowerCase()
+    .trim()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/(^-|-$)/g, "");
+
 export default function QuickNav({ sections }: { sections: QuickNavSection[] }) {
   const { t } = useTranslation();
   const [activeId, setActiveId] = useState(sections[0]?.id);
   const tabRefs = useRef<Record<string, HTMLElement | null>>({});
   const scrollContainerRef = useRef<HTMLDivElement | null>(null);
+
+  const { idToSlug, slugToId } = useMemo(() => {
+    const idToSlug: Record<string, string> = {};
+    const slugToId: Record<string, string> = {};
+
+    sections.forEach((s) => {
+      const slug = slugify(s.label);
+      idToSlug[s.id] = slug;
+      slugToId[slug] = s.id;
+    });
+
+    return { idToSlug, slugToId };
+  }, [sections]);
 
   useEffect(() => {
     const container = scrollContainerRef.current;
@@ -45,7 +65,7 @@ export default function QuickNav({ sections }: { sections: QuickNavSection[] }) 
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             setActiveId(entry.target.id);
-            window.history.replaceState(null, "", `#${entry.target.id}`);
+            window.history.replaceState(null, "", `#${idToSlug[entry.target.id] ?? entry.target.id}`);
           }
         });
       },
@@ -65,21 +85,27 @@ export default function QuickNav({ sections }: { sections: QuickNavSection[] }) 
     }
 
     const hash = window.location.hash.replace("#", "");
-    const match = sections.find((s) => s.id === hash);
+    const targetId = slugToId[hash] ?? sections.find((s) => s.id === hash)?.id;
 
-    if (!match) {
+    if (!targetId) {
       return;
     }
 
     hasAppliedInitialHash.current = true;
-    document.getElementById(hash)?.scrollIntoView({ block: "start" });
-    setActiveId(hash);
-  }, [sections]);
+
+    const root = document.documentElement;
+    const previousScrollBehavior = root.style.scrollBehavior;
+    root.style.scrollBehavior = "auto";
+    document.getElementById(targetId)?.scrollIntoView({ block: "start" });
+    root.style.scrollBehavior = previousScrollBehavior;
+
+    setActiveId(targetId);
+  }, [sections, slugToId]);
 
   const handleTabClick = (id: string) => {
     document.getElementById(id)?.scrollIntoView({ block: "start" });
     setActiveId(id);
-    window.history.replaceState(null, "", `#${id}`);
+    window.history.replaceState(null, "", `#${idToSlug[id] ?? id}`);
   };
 
   if (!sections.length) {
