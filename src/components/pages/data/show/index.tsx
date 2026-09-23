@@ -5,6 +5,7 @@ import ShowBody from "./body";
 import Carousel from "./carousel";
 import ShowHeader from "./header";
 import ShowMap from "./map";
+import ScrollToTop from "./scroll-to-top";
 import useTemplateResponseShow from "./use-template-response-show";
 
 export default function ResponseShowPageComponent() {
@@ -24,6 +25,7 @@ export default function ResponseShowPageComponent() {
       </SimpleGrid>
       <ShowHeader />
       <ShowBody />
+      <ScrollToTop />
     </div>
   );
 }

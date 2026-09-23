@@ -1,5 +1,5 @@
 import { Box, Collapsible } from "@chakra-ui/react";
-import { DrawingManager, GoogleMap } from "@react-google-maps/api";
+import { GoogleMap } from "@react-google-maps/api";
 import React from "react";
 
 import Marker from "./marker";
@@ -10,9 +10,13 @@ const mapContainerStyle = {
 };
 
 const MapLocationPicker = ({ coordinates, setCoordinates, isOpen, onTextUpdate, zoom, center }) => {
-  const onMarkerComplete = (marker) => {
-    setCoordinates({ lat: marker.position.lat(), lng: marker.position.lng() });
-    marker.setMap(null);
+  const handleMapClick = (e: google.maps.MapMouseEvent) => {
+    if (e.latLng) {
+      setCoordinates({
+        lat: e.latLng.lat(),
+        lng: e.latLng.lng()
+      });
+    }
   };
 
   return (
@@ -24,18 +28,8 @@ const MapLocationPicker = ({ coordinates, setCoordinates, isOpen, onTextUpdate, 
             mapContainerStyle={mapContainerStyle}
             zoom={zoom}
             center={center}
+            onClick={handleMapClick}
           >
-            <DrawingManager
-              options={
-                {
-                  drawingControl: true,
-                  drawingControlOptions: {
-                    drawingModes: ["marker"]
-                  }
-                } as any
-              }
-              onMarkerComplete={onMarkerComplete}
-            />
             <Marker
               position={coordinates}
               setCoordinates={setCoordinates}

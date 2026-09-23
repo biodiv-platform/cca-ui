@@ -430,3 +430,62 @@ export const axSearchMapCCAData = async (params) => {
     return { success: false, data: {} };
   }
 };
+
+export const axGetGBIFObservations = async (
+  ccaId: number,
+  offset = 0,
+  limit = 10,
+  speciesGroup: string | null | undefined = null,
+  iucnCategory: string | null | undefined = null
+) => {
+  try {
+    const params: any = { offset, limit };
+    if (speciesGroup) {
+      params.speciesGroup = speciesGroup;
+    }
+    if (iucnCategory) {
+      params.iucnCategory = iucnCategory;
+    }
+    const { data } = await plainHttp.get(
+      `${ENDPOINT.CCA}/v1/data/${ccaId}/gbif-observations`,
+      { params }
+    );
+    return { success: true, data };
+  } catch (e) {
+    console.error(e);
+    return {
+      success: false,
+      data: { totalCount: 0, totalOccurrenceRecords: 0, offset: 0, limit: 10, aggregations: [], observations: [] }
+    };
+  }
+};
+
+export const axGetSpeciesGroupAggregation = async (ccaId) => {
+  try {
+    const { data } = await plainHttp.get(
+      `${ENDPOINT.CCA}/v1/data/${ccaId}/species-group-aggregation`
+    );
+    return { success: true, data };
+  } catch (e) {
+    console.error(e);
+    return {
+      success: false,
+      data: { aggregations: [] }
+    };
+  }
+};
+
+export const axGetIUCNAggregation = async (ccaId) => {
+  try {
+    const { data } = await plainHttp.get(
+      `${ENDPOINT.CCA}/v1/data/${ccaId}/iucn-aggregation`
+    );
+    return { success: true, data };
+  } catch (e) {
+    console.error(e);
+    return {
+      success: false,
+      data: { aggregations: [] }
+    };
+  }
+};
