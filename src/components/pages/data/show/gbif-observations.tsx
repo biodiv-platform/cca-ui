@@ -193,7 +193,7 @@ export default function GBIFObservations({ ccaId, selectedSpeciesGroup, selected
                     <Table.Row key={`${agg.scientificName}-${index}`}>
                       <Table.Cell fontStyle="italic" whiteSpace="nowrap" data-sticky bg="white">
                         <Link
-                          href={`https://www.gbif.org/species/${agg.taxonKey}`}
+                          href={`https://www.gbif.org/taxon/${agg.taxonKey}`}
                           target="_blank"
                           rel="noopener noreferrer"
                           color="teal.600"
