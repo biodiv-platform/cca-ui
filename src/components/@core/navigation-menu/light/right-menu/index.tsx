@@ -62,7 +62,7 @@ export default function RightMenu({ isOpen }: IMenuProps) {
         <MainItems key={item.name} {...item} prefixGroup={isGroup} />
       ))}
       {activeItems.map((item) => (
-        <MainItems key={item.name} {...item} prefixGroup={isGroup} />
+        <MainItems key={item.name} {...item} prefixGroup={isGroup} pl={0} />
       ))}
     </RightMenuContainer>
   );
