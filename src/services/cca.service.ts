@@ -460,6 +460,40 @@ export const axGetGBIFObservations = async (
   }
 };
 
+export const axGetGBIFOccurrenceLocations = async (
+  ccaId: number,
+  speciesGroup: string | null | undefined = null,
+  iucnCategory: string | null | undefined = null
+) => {
+  try {
+    const params: any = {};
+    if (speciesGroup) {
+      params.speciesGroup = speciesGroup;
+    }
+    if (iucnCategory) {
+      params.iucnCategory = iucnCategory;
+    }
+    const { data } = await plainHttp.get(
+      `${ENDPOINT.CCA}/v1/data/${ccaId}/gbif-occurrence-locations`,
+      { params }
+    );
+    return { success: true, data };
+  } catch (e) {
+    console.error(e);
+    return {
+      success: false,
+      data: {
+        bbox: null,
+        totalRecords: 0,
+        insideRecords: 0,
+        totalLocations: 0,
+        truncated: false,
+        locations: []
+      }
+    };
+  }
+};
+
 export const axGetSpeciesGroupAggregation = async (ccaId) => {
   try {
     const { data } = await plainHttp.get(

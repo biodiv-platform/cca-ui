@@ -1,0 +1,377 @@
+import { GMAPS_LIBRARIES } from "@biodiv-platform/naksha-commons";
+import { Box, Heading, HStack, Spinner, Stack, Text } from "@chakra-ui/react";
+import SITE_CONFIG from "@configs/site-config";
+import { GoogleMap, InfoWindow, LoadScriptNext } from "@react-google-maps/api";
+import { axGetGBIFOccurrenceLocations } from "@services/cca.service";
+import { FORM_TYPE } from "@static/constants";
+import React, { useEffect, useMemo, useState } from "react";
+
+import { Checkbox } from "@/components/ui/checkbox";
+
+import useTemplateResponseShow from "./use-template-response-show";
+
+interface OccurrenceLocation {
+  latitude: number;
+  longitude: number;
+  recordCount: number;
+  speciesCount: number;
+  insideGeometry: boolean;
+}
+
+interface OccurrenceLocationResponse {
+  bbox: [number, number, number, number] | null;
+  totalRecords: number;
+  insideRecords: number;
+  totalLocations: number;
+  truncated: boolean;
+  locations: OccurrenceLocation[];
+}
+
+interface GBIFOccurrenceMapProps {
+  ccaId: number;
+  selectedSpeciesGroup?: string | null;
+  selectedIucnCategory?: string | null;
+}
+
+// High-contrast colours that stand out on the satellite basemap
+const COLORS = {
+  CCA_STROKE: "#FFEA00",
+  CCA_HALO: "#000000",
+  INSIDE: "#00E5FF",
+  OUTSIDE: "#FFFFFF",
+  SEARCH_AREA: "#FFFFFF"
+};
+
+/**
+ * The geometry field value is stored as a FeatureCollection, but the form keeps it
+ * as a plain array of features, so accept both.
+ */
+const toFeatureCollection = (value) => {
+  if (!value) return null;
+  if (Array.isArray(value)) return { type: "FeatureCollection", features: value };
+  if (value.type === "FeatureCollection") return value;
+  if (value.type === "Feature") return { type: "FeatureCollection", features: [value] };
+  return null;
+};
+
+const markerScale = (recordCount: number) => Math.min(4 + Math.log10(recordCount + 1) * 2.5, 14);
+
+const LegendItem = ({ swatch, label }) => (
+  <HStack gap={2}>
+    {swatch}
+    <Text fontSize="sm">{label}</Text>
+  </HStack>
+);
+
+const Dot = ({ color, opacity = 1 }) => (
+  <Box
+    w="12px"
+    h="12px"
+    borderRadius="full"
+    bg={color}
+    opacity={opacity}
+    border="1.5px solid"
+    borderColor="gray.800"
+    flexShrink={0}
+  />
+);
+
+export default function GBIFOccurrenceMap({
+  ccaId,
+  selectedSpeciesGroup,
+  selectedIucnCategory
+}: GBIFOccurrenceMapProps) {
+  const { response } = useTemplateResponseShow();
+  const [map, setMap] = useState<google.maps.Map | null>(null);
+  const [data, setData] = useState<OccurrenceLocationResponse | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [showOutside, setShowOutside] = useState(true);
+  const [selected, setSelected] = useState<OccurrenceLocation | null>(null);
+
+  const ccaGeometry = useMemo(() => {
+    const geometryField = Object.values<any>(response?.ccaFieldValues ?? {}).find(
+      (f) => f?.type === FORM_TYPE.GEOMETRY
+    );
+    return toFeatureCollection(geometryField?.value);
+  }, [response]);
+
+  // Only polygons have an inside/outside distinction; for point CCAs every
+  // occurrence in the search area belongs to the CCA
+  const isPolygon = useMemo(
+    () =>
+      ["Polygon", "MultiPolygon"].includes(ccaGeometry?.features?.[0]?.geometry?.type),
+    [ccaGeometry]
+  );
+
+  useEffect(() => {
+    const fetchLocations = async () => {
+      setLoading(true);
+      setSelected(null);
+      const { success, data } = await axGetGBIFOccurrenceLocations(
+        ccaId,
+        selectedSpeciesGroup,
+        selectedIucnCategory
+      );
+      if (success) {
+        setData(data);
+      }
+      setLoading(false);
+    };
+    fetchLocations();
+  }, [ccaId, selectedSpeciesGroup, selectedIucnCategory]);
+
+  // Search area (bounding box) as a dashed outline + fit the map to it once
+  useEffect(() => {
+    if (!map || !data?.bbox) return;
+    const [minLon, minLat, maxLon, maxLat] = data.bbox;
+
+    const outline = new google.maps.Polyline({
+      map,
+      path: [
+        { lat: minLat, lng: minLon },
+        { lat: minLat, lng: maxLon },
+        { lat: maxLat, lng: maxLon },
+        { lat: maxLat, lng: minLon },
+        { lat: minLat, lng: minLon }
+      ],
+      strokeOpacity: 0,
+      clickable: false,
+      zIndex: 1,
+      icons: [
+        {
+          icon: {
+            path: "M 0,-1 0,1",
+            strokeOpacity: 0.8,
+            strokeColor: COLORS.SEARCH_AREA,
+            strokeWeight: 2,
+            scale: 3
+          },
+          offset: "0",
+          repeat: "16px"
+        }
+      ]
+    });
+
+    return () => outline.setMap(null);
+  }, [map, data?.bbox?.join(",")]);
+
+  useEffect(() => {
+    if (!map) return;
+    const bounds = new google.maps.LatLngBounds();
+    if (data?.bbox) {
+      const [minLon, minLat, maxLon, maxLat] = data.bbox;
+      bounds.extend({ lat: minLat, lng: minLon });
+      bounds.extend({ lat: maxLat, lng: maxLon });
+    } else if (ccaGeometry) {
+      const layer = new google.maps.Data();
+      layer.addGeoJson(ccaGeometry);
+      layer.forEach((f) => f.getGeometry()?.forEachLatLng((ll) => bounds.extend(ll)));
+    }
+    if (!bounds.isEmpty()) {
+      map.fitBounds(bounds, 24);
+    }
+  }, [map, data?.bbox?.join(","), ccaGeometry]);
+
+  // CCA boundary: a thick black halo under a bright yellow outline so it reads on any basemap
+  useEffect(() => {
+    if (!map || !ccaGeometry) return;
+
+    const halo = new google.maps.Data({ map });
+    halo.addGeoJson(ccaGeometry);
+    halo.setStyle({
+      clickable: false,
+      strokeColor: COLORS.CCA_HALO,
+      strokeOpacity: 0.7,
+      strokeWeight: 8,
+      fillOpacity: 0,
+      zIndex: 2,
+      visible: isPolygon
+    });
+
+    const boundary = new google.maps.Data({ map });
+    boundary.addGeoJson(ccaGeometry);
+    boundary.setStyle({
+      clickable: false,
+      strokeColor: COLORS.CCA_STROKE,
+      strokeOpacity: 1,
+      strokeWeight: 4,
+      fillColor: COLORS.CCA_STROKE,
+      fillOpacity: 0.12,
+      zIndex: 3,
+      title: "CCA location"
+    });
+
+    return () => {
+      halo.setMap(null);
+      boundary.setMap(null);
+    };
+  }, [map, ccaGeometry, isPolygon]);
+
+  // Occurrence locations, sized by record count; inside-CCA locations drawn on top
+  useEffect(() => {
+    if (!map || !data?.locations?.length) return;
+
+    const layer = new google.maps.Data({ map });
+    data.locations.forEach((location) => {
+      if (isPolygon && !location.insideGeometry && !showOutside) return;
+      layer.add(
+        new google.maps.Data.Feature({
+          geometry: new google.maps.Data.Point({
+            lat: location.latitude,
+            lng: location.longitude
+          }),
+          properties: { location }
+        })
+      );
+    });
+
+    layer.setStyle((feature) => {
+      const location: OccurrenceLocation = feature.getProperty("location");
+      const inside = !isPolygon || location.insideGeometry;
+      return {
+        icon: {
+          path: google.maps.SymbolPath.CIRCLE,
+          scale: markerScale(location.recordCount),
+          fillColor: inside ? COLORS.INSIDE : COLORS.OUTSIDE,
+          fillOpacity: inside ? 0.9 : 0.55,
+          strokeColor: "#111111",
+          strokeWeight: 1
+        },
+        zIndex: inside ? 5 : 4,
+        title: `${location.recordCount.toLocaleString()} records`
+      };
+    });
+
+    const listener = layer.addListener("click", (e) => setSelected(e.feature.getProperty("location")));
+
+    return () => {
+      listener.remove();
+      layer.setMap(null);
+    };
+  }, [map, data, isPolygon, showOutside]);
+
+  if (!ccaGeometry) {
+    return null;
+  }
+
+  const outsideRecords = (data?.totalRecords ?? 0) - (data?.insideRecords ?? 0);
+
+  return (
+    <Box borderRadius="md" border="1px solid var(--chakra-colors-gray-300)" boxShadow="sm" overflow="hidden">
+      <Box bg="white" px={6} py={4} borderBottom="1px solid var(--chakra-colors-gray-300)">
+        <Heading size="md" color="gray.800">
+          GBIF Occurrences Map
+        </Heading>
+        {data && data.totalRecords > 0 && (
+          <Text fontSize="sm" color="gray.600" mt={1}>
+            {isPolygon
+              ? `${data.insideRecords.toLocaleString()} records inside the CCA boundary, ${outsideRecords.toLocaleString()} more within the search area`
+              : `${data.totalRecords.toLocaleString()} records within the search area around the CCA location`}
+            {` (${data.totalLocations.toLocaleString()} locations)`}
+          </Text>
+        )}
+      </Box>
+
+      <Box position="relative" h={{ base: "22rem", md: "32rem" }}>
+        <LoadScriptNext
+          googleMapsApiKey={SITE_CONFIG.TOKENS.GMAP}
+          region={SITE_CONFIG.MAP.COUNTRY}
+          libraries={GMAPS_LIBRARIES.DEFAULT}
+        >
+          <GoogleMap
+            mapContainerStyle={{ height: "100%", width: "100%" }}
+            onLoad={setMap}
+            onUnmount={() => setMap(null)}
+            options={{
+              mapTypeId: "hybrid",
+              gestureHandling: "cooperative",
+              streetViewControl: false,
+              maxZoom: 18
+            }}
+          >
+            {selected && (
+              <InfoWindow
+                position={{ lat: selected.latitude, lng: selected.longitude }}
+                onCloseClick={() => setSelected(null)}
+              >
+                <Box color="gray.800" fontSize="sm">
+                  <Text fontWeight="bold">
+                    {selected.recordCount.toLocaleString()} occurrence records
+                  </Text>
+                  <Text>{selected.speciesCount.toLocaleString()} species</Text>
+                  {isPolygon && (
+                    <Text>{selected.insideGeometry ? "Inside CCA boundary" : "Outside CCA boundary"}</Text>
+                  )}
+                  <Text color="gray.500">
+                    {selected.latitude}, {selected.longitude}
+                  </Text>
+                </Box>
+              </InfoWindow>
+            )}
+          </GoogleMap>
+        </LoadScriptNext>
+
+        {loading && (
+          <Box position="absolute" top={3} right={14} bg="white" borderRadius="md" p={2} boxShadow="md">
+            <Spinner size="sm" />
+          </Box>
+        )}
+      </Box>
+
+      <Stack bg="white" px={6} py={3} gap={2} borderTop="1px solid var(--chakra-colors-gray-300)">
+        <HStack gap={6} wrap="wrap">
+          <LegendItem
+            swatch={
+              isPolygon ? (
+                <Box
+                  w="18px"
+                  h="12px"
+                  bg="rgba(255, 234, 0, 0.25)"
+                  border="3px solid"
+                  borderColor={COLORS.CCA_STROKE}
+                  outline="1px solid black"
+                  flexShrink={0}
+                />
+              ) : (
+                <Box as="span" color="red.500" fontSize="lg" lineHeight={1}>
+                  ●
+                </Box>
+              )
+            }
+            label={isPolygon ? "CCA boundary" : "CCA location"}
+          />
+          <LegendItem
+            swatch={<Dot color={COLORS.INSIDE} />}
+            label={isPolygon ? "Occurrences inside CCA" : "Occurrences of CCA"}
+          />
+          {isPolygon && (
+            <LegendItem
+              swatch={<Dot color={COLORS.OUTSIDE} opacity={0.7} />}
+              label="Occurrences outside CCA (in search area)"
+            />
+          )}
+          <LegendItem
+            swatch={<Box w="18px" borderTop="2px dashed" borderColor="gray.500" flexShrink={0} />}
+            label="Search area"
+          />
+        </HStack>
+        <HStack justify="space-between" wrap="wrap" gap={2}>
+          <Text fontSize="xs" color="gray.500">
+            Circle size reflects the number of records at a location. Click a circle for details.
+            {data?.truncated &&
+              ` Showing the ${data.locations.length.toLocaleString()} busiest locations (inside the CCA first).`}
+          </Text>
+          {isPolygon && (
+            <Checkbox
+              size="sm"
+              checked={showOutside}
+              onCheckedChange={(e) => setShowOutside(!!e.checked)}
+            >
+              Show occurrences outside CCA
+            </Checkbox>
+          )}
+        </HStack>
+      </Stack>
+    </Box>
+  );
+}

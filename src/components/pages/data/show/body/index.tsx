@@ -8,6 +8,7 @@ import { RESOURCE_TYPE } from "@static/constants";
 import useTranslation from "next-translate/useTranslation";
 import React, { useEffect, useMemo, useState } from "react";
 
+import GBIFOccurrenceMap from "../gbif-occurrence-map";
 import GBIFObservations from "../gbif-observations";
 import Group from "../groups";
 import IUCNAggregation from "../iucn-aggregation";
@@ -109,11 +110,18 @@ export default function ShowBody() {
               selectedIucnCategory={selectedIucnCategory}
             />
           </Stack>
-          <GBIFObservations
-            ccaId={header.id}
-            selectedSpeciesGroup={selectedSpeciesGroup}
-            selectedIucnCategory={selectedIucnCategory}
-          />
+          <Stack gap={6} minW={0}>
+            <GBIFOccurrenceMap
+              ccaId={header.id}
+              selectedSpeciesGroup={selectedSpeciesGroup}
+              selectedIucnCategory={selectedIucnCategory}
+            />
+            <GBIFObservations
+              ccaId={header.id}
+              selectedSpeciesGroup={selectedSpeciesGroup}
+              selectedIucnCategory={selectedIucnCategory}
+            />
+          </Stack>
         </Grid>
         {renderDivider()}
         {user.id && (
