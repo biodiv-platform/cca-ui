@@ -15,13 +15,22 @@ interface OccurrenceLocation {
   longitude: number;
   recordCount: number;
   speciesCount: number;
+  /** Any record here is inside the search area (the CCA grown by the buffer) */
   insideGeometry: boolean;
+  /** Any record here is inside the CCA's own polygon(s) */
+  insidePolygon: boolean;
 }
 
 interface OccurrenceLocationResponse {
   bbox: [number, number, number, number] | null;
+  /** The exact area the records were counted in, as a GeoJSON geometry */
+  searchArea: any | null;
+  bufferKm: number;
   totalRecords: number;
+  /** Records inside the search area */
   insideRecords: number;
+  /** Records inside the CCA's own polygon(s) */
+  polygonRecords: number;
   totalLocations: number;
   truncated: boolean;
   locations: OccurrenceLocation[];
@@ -33,14 +42,21 @@ interface GBIFOccurrenceMapProps {
   selectedIucnCategory?: string | null;
 }
 
+type Tier = "cca" | "buffer" | "outside";
+
+interface ClassifiedLocation extends OccurrenceLocation {
+  tier: Tier;
+}
+
 // High-contrast colours that stand out on the satellite basemap
 const COLORS = {
   CCA_STROKE: "#FFEA00",
   CCA_HALO: "#000000",
-  INSIDE: "#00E5FF",
-  OUTSIDE: "#FFFFFF",
-  SEARCH_AREA: "#FFFFFF"
+  SEARCH_AREA: "#FFFFFF",
+  TIER: { cca: "#00E5FF", buffer: "#FF9100", outside: "#FFFFFF" } as Record<Tier, string>
 };
+
+const TIER_Z_INDEX: Record<Tier, number> = { cca: 6, buffer: 5, outside: 4 };
 
 /**
  * The geometry field value is stored as a FeatureCollection, but the form keeps it
@@ -53,6 +69,30 @@ const toFeatureCollection = (value) => {
   if (value.type === "Feature") return { type: "FeatureCollection", features: [value] };
   return null;
 };
+
+const isPolygonFeature = (f) => ["Polygon", "MultiPolygon"].includes(f?.geometry?.type);
+
+const toPath = (line): google.maps.LatLngLiteral[] => line.map(([lng, lat]) => ({ lat, lng }));
+
+/** Polygon rings and lines of any GeoJSON geometry as google.maps paths (points have no outline) */
+const toPaths = (geometry): google.maps.LatLngLiteral[][] => {
+  switch (geometry?.type) {
+    case "Polygon":
+    case "MultiLineString":
+      return geometry.coordinates.map(toPath);
+    case "MultiPolygon":
+      return geometry.coordinates.flatMap((rings) => rings.map(toPath));
+    case "LineString":
+      return [toPath(geometry.coordinates)];
+    case "GeometryCollection":
+      return geometry.geometries.flatMap(toPaths);
+    default:
+      return [];
+  }
+};
+
+const tierOf = (location: OccurrenceLocation): Tier =>
+  location.insidePolygon ? "cca" : location.insideGeometry ? "buffer" : "outside";
 
 const markerScale = (recordCount: number) => Math.min(4 + Math.log10(recordCount + 1) * 2.5, 14);
 
@@ -85,8 +125,8 @@ export default function GBIFOccurrenceMap({
   const [map, setMap] = useState<google.maps.Map | null>(null);
   const [data, setData] = useState<OccurrenceLocationResponse | null>(null);
   const [loading, setLoading] = useState(true);
-  const [showOutside, setShowOutside] = useState(true);
-  const [selected, setSelected] = useState<OccurrenceLocation | null>(null);
+  const [showOutside, setShowOutside] = useState(false);
+  const [selected, setSelected] = useState<ClassifiedLocation | null>(null);
 
   const ccaGeometry = useMemo(() => {
     const geometryField = Object.values<any>(response?.ccaFieldValues ?? {}).find(
@@ -95,12 +135,16 @@ export default function GBIFOccurrenceMap({
     return toFeatureCollection(geometryField?.value);
   }, [response]);
 
-  // Only polygons have an inside/outside distinction; for point CCAs every
-  // occurrence in the search area belongs to the CCA
-  const isPolygon = useMemo(
-    () =>
-      ["Polygon", "MultiPolygon"].includes(ccaGeometry?.features?.[0]?.geometry?.type),
+  // Only polygons have an inside; point CCAs just have the buffer around them
+  const hasPolygon = useMemo(
+    () => (ccaGeometry?.features ?? []).some(isPolygonFeature),
     [ccaGeometry]
+  );
+
+  // Tiers come from the server, which tested every raw record against the exact shapes
+  const locations = useMemo<ClassifiedLocation[]>(
+    () => (data?.locations ?? []).map((location) => ({ ...location, tier: tierOf(location) })),
+    [data]
   );
 
   useEffect(() => {
@@ -120,41 +164,7 @@ export default function GBIFOccurrenceMap({
     fetchLocations();
   }, [ccaId, selectedSpeciesGroup, selectedIucnCategory]);
 
-  // Search area (bounding box) as a dashed outline + fit the map to it once
-  useEffect(() => {
-    if (!map || !data?.bbox) return;
-    const [minLon, minLat, maxLon, maxLat] = data.bbox;
-
-    const outline = new google.maps.Polyline({
-      map,
-      path: [
-        { lat: minLat, lng: minLon },
-        { lat: minLat, lng: maxLon },
-        { lat: maxLat, lng: maxLon },
-        { lat: maxLat, lng: minLon },
-        { lat: minLat, lng: minLon }
-      ],
-      strokeOpacity: 0,
-      clickable: false,
-      zIndex: 1,
-      icons: [
-        {
-          icon: {
-            path: "M 0,-1 0,1",
-            strokeOpacity: 0.8,
-            strokeColor: COLORS.SEARCH_AREA,
-            strokeWeight: 2,
-            scale: 3
-          },
-          offset: "0",
-          repeat: "16px"
-        }
-      ]
-    });
-
-    return () => outline.setMap(null);
-  }, [map, data?.bbox?.join(",")]);
-
+  // Fit the map to the search area's bounding box, falling back to the CCA geometry
   useEffect(() => {
     if (!map) return;
     const bounds = new google.maps.LatLngBounds();
@@ -172,21 +182,52 @@ export default function GBIFOccurrenceMap({
     }
   }, [map, data?.bbox?.join(","), ccaGeometry]);
 
+  // The exact search area the server counted in, as a dashed outline
+  useEffect(() => {
+    if (!map || !data?.searchArea) return;
+
+    const outlines = toPaths(data.searchArea).map(
+      (path) =>
+        new google.maps.Polyline({
+          map,
+          path,
+          strokeOpacity: 0,
+          clickable: false,
+          zIndex: 1,
+          icons: [
+            {
+              icon: {
+                path: "M 0,-1 0,1",
+                strokeOpacity: 0.9,
+                strokeColor: COLORS.SEARCH_AREA,
+                strokeWeight: 2,
+                scale: 3
+              },
+              offset: "0",
+              repeat: "16px"
+            }
+          ]
+        })
+    );
+
+    return () => outlines.forEach((o) => o.setMap(null));
+  }, [map, data?.searchArea]);
+
   // CCA boundary: a thick black halo under a bright yellow outline so it reads on any basemap
   useEffect(() => {
     if (!map || !ccaGeometry) return;
 
     const halo = new google.maps.Data({ map });
     halo.addGeoJson(ccaGeometry);
-    halo.setStyle({
+    halo.setStyle((feature) => ({
       clickable: false,
       strokeColor: COLORS.CCA_HALO,
       strokeOpacity: 0.7,
       strokeWeight: 8,
       fillOpacity: 0,
       zIndex: 2,
-      visible: isPolygon
-    });
+      visible: feature.getGeometry()?.getType() !== "Point"
+    }));
 
     const boundary = new google.maps.Data({ map });
     boundary.addGeoJson(ccaGeometry);
@@ -205,15 +246,15 @@ export default function GBIFOccurrenceMap({
       halo.setMap(null);
       boundary.setMap(null);
     };
-  }, [map, ccaGeometry, isPolygon]);
+  }, [map, ccaGeometry]);
 
-  // Occurrence locations, sized by record count; inside-CCA locations drawn on top
+  // Occurrence locations, sized by record count; CCA > buffer > outside in draw order
   useEffect(() => {
-    if (!map || !data?.locations?.length) return;
+    if (!map || !locations.length) return;
 
     const layer = new google.maps.Data({ map });
-    data.locations.forEach((location) => {
-      if (isPolygon && !location.insideGeometry && !showOutside) return;
+    locations.forEach((location) => {
+      if (location.tier === "outside" && !showOutside) return;
       layer.add(
         new google.maps.Data.Feature({
           geometry: new google.maps.Data.Point({
@@ -226,18 +267,17 @@ export default function GBIFOccurrenceMap({
     });
 
     layer.setStyle((feature) => {
-      const location: OccurrenceLocation = feature.getProperty("location");
-      const inside = !isPolygon || location.insideGeometry;
+      const location: ClassifiedLocation = feature.getProperty("location");
       return {
         icon: {
           path: google.maps.SymbolPath.CIRCLE,
           scale: markerScale(location.recordCount),
-          fillColor: inside ? COLORS.INSIDE : COLORS.OUTSIDE,
-          fillOpacity: inside ? 0.9 : 0.55,
+          fillColor: COLORS.TIER[location.tier],
+          fillOpacity: location.tier === "outside" ? 0.5 : 0.9,
           strokeColor: "#111111",
           strokeWeight: 1
         },
-        zIndex: inside ? 5 : 4,
+        zIndex: TIER_Z_INDEX[location.tier],
         title: `${location.recordCount.toLocaleString()} records`
       };
     });
@@ -248,13 +288,24 @@ export default function GBIFOccurrenceMap({
       listener.remove();
       layer.setMap(null);
     };
-  }, [map, data, isPolygon, showOutside]);
+  }, [map, locations, showOutside]);
 
   if (!ccaGeometry) {
     return null;
   }
 
-  const outsideRecords = (data?.totalRecords ?? 0) - (data?.insideRecords ?? 0);
+  // Exact totals from the server, independent of how many locations were returned
+  const bufferKm = data?.bufferKm;
+  const insideRecords = data?.insideRecords ?? 0;
+  const ccaRecords = data?.polygonRecords ?? 0;
+  const bufferRecords = insideRecords - ccaRecords;
+  const searchedLocations = locations.filter((l) => l.tier !== "outside").length;
+
+  const TIER_LABELS: Record<Tier, string> = {
+    cca: "Inside CCA boundary",
+    buffer: `Within ${bufferKm} km of the CCA`,
+    outside: `Outside the ${bufferKm} km search area (not counted)`
+  };
 
   return (
     <Box borderRadius="md" border="1px solid var(--chakra-colors-gray-300)" boxShadow="sm" overflow="hidden">
@@ -262,12 +313,12 @@ export default function GBIFOccurrenceMap({
         <Heading size="md" color="gray.800">
           GBIF Occurrences Map
         </Heading>
-        {data && data.totalRecords > 0 && (
+        {insideRecords > 0 && (
           <Text fontSize="sm" color="gray.600" mt={1}>
-            {isPolygon
-              ? `${data.insideRecords.toLocaleString()} records inside the CCA boundary, ${outsideRecords.toLocaleString()} more within the search area`
-              : `${data.totalRecords.toLocaleString()} records within the search area around the CCA location`}
-            {` (${data.totalLocations.toLocaleString()} locations)`}
+            {hasPolygon
+              ? `${ccaRecords.toLocaleString()} records inside the CCA boundary, ${bufferRecords.toLocaleString()} more within ${bufferKm} km of it`
+              : `${insideRecords.toLocaleString()} records within ${bufferKm} km of the CCA location`}
+            {!data?.truncated && ` (${searchedLocations.toLocaleString()} locations)`}
           </Text>
         )}
       </Box>
@@ -299,9 +350,7 @@ export default function GBIFOccurrenceMap({
                     {selected.recordCount.toLocaleString()} occurrence records
                   </Text>
                   <Text>{selected.speciesCount.toLocaleString()} species</Text>
-                  {isPolygon && (
-                    <Text>{selected.insideGeometry ? "Inside CCA boundary" : "Outside CCA boundary"}</Text>
-                  )}
+                  <Text>{TIER_LABELS[selected.tier]}</Text>
                   <Text color="gray.500">
                     {selected.latitude}, {selected.longitude}
                   </Text>
@@ -322,7 +371,7 @@ export default function GBIFOccurrenceMap({
         <HStack gap={6} wrap="wrap">
           <LegendItem
             swatch={
-              isPolygon ? (
+              hasPolygon ? (
                 <Box
                   w="18px"
                   h="12px"
@@ -338,38 +387,30 @@ export default function GBIFOccurrenceMap({
                 </Box>
               )
             }
-            label={isPolygon ? "CCA boundary" : "CCA location"}
+            label={hasPolygon ? "CCA boundary" : "CCA location"}
           />
-          <LegendItem
-            swatch={<Dot color={COLORS.INSIDE} />}
-            label={isPolygon ? "Occurrences inside CCA" : "Occurrences of CCA"}
-          />
-          {isPolygon && (
-            <LegendItem
-              swatch={<Dot color={COLORS.OUTSIDE} opacity={0.7} />}
-              label="Occurrences outside CCA (in search area)"
-            />
-          )}
+          {hasPolygon && <LegendItem swatch={<Dot color={COLORS.TIER.cca} />} label={TIER_LABELS.cca} />}
+          <LegendItem swatch={<Dot color={COLORS.TIER.buffer} />} label={TIER_LABELS.buffer} />
           <LegendItem
             swatch={<Box w="18px" borderTop="2px dashed" borderColor="gray.500" flexShrink={0} />}
-            label="Search area"
+            label={`${bufferKm ?? ""} km search area`}
           />
+          {showOutside && (
+            <LegendItem
+              swatch={<Dot color={COLORS.TIER.outside} opacity={0.6} />}
+              label={TIER_LABELS.outside}
+            />
+          )}
         </HStack>
         <HStack justify="space-between" wrap="wrap" gap={2}>
           <Text fontSize="xs" color="gray.500">
             Circle size reflects the number of records at a location. Click a circle for details.
             {data?.truncated &&
-              ` Showing the ${data.locations.length.toLocaleString()} busiest locations (inside the CCA first).`}
+              ` Showing the ${data.locations.length.toLocaleString()} busiest locations, those inside the CCA and search area first. Record counts above include all locations.`}
           </Text>
-          {isPolygon && (
-            <Checkbox
-              size="sm"
-              checked={showOutside}
-              onCheckedChange={(e) => setShowOutside(!!e.checked)}
-            >
-              Show occurrences outside CCA
-            </Checkbox>
-          )}
+          <Checkbox size="sm" checked={showOutside} onCheckedChange={(e) => setShowOutside(!!e.checked)}>
+            Show occurrences outside search area
+          </Checkbox>
         </HStack>
       </Stack>
     </Box>

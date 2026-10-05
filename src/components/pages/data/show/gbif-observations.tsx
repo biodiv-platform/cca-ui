@@ -125,7 +125,9 @@ export default function GBIFObservations({ ccaId, selectedSpeciesGroup, selected
               . The dataset has 65,608,629 occurrences records.
             </Text>
             <Text mt={3}>
-              A bounding box of 11 km is drawn around the CCA point location point and occurrences within the bounding box is fetched from the GBIF Species Occurrence. If the CCA has a polygon, a bounding box is drawn around the polygon and occurrences are fetched.
+              Occurrences are fetched from a search area around the CCA: a circle around a point
+              location, or the CCA polygon extended outward on all sides. The search area and its
+              distance are shown on the GBIF Occurrences Map.
             </Text>
           </AccordionItemContent>
         </AccordionItem>
