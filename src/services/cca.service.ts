@@ -485,6 +485,7 @@ export const axGetGBIFOccurrenceLocations = async (
       data: {
         bbox: null,
         searchArea: null,
+        pointBufferKm: null,
         bufferKm: null,
         totalRecords: 0,
         insideRecords: 0,

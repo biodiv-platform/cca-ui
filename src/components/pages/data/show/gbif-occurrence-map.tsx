@@ -25,6 +25,9 @@ interface OccurrenceLocationResponse {
   bbox: [number, number, number, number] | null;
   /** The exact area the records were counted in, as a GeoJSON geometry */
   searchArea: any | null;
+  /** Buffer around points, in km */
+  pointBufferKm: number;
+  /** Buffer around lines and polygons, in km */
   bufferKm: number;
   totalRecords: number;
   /** Records inside the search area */
@@ -71,6 +74,7 @@ const toFeatureCollection = (value) => {
 };
 
 const isPolygonFeature = (f) => ["Polygon", "MultiPolygon"].includes(f?.geometry?.type);
+const isPointFeature = (f) => ["Point", "MultiPoint"].includes(f?.geometry?.type);
 
 const toPath = (line): google.maps.LatLngLiteral[] => line.map(([lng, lat]) => ({ lat, lng }));
 
@@ -138,6 +142,13 @@ export default function GBIFOccurrenceMap({
   // Only polygons have an inside; point CCAs just have the buffer around them
   const hasPolygon = useMemo(
     () => (ccaGeometry?.features ?? []).some(isPolygonFeature),
+    [ccaGeometry]
+  );
+
+  // Points and the other shapes are buffered by different distances
+  const hasPoint = useMemo(() => (ccaGeometry?.features ?? []).some(isPointFeature), [ccaGeometry]);
+  const hasShape = useMemo(
+    () => (ccaGeometry?.features ?? []).some((f) => f?.geometry && !isPointFeature(f)),
     [ccaGeometry]
   );
 
@@ -296,6 +307,13 @@ export default function GBIFOccurrenceMap({
 
   // Exact totals from the server, independent of how many locations were returned
   const bufferKm = data?.bufferKm;
+  const pointBufferKm = data?.pointBufferKm;
+  const nearCca =
+    hasPoint && hasShape
+      ? `within ${bufferKm} km of the CCA or ${pointBufferKm} km of its point location`
+      : hasPoint
+      ? `within ${pointBufferKm} km of the CCA location`
+      : `within ${bufferKm} km of the CCA`;
   const insideRecords = data?.insideRecords ?? 0;
   const ccaRecords = data?.polygonRecords ?? 0;
   const bufferRecords = insideRecords - ccaRecords;
@@ -303,8 +321,8 @@ export default function GBIFOccurrenceMap({
 
   const TIER_LABELS: Record<Tier, string> = {
     cca: "Inside CCA boundary",
-    buffer: `Within ${bufferKm} km of the CCA`,
-    outside: `Outside the ${bufferKm} km search area (not counted)`
+    buffer: nearCca.charAt(0).toUpperCase() + nearCca.slice(1),
+    outside: "Outside the search area (not counted)"
   };
 
   return (
@@ -316,8 +334,8 @@ export default function GBIFOccurrenceMap({
         {insideRecords > 0 && (
           <Text fontSize="sm" color="gray.600" mt={1}>
             {hasPolygon
-              ? `${ccaRecords.toLocaleString()} records inside the CCA boundary, ${bufferRecords.toLocaleString()} more within ${bufferKm} km of it`
-              : `${insideRecords.toLocaleString()} records within ${bufferKm} km of the CCA location`}
+              ? `${ccaRecords.toLocaleString()} records inside the CCA boundary, ${bufferRecords.toLocaleString()} more ${nearCca}`
+              : `${insideRecords.toLocaleString()} records ${nearCca}`}
             {!data?.truncated && ` (${searchedLocations.toLocaleString()} locations)`}
           </Text>
         )}
@@ -393,7 +411,7 @@ export default function GBIFOccurrenceMap({
           <LegendItem swatch={<Dot color={COLORS.TIER.buffer} />} label={TIER_LABELS.buffer} />
           <LegendItem
             swatch={<Box w="18px" borderTop="2px dashed" borderColor="gray.500" flexShrink={0} />}
-            label={`${bufferKm ?? ""} km search area`}
+            label="Search area"
           />
           {showOutside && (
             <LegendItem
