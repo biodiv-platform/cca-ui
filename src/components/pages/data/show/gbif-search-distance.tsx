@@ -1,4 +1,4 @@
-import { Box, Button, Heading, HStack, Stack, Text } from "@chakra-ui/react";
+import { Box, Button, HStack, Stack, Text } from "@chakra-ui/react";
 import { GBIFSearchBuffers } from "@services/cca.service";
 import React, { useEffect, useState } from "react";
 import { IoInformationCircleOutline } from "react-icons/io5";
@@ -21,28 +21,27 @@ interface GBIFSearchDistanceProps {
 const isValid = (km: string) => km.trim() !== "" && Number(km) >= 0 && Number(km) <= MAX_BUFFER_KM;
 
 const DistanceInput = ({ label, value, onChange }) => (
-  <Stack gap={1}>
-    <Text fontSize="sm" color="gray.700">
+  <HStack gap={2}>
+    <Text fontSize="sm" color="gray.600" whiteSpace="nowrap">
       {label}
     </Text>
-    <HStack gap={2}>
-      <NumberInputRoot
-        value={value}
-        onValueChange={(e) => onChange(e.value)}
-        min={0}
-        max={MAX_BUFFER_KM}
-        step={1}
-        size="sm"
-        maxW="7rem"
-        invalid={!isValid(value)}
-      >
-        <NumberInputField />
-      </NumberInputRoot>
-      <Text fontSize="sm" color="gray.600">
-        km
-      </Text>
-    </HStack>
-  </Stack>
+    <NumberInputRoot
+      value={value}
+      onValueChange={(e) => onChange(e.value)}
+      min={0}
+      max={MAX_BUFFER_KM}
+      step={1}
+      size="xs"
+      w="5rem"
+      bg="white"
+      invalid={!isValid(value)}
+    >
+      <NumberInputField aria-label={`${label} (km)`} />
+    </NumberInputRoot>
+    <Text fontSize="sm" color="gray.600">
+      km
+    </Text>
+  </HStack>
 );
 
 /**
@@ -79,43 +78,35 @@ export default function GBIFSearchDistance({
     value.bufferKm === DEFAULT_GBIF_SEARCH_BUFFERS.bufferKm;
 
   return (
-    <Box borderRadius="md" boxShadow="md" overflow="hidden">
-      <Box bg="teal.500" px={6} py={4}>
-        <HStack gap={2}>
-          <Heading size="md" color="white">
-            Search Distance
-          </Heading>
+    <Stack gap={1}>
+      <HStack gap={{ base: 3, md: 5 }} wrap="wrap" rowGap={2}>
+        <HStack gap={1}>
+          <Text fontSize="sm" fontWeight="semibold" color="gray.700">
+            Buffered distance
+          </Text>
           <Tooltip content="GBIF records are counted within this distance of the CCA. Apply to refresh the species groups, IUCN categories, map and species list.">
-            <Box color="white" cursor="help" display="flex" alignItems="center">
-              <IoInformationCircleOutline size={20} />
+            <Box color="gray.500" cursor="help" display="flex" alignItems="center">
+              <IoInformationCircleOutline size={16} />
             </Box>
           </Tooltip>
         </HStack>
-      </Box>
-
-      <Stack bg="white" p={6} gap={4}>
-        {hasPoint && (
-          <DistanceInput
-            label={hasShape ? "Around the CCA's point location" : "Around the CCA location"}
-            value={pointKm}
-            onChange={setPointKm}
-          />
-        )}
         {hasShape && (
           <DistanceInput
-            label={hasPoint ? "Around the CCA boundary" : "Around the CCA"}
+            label={hasPoint ? "Around the boundary" : "Around the CCA"}
             value={shapeKm}
             onChange={setShapeKm}
           />
         )}
-        {!valid && (
-          <Text fontSize="sm" color="red.600">
-            Enter a distance from 0 to {MAX_BUFFER_KM} km.
-          </Text>
+        {hasPoint && (
+          <DistanceInput
+            label={hasShape ? "Around the point" : "Around the CCA location"}
+            value={pointKm}
+            onChange={setPointKm}
+          />
         )}
-        <HStack gap={2}>
+        <HStack gap={1} ml={{ md: "auto" }}>
           <Button
-            size="sm"
+            size="xs"
             colorPalette="teal"
             disabled={!valid || !changed}
             onClick={() => onApply(draft)}
@@ -123,8 +114,9 @@ export default function GBIFSearchDistance({
             Apply
           </Button>
           <Button
-            size="sm"
-            variant="outline"
+            size="xs"
+            variant="ghost"
+            colorPalette="gray"
             disabled={isDefault && !changed}
             onClick={() => {
               setPointKm(String(DEFAULT_GBIF_SEARCH_BUFFERS.pointBufferKm));
@@ -132,10 +124,15 @@ export default function GBIFSearchDistance({
               onApply(DEFAULT_GBIF_SEARCH_BUFFERS);
             }}
           >
-            Reset to defaults
+            Reset
           </Button>
         </HStack>
-      </Stack>
-    </Box>
+      </HStack>
+      {!valid && (
+        <Text fontSize="xs" color="red.600">
+          Enter a distance from 0 to {MAX_BUFFER_KM} km.
+        </Text>
+      )}
+    </Stack>
   );
 }

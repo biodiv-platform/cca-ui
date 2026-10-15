@@ -8,6 +8,7 @@ import React, { useEffect, useMemo, useState } from "react";
 import { Checkbox } from "@/components/ui/checkbox";
 
 import { getCcaGeometry, getGeometryKinds } from "./cca-geometry";
+import GBIFSearchDistance from "./gbif-search-distance";
 import useTemplateResponseShow from "./use-template-response-show";
 
 interface OccurrenceLocation {
@@ -43,6 +44,8 @@ interface GBIFOccurrenceMapProps {
   ccaId: number;
   /** How far around the CCA GBIF records are searched */
   buffers: GBIFSearchBuffers;
+  /** Applies new search distances, refreshing all the biodiversity panels */
+  onBuffersChange: (buffers: GBIFSearchBuffers) => void;
   selectedSpeciesGroup?: string | null;
   selectedIucnCategory?: string | null;
 }
@@ -110,6 +113,7 @@ const Dot = ({ color, opacity = 1 }) => (
 export default function GBIFOccurrenceMap({
   ccaId,
   buffers,
+  onBuffersChange,
   selectedSpeciesGroup,
   selectedIucnCategory
 }: GBIFOccurrenceMapProps) {
@@ -406,6 +410,15 @@ export default function GBIFOccurrenceMap({
           </Checkbox>
         </HStack>
       </Stack>
+
+      <Box bg="gray.50" px={6} py={3} borderTop="1px solid var(--chakra-colors-gray-300)">
+        <GBIFSearchDistance
+          value={buffers}
+          onApply={onBuffersChange}
+          hasPoint={hasPoint}
+          hasShape={hasShape}
+        />
+      </Box>
     </Box>
   );
 }

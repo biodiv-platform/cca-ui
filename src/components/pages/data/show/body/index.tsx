@@ -8,10 +8,9 @@ import { RESOURCE_TYPE } from "@static/constants";
 import useTranslation from "next-translate/useTranslation";
 import React, { useEffect, useMemo, useState } from "react";
 
-import { getCcaGeometry, getGeometryKinds } from "../cca-geometry";
 import GBIFOccurrenceMap from "../gbif-occurrence-map";
 import GBIFObservations from "../gbif-observations";
-import GBIFSearchDistance, { DEFAULT_GBIF_SEARCH_BUFFERS } from "../gbif-search-distance";
+import { DEFAULT_GBIF_SEARCH_BUFFERS } from "../gbif-search-distance";
 import Group from "../groups";
 import IUCNAggregation from "../iucn-aggregation";
 import QuickNav from "../quick-nav";
@@ -33,7 +32,6 @@ export default function ShowBody() {
   const [selectedIucnCategory, setSelectedIucnCategory] = useState<string | null>(null);
   // Applied search distances; the biodiversity panels refetch when these change
   const [gbifBuffers, setGbifBuffers] = useState<GBIFSearchBuffers>(DEFAULT_GBIF_SEARCH_BUFFERS);
-  const { hasPoint, hasShape } = useMemo(() => getGeometryKinds(getCcaGeometry(response)), [response]);
 
   useEffect(() => {
     const fetchMemberData = async () => {
@@ -104,12 +102,6 @@ export default function ShowBody() {
             Biodiversity
           </Heading>
           <Stack gap={6}>
-            <GBIFSearchDistance
-              value={gbifBuffers}
-              onApply={setGbifBuffers}
-              hasPoint={hasPoint}
-              hasShape={hasShape}
-            />
             <SpeciesGroupAggregation
               ccaId={header.id}
               buffers={gbifBuffers}
@@ -127,6 +119,7 @@ export default function ShowBody() {
             <GBIFOccurrenceMap
               ccaId={header.id}
               buffers={gbifBuffers}
+              onBuffersChange={setGbifBuffers}
               selectedSpeciesGroup={selectedSpeciesGroup}
               selectedIucnCategory={selectedIucnCategory}
             />
