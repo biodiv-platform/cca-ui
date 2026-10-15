@@ -301,7 +301,7 @@ export default function GBIFOccurrenceMap({
   const TIER_LABELS: Record<Tier, string> = {
     cca: "Inside CCA boundary",
     buffer: nearCca.charAt(0).toUpperCase() + nearCca.slice(1),
-    outside: "Outside the search area (not counted)"
+    outside: "Outside the buffered area (not counted)"
   };
 
   return (
@@ -390,7 +390,7 @@ export default function GBIFOccurrenceMap({
           <LegendItem swatch={<Dot color={COLORS.TIER.buffer} />} label={TIER_LABELS.buffer} />
           <LegendItem
             swatch={<Box w="18px" borderTop="2px dashed" borderColor="gray.500" flexShrink={0} />}
-            label="Search area"
+            label="Buffered area"
           />
           {showOutside && (
             <LegendItem
@@ -403,10 +403,10 @@ export default function GBIFOccurrenceMap({
           <Text fontSize="xs" color="gray.500">
             Circle size reflects the number of records at a location. Click a circle for details.
             {data?.truncated &&
-              ` Showing the ${data.locations.length.toLocaleString()} busiest locations, those inside the CCA and search area first. Record counts above include all locations.`}
+              ` Showing the ${data.locations.length.toLocaleString()} busiest locations, those inside the CCA and buffered area first. Record counts above include all locations.`}
           </Text>
           <Checkbox size="sm" checked={showOutside} onCheckedChange={(e) => setShowOutside(!!e.checked)}>
-            Show occurrences outside search area
+            Show occurrences outside buffered area
           </Checkbox>
         </HStack>
       </Stack>
