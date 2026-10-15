@@ -2,14 +2,16 @@ import { Box, Center, Grid, GridItem, Heading, Separator, Stack } from "@chakra-
 import Activity from "@components/@core/activity";
 import { Container } from "@components/@core/container";
 import useGlobalState from "@hooks/use-global-state";
-import { axAddAcitivityComment } from "@services/cca.service";
+import { axAddAcitivityComment, GBIFSearchBuffers } from "@services/cca.service";
 import { axMemberGroupListByUserId } from "@services/usergroup.service";
 import { RESOURCE_TYPE } from "@static/constants";
 import useTranslation from "next-translate/useTranslation";
 import React, { useEffect, useMemo, useState } from "react";
 
+import { getCcaGeometry, getGeometryKinds } from "../cca-geometry";
 import GBIFOccurrenceMap from "../gbif-occurrence-map";
 import GBIFObservations from "../gbif-observations";
+import GBIFSearchDistance, { DEFAULT_GBIF_SEARCH_BUFFERS } from "../gbif-search-distance";
 import Group from "../groups";
 import IUCNAggregation from "../iucn-aggregation";
 import QuickNav from "../quick-nav";
@@ -29,6 +31,9 @@ export default function ShowBody() {
   const [loading, setLoading] = useState(true);
   const [selectedSpeciesGroup, setSelectedSpeciesGroup] = useState<string | null>(null);
   const [selectedIucnCategory, setSelectedIucnCategory] = useState<string | null>(null);
+  // Applied search distances; the biodiversity panels refetch when these change
+  const [gbifBuffers, setGbifBuffers] = useState<GBIFSearchBuffers>(DEFAULT_GBIF_SEARCH_BUFFERS);
+  const { hasPoint, hasShape } = useMemo(() => getGeometryKinds(getCcaGeometry(response)), [response]);
 
   useEffect(() => {
     const fetchMemberData = async () => {
@@ -99,13 +104,21 @@ export default function ShowBody() {
             Biodiversity
           </Heading>
           <Stack gap={6}>
+            <GBIFSearchDistance
+              value={gbifBuffers}
+              onApply={setGbifBuffers}
+              hasPoint={hasPoint}
+              hasShape={hasShape}
+            />
             <SpeciesGroupAggregation
               ccaId={header.id}
+              buffers={gbifBuffers}
               onSelectSpeciesGroup={handleSpeciesGroupSelect}
               selectedSpeciesGroup={selectedSpeciesGroup}
             />
             <IUCNAggregation
               ccaId={header.id}
+              buffers={gbifBuffers}
               onSelectIucnCategory={handleIucnCategorySelect}
               selectedIucnCategory={selectedIucnCategory}
             />
@@ -113,11 +126,13 @@ export default function ShowBody() {
           <Stack gap={6} minW={0}>
             <GBIFOccurrenceMap
               ccaId={header.id}
+              buffers={gbifBuffers}
               selectedSpeciesGroup={selectedSpeciesGroup}
               selectedIucnCategory={selectedIucnCategory}
             />
             <GBIFObservations
               ccaId={header.id}
+              buffers={gbifBuffers}
               selectedSpeciesGroup={selectedSpeciesGroup}
               selectedIucnCategory={selectedIucnCategory}
             />

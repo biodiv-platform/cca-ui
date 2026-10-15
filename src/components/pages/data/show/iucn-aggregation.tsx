@@ -1,7 +1,7 @@
 import { Badge, Box, Button, Heading, HStack, Spinner, Table, Text } from "@chakra-ui/react";
 import { Tooltip } from "@/components/ui/tooltip";
 import { IoInformationCircleOutline } from "react-icons/io5";
-import { axGetIUCNAggregation } from "@services/cca.service";
+import { axGetIUCNAggregation, GBIFSearchBuffers } from "@services/cca.service";
 import React, { useEffect, useState } from "react";
 
 interface IUCNAggregation {
@@ -12,6 +12,8 @@ interface IUCNAggregation {
 
 interface IUCNAggregationProps {
   ccaId: number;
+  /** How far around the CCA GBIF records are searched */
+  buffers: GBIFSearchBuffers;
   onSelectIucnCategory: (category: string | null) => void;
   selectedIucnCategory: string | null;
 }
@@ -28,6 +30,7 @@ const IUCN_COLORS = {
 
 export default function IUCNAggregation({
   ccaId,
+  buffers,
   onSelectIucnCategory,
   selectedIucnCategory
 }: IUCNAggregationProps) {
@@ -38,7 +41,7 @@ export default function IUCNAggregation({
     const fetchAggregations = async () => {
       setLoading(true);
       try {
-        const { success, data } = await axGetIUCNAggregation(ccaId);
+        const { success, data } = await axGetIUCNAggregation(ccaId, buffers);
         if (success && data) {
           setAggregations(data.aggregations || []);
         }
@@ -50,7 +53,7 @@ export default function IUCNAggregation({
     };
 
     fetchAggregations();
-  }, [ccaId]);
+  }, [ccaId, buffers.pointBufferKm, buffers.bufferKm]);
 
   const getIUCNColor = (category: string) => {
     return IUCN_COLORS[category] || "gray";

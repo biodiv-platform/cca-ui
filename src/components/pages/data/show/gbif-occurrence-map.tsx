@@ -2,12 +2,12 @@ import { GMAPS_LIBRARIES } from "@biodiv-platform/naksha-commons";
 import { Box, Heading, HStack, Spinner, Stack, Text } from "@chakra-ui/react";
 import SITE_CONFIG from "@configs/site-config";
 import { GoogleMap, InfoWindow, LoadScriptNext } from "@react-google-maps/api";
-import { axGetGBIFOccurrenceLocations } from "@services/cca.service";
-import { FORM_TYPE } from "@static/constants";
+import { axGetGBIFOccurrenceLocations, GBIFSearchBuffers } from "@services/cca.service";
 import React, { useEffect, useMemo, useState } from "react";
 
 import { Checkbox } from "@/components/ui/checkbox";
 
+import { getCcaGeometry, getGeometryKinds } from "./cca-geometry";
 import useTemplateResponseShow from "./use-template-response-show";
 
 interface OccurrenceLocation {
@@ -41,6 +41,8 @@ interface OccurrenceLocationResponse {
 
 interface GBIFOccurrenceMapProps {
   ccaId: number;
+  /** How far around the CCA GBIF records are searched */
+  buffers: GBIFSearchBuffers;
   selectedSpeciesGroup?: string | null;
   selectedIucnCategory?: string | null;
 }
@@ -60,21 +62,6 @@ const COLORS = {
 };
 
 const TIER_Z_INDEX: Record<Tier, number> = { cca: 6, buffer: 5, outside: 4 };
-
-/**
- * The geometry field value is stored as a FeatureCollection, but the form keeps it
- * as a plain array of features, so accept both.
- */
-const toFeatureCollection = (value) => {
-  if (!value) return null;
-  if (Array.isArray(value)) return { type: "FeatureCollection", features: value };
-  if (value.type === "FeatureCollection") return value;
-  if (value.type === "Feature") return { type: "FeatureCollection", features: [value] };
-  return null;
-};
-
-const isPolygonFeature = (f) => ["Polygon", "MultiPolygon"].includes(f?.geometry?.type);
-const isPointFeature = (f) => ["Point", "MultiPoint"].includes(f?.geometry?.type);
 
 const toPath = (line): google.maps.LatLngLiteral[] => line.map(([lng, lat]) => ({ lat, lng }));
 
@@ -122,6 +109,7 @@ const Dot = ({ color, opacity = 1 }) => (
 
 export default function GBIFOccurrenceMap({
   ccaId,
+  buffers,
   selectedSpeciesGroup,
   selectedIucnCategory
 }: GBIFOccurrenceMapProps) {
@@ -132,25 +120,11 @@ export default function GBIFOccurrenceMap({
   const [showOutside, setShowOutside] = useState(false);
   const [selected, setSelected] = useState<ClassifiedLocation | null>(null);
 
-  const ccaGeometry = useMemo(() => {
-    const geometryField = Object.values<any>(response?.ccaFieldValues ?? {}).find(
-      (f) => f?.type === FORM_TYPE.GEOMETRY
-    );
-    return toFeatureCollection(geometryField?.value);
-  }, [response]);
+  const ccaGeometry = useMemo(() => getCcaGeometry(response), [response]);
 
-  // Only polygons have an inside; point CCAs just have the buffer around them
-  const hasPolygon = useMemo(
-    () => (ccaGeometry?.features ?? []).some(isPolygonFeature),
-    [ccaGeometry]
-  );
-
-  // Points and the other shapes are buffered by different distances
-  const hasPoint = useMemo(() => (ccaGeometry?.features ?? []).some(isPointFeature), [ccaGeometry]);
-  const hasShape = useMemo(
-    () => (ccaGeometry?.features ?? []).some((f) => f?.geometry && !isPointFeature(f)),
-    [ccaGeometry]
-  );
+  // Only polygons have an inside; point CCAs just have the buffer around them. Points
+  // and the other shapes are buffered by different distances.
+  const { hasPolygon, hasPoint, hasShape } = useMemo(() => getGeometryKinds(ccaGeometry), [ccaGeometry]);
 
   // Tiers come from the server, which tested every raw record against the exact shapes
   const locations = useMemo<ClassifiedLocation[]>(
@@ -165,7 +139,8 @@ export default function GBIFOccurrenceMap({
       const { success, data } = await axGetGBIFOccurrenceLocations(
         ccaId,
         selectedSpeciesGroup,
-        selectedIucnCategory
+        selectedIucnCategory,
+        buffers
       );
       if (success) {
         setData(data);
@@ -173,7 +148,7 @@ export default function GBIFOccurrenceMap({
       setLoading(false);
     };
     fetchLocations();
-  }, [ccaId, selectedSpeciesGroup, selectedIucnCategory]);
+  }, [ccaId, selectedSpeciesGroup, selectedIucnCategory, buffers.pointBufferKm, buffers.bufferKm]);
 
   // Fit the map to the search area's bounding box, falling back to the CCA geometry
   useEffect(() => {

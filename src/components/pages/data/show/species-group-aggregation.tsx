@@ -1,7 +1,7 @@
 import { Badge, Box, Button, Heading, HStack, Spinner, Table, Text } from "@chakra-ui/react";
 import { Tooltip } from "@/components/ui/tooltip";
 import { IoInformationCircleOutline } from "react-icons/io5";
-import { axGetSpeciesGroupAggregation } from "@services/cca.service";
+import { axGetSpeciesGroupAggregation, GBIFSearchBuffers } from "@services/cca.service";
 import React, { useEffect, useState } from "react";
 
 interface SpeciesGroupAggregation {
@@ -12,12 +12,15 @@ interface SpeciesGroupAggregation {
 
 interface SpeciesGroupAggregationProps {
   ccaId: number;
+  /** How far around the CCA GBIF records are searched */
+  buffers: GBIFSearchBuffers;
   onSelectSpeciesGroup: (speciesGroup: string | null) => void;
   selectedSpeciesGroup: string | null;
 }
 
 export default function SpeciesGroupAggregation({
   ccaId,
+  buffers,
   onSelectSpeciesGroup,
   selectedSpeciesGroup
 }: SpeciesGroupAggregationProps) {
@@ -28,7 +31,7 @@ export default function SpeciesGroupAggregation({
     const fetchAggregations = async () => {
       setLoading(true);
       try {
-        const { success, data } = await axGetSpeciesGroupAggregation(ccaId);
+        const { success, data } = await axGetSpeciesGroupAggregation(ccaId, buffers);
         if (success && data) {
           setAggregations(data.aggregations || []);
         }
@@ -40,7 +43,7 @@ export default function SpeciesGroupAggregation({
     };
 
     fetchAggregations();
-  }, [ccaId]);
+  }, [ccaId, buffers.pointBufferKm, buffers.bufferKm]);
 
   // Don't show anything if there are no aggregations and we're done loading
   if (aggregations.length === 0 && !loading) {

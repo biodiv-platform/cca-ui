@@ -431,15 +431,24 @@ export const axSearchMapCCAData = async (params) => {
   }
 };
 
+/** How far around the CCA GBIF records are searched; omitted values use the server defaults */
+export interface GBIFSearchBuffers {
+  /** Around the CCA's point locations, in km */
+  pointBufferKm: number;
+  /** Around the CCA's lines and polygons, in km */
+  bufferKm: number;
+}
+
 export const axGetGBIFObservations = async (
   ccaId: number,
   offset = 0,
   limit = 10,
   speciesGroup: string | null | undefined = null,
-  iucnCategory: string | null | undefined = null
+  iucnCategory: string | null | undefined = null,
+  buffers: GBIFSearchBuffers | null = null
 ) => {
   try {
-    const params: any = { offset, limit };
+    const params: any = { offset, limit, ...buffers };
     if (speciesGroup) {
       params.speciesGroup = speciesGroup;
     }
@@ -463,10 +472,11 @@ export const axGetGBIFObservations = async (
 export const axGetGBIFOccurrenceLocations = async (
   ccaId: number,
   speciesGroup: string | null | undefined = null,
-  iucnCategory: string | null | undefined = null
+  iucnCategory: string | null | undefined = null,
+  buffers: GBIFSearchBuffers | null = null
 ) => {
   try {
-    const params: any = {};
+    const params: any = { ...buffers };
     if (speciesGroup) {
       params.speciesGroup = speciesGroup;
     }
@@ -498,10 +508,11 @@ export const axGetGBIFOccurrenceLocations = async (
   }
 };
 
-export const axGetSpeciesGroupAggregation = async (ccaId) => {
+export const axGetSpeciesGroupAggregation = async (ccaId, buffers: GBIFSearchBuffers | null = null) => {
   try {
     const { data } = await plainHttp.get(
-      `${ENDPOINT.CCA}/v1/data/${ccaId}/species-group-aggregation`
+      `${ENDPOINT.CCA}/v1/data/${ccaId}/species-group-aggregation`,
+      { params: { ...buffers } }
     );
     return { success: true, data };
   } catch (e) {
@@ -513,10 +524,11 @@ export const axGetSpeciesGroupAggregation = async (ccaId) => {
   }
 };
 
-export const axGetIUCNAggregation = async (ccaId) => {
+export const axGetIUCNAggregation = async (ccaId, buffers: GBIFSearchBuffers | null = null) => {
   try {
     const { data } = await plainHttp.get(
-      `${ENDPOINT.CCA}/v1/data/${ccaId}/iucn-aggregation`
+      `${ENDPOINT.CCA}/v1/data/${ccaId}/iucn-aggregation`,
+      { params: { ...buffers } }
     );
     return { success: true, data };
   } catch (e) {

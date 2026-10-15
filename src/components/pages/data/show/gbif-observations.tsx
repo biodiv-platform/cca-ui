@@ -1,5 +1,5 @@
 import { Badge, Box, Button, Heading, HStack, Link, Spinner, Stack, Table, Text } from "@chakra-ui/react";
-import { axGetGBIFObservations } from "@services/cca.service";
+import { axGetGBIFObservations, GBIFSearchBuffers } from "@services/cca.service";
 import React, { useEffect, useState } from "react";
 import { FiLink } from "react-icons/fi";
 
@@ -21,6 +21,8 @@ interface SpeciesAggregation {
 
 interface GBIFObservationsProps {
   ccaId: number;
+  /** How far around the CCA GBIF records are searched */
+  buffers: GBIFSearchBuffers;
   selectedSpeciesGroup?: string | null;
   selectedIucnCategory?: string | null;
 }
@@ -35,7 +37,12 @@ const IUCN_COLORS = {
   NE: "gray" // Not Evaluated
 };
 
-export default function GBIFObservations({ ccaId, selectedSpeciesGroup, selectedIucnCategory }: GBIFObservationsProps) {
+export default function GBIFObservations({
+  ccaId,
+  buffers,
+  selectedSpeciesGroup,
+  selectedIucnCategory
+}: GBIFObservationsProps) {
   const [aggregations, setAggregations] = useState<SpeciesAggregation[]>([]);
   const [totalCount, setTotalCount] = useState(0);
   const [totalOccurrenceRecords, setTotalOccurrenceRecords] = useState(0);
@@ -47,7 +54,14 @@ export default function GBIFObservations({ ccaId, selectedSpeciesGroup, selected
   const fetchObservations = async (currentOffset: number, isInitial = false) => {
     setLoading(true);
     try {
-      const { success, data } = await axGetGBIFObservations(ccaId, currentOffset, limit, selectedSpeciesGroup, selectedIucnCategory);
+      const { success, data } = await axGetGBIFObservations(
+        ccaId,
+        currentOffset,
+        limit,
+        selectedSpeciesGroup,
+        selectedIucnCategory,
+        buffers
+      );
 
       if (success && data) {
         setTotalCount(data.totalCount);
@@ -75,7 +89,7 @@ export default function GBIFObservations({ ccaId, selectedSpeciesGroup, selected
   useEffect(() => {
     setOffset(0);
     fetchObservations(0, true);
-  }, [ccaId, selectedSpeciesGroup, selectedIucnCategory]);
+  }, [ccaId, selectedSpeciesGroup, selectedIucnCategory, buffers.pointBufferKm, buffers.bufferKm]);
 
   const handleLoadMore = () => {
     const newOffset = offset + limit;
