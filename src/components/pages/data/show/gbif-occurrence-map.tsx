@@ -5,7 +5,6 @@ import { GoogleMap, InfoWindow, LoadScriptNext } from "@react-google-maps/api";
 import { axGetGBIFOccurrenceLocations, GBIFSearchBuffers } from "@services/cca.service";
 import React, { useEffect, useMemo, useState } from "react";
 
-import { Checkbox } from "@/components/ui/checkbox";
 
 import { getCcaGeometry, getGeometryKinds } from "./cca-geometry";
 import GBIFSearchDistance from "./gbif-search-distance";
@@ -50,7 +49,7 @@ interface GBIFOccurrenceMapProps {
   selectedIucnCategory?: string | null;
 }
 
-type Tier = "cca" | "buffer" | "outside";
+type Tier = "cca" | "buffer";
 
 interface ClassifiedLocation extends OccurrenceLocation {
   tier: Tier;
@@ -61,10 +60,10 @@ const COLORS = {
   CCA_STROKE: "#FFEA00",
   CCA_HALO: "#000000",
   SEARCH_AREA: "#FFFFFF",
-  TIER: { cca: "#00E5FF", buffer: "#FF9100", outside: "#FFFFFF" } as Record<Tier, string>
+  TIER: { cca: "#00E5FF", buffer: "#FF9100" } as Record<Tier, string>
 };
 
-const TIER_Z_INDEX: Record<Tier, number> = { cca: 6, buffer: 5, outside: 4 };
+const TIER_Z_INDEX: Record<Tier, number> = { cca: 6, buffer: 5 };
 
 const toPath = (line): google.maps.LatLngLiteral[] => line.map(([lng, lat]) => ({ lat, lng }));
 
@@ -86,7 +85,7 @@ const toPaths = (geometry): google.maps.LatLngLiteral[][] => {
 };
 
 const tierOf = (location: OccurrenceLocation): Tier =>
-  location.insidePolygon ? "cca" : location.insideGeometry ? "buffer" : "outside";
+  location.insidePolygon ? "cca" : "buffer";
 
 const markerScale = (recordCount: number) => Math.min(4 + Math.log10(recordCount + 1) * 2.5, 14);
 
@@ -121,7 +120,6 @@ export default function GBIFOccurrenceMap({
   const [map, setMap] = useState<google.maps.Map | null>(null);
   const [data, setData] = useState<OccurrenceLocationResponse | null>(null);
   const [loading, setLoading] = useState(true);
-  const [showOutside, setShowOutside] = useState(false);
   const [selected, setSelected] = useState<ClassifiedLocation | null>(null);
 
   const ccaGeometry = useMemo(() => getCcaGeometry(response), [response]);
@@ -130,7 +128,8 @@ export default function GBIFOccurrenceMap({
   // and the other shapes are buffered by different distances.
   const { hasPolygon, hasPoint, hasShape } = useMemo(() => getGeometryKinds(ccaGeometry), [ccaGeometry]);
 
-  // Tiers come from the server, which tested every raw record against the exact shapes
+  // The server returns only locations inside the buffered area, and tested every raw record
+  // against the exact shapes to set the tiers
   const locations = useMemo<ClassifiedLocation[]>(
     () => (data?.locations ?? []).map((location) => ({ ...location, tier: tierOf(location) })),
     [data]
@@ -238,13 +237,12 @@ export default function GBIFOccurrenceMap({
     };
   }, [map, ccaGeometry]);
 
-  // Occurrence locations, sized by record count; CCA > buffer > outside in draw order
+  // Occurrence locations, sized by record count; CCA above buffer in draw order
   useEffect(() => {
     if (!map || !locations.length) return;
 
     const layer = new google.maps.Data({ map });
     locations.forEach((location) => {
-      if (location.tier === "outside" && !showOutside) return;
       layer.add(
         new google.maps.Data.Feature({
           geometry: new google.maps.Data.Point({
@@ -263,7 +261,7 @@ export default function GBIFOccurrenceMap({
           path: google.maps.SymbolPath.CIRCLE,
           scale: markerScale(location.recordCount),
           fillColor: COLORS.TIER[location.tier],
-          fillOpacity: location.tier === "outside" ? 0.5 : 0.9,
+          fillOpacity: 0.9,
           strokeColor: "#111111",
           strokeWeight: 1
         },
@@ -278,7 +276,7 @@ export default function GBIFOccurrenceMap({
       listener.remove();
       layer.setMap(null);
     };
-  }, [map, locations, showOutside]);
+  }, [map, locations]);
 
   if (!ccaGeometry) {
     return null;
@@ -296,12 +294,10 @@ export default function GBIFOccurrenceMap({
   const insideRecords = data?.insideRecords ?? 0;
   const ccaRecords = data?.polygonRecords ?? 0;
   const bufferRecords = insideRecords - ccaRecords;
-  const searchedLocations = locations.filter((l) => l.tier !== "outside").length;
 
   const TIER_LABELS: Record<Tier, string> = {
     cca: "Inside CCA boundary",
-    buffer: nearCca.charAt(0).toUpperCase() + nearCca.slice(1),
-    outside: "Outside the buffered area (not counted)"
+    buffer: nearCca.charAt(0).toUpperCase() + nearCca.slice(1)
   };
 
   return (
@@ -315,7 +311,7 @@ export default function GBIFOccurrenceMap({
             {hasPolygon
               ? `${ccaRecords.toLocaleString()} records inside the CCA boundary, ${bufferRecords.toLocaleString()} more ${nearCca}`
               : `${insideRecords.toLocaleString()} records ${nearCca}`}
-            {!data?.truncated && ` (${searchedLocations.toLocaleString()} locations)`}
+            {!data?.truncated && ` (${locations.length.toLocaleString()} locations)`}
           </Text>
         )}
       </Box>
@@ -392,23 +388,12 @@ export default function GBIFOccurrenceMap({
             swatch={<Box w="18px" borderTop="2px dashed" borderColor="gray.500" flexShrink={0} />}
             label="Buffered area"
           />
-          {showOutside && (
-            <LegendItem
-              swatch={<Dot color={COLORS.TIER.outside} opacity={0.6} />}
-              label={TIER_LABELS.outside}
-            />
-          )}
         </HStack>
-        <HStack justify="space-between" wrap="wrap" gap={2}>
-          <Text fontSize="xs" color="gray.500">
-            Circle size reflects the number of records at a location. Click a circle for details.
-            {data?.truncated &&
-              ` Showing the ${data.locations.length.toLocaleString()} busiest locations, those inside the CCA and buffered area first. Record counts above include all locations.`}
-          </Text>
-          <Checkbox size="sm" checked={showOutside} onCheckedChange={(e) => setShowOutside(!!e.checked)}>
-            Show occurrences outside buffered area
-          </Checkbox>
-        </HStack>
+        <Text fontSize="xs" color="gray.500">
+          Circle size reflects the number of records at a location. Click a circle for details.
+          {data?.truncated &&
+            ` Showing the ${locations.length.toLocaleString()} busiest locations, those inside the CCA first. Record counts above include all locations.`}
+        </Text>
       </Stack>
 
       <Box bg="gray.50" px={6} py={3} borderTop="1px solid var(--chakra-colors-gray-300)">
