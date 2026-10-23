@@ -33,9 +33,9 @@ export default function GBIFAbout() {
         </h3>
         <AccordionItemContent bg="white" p={4}>
           <Text>
-            This species occurrence data is sourced from the Global Biodiversity Information Facility (GBIF), an open-access global biodiversity database. Unlike the rest of the information on this page, this data is not user-submitted on this portal.  It is downloaded from GBIF.org (18 September 2026) GBIF Occurrence{" "}
+            This species occurrence data is sourced from the Global Biodiversity Information Facility (GBIF), an open-access global biodiversity database. Unlike the rest of the information on this page, this data is not user-submitted on this portal.  It is downloaded from GBIF.org (20 October 2026) GBIF Occurrence{" "}
             <Link
-              href="https://doi.org/10.15468/dl.r8uwrs"
+              href="https://doi.org/10.15468/dl.48c69g"
               target="_blank"
               rel="noopener noreferrer"
               color="blue.600"
@@ -43,7 +43,7 @@ export default function GBIFAbout() {
             >
               Download
             </Link>
-            . The dataset has 65,608,629 occurrences records.
+            . The dataset has 64,752,522 occurrences records.
           </Text>
           <Text mt={3}>
             Occurrences are fetched from a buffered area around the CCA: a circle around a point
