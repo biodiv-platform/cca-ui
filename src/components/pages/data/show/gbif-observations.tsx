@@ -1,14 +1,7 @@
 import { Badge, Box, Button, Heading, HStack, Link, Spinner, Stack, Table, Text } from "@chakra-ui/react";
-import { axGetGBIFObservations } from "@services/cca.service";
+import { axGetGBIFObservations, GBIFSearchBuffers } from "@services/cca.service";
 import React, { useEffect, useState } from "react";
 import { FiLink } from "react-icons/fi";
-
-import {
-  AccordionItem,
-  AccordionItemContent,
-  AccordionItemTrigger,
-  AccordionRoot
-} from "@/components/ui/accordion";
 
 interface SpeciesAggregation {
   scientificName: string;
@@ -21,6 +14,8 @@ interface SpeciesAggregation {
 
 interface GBIFObservationsProps {
   ccaId: number;
+  /** How far around the CCA GBIF records are searched */
+  buffers: GBIFSearchBuffers;
   selectedSpeciesGroup?: string | null;
   selectedIucnCategory?: string | null;
 }
@@ -35,7 +30,12 @@ const IUCN_COLORS = {
   NE: "gray" // Not Evaluated
 };
 
-export default function GBIFObservations({ ccaId, selectedSpeciesGroup, selectedIucnCategory }: GBIFObservationsProps) {
+export default function GBIFObservations({
+  ccaId,
+  buffers,
+  selectedSpeciesGroup,
+  selectedIucnCategory
+}: GBIFObservationsProps) {
   const [aggregations, setAggregations] = useState<SpeciesAggregation[]>([]);
   const [totalCount, setTotalCount] = useState(0);
   const [totalOccurrenceRecords, setTotalOccurrenceRecords] = useState(0);
@@ -47,7 +47,14 @@ export default function GBIFObservations({ ccaId, selectedSpeciesGroup, selected
   const fetchObservations = async (currentOffset: number, isInitial = false) => {
     setLoading(true);
     try {
-      const { success, data } = await axGetGBIFObservations(ccaId, currentOffset, limit, selectedSpeciesGroup, selectedIucnCategory);
+      const { success, data } = await axGetGBIFObservations(
+        ccaId,
+        currentOffset,
+        limit,
+        selectedSpeciesGroup,
+        selectedIucnCategory,
+        buffers
+      );
 
       if (success && data) {
         setTotalCount(data.totalCount);
@@ -75,7 +82,7 @@ export default function GBIFObservations({ ccaId, selectedSpeciesGroup, selected
   useEffect(() => {
     setOffset(0);
     fetchObservations(0, true);
-  }, [ccaId, selectedSpeciesGroup, selectedIucnCategory]);
+  }, [ccaId, selectedSpeciesGroup, selectedIucnCategory, buffers.pointBufferKm, buffers.bufferKm]);
 
   const handleLoadMore = () => {
     const newOffset = offset + limit;
@@ -89,48 +96,6 @@ export default function GBIFObservations({ ccaId, selectedSpeciesGroup, selected
 
   return (
     <Stack gap={4} minW={0}>
-      {/* Information Accordion */}
-      <AccordionRoot collapsible defaultValue={["info"]}>
-        <AccordionItem
-          bg="white"
-          borderRadius="md"
-          border="1px solid var(--chakra-colors-gray-300)"
-          boxShadow="sm"
-          value="info"
-        >
-          <h3>
-            <AccordionItemTrigger
-              px={4}
-              py={3}
-              _hover={{ bg: "gray.100" }}
-              _expanded={{ bg: "gray.100" }}
-            >
-              <Box flex="1" textAlign="left">
-                About GBIF Data
-              </Box>
-            </AccordionItemTrigger>
-          </h3>
-          <AccordionItemContent bg="white" p={4}>
-            <Text>
-              This species occurrence data is sourced from the Global Biodiversity Information Facility (GBIF), an open-access global biodiversity database. Unlike the rest of the information on this page, this data is not user-submitted on this portal.  It is downloaded from GBIF.org (18 September 2026) GBIF Occurrence{" "}
-              <Link
-                href="https://doi.org/10.15468/dl.r8uwrs"
-                target="_blank"
-                rel="noopener noreferrer"
-                color="blue.600"
-                textDecoration="underline"
-              >
-                Download
-              </Link>
-              . The dataset has 65,608,629 occurrences records.
-            </Text>
-            <Text mt={3}>
-              A bounding box of 11 km is drawn around the CCA point location point and occurrences within the bounding box is fetched from the GBIF Species Occurrence. If the CCA has a polygon, a bounding box is drawn around the polygon and occurrences are fetched.
-            </Text>
-          </AccordionItemContent>
-        </AccordionItem>
-      </AccordionRoot>
-
       {/* GBIF Observations Table */}
       <Box borderRadius="md" border="1px solid var(--chakra-colors-gray-300)" boxShadow="sm" overflow="hidden">
         {/* Header Panel */}

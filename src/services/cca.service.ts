@@ -431,15 +431,24 @@ export const axSearchMapCCAData = async (params) => {
   }
 };
 
+/** How far around the CCA GBIF records are searched; omitted values use the server defaults */
+export interface GBIFSearchBuffers {
+  /** Around the CCA's point locations, in km */
+  pointBufferKm: number;
+  /** Around the CCA's lines and polygons, in km */
+  bufferKm: number;
+}
+
 export const axGetGBIFObservations = async (
   ccaId: number,
   offset = 0,
   limit = 10,
   speciesGroup: string | null | undefined = null,
-  iucnCategory: string | null | undefined = null
+  iucnCategory: string | null | undefined = null,
+  buffers: GBIFSearchBuffers | null = null
 ) => {
   try {
-    const params: any = { offset, limit };
+    const params: any = { offset, limit, ...buffers };
     if (speciesGroup) {
       params.speciesGroup = speciesGroup;
     }
@@ -460,10 +469,50 @@ export const axGetGBIFObservations = async (
   }
 };
 
-export const axGetSpeciesGroupAggregation = async (ccaId) => {
+export const axGetGBIFOccurrenceLocations = async (
+  ccaId: number,
+  speciesGroup: string | null | undefined = null,
+  iucnCategory: string | null | undefined = null,
+  buffers: GBIFSearchBuffers | null = null
+) => {
+  try {
+    const params: any = { ...buffers };
+    if (speciesGroup) {
+      params.speciesGroup = speciesGroup;
+    }
+    if (iucnCategory) {
+      params.iucnCategory = iucnCategory;
+    }
+    const { data } = await plainHttp.get(
+      `${ENDPOINT.CCA}/v1/data/${ccaId}/gbif-occurrence-locations`,
+      { params }
+    );
+    return { success: true, data };
+  } catch (e) {
+    console.error(e);
+    return {
+      success: false,
+      data: {
+        bbox: null,
+        searchArea: null,
+        pointBufferKm: null,
+        bufferKm: null,
+        totalRecords: 0,
+        insideRecords: 0,
+        polygonRecords: 0,
+        totalLocations: 0,
+        truncated: false,
+        locations: []
+      }
+    };
+  }
+};
+
+export const axGetSpeciesGroupAggregation = async (ccaId, buffers: GBIFSearchBuffers | null = null) => {
   try {
     const { data } = await plainHttp.get(
-      `${ENDPOINT.CCA}/v1/data/${ccaId}/species-group-aggregation`
+      `${ENDPOINT.CCA}/v1/data/${ccaId}/species-group-aggregation`,
+      { params: { ...buffers } }
     );
     return { success: true, data };
   } catch (e) {
@@ -475,10 +524,11 @@ export const axGetSpeciesGroupAggregation = async (ccaId) => {
   }
 };
 
-export const axGetIUCNAggregation = async (ccaId) => {
+export const axGetIUCNAggregation = async (ccaId, buffers: GBIFSearchBuffers | null = null) => {
   try {
     const { data } = await plainHttp.get(
-      `${ENDPOINT.CCA}/v1/data/${ccaId}/iucn-aggregation`
+      `${ENDPOINT.CCA}/v1/data/${ccaId}/iucn-aggregation`,
+      { params: { ...buffers } }
     );
     return { success: true, data };
   } catch (e) {
