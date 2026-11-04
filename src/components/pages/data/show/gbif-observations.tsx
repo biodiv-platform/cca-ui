@@ -219,11 +219,9 @@ export default function GBIFObservations({
                             href={`${IBP_SPECIES_PAGE_URL}/${agg.speciesId}`}
                             target="_blank"
                             rel="noopener noreferrer"
-                            color="teal.600"
-                            _hover={{ textDecoration: "underline" }}
                           >
                             <HStack gap={1} display="inline-flex" alignItems="center">
-                              <Text as="span">View</Text>
+                              <Badge colorPalette="teal">IBP</Badge>
                               <LuExternalLink size={16} />
                             </HStack>
                           </Link>
