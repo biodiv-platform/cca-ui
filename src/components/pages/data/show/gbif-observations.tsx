@@ -1,7 +1,7 @@
 import { Badge, Box, Button, Heading, HStack, Link, Spinner, Stack, Table, Text } from "@chakra-ui/react";
 import { axGetGBIFObservations, GBIFSearchBuffers } from "@services/cca.service";
 import React, { useEffect, useState } from "react";
-import { FiLink } from "react-icons/fi";
+import { LuExternalLink } from "react-icons/lu";
 
 interface SpeciesAggregation {
   scientificName: string;
@@ -10,6 +10,8 @@ interface SpeciesAggregation {
   speciesGroup: string;
   taxonKey: number;
   iucnLink: string;
+  /** IBP species page matched to the GBIF name, null when there is none */
+  speciesId: number | null;
 }
 
 interface GBIFObservationsProps {
@@ -29,6 +31,8 @@ const IUCN_COLORS = {
   DD: "gray", // Data Deficient
   NE: "gray" // Not Evaluated
 };
+
+const IBP_SPECIES_PAGE_URL = "https://indiabiodiversity.org/species/show";
 
 export default function GBIFObservations({
   ccaId,
@@ -144,12 +148,15 @@ export default function GBIFObservations({
                     <Table.ColumnHeader fontWeight="bold" whiteSpace="nowrap">
                       IUCN Status
                     </Table.ColumnHeader>
+                    <Table.ColumnHeader fontWeight="bold" whiteSpace="nowrap">
+                      IBP Species Page
+                    </Table.ColumnHeader>
                   </Table.Row>
                 </Table.Header>
                 <Table.Body>
                   {aggregations.length === 0 ? (
                     <Table.Row>
-                      <Table.Cell colSpan={4} textAlign="center" py={8}>
+                      <Table.Cell colSpan={5} textAlign="center" py={8}>
                         <Text color="gray.500">No observations found</Text>
                       </Table.Cell>
                     </Table.Row>
@@ -166,7 +173,7 @@ export default function GBIFObservations({
                         >
                           <HStack gap={1} display="inline-flex" alignItems="center">
                             <Text as="span">{agg.scientificName}</Text>
-                            <FiLink size={16} />
+                            <LuExternalLink size={16} />
                           </HStack>
                         </Link>
                       </Table.Cell>
@@ -192,7 +199,7 @@ export default function GBIFObservations({
                                 <Badge colorPalette={getIUCNColor(agg.iucnRedListCategory)}>
                                   {agg.iucnRedListCategory}
                                 </Badge>
-                                <FiLink size={16} />
+                                <LuExternalLink size={16} />
                               </HStack>
                             </Link>
                           ) : (
@@ -200,6 +207,24 @@ export default function GBIFObservations({
                               {agg.iucnRedListCategory}
                             </Badge>
                           )
+                        ) : (
+                          <Text color="gray.400" fontSize="sm">
+                            -
+                          </Text>
+                        )}
+                      </Table.Cell>
+                      <Table.Cell whiteSpace="nowrap">
+                        {agg.speciesId ? (
+                          <Link
+                            href={`${IBP_SPECIES_PAGE_URL}/${agg.speciesId}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
+                            <HStack gap={1} display="inline-flex" alignItems="center">
+                              <Badge colorPalette="teal">IBP</Badge>
+                              <LuExternalLink size={16} />
+                            </HStack>
+                          </Link>
                         ) : (
                           <Text color="gray.400" fontSize="sm">
                             -
