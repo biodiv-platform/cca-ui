@@ -1,7 +1,7 @@
 import { Badge, Box, Button, Heading, HStack, Link, Spinner, Stack, Table, Text } from "@chakra-ui/react";
 import { axGetGBIFObservations, GBIFSearchBuffers } from "@services/cca.service";
 import React, { useEffect, useState } from "react";
-import { FiLink } from "react-icons/fi";
+import { LuExternalLink } from "react-icons/lu";
 
 interface SpeciesAggregation {
   scientificName: string;
@@ -173,7 +173,7 @@ export default function GBIFObservations({
                         >
                           <HStack gap={1} display="inline-flex" alignItems="center">
                             <Text as="span">{agg.scientificName}</Text>
-                            <FiLink size={16} />
+                            <LuExternalLink size={16} />
                           </HStack>
                         </Link>
                       </Table.Cell>
@@ -199,7 +199,7 @@ export default function GBIFObservations({
                                 <Badge colorPalette={getIUCNColor(agg.iucnRedListCategory)}>
                                   {agg.iucnRedListCategory}
                                 </Badge>
-                                <FiLink size={16} />
+                                <LuExternalLink size={16} />
                               </HStack>
                             </Link>
                           ) : (
@@ -224,7 +224,7 @@ export default function GBIFObservations({
                           >
                             <HStack gap={1} display="inline-flex" alignItems="center">
                               <Text as="span">View</Text>
-                              <FiLink size={16} />
+                              <LuExternalLink size={16} />
                             </HStack>
                           </Link>
                         ) : (
