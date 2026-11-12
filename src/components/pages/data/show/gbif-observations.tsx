@@ -194,18 +194,20 @@ export default function GBIFObservations({
                       <Table.Cell whiteSpace="nowrap">
                         {agg.iucnRedListCategory ? (
                           agg.iucnLink ? (
-                            <Link
-                              href={agg.iucnLink}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                            >
-                              <HStack gap={1} display="inline-flex" alignItems="center">
-                                <Badge colorPalette={getIUCNColor(agg.iucnRedListCategory)}>
-                                  {agg.iucnRedListCategory}
-                                </Badge>
-                                <LuExternalLink size={16} />
-                              </HStack>
-                            </Link>
+                            <SitePreview url={agg.iucnLink} name={agg.scientificName}>
+                              <Link
+                                href={agg.iucnLink}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                              >
+                                <HStack gap={1} display="inline-flex" alignItems="center">
+                                  <Badge colorPalette={getIUCNColor(agg.iucnRedListCategory)}>
+                                    {agg.iucnRedListCategory}
+                                  </Badge>
+                                  <LuExternalLink size={16} />
+                                </HStack>
+                              </Link>
+                            </SitePreview>
                           ) : (
                             <Badge colorPalette={getIUCNColor(agg.iucnRedListCategory)}>
                               {agg.iucnRedListCategory}
