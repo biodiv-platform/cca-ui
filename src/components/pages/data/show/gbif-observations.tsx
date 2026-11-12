@@ -1,4 +1,5 @@
 import { Badge, Box, Button, Heading, HStack, Link, Spinner, Stack, Table, Text } from "@chakra-ui/react";
+import SitePreview from "@components/@core/site-preview";
 import { axGetGBIFObservations, GBIFSearchBuffers } from "@services/cca.service";
 import React, { useEffect, useState } from "react";
 import { LuExternalLink } from "react-icons/lu";
@@ -33,6 +34,7 @@ const IUCN_COLORS = {
 };
 
 const IBP_SPECIES_PAGE_URL = "https://indiabiodiversity.org/species/show";
+const GBIF_TAXON_URL = "https://www.gbif.org/taxon";
 
 export default function GBIFObservations({
   ccaId,
@@ -164,18 +166,20 @@ export default function GBIFObservations({
                     aggregations.map((agg, index) => (
                     <Table.Row key={`${agg.scientificName}-${index}`}>
                       <Table.Cell fontStyle="italic" whiteSpace="nowrap" data-sticky bg="white">
-                        <Link
-                          href={`https://www.gbif.org/taxon/${agg.taxonKey}`}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          color="teal.600"
-                          _hover={{ textDecoration: "underline" }}
-                        >
-                          <HStack gap={1} display="inline-flex" alignItems="center">
-                            <Text as="span">{agg.scientificName}</Text>
-                            <LuExternalLink size={16} />
-                          </HStack>
-                        </Link>
+                        <SitePreview url={`${GBIF_TAXON_URL}/${agg.taxonKey}`} name={agg.scientificName}>
+                          <Link
+                            href={`${GBIF_TAXON_URL}/${agg.taxonKey}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            color="teal.600"
+                            _hover={{ textDecoration: "underline" }}
+                          >
+                            <HStack gap={1} display="inline-flex" alignItems="center">
+                              <Text as="span">{agg.scientificName}</Text>
+                              <LuExternalLink size={16} />
+                            </HStack>
+                          </Link>
+                        </SitePreview>
                       </Table.Cell>
                       <Table.Cell whiteSpace="nowrap">
                         {agg.speciesGroup ? (
@@ -215,16 +219,21 @@ export default function GBIFObservations({
                       </Table.Cell>
                       <Table.Cell whiteSpace="nowrap">
                         {agg.speciesId ? (
-                          <Link
-                            href={`${IBP_SPECIES_PAGE_URL}/${agg.speciesId}`}
-                            target="_blank"
-                            rel="noopener noreferrer"
+                          <SitePreview
+                            url={`${IBP_SPECIES_PAGE_URL}/${agg.speciesId}`}
+                            name={agg.scientificName}
                           >
-                            <HStack gap={1} display="inline-flex" alignItems="center">
-                              <Badge colorPalette="teal">IBP</Badge>
-                              <LuExternalLink size={16} />
-                            </HStack>
-                          </Link>
+                            <Link
+                              href={`${IBP_SPECIES_PAGE_URL}/${agg.speciesId}`}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                            >
+                              <HStack gap={1} display="inline-flex" alignItems="center">
+                                <Badge colorPalette="teal">IBP</Badge>
+                                <LuExternalLink size={16} />
+                              </HStack>
+                            </Link>
+                          </SitePreview>
                         ) : (
                           <Text color="gray.400" fontSize="sm">
                             -
